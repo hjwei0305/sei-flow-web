@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: io.zipkin.reporter2:zipkin-sender-okhttp3:2.5.0">
+    <CLASSES>
+      <root url="jar://D:/gradle download/caches/modules-2/files-2.1/io.zipkin.reporter2/zipkin-sender-okhttp3/2.5.0/9796f04c94008add1cc079de8372a6fd1607ba90/zipkin-sender-okhttp3-2.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/gradle download/caches/modules-2/files-2.1/io.zipkin.reporter2/zipkin-sender-okhttp3/2.5.0/be322a15f8683322b8826ebcf86e993201156cfe/zipkin-sender-okhttp3-2.5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
