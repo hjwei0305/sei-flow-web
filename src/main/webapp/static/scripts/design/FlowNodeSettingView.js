@@ -58,7 +58,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             this.initNotify(true);
         } else {
             this.window = EUI.Window({
-                width: 550,
+                width: 580,
                 height: 420,
                 padding: 15,
                 buttons: this.getButtons(),
@@ -179,7 +179,8 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 var eventData = eventForm ? eventForm.getFormValue() : '';
                 var executor = '';
                 if (g.type != 'ServiceTask' && g.type != 'ReceiveTask'&& g.type != 'PoolTask' && g.type != 'CallActivity') {
-                    executor = g.getExcutorData()
+                    executor = g.getExcutorData();
+
                 }
                 g.afterConfirm && g.afterConfirm.call(this, {
                     normal: normalData,
@@ -438,30 +439,32 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         return {
             xtype: "FormPanel",
             title: "执行人",
-            height: 375,
-            width: 535,
+            height: 400,
+            width: 565,
             id: "excutor",
             itemspace: 0,
             items: [{
                 xtype: "Container",
-                height: 65,
-                width: 532,
+                height: 90,
+                width: 555,
                 padding: 0,
                 border: false,
                 items: [this.initUserTypeGroup()]
             }, {
                 xtype: "Container",
-                width: 532,
+                width: 555,
                 height: 290,
                 padding: 0,
                 id: "gridBox",
                 hidden: true,
                 defaultConfig: {
                     border: true,
-                    height: 240,
-                    width: 520
+                    height: 200,
+                    width: 530
                 },
-                items: [{
+                items: [
+                    this.getSelfDef(),
+                    {
                     xtype: "ToolBar",
                     region: "north",
                     height: 40,
@@ -474,14 +477,35 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                         id: "chooseBtn",
                         handler: function () {
                             var userType = EUI.getCmp("userType").getValue().userType;
-                            if (userType == "Position") {
+                            if (userType == "Position"||userType == "PositionAndOrg"||userType == "PositionAndOrgAndSelfDefinition") {
                                 g.showSelectPositionWindow();
                             } else if (userType == "PositionType") {
                                 g.showSelectPositionTypeWindow();
                             }
                         }
                     }]
-                }, this.getPositionGrid(), this.getPositionTypeGrid(), this.getSelfDef()]
+                },
+                    this.getPositionGrid(),this.getPositionTypeGrid(),
+                 {
+                        xtype: "ToolBar",
+                        region: "north",
+                        height: 40,
+                        padding: 0,
+                        border: false,
+                        items: [{
+                            xtype: "Button",
+                            title: "选择组织维度",
+                            iconCss: "ecmp-common-choose",
+                            id: "chooseOrgBtn",
+                            handler: function () {
+                                var userType = EUI.getCmp("userType").getValue().userType;
+                                if (userType == "PositionAndOrg"||userType == "PositionAndOrgAndSelfDefinition") {
+                                       g.showSelectOrganizationWindow();
+                                }
+                            }
+                        }]
+                    },
+                    this.getOrganizationGrid()]
             }]
         };
     },
@@ -527,6 +551,19 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 onChecked: function (value) {
                     g.showChooseUserGrid(this.name);
                 }
+            }, {
+                title: "岗位+组织维度",
+                name: "PositionAndOrg",
+                onChecked: function (value) {
+                    g.showChooseUserGrid(this.name);
+                }
+            }, {
+                title: "岗位+组织维度（自定义执行人）",
+                name: "PositionAndOrgAndSelfDefinition",
+                labelWidth: 250,
+                onChecked: function (value) {
+                    g.showChooseUserGrid(this.name);
+                }
             }]
         };
     },
@@ -541,6 +578,8 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             EUI.getCmp("positionGrid").show();
             EUI.getCmp("positionTypeGrid").hide();
             EUI.getCmp("selfDef").hide();
+            EUI.getCmp("chooseOrgBtn").hide();
+            EUI.getCmp("organizationGrid").hide();
             EUI.getCmp("chooseBtn").setTitle("选择岗位");
             if (data && data.rowdata) {
                 EUI.getCmp("positionGrid").setDataInGrid(data.rowdata);
@@ -552,6 +591,8 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             EUI.getCmp("positionGrid").hide();
             EUI.getCmp("positionTypeGrid").show();
             EUI.getCmp("selfDef").hide();
+            EUI.getCmp("chooseOrgBtn").hide();
+            EUI.getCmp("organizationGrid").hide();
             EUI.getCmp("chooseBtn").setTitle("选择岗位类别");
             if (data && data.rowdata) {
                 EUI.getCmp("positionTypeGrid").setDataInGrid(data.rowdata);
@@ -561,10 +602,41 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             EUI.getCmp("chooseBtn").hide();
             EUI.getCmp("positionGrid").hide();
             EUI.getCmp("positionTypeGrid").hide();
+            EUI.getCmp("chooseOrgBtn").hide();
+            EUI.getCmp("organizationGrid").hide();
             EUI.getCmp("selfDef").show();
             EUI.getCmp("selfDef").loadData(data);
         } else if (userType == "AnyOne") {
             EUI.getCmp("gridBox").hide();
+        }else if (userType == "PositionAndOrg") {
+            EUI.getCmp("chooseBtn").show();
+            EUI.getCmp("gridBox").show();
+            EUI.getCmp("positionGrid").show();
+            EUI.getCmp("chooseOrgBtn").show();
+            EUI.getCmp("organizationGrid").show();
+            EUI.getCmp("positionTypeGrid").hide();
+            EUI.getCmp("selfDef").hide();
+            EUI.getCmp("chooseBtn").setTitle("选择岗位");
+            EUI.getCmp("chooseOrgBtn").setTitle("选择组织维度");
+            if (data && data.length==2) {
+                EUI.getCmp("positionGrid").setDataInGrid(data[0].rowdata);
+                EUI.getCmp("organizationGrid").setDataInGrid(data[1].rowdata);
+            }
+        } else if (userType == "PositionAndOrgAndSelfDefinition") {
+            EUI.getCmp("selfDef").show();
+            EUI.getCmp("chooseBtn").show();
+            EUI.getCmp("gridBox").show();
+            EUI.getCmp("positionGrid").show();
+            EUI.getCmp("chooseOrgBtn").show();
+            EUI.getCmp("organizationGrid").show();
+            EUI.getCmp("positionTypeGrid").hide();
+            EUI.getCmp("chooseBtn").setTitle("选择岗位");
+            EUI.getCmp("chooseOrgBtn").setTitle("选择组织维度");
+            if (data && data.length==3) {
+                EUI.getCmp("selfDef").loadData(data[0]);
+                EUI.getCmp("positionGrid").setDataInGrid(data[1].rowdata);
+                EUI.getCmp("organizationGrid").setDataInGrid(data[2].rowdata);
+            }
         }
     },
     getEventTab: function () {
@@ -896,6 +968,43 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         }
         return notifyChoosePositionIds;
     },
+    getOrganizationGrid: function () {
+        var colModel = [{
+            label: this.lang.operateText,
+            name: "id",
+            index: "id",
+            width: 60,
+            align: "center",
+            formatter: function (cellvalue, options, rowObject) {
+                return "<div class='ecmp-common-delete condetail-delete' title='删除' id='" + cellvalue + "'></div>";
+            }
+        }];
+        colModel = colModel.concat(this.organizationGridColModel());
+        return {
+            xtype: "GridPanel",
+            id: "organizationGrid",
+            gridCfg: {
+                loadonce: true,
+                datatype: "local",
+                hasPager: false,
+                colModel: colModel
+            }
+        };
+    },
+    organizationGridColModel: function () {
+        return [{
+            label: this.lang.codeText,
+            name: "id",
+            index: "id",
+            width: 100
+        }, {
+            label: this.lang.nameText,
+            name: "name",
+            index: "name",
+            width: 150
+
+        }];
+    },
     getPositionGrid: function () {
         var colModel = [{
             label: this.lang.operateText,
@@ -1026,6 +1135,129 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 }
             }
         };
+    },
+    showSelectOrganizationWindow:function(){
+        var g = this;
+        var win = EUI.Window({
+            title: "选择组织维度",
+            padding: 15,
+            width: 1020,
+            height: 350,
+            buttons: [{
+                title: "取消",
+                handler: function () {
+                    win.close();
+                }
+            }, {
+                title: "确定",
+                selected: true,
+                handler: function () {
+                    var cmp = EUI.getCmp("organizationGrid");
+                    var selectRow = EUI.getCmp("selOrganizationGrid").getGridData();
+                    cmp.reset();
+                    cmp.setDataInGrid(selectRow, false);
+                    win.close();
+                }
+            }],
+            items: [{
+                xtype: "Container",
+                layout: "border",
+                border: false,
+                padding: 0,
+                itemspace: 0,
+                items: [{
+                    xtype: "GridPanel",
+                    border: true,
+                    title: "已选择",
+                    width: 470,
+                    id: "selOrganizationGrid",
+                    region: "west",
+                    gridCfg: {
+                        datatype: "local",
+                        loadonce: true,
+                        multiselect: true,
+                        sortname: 'code',
+                        colModel: this.organizationGridColModel(),
+                        ondblClickRow: function (rowid) {
+                            var cmp = EUI.getCmp("selOrganizationGrid");
+                            var row = cmp.grid.jqGrid('getRowData', rowid);
+                            if (!row) {
+                                g.message("请选择一条要操作的行项目!");
+                                return false;
+                            }
+                            g.deleteRowData([row], cmp);
+                        }
+                    }
+                }, g.getCenterIcon("organization"), {
+                    xtype: "GridPanel",
+                    width: 470,
+                    id: "allOrganizationGrid",
+                    region: "east",
+                    border: true,
+                    title: "所有组织维度",
+                    tbar: ["->", {
+                        xtype: "SearchBox",
+                        id: "searchBox_organizationGrid",
+                        width: 200,
+                        displayText: g.lang.searchDisplayText,
+                        onSearch: function (v) {
+                            EUI.getCmp("allOrganizationGrid").setPostParams({
+                                Quick_value: v
+                            }, true);
+                        },
+                        afterClear: function () {
+                            EUI.getCmp("allOrganizationGrid").setPostParams({
+                                Quick_value: null
+                            }, true);
+                        }
+                    }],
+                    searchConfig: {
+                        searchCols: ["id", "name"]
+                    },
+                    gridCfg: {
+                        hasPager: true,
+                        multiselect: true,
+                        loadonce: false,
+                        sortname: 'code',
+                        url: _ctxPath + "/design/listOrganizationDimension",
+                        colModel: this.organizationGridColModel(),
+                        ondblClickRow: function (rowid) {
+                            var selectRow = EUI.getCmp("allOrganizationGrid").grid.jqGrid('getRowData', rowid);
+                            if (!selectRow) {
+                                g.message("请选择一条要操作的行项目!");
+                                return false;
+                            }
+                            EUI.getCmp("selOrganizationGrid").addRowData([selectRow], true);
+                        }
+                    }
+                }]
+            }]
+        });
+        var data = EUI.getCmp("organizationGrid").getGridData();
+        EUI.getCmp("selOrganizationGrid").reset();
+        EUI.getCmp("selOrganizationGrid").setDataInGrid(data, false);
+        this.addOrganizationEvent();
+    },
+    addOrganizationEvent: function () {
+        var g = this;
+        $("#organization-left").bind("click", function (e) {
+            var cmp = EUI.getCmp("selOrganizationGrid");
+            var selectRow = EUI.getCmp("allOrganizationGrid").getSelectRow();
+            if (selectRow.length == 0) {
+                g.message("请选择一条要操作的行项目!");
+                return false;
+            }
+            cmp.addRowData(selectRow, true);
+        });
+        $("#organization-right").bind("click", function (e) {
+            var cmp = EUI.getCmp("selOrganizationGrid");
+            var row = cmp.getSelectRow();
+            if (row.length == 0) {
+                g.message("请选择一条要操作的行项目!");
+                return false;
+            }
+            g.deleteRowData(row, cmp);
+        });
     },
     showSelectPositionWindow: function () {
         var g = this;
@@ -1289,12 +1521,25 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     checkExcutor: function () {
         var userType = EUI.getCmp("userType").getValue().userType;
         var data;
+        var dataOrg;
         if (userType == "Position") {
             data = EUI.getCmp("positionGrid").getGridData();
         } else if (userType == "PositionType") {
             data = EUI.getCmp("positionTypeGrid").getGridData();
         } else if (userType == "SelfDefinition") {
             return EUI.getCmp("selfDef").sysValidater();
+        } else if(userType=="PositionAndOrg"){
+            data = EUI.getCmp("positionGrid").getGridData();
+            dataOrg = EUI.getCmp("organizationGrid").getGridData();
+            if(!dataOrg||dataOrg.length == 0){
+                return false;
+            }
+        } else if(userType=="PositionAndOrgAndSelfDefinition"){
+            data = EUI.getCmp("positionGrid").getGridData();
+            dataOrg = EUI.getCmp("organizationGrid").getGridData();
+            if(!dataOrg||dataOrg.length == 0||!EUI.getCmp("selfDef").sysValidater()){
+                return false;
+            }
         } else {
             return true;
         }
@@ -1304,21 +1549,58 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         return true;
     },
     getExcutorData: function () {
+        var dataArray=[];
         var data = EUI.getCmp("userType").getValue();
+        var dataOrg = {};
         var userType = data.userType;
         if (userType == "Position") {
             rowdata = EUI.getCmp("positionGrid").getGridData();
             data.ids = this.getSelectIds(rowdata);
             data.rowdata = rowdata;
+            dataArray.push(data);
         } else if (userType == "PositionType") {
             rowdata = EUI.getCmp("positionTypeGrid").getGridData();
             data.ids = this.getSelectIds(rowdata);
             data.rowdata = rowdata;
+            dataArray.push(data);
         } else if (userType == "SelfDefinition") {
             var selfData = EUI.getCmp("selfDef").getSubmitValue();
             EUI.apply(data, selfData);
+            dataArray.push(data);
+        } else if (userType == "PositionAndOrg") {
+            rowdata = EUI.getCmp("positionGrid").getGridData();
+            data.userType="Position";
+            data.ids = this.getSelectIds(rowdata);
+            data.rowdata = rowdata;
+            dataArray.push(data);
+
+            rowdata = EUI.getCmp("organizationGrid").getGridData();
+            dataOrg.userType="Organization";
+            dataOrg.ids = this.getSelectIds(rowdata);
+            dataOrg.rowdata = rowdata;
+            dataArray.push(dataOrg);
+
+        } else if (userType == "PositionAndOrgAndSelfDefinition") {
+
+            var selfData = EUI.getCmp("selfDef").getSubmitValue();
+            var datasel = {'userType':'SelfDefinition'};
+            EUI.apply(datasel, selfData);
+            dataArray.push(datasel);
+
+            rowdata = EUI.getCmp("positionGrid").getGridData();
+            data.userType="Position";
+            data.ids = this.getSelectIds(rowdata);
+            data.rowdata = rowdata;
+            dataArray.push(data);
+
+            rowdata = EUI.getCmp("organizationGrid").getGridData();
+            dataOrg.userType="Organization";
+            dataOrg.ids = this.getSelectIds(rowdata);
+            dataOrg.rowdata = rowdata;
+            dataArray.push(dataOrg);
         }
-        return data;
+        // return data;
+        return dataArray;
     },
     getSelectIds: function (data) {
         var ids = "";
@@ -1344,10 +1626,27 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
 
         //加载执行人配置
         if (g.type != 'ServiceTask' && g.type != 'ReceiveTask'&& g.type != 'PoolTask' && g.type != 'CallActivity') {
-            var userType = this.data.executor.userType;
-            var userTypeCmp = EUI.getCmp("userType");
-            userTypeCmp.setValue(userType);
-            this.showChooseUserGrid(userType, this.data.executor);
+              var  executorLength= this.data.executor.length;
+              if(executorLength==1){
+                   var userType = this.data.executor[0].userType;
+                   var userTypeCmp = EUI.getCmp("userType");
+                   userTypeCmp.setValue(userType);
+                   this.showChooseUserGrid(userType, this.data.executor[0]);
+              }else if(executorLength==2){
+                  var userType = "PositionAndOrg";
+                  var userTypeCmp = EUI.getCmp("userType");
+                  userTypeCmp.setValue(userType);
+                  this.showChooseUserGrid(userType, this.data.executor);
+              }else if(executorLength==3){
+                  var userType = "PositionAndOrgAndSelfDefinition";
+                  var userTypeCmp = EUI.getCmp("userType");
+                  userTypeCmp.setValue(userType);
+                  this.showChooseUserGrid(userType, this.data.executor);
+              }
+            // var userType = this.data.executor.userType;
+            // var userTypeCmp = EUI.getCmp("userType");
+            // userTypeCmp.setValue(userType);
+            // this.showChooseUserGrid(userType, this.data.executor);
         }
         if (g.type == 'CallActivity') {
             return;
