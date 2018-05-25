@@ -657,7 +657,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             EUI.getCmp("chooseBtn").setTitle("选择岗位");
             EUI.getCmp("chooseOrgBtn").setTitle("选择组织维度");
             if (data && data.length==2) {
-                EUI.getCmp("positionAndOrgGrid").setDataInGrid(data[0].rowdata);
+                EUI.getCmp("positionOfOrgGrid").setDataInGrid(data[0].rowdata);
                 EUI.getCmp("organizationGrid").setDataInGrid(data[1].rowdata);
             }
         } else if (userType == "PositionAndOrgAndSelfDefinition") {
