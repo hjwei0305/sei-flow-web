@@ -2140,7 +2140,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             dataArray.push(data);
 
             rowdata = EUI.getCmp("organizationGrid").getGridData();
-            dataOrg.userType="Organization";
+            dataOrg.userType="OrganizationDimension";
             dataOrg.ids = this.getSelectIds(rowdata);
             dataOrg.rowdata = rowdata;
             dataArray.push(dataOrg);
@@ -2159,7 +2159,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             dataArray.push(data);
 
             rowdata = EUI.getCmp("organizationOfSelGrid").getGridData();
-            dataOrg.userType="Organization";
+            dataOrg.userType="OrganizationDimension";
             dataOrg.ids = this.getSelectIds(rowdata);
             dataOrg.rowdata = rowdata;
             dataArray.push(dataOrg);
