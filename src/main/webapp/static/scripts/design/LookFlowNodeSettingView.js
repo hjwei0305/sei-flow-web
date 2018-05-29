@@ -1039,22 +1039,22 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         }
         //加载执行人配置
         if (nodeConfig.executor) {
-            var  executorLength= this.data.executor.length;
+            var  executorLength= nodeConfig.executor.length;
             if(executorLength==1){
-                var userType = this.data.executor[0].userType;
+                var userType = nodeConfig.executor[0].userType;
                 var userTypeCmp = EUI.getCmp("userType");
                 userTypeCmp.setValue(userType);
-                this.showChooseUserGrid(userType, this.data.executor[0]);
+                this.showChooseUserGrid(userType, nodeConfig.executor[0]);
             }else if(executorLength==2){
                 var userType = "PositionAndOrg";
                 var userTypeCmp = EUI.getCmp("userType");
                 userTypeCmp.setValue(userType);
-                this.showChooseUserGrid(userType, this.data.executor);
+                this.showChooseUserGrid(userType, nodeConfig.executor);
             }else if(executorLength==3){
                 var userType = "PositionAndOrgAndSelfDefinition";
                 var userTypeCmp = EUI.getCmp("userType");
                 userTypeCmp.setValue(userType);
-                this.showChooseUserGrid(userType, this.data.executor);
+                this.showChooseUserGrid(userType, nodeConfig.executor);
             }
             // var userType = nodeConfig.executor.userType;
             // var userTypeCmp = EUI.getCmp("userType");
