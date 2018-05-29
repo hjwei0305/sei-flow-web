@@ -2163,6 +2163,8 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             dataOrg.ids = this.getSelectIds(rowdata);
             dataOrg.rowdata = rowdata;
             dataArray.push(dataOrg);
+        }else{
+            dataArray.push(data);
         }
         // return data;
         return dataArray;
