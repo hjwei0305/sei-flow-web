@@ -78,10 +78,12 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 }]
             });
             this.initNotify();
-            this.showChooseUserGrid('Position');//岗位默认选中
+            // this.showChooseUserGrid('Position');
         }
         if (this.data && !Object.isEmpty(this.data)) {
             this.loadData();
+        }else{
+            this.showChooseUserGrid('Position');//岗位默认选中
         }
         this.addEvent();
     },
