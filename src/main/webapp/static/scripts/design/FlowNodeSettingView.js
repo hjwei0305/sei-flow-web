@@ -78,7 +78,6 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 }]
             });
             this.initNotify();
-            // this.showChooseUserGrid('Position');
         }
         if (this.data && !Object.isEmpty(this.data)) {
             this.loadData();
@@ -353,6 +352,20 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 title: "允许驳回",
                 name: "allowReject"
             }]);
+        }
+        if(this.nodeType == "Normal" || this.nodeType == "Approve"){
+            items = items.concat([{
+                xtype: "CheckBox",
+                title: "允许转办",
+                name: "allowTransfer"
+            }]);
+            if(this.nodeType == "Approve"){
+                items = items.concat([{
+                    xtype: "CheckBox",
+                    title: "允许委托",
+                    name: "allowEntrust"
+                }]);
+            }
         }
         return {
             title: "常规",

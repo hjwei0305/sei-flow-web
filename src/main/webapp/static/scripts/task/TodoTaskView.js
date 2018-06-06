@@ -177,6 +177,8 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
             var rejectHtml = items[j].canReject ? '<div class="todo-btn reject-btn"><i class="ecmp-common-return reject-icon" title="驳回"></i><span>驳回</span></div>' : '';
             var nodeType = JSON.parse(items[j].taskJsonDef).nodeType;
             var claimTaskHtml = nodeType == "SingleSign" && !items[j].actClaimTime ? '<div class="todo-btn claim-btn"><i class="ecmp-common-claim claim-icon" title="签收"></i><span>签收</span></div>' : '';
+            var transferHtml=(nodeType=="Normal"||nodeType=="Approve")&&JSON.parse(items[j].taskJsonDef).nodeConfig.normal.allowTransfer?'<div class="todo-btn turn-to-do-btn"><i class="ecmp-flow-turn-to-do-c turn-to-do-icon handle-icon-size" title="转办"></i><span>转办</span></div>':'';
+            var entrustHtml=nodeType=="Approve"&&JSON.parse(items[j].taskJsonDef).nodeConfig.normal.allowEntrust?'<div class="todo-btn entrust-btn"><i class="ecmp-flow-turn-to-do turn-to-do-icon handle-icon-size" title="委托"></i><span>委托</span></div>':'';
             var flowInstanceCreatorId = items[j].flowInstance ? items[j].flowInstance.creatorId : "";
             var workRemark = null;
             if(items[j].flowInstance.businessModelRemark && items[j].flowInstance.businessModelRemark!='null'){
@@ -195,7 +197,8 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
                 '                     <div class="end">'
                 + claimTaskHtml +
                 '                          <div class="todo-btn approve-btn"><i class="ecmp-eui-edit end-icon handle-icon-size" title="审批"></i><span>处理</span></div>'
-                +'                          <div class="todo-btn turn-to-do-btn"><i class="ecmp-flow-turn-to-do-c turn-to-do-icon handle-icon-size" title="转办"></i><span>转办</span></div>'
+                + transferHtml
+                + entrustHtml
                 + rejectHtml + endFlowHtml +
                 '                          <div class="todo-btn look-approve-btn"><i class="ecmp-common-view look-icon look-approve" title="查看表单"></i><span>查看表单</span></div>' +
                 '                          <div class="todo-btn flowInstance-btn"><i class="ecmp-flow-history time-icon flowInstance icon-size" title="流程历史"></i><span>流程历史</span></div>' +
@@ -297,6 +300,7 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
         g.claimEvent();
         g.endFlowEvent();
         g.turnToDoViewWindow();
+        g.entrustViewWindow();
     }
     ,
     //点击打开审批界面的新页签
@@ -316,6 +320,67 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
             g.addTab(tab);
         });
     },
+    //委托-选择人
+    entrustViewWindow: function () {
+        var g = this;
+        $(".entrust-btn", "#" + this.renderTo).live("click", function () {
+            var itemdom = $(this).parents(".info-item");
+            var data = itemdom.data();
+            g.showChooseExecutorWind(data.id,"entrust");
+        });
+    }
+    ,entrustSubmit:function(taskId,userId){
+    if(__SessionUser.userId==userId){
+        var status = {
+            msg: "不能委托给自己",
+            success: false,
+            showTime: 4
+        };
+        EUI.ProcessStatus(status);
+        return;
+    }
+    var g = this;
+    var msgBox = EUI.MessageBox({
+        title: '提示',
+        msg: "委托后将任对该任务拥有所有权，请确定是否继续?",
+        buttons: [{
+            title: "取消",
+            handler: function () {
+                msgBox.remove();
+            }
+        }, {
+            title: "确定",
+            selected: true,
+            handler: function () {
+                msgBox.remove();
+                var mask = EUI.LoadMask({
+                    msg: "正在执行，请稍候..."
+                });
+                EUI.Store({
+                    url: _ctxPath + "/flowTask/taskTrustToDo",
+                    params: {
+                        taskId: taskId,
+                        userId: userId
+                    },
+                    success: function (status) {
+                        mask.hide();
+                        var status = {
+                            msg: "执行成功",
+                            success: true
+                        };
+                        EUI.ProcessStatus(status);
+                        g.chooseAnyOneWind.close();
+                        g.refresh();
+                    },
+                    failure: function (response) {
+                        mask.hide();
+                        EUI.ProcessStatus(response);
+                    }
+                });
+            }
+        }]
+    });
+   },
     //转办-选择人
     turnToDoViewWindow: function () {
         var g = this;
@@ -331,15 +396,15 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
             //     id: data.id
             // };
             // g.addTab(tab);
-            g.showChooseExecutorWind(data.id);
+            g.showChooseExecutorWind(data.id,"transfer");
         });
     }
     ,
-    showChooseExecutorWind: function (taskId) {
+    showChooseExecutorWind: function (taskId,status) {
         var g = this;
         var isChooseOneTitle;
         var saveBtnIsHidden;
-        isChooseOneTitle = "选择转办执行人【可双击选择】";
+        status=="transfer"?isChooseOneTitle = "选择转办执行人【可双击选择】":isChooseOneTitle = "选择委托执行人【可双击选择】";
         saveBtnIsHidden = true;
         g.chooseAnyOneWind = EUI.Window({
             title: isChooseOneTitle,
@@ -348,7 +413,7 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
             height: 380,
             padding: 5,
             itemspace: 0,
-            items: [this.initChooseUserWindLeft(), this.InitChooseUserGrid(taskId)],
+            items: [this.initChooseUserWindLeft(), this.InitChooseUserGrid(taskId,status)],
             buttons: [{
                 title: "取消",
                 handler: function () {
@@ -374,7 +439,11 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
                     // } else {
                     //     g.addChooseUsersInContainer(selectRow, currentChooseDivIndex, currentChooseTaskType);
                     // }
-                    g.turnToDoSubmit(taskId,selectRow.id);
+                    if(status=="transfer"){
+                        g.turnToDoSubmit(taskId,selectRow.id);
+                    }else{
+                        g.entrustSubmit(taskId,selectRow.id);
+                    }
                     // g.chooseAnyOneWind.close();
                 }
             }]
@@ -515,7 +584,7 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
         }
     }
     ,
-    InitChooseUserGrid: function (taskId) {
+    InitChooseUserGrid: function (taskId,status) {
         var g = this;
         var isShowMultiselect=false;
         return {
@@ -579,7 +648,11 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
                     }],
                     ondblClickRow: function (rowid) {
                         var rowData = EUI.getCmp("chooseUserGridPanel").grid.jqGrid('getRowData', rowid);
-                        g.turnToDoSubmit(taskId,rowData.id);
+                        if(status=="transfer"){
+                            g.turnToDoSubmit(taskId,rowData.id);
+                        }else{
+                            g.entrustSubmit(taskId,rowData.id);
+                        }
                     }
                 }
             }]

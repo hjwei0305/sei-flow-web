@@ -268,6 +268,20 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 name: "allowReject"
             }]);
         }
+        if(this.nodeType == "Normal" || this.nodeType == "Approve"){
+            items = items.concat([{
+                xtype: "CheckBox",
+                title: "允许转办",
+                name: "allowTransfer"
+            }]);
+            if(this.nodeType == "Approve"){
+                items = items.concat([{
+                    xtype: "CheckBox",
+                    title: "允许委托",
+                    name: "allowEntrust"
+                }]);
+            }
+        }
         return {
             title: "常规",
             xtype: "FormPanel",
