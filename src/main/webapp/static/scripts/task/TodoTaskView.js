@@ -174,43 +174,45 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
     showData: function (items) {
         var g = this;
         for (var j = 0; j < items.length; j++) {
-            var rejectHtml = items[j].canReject ? '<div class="todo-btn reject-btn"><i class="ecmp-common-return reject-icon" title="驳回"></i><span>驳回</span></div>' : '';
-            var nodeType = JSON.parse(items[j].taskJsonDef).nodeType;
-            var claimTaskHtml = nodeType == "SingleSign" && !items[j].actClaimTime ? '<div class="todo-btn claim-btn"><i class="ecmp-common-claim claim-icon" title="签收"></i><span>签收</span></div>' : '';
-            var transferHtml=(nodeType=="Normal"||nodeType=="Approve")&&JSON.parse(items[j].taskJsonDef).nodeConfig.normal.allowTransfer?'<div class="todo-btn turn-to-do-btn"><i class="ecmp-flow-turn-to-do-c turn-to-do-icon handle-icon-size" title="转办"></i><span>转办</span></div>':'';
-            var entrustHtml=nodeType=="Approve"&&JSON.parse(items[j].taskJsonDef).nodeConfig.normal.allowEntrust?'<div class="todo-btn entrust-btn"><i class="ecmp-flow-turn-to-do turn-to-do-icon handle-icon-size" title="委托"></i><span>委托</span></div>':'';
-            var flowInstanceCreatorId = items[j].flowInstance ? items[j].flowInstance.creatorId : "";
-            var workRemark = null;
-            if(items[j].flowInstance.businessModelRemark && items[j].flowInstance.businessModelRemark!='null'){
-                workRemark =  items[j].flowInstance.businessCode + '-' + items[j].flowInstance.businessModelRemark;
-            }else {
-                workRemark =  items[j].flowInstance.businessCode;
-            }
-            var endFlowHtml = items[j].canSuspension && flowInstanceCreatorId == items[j].executorId ? '<div class="todo-btn endFlow-btn"><i class="ecmp-flow-end endFlow-icon icon-size" title="终止"></i><span>终止</span></div>' : '';var itemdom = $('<div class="info-item">' +
-                '                 <div class="item">' +
-                '                     <span class="flow-text">' + items[j].flowName + '_' + items[j].taskName + '</span>' +
-                '                 </div>' +
-                '                 <div class="item flow-digest">' +
-                '                     <span class="digest">' + workRemark + '</span></span>' +
-                '                 </div>' +
-                '                 <div class="item operation">' +
-                '                     <div class="end">'
-                + claimTaskHtml +
-                '                          <div class="todo-btn approve-btn"><i class="ecmp-eui-edit end-icon handle-icon-size" title="审批"></i><span>处理</span></div>'
-                + transferHtml
-                + entrustHtml
-                + rejectHtml + endFlowHtml +
-                '                          <div class="todo-btn look-approve-btn"><i class="ecmp-common-view look-icon look-approve" title="查看表单"></i><span>查看表单</span></div>' +
-                '                          <div class="todo-btn flowInstance-btn"><i class="ecmp-flow-history time-icon flowInstance icon-size" title="流程历史"></i><span>流程历史</span></div>' +
-                '                     </div>' +
-                '                     <span class="item-right task-item-right">' +
-                '                          <div class="userName">发起人：' + items[j].creatorName + '</div>' +
-                '                          <div class="todo-date"><i class="ecmp-flow-history flow-time-icon time-icon-size" title="创建时间"></i><span>' + this.countDate(items[j].createdDate) + '</span></div>' +
-                '                     </span>' +
-                '                 </div>' +
-                '</div>');
-            itemdom.data(items[j]);
-            this.dataDom.append(itemdom);
+                var rejectHtml = items[j].trustState!=2 && items[j].canReject ? '<div class="todo-btn reject-btn"><i class="ecmp-common-return reject-icon" title="驳回"></i><span>驳回</span></div>' : '';
+                var nodeType = JSON.parse(items[j].taskJsonDef).nodeType;
+                var claimTaskHtml = nodeType == "SingleSign" && items[j].trustState!=2 && !items[j].actClaimTime ? '<div class="todo-btn claim-btn"><i class="ecmp-common-claim claim-icon" title="签收"></i><span>签收</span></div>' : '';
+                var transferHtml=(nodeType=="Normal"||nodeType=="Approve") && items[j].trustState==null &&JSON.parse(items[j].taskJsonDef).nodeConfig.normal.allowTransfer?'<div class="todo-btn turn-to-do-btn"><i class="ecmp-flow-turn-to-do-c turn-to-do-icon handle-icon-size" title="转办"></i><span>转办</span></div>':'';
+                var entrustHtml=nodeType=="Approve"&&items[j].trustState ==null &&JSON.parse(items[j].taskJsonDef).nodeConfig.normal.allowEntrust?'<div class="todo-btn entrust-btn"><i class="ecmp-flow-turn-to-do turn-to-do-icon handle-icon-size" title="委托"></i><span>委托</span></div>':'';
+                var flowInstanceCreatorId = items[j].flowInstance ? items[j].flowInstance.creatorId : "";
+                var workRemark = null;
+                if(items[j].flowInstance.businessModelRemark && items[j].flowInstance.businessModelRemark!='null'){
+                    workRemark =  items[j].flowInstance.businessCode + '-' + items[j].flowInstance.businessModelRemark;
+                }else {
+                    workRemark =  items[j].flowInstance.businessCode;
+                }
+                var endFlowHtml = items[j].canSuspension && items[j].trustState!=2 && flowInstanceCreatorId == items[j].executorId ? '<div class="todo-btn endFlow-btn"><i class="ecmp-flow-end endFlow-icon icon-size" title="终止"></i><span>终止</span></div>' : '';
+
+                var itemdom = $('<div class="info-item">' +
+                    '                 <div class="item">' +
+                    '                     <span class="flow-text">' + items[j].flowName + '_' + items[j].taskName + '</span>' +
+                    '                 </div>' +
+                    '                 <div class="item flow-digest">' +
+                    '                     <span class="digest">' + workRemark + '</span></span>' +
+                    '                 </div>' +
+                    '                 <div class="item operation">' +
+                    '                     <div class="end">'
+                    + claimTaskHtml +
+                    '                          <div class="todo-btn approve-btn"><i class="ecmp-eui-edit end-icon handle-icon-size" title="审批"></i><span>处理</span></div>'
+                    + transferHtml
+                    + entrustHtml
+                    + rejectHtml + endFlowHtml +
+                    '                          <div class="todo-btn look-approve-btn"><i class="ecmp-common-view look-icon look-approve" title="查看表单"></i><span>查看表单</span></div>' +
+                    '                          <div class="todo-btn flowInstance-btn"><i class="ecmp-flow-history time-icon flowInstance icon-size" title="流程历史"></i><span>流程历史</span></div>' +
+                    '                     </div>' +
+                    '                     <span class="item-right task-item-right">' +
+                    '                          <div class="userName">发起人：' + items[j].creatorName + '</div>' +
+                    '                          <div class="todo-date"><i class="ecmp-flow-history flow-time-icon time-icon-size" title="创建时间"></i><span>' + this.countDate(items[j].createdDate) + '</span></div>' +
+                    '                     </span>' +
+                    '                 </div>' +
+                    '</div>');
+                itemdom.data(items[j]);
+                this.dataDom.append(itemdom);
         }
         EUI.resize(this.boxCmp);
     }
@@ -312,9 +314,13 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
             var taskConfig = JSON.parse(data.taskJsonDef);
             var workPageUrl = data.taskFormUrlXiangDui;
             var joinStr = workPageUrl.indexOf("?") != -1 ? "&" : "?";
+            var trustState=0;
+            if(data.trustState){
+                trustState=data.trustState;
+            }
             var tab = {
                 title: data.taskName,
-                url: workPageUrl + joinStr + "id=" + data.flowInstance.businessId + "&taskId=" + data.id,
+                url: workPageUrl + joinStr + "id=" + data.flowInstance.businessId + "&taskId=" + data.id+"&trustState="+trustState,
                 id: data.id
             };
             g.addTab(tab);
