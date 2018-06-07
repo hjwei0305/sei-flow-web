@@ -236,4 +236,20 @@ public class FlowTaskController {
         OperateStatus status=new OperateStatus(result.successful(),result.getMessage());
         return status;
     }
+
+    /**
+     * 被委托方提交任务（返回到委托方）
+     * @param taskId 任务ID
+     * @return 操作结果
+     */
+    @RequestMapping(value = "taskTrustToReturn")
+    @ResponseBody
+    public OperateStatus taskTrustToReturn(String taskId)  throws Exception{
+        IFlowTaskService proxy = ApiClient.createProxy(IFlowTaskService.class);
+        OperateResult result = proxy.taskTrustToReturn(taskId);
+        OperateStatus status=new OperateStatus(result.successful(),result.getMessage());
+        return status;
+    }
+
+
 }
