@@ -124,6 +124,10 @@ public class BuiltInApproveController extends FlowBaseController<DefaultBusiness
     @ResponseBody
     public OperateStatus startFlow(String businessModelCode, String businessKey, String opinion, String typeId,String flowDefKey, String taskList) throws NoSuchMethodException, SecurityException {
 //        IBaseEntityService baseService = getBaseService();
+//        System.setProperty("http.proxyHost", "localhost");
+//        System.setProperty("https.proxyHost", "localhost");
+//        System.setProperty("http.proxyPort", "8888");
+//        System.setProperty("https.proxyPort", "8888");
         OperateStatus operateStatus = null;
 //        DefaultBusinessModel defaultBusinessModel = (DefaultBusinessModel) baseService.findOne(businessKey);
         List<FlowTaskCompleteWebVO> flowTaskCompleteList = null;
@@ -251,7 +255,7 @@ public class BuiltInApproveController extends FlowBaseController<DefaultBusiness
                         selectedNodesMap.put(f.getNodeId(),f.getNodeId());
                         if ("common".equalsIgnoreCase(flowTaskType) || "approve".equalsIgnoreCase(flowTaskType)) {
                             v.put(f.getUserVarName(), f.getUserIds());
-                        } else {
+                        } else if(!"poolTask".equalsIgnoreCase(flowTaskType)){
                             String[] idArray = f.getUserIds().split(",");
                             v.put(f.getUserVarName(), idArray);
                         }
