@@ -244,9 +244,9 @@ public class FlowTaskController {
      */
     @RequestMapping(value = "taskTrustToReturn")
     @ResponseBody
-    public OperateStatus taskTrustToReturn(String taskId)  throws Exception{
+    public OperateStatus taskTrustToReturn(String taskId,String opinion)  throws Exception{
         IFlowTaskService proxy = ApiClient.createProxy(IFlowTaskService.class);
-        OperateResult result = proxy.taskTrustToReturn(taskId);
+        OperateResult result = proxy.taskTrustToReturn(taskId,opinion);
         OperateStatus status=new OperateStatus(result.successful(),result.getMessage());
         return status;
     }
