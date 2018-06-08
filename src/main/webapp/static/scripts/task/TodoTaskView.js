@@ -348,7 +348,7 @@ EUI.TodoTaskView = EUI.extend(EUI.CustomUI, {
     var g = this;
     var msgBox = EUI.MessageBox({
         title: '提示',
-        msg: "委托后将任对该任务拥有所有权，请确定是否继续?",
+        msg: "委托后将暂由被委托人先行处理，请确定是否继续?",
         buttons: [{
             title: "取消",
             handler: function () {
