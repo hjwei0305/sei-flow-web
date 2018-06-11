@@ -336,6 +336,14 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                     title: "串行",
                     name: true
                 }]
+            } , {
+                xtype: "CheckBox",
+                title: "允许加签",
+                name: "allowAddSign"
+            } , {
+                xtype: "CheckBox",
+                title: "允许减签",
+                name: "allowSubtractSign"
             }]);
         }
         else if (this.nodeType != "ParallelTask" && this.nodeType != "SerialTask" && this.type != "ServiceTask" && this.type != "ReceiveTask" && this.type != "PoolTask" && this.type != 'CallActivity') {
