@@ -239,7 +239,7 @@ EUI.FlowInstanceView = EUI.extend(EUI.CustomUI, {
             }
             var tab = {
                 title: g.lang.viewOrderText,
-                url: _basePath + data.webBaseAddress+lookUrl + "?id=" + data.businessId,
+                url: _basePath +"/"+ data.webBaseAddress +"/"+ lookUrl + "?id=" + data.businessId,
                 id: data.businessId
             };
             g.addTab(tab);
