@@ -97,7 +97,7 @@ public class BusinessModuleController {
     @ResponseBody
     public OperateStatus listAllAppModule() {
         IAppModuleService proxy = ApiClient.createProxy(IAppModuleService.class);
-        List<AppModule> appModuleList = proxy.findAll();
+        List<AppModule> appModuleList = proxy.findAllByAuth();
         OperateStatus operateStatus = new OperateStatus(true, OperateStatus.COMMON_SUCCESS_MSG, appModuleList);
         return operateStatus;
     }

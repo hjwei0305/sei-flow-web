@@ -87,7 +87,7 @@ public class FlowTypeController {
     @ResponseBody
     public List<BusinessModel> listAllBusinessModel() {
         IBusinessModelService proxy = ApiClient.createProxy(IBusinessModelService.class);
-        List<BusinessModel> businessModelList = proxy.findAll();
+        List<BusinessModel> businessModelList = proxy.findAllByAuth();
 //        OperateStatus operateStatus = new OperateStatus(true, OperateStatus.COMMON_SUCCESS_MSG, businessModelList);
         return businessModelList;
     }

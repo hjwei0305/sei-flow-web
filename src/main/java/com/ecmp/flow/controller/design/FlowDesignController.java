@@ -8,6 +8,7 @@ import com.ecmp.core.search.Search;
 import com.ecmp.core.search.SearchUtil;
 import com.ecmp.core.vo.OperateStatus;
 import com.ecmp.flow.api.*;
+import com.ecmp.flow.basic.vo.OrganizationDimension;
 import com.ecmp.flow.basic.vo.Position;
 import com.ecmp.flow.basic.vo.PositionCategory;
 import com.ecmp.flow.common.util.Constants;
@@ -221,6 +222,19 @@ public class FlowDesignController {
         String url = Constants.getBasicPositioncategoryFindallUrl();
         List<PositionCategory> positionCategoryList  = ApiClient.getEntityViaProxy(url,new GenericType<List<PositionCategory>>() {},null);
         return positionCategoryList;
+    }
+
+    /**
+     * 获取组织维度列表
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "listOrganizationDimension")
+    public List<OrganizationDimension> listOrganizationDimension() {
+        String url = Constants.getBasicOrgDimensionUrl();
+        List<OrganizationDimension> organizationDimensionList  = ApiClient.getEntityViaProxy(url,new GenericType<List<OrganizationDimension>>() {},null);
+        return organizationDimensionList;
     }
 
     /**
