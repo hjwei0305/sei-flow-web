@@ -1,0 +1,207 @@
+/***
+** 基础样式
+***/
+html,body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.ant-btn-primary{
+    background-image: linear-gradient(-90deg, #3A9BFF 0%, #34CCFB 100%);
+    color: #fff;
+}
+
+.steps-wrapper{
+    width: 80%;
+    margin: 10px 10%;
+    padding-top: 10px;
+}
+.layout-header.ant-layout-header{
+    background:#ffffff
+}
+.layout-header{
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e8e8e8;
+    background: #fff!important;
+}
+ .content-wrapper{
+    width: 100%;
+    padding-top:64px;
+    height: 100vh;
+    overflow: auto;
+}
+.content-wrapper .layout-wrapper {
+    height: 100%;
+}
+.btn-wrapper{
+    display: inline-block;
+}
+.anchor-fix{
+    position: fixed;
+    width: 196px;
+    height: calc(100vh - 80px);
+    border: none;
+}
+
+.anchor-fix .ant-menu{
+    border: none;
+}
+#defaultSimpleTable .ant-pagination .ant-select{
+    width: auto;
+    max-width: 100%;
+    font-size: 12px;
+}
+
+#defaultSimpleTable .ant-pagination-item a{
+    margin: 0 0;
+}
+
+#defaultSimpleTable .ant-pagination.mini .ant-pagination-item{
+    margin: 0;
+    min-width: 20px;
+    height: 23px;
+    line-height: 21px;
+}
+.table-box{
+    height: 100vh;
+    padding: 4px 10px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+.steps-div{
+    width: 80%;
+    margin-left: 10%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.table-div{
+    width: 90%;
+    margin-left: 5%;
+}
+.steps-content {
+    height: calc(100vh - 174px);
+    overflow: auto;
+}
+
+.title {
+    padding-left: 10px
+}
+
+.steps-action {
+    height: 30px;
+    text-align: center;
+    padding: 20px;
+}
+#defaultSimpleTable #pageInfo{
+    margin-top: -5px;
+}
+
+.modal-box .ant-modal-body{
+    padding: 2px 15px;
+}
+.modal-box .ant-table-wrapper{
+    min-height: 390px!important;
+    max-height: 438px !important;
+}
+
+.choose-supplier .ant-modal-body{
+    padding: 2px 15px;
+}
+
+.blank-cell{
+    border-bottom-width: 0px!important;
+    border-right-width: 0px!important;
+}
+.item-label{
+    color: rgb(110, 110, 110);
+    font-size: 14px;
+}
+.item-value{
+    font-size: 14px;
+}
+
+.header-span{
+    font-size: 18px;
+    font-weight: bold;
+    color: #595959;
+}
+.ant-modal-title{
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+
+#components-table-demo-resizable-column .react-resizable {
+    position: relative;
+  }
+
+#components-table-demo-resizable-column .react-resizable-handle {
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    bottom: 0;
+    right: -5px;
+    cursor: col-resize;
+}
+
+.card-title{
+    min-height: 20px;
+    margin: 10px 40px;
+    border-radius: 4px;
+}
+
+.item-wrapper{
+    border: 1px solid rgb(221, 221, 221);
+    box-shadow: rgb(204, 204, 204) 0px 0px 3px 0px;
+}
+.item-box{
+    text-align: 'center';
+}
+.item-box .ant-card-head-title{
+    padding: 16px 0 0 0;
+}
+.item-header{
+    padding: 5px;
+    margin-right: 0;
+    background-color: rgb(212, 232, 250);
+}
+.item-wrapper:hover .item-header {
+    background-color: rgb(168, 229, 255);
+}
+
+.doingColor{
+    color:lightgreen;
+}
+
+.successColor{
+    color: green;
+}
+
+.failColor{
+    color: red;
+}
+
+.upload-style{
+    display: inline-block;
+    margin: 0px 5px;
+}
+.ant-spin-nested-loading > div > .ant-spin{
+    z-index: 9999;
+}
+.ant-modal-content>.ant-modal-body{
+    padding: 10px;
+}
+.ant-modal-content .ant-form-item,.ant-card-body .ant-form-item{
+    margin-bottom: 10px;
+}
+.ant-checkbox-wrapper.text-short>span:nth-child(2){
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 158px;
+    vertical-align: top;
+    display: inline-block;
+}
