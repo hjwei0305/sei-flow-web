@@ -10,8 +10,9 @@ export default class IndexView extends Component {
                 <nav>
                     <ul>
                         <li><Link to='/Demo'>组件测试Demo</Link></li>
-                        <h4>：</h4>
-
+                        <h4>后台配置：</h4>
+                        <li><Link to='/AppModuleTable'>应用模块配置</Link></li>
+                        <li><Link to='/WorkPageTable'>工作界面配置</Link></li>
                     </ul>
                 </nav>
             </header>

@@ -6,6 +6,8 @@ import {Switch, BrowserRouter as Router} from 'react-router-dom'
 import Route from './PrivateRoute'
 import Demo from "../commons/components/Demo";
 import IndexView from "./IndexView";
+import AppModuleTable from "../components/mainData/AppModule/AppModuleTable";
+import WorkPageTable from "../components/mainData/WorkPage/WorkPageTable";
 
 export default class Routers extends Component {
     render() {
@@ -14,7 +16,8 @@ export default class Routers extends Component {
                 <Switch>
                     <Route path='/' exact component={IndexView}/>
                     <Route path='/Demo' component={Demo}/>
-
+                    <Route path='/AppModuleTable' component={AppModuleTable}/>
+                    <Route path='/WorkPageTable' component={WorkPageTable}/>
                 </Switch>
             </Router>
 
