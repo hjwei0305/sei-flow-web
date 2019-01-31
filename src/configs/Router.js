@@ -8,6 +8,7 @@ import Demo from "../commons/components/Demo";
 import IndexView from "./IndexView";
 import AppModuleTable from "../components/mainData/AppModule/AppModuleTable";
 import WorkPageTable from "../components/mainData/WorkPage/WorkPageTable";
+import BusinessModelTable from "../components/mainData/businessModel/BusinessModelTable";
 
 export default class Routers extends Component {
     render() {
@@ -18,6 +19,7 @@ export default class Routers extends Component {
                     <Route path='/Demo' component={Demo}/>
                     <Route path='/AppModuleTable' component={AppModuleTable}/>
                     <Route path='/WorkPageTable' component={WorkPageTable}/>
+                    <Route path='/BusinessModelTable' component={BusinessModelTable}/>
                 </Switch>
             </Router>
 

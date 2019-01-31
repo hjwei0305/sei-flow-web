@@ -12,7 +12,7 @@ import {appModuleConfig} from "../../../configs/CommonComponentsConfig";
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 
-class EditAppModuleModal extends Component {
+class WorkPageModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -121,5 +121,5 @@ class EditAppModuleModal extends Component {
     }
 }
 
-EditAppModuleModal = Form.create()(EditAppModuleModal);
-export default EditAppModuleModal;
+WorkPageModal = Form.create()(WorkPageModal);
+export default WorkPageModal;

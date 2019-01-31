@@ -26,7 +26,7 @@ class PrivateRoute extends Component {
             cache.clear('Right');
             cache.clear('_s');
             cache.clear('authHeader');
-            let url =isLocalhost?'':host
+            let url =isLocalhost?'':host;
             httpUtils.get(url+baseAuthor+"/checkToken?_s="+urlParams._s+'&AppCode='+defaultAppCode.toString()).then(res => {
                 if(res.success){
                     cache.set('Authorization',res.data[0]);

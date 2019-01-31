@@ -1,6 +1,6 @@
 /**
  * <p/>
- * 实现功能：工作界面配置
+ * 实现功能：业务实体
  * <p/>
  *
  * @author 李艳
@@ -10,15 +10,15 @@ import {connect} from 'react-redux'
 import {Button, Col, Row, message, Input, Modal} from 'antd';
 import SimpleTable from "../../../commons/components/SimpleTable";
 import {hide, show} from "../../../configs/SharedReducer";
-import {deleteCorp, getWorkPage, save} from "./WorkPageService";
+import {deleteCorp, getBusinessModel, save} from "./BusinessModelService";
 import {appModuleConfig} from "../../../configs/CommonComponentsConfig";
 import SearchTable from "../../../commons/components/SearchTable";
-import WorkPageModal from "./WorkPageModal";
+import BusinessModelModal from "./BusinessModelModal";
 
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
-class WorkPageTable extends Component {
+class BusinessModelTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,9 +26,10 @@ class WorkPageTable extends Component {
             modalVisible: false,
             confirmLoading: false,
             selectedRows: [],
-            isAdd: false,
+            operateFlag: "add",
             pageInfo:null,
-            searchValue:""
+            searchValue:"",
+            appModule:{}
         };
     }
 
@@ -41,7 +42,7 @@ class WorkPageTable extends Component {
     };
     getDataSource = (params) => {
         this.props.show();
-        getWorkPage(params).then(data => {
+        getBusinessModel(params).then(data => {
             this.setState({data, selectedRows: [], searchValue: ""})
         }).catch(e => {
         }).finally(() => {
@@ -52,23 +53,29 @@ class WorkPageTable extends Component {
     handleRowSelectChange = (selectedRows) => {
         this.setState({selectedRows})
     };
-    handleModalVisible = (modalVisible, isAdd) => {
-        this.setState({modalVisible, isAdd})
+    handleModalVisible = (modalVisible, operateFlag) => {
+        this.setState({modalVisible, operateFlag})
     };
     addClick = () => {
-        this.handleModalVisible(true, true)
+        this.handleModalVisible(true, "add")
     };
+    refClick = () => {
+        this.handleModalVisible(true, "refAdd")
+    };
+
     editClick = () => {
         if (!this.judgeSelected()) return;
-        this.handleModalVisible(true, false)
+        this.handleModalVisible(true, "edit")
     };
     handleSave = () => {
+        let {operateFlag}=this.state;
         this.ref.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                let params = {}
+                let params = {};
                 Object.assign(params, values);
-                if (this.state.isAdd)
-                    delete params.id;//新增时id==="",保存可能会出错，需删除id
+                if (operateFlag==='refAdd'||operateFlag==='add'){
+                    delete params.id;
+                }
                 this.setState({confirmLoading: true});
                 save(params).then(result => {
                     if (result.status === "SUCCESS") {
@@ -126,6 +133,7 @@ class WorkPageTable extends Component {
         });
     };
     selectChange = (record) => {
+        this.setState({appModule:record})
         this.getDataSource({Q_EQ_appModuleId: record.id});
     };
     pageChange = (pageInfo) => {
@@ -136,32 +144,31 @@ class WorkPageTable extends Component {
         this.getDataSource({Quick_value:this.state.searchValue,...pageInfo})
     };
     render() {
+        const {appModule}=this.state;
         const columns = [
             {
                 title: '名称',
                 dataIndex: 'name',
-                width: 300
+                width: 200
             },
             {
-                title: 'URL地址',
-                dataIndex: 'url',
+                title: '类全路径',
+                dataIndex: 'className',
                 width: 400
             },
             {
-                title: '必须提交',
-                dataIndex: 'mustCommit',
-                width: 100,
-                render: (text, record) => {
-                    if (record.mustCommit) {
-                        return "是"
-                    } else {
-                        return "否"
-                    }
-                }
+                title: '应用模块Code',
+                dataIndex: 'appModuleCode',
+                width: 120,
             },
             {
-                title: '描述',
-                dataIndex: 'depict',
+                title: '表单明细URL',
+                dataIndex: 'businessDetailServiceUrl',
+                width: 400,
+            },
+            {
+                title: '表单URL',
+                dataIndex: 'lookUrl',
                 width: 400,
             },
         ];
@@ -174,12 +181,20 @@ class WorkPageTable extends Component {
                     isNotFormItem={true} config={appModuleConfig}
                     style={{width: 220, marginRight: '8px'}}
                     selectChange={this.selectChange}/>,
-                <Button key="edit" style={{marginRight: '8px'}}
+                <Button key="add" style={{marginRight: '8px'}}
                         onClick={this.addClick}>新增</Button>,
-                <Button key="check" style={{marginRight: '8px'}}
+                <Button key="refAdd" style={{marginRight: '8px'}}
+                        onClick={this.refClick}>参考创建</Button>,
+                <Button key="edit" style={{marginRight: '8px'}}
                         onClick={this.editClick}>编辑</Button>,
-                <Button key="frozen" style={{marginRight: '8px'}}
+                <Button key="delete" style={{marginRight: '8px'}}
                         onClick={this.deleteClick}>删除</Button>,
+                <Button key="configWorkPage" style={{marginRight: '8px'}}
+                        onClick={this.refClick}>配置工作界面</Button>,
+                <Button key="configUrl" style={{marginRight: '8px'}}
+                        onClick={this.editClick}>配置服务地址</Button>,
+                <Button key="check" style={{marginRight: '8px'}}
+                        onClick={this.deleteClick}>查看条件属性</Button>,
             ]
         };
 
@@ -205,8 +220,8 @@ class WorkPageTable extends Component {
                     border: '1px solid #e8e8e8',
                     borderBottom: 'none'
                 }}>
-                    <Col span={14}>{title()}</Col>
-                    <Col span={10}>
+                    <Col span={16}>{title()}</Col>
+                    <Col span={8}>
                         <div style={{textAlign: 'right'}}>{search()}</div>
                     </Col>
                 </Row>
@@ -217,14 +232,15 @@ class WorkPageTable extends Component {
                     columns={columns}
                     pageChange={this.pageChange}
                 />
-                <WorkPageModal
-                    isAdd={this.state.isAdd}
+                <BusinessModelModal
+                    operateFlag={this.state.operateFlag}
                     modalVisible={this.state.modalVisible}
                     confirmLoading={this.state.confirmLoading}
                     handleOk={this.handleSave}
                     handleCancel={this.handleModalCancel}
                     onRef={this.onRef}
-                    defaultValue={this.state.selectedRows[0] ? this.state.selectedRows[0] : {}}/>
+                    defaultValue={this.state.selectedRows[0] ? this.state.selectedRows[0] :
+                        appModule?{appModule}:{}}/>
             </div>
         )
     }
@@ -248,7 +264,7 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(WorkPageTable)
+)(BusinessModelTable)
 
 
 
