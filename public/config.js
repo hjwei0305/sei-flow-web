@@ -1,3 +1,3 @@
 window._host="http://decmp.changhong.com";
-window._authorUri="/flow-web";
+window._authorUri="/basic-web";
 window._apiUri="/flow-service";
