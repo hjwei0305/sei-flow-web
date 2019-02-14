@@ -14,6 +14,10 @@ import {deleteCorp, getBusinessModel, save} from "./BusinessModelService";
 import {appModuleConfig} from "../../../configs/CommonComponentsConfig";
 import SearchTable from "../../../commons/components/SearchTable";
 import BusinessModelModal from "./BusinessModelModal";
+import ConfigWorkPageModal from "./workPage/ConfigWorkPageModal";
+import ConfigServerUrlModal from "./serverUrl/ConfigServerUrlModal";
+import ConfigExUserModal from "./exUser/ConfigExUserModal";
+import PropertiesForConditionPojoModal from "./propertiesForConditionPojo/PropertiesForConditionPojoModal";
 
 const Search = Input.Search;
 const confirm = Modal.confirm;
@@ -29,7 +33,11 @@ class BusinessModelTable extends Component {
             operateFlag: "add",
             pageInfo:null,
             searchValue:"",
-            appModule:{}
+            appModule:{},
+            workPageModalVisible:false,
+            configServerUrlModalVisible:false,
+            exUserModalVisible:false,
+            checkModalVisible:false,
         };
     }
 
@@ -53,19 +61,37 @@ class BusinessModelTable extends Component {
     handleRowSelectChange = (selectedRows) => {
         this.setState({selectedRows})
     };
-    handleModalVisible = (modalVisible, operateFlag) => {
-        this.setState({modalVisible, operateFlag})
+    handleModalVisible = (modalVisible=false,workPageModalVisible=false,configServerUrlModalVisible=false,exUserModalVisible=false,checkModalVisible=false) => {
+        this.setState({modalVisible,workPageModalVisible, configServerUrlModalVisible,exUserModalVisible,checkModalVisible})
     };
     addClick = () => {
-        this.handleModalVisible(true, "add")
+        this.handleModalVisible(true);
+        this.setState({operateFlag:'add'})
     };
     refClick = () => {
-        this.handleModalVisible(true, "refAdd")
+        this.handleModalVisible(true);
+        this.setState({operateFlag:'refAdd'})
     };
-
     editClick = () => {
         if (!this.judgeSelected()) return;
-        this.handleModalVisible(true, "edit")
+        this.handleModalVisible(true);
+        this.setState({operateFlag:'edit'})
+    };
+    configWorkPageClick = () => {
+        if (!this.judgeSelected()) return;
+        this.handleModalVisible(false,true)
+    };
+    configServerUrlClick= () => {
+        if (!this.judgeSelected()) return;
+        this.handleModalVisible(false,false,true)
+    };
+    configExUserClick = () => {
+        if (!this.judgeSelected()) return;
+        this.handleModalVisible(false,false,false,true)
+    };
+    checkClick = () => {
+        if (!this.judgeSelected()) return;
+        this.handleModalVisible(false,false,false,false,true)
     };
     handleSave = () => {
         let {operateFlag}=this.state;
@@ -101,7 +127,7 @@ class BusinessModelTable extends Component {
     };
 
     handleModalCancel = () => {
-        this.handleModalVisible(false)
+        this.handleModalVisible()
     };
 
     handleSearch = (value) => {
@@ -190,11 +216,13 @@ class BusinessModelTable extends Component {
                 <Button key="delete" style={{marginRight: '8px'}}
                         onClick={this.deleteClick}>删除</Button>,
                 <Button key="configWorkPage" style={{marginRight: '8px'}}
-                        onClick={this.refClick}>配置工作界面</Button>,
+                        onClick={this.configWorkPageClick}>配置工作界面</Button>,
                 <Button key="configUrl" style={{marginRight: '8px'}}
-                        onClick={this.editClick}>配置服务地址</Button>,
+                        onClick={this.configServerUrlClick}>配置服务地址</Button>,
+                <Button key="configExUser" style={{marginRight: '8px'}}
+                        onClick={this.configExUserClick}>自定义执行人配置</Button>,
                 <Button key="check" style={{marginRight: '8px'}}
-                        onClick={this.deleteClick}>查看条件属性</Button>,
+                        onClick={this.checkClick}>查看条件属性</Button>,
             ]
         };
 
@@ -220,8 +248,8 @@ class BusinessModelTable extends Component {
                     border: '1px solid #e8e8e8',
                     borderBottom: 'none'
                 }}>
-                    <Col span={16}>{title()}</Col>
-                    <Col span={8}>
+                    <Col span={19}>{title()}</Col>
+                    <Col span={5}>
                         <div style={{textAlign: 'right'}}>{search()}</div>
                     </Col>
                 </Row>
@@ -232,7 +260,7 @@ class BusinessModelTable extends Component {
                     columns={columns}
                     pageChange={this.pageChange}
                 />
-                <BusinessModelModal
+                {this.state.modalVisible&&<BusinessModelModal
                     operateFlag={this.state.operateFlag}
                     modalVisible={this.state.modalVisible}
                     confirmLoading={this.state.confirmLoading}
@@ -240,7 +268,28 @@ class BusinessModelTable extends Component {
                     handleCancel={this.handleModalCancel}
                     onRef={this.onRef}
                     defaultValue={this.state.selectedRows[0] ? this.state.selectedRows[0] :
-                        appModule?{appModule}:{}}/>
+                        appModule?{appModule}:{}}/>}
+                {this.state.workPageModalVisible&&<ConfigWorkPageModal
+                    appModuleId={this.state.appModule?this.state.appModule.id:""}
+                    businessModelId={this.state.selectedRows[0]?this.state.selectedRows[0].id:""}
+                    modalVisible={this.state.workPageModalVisible}
+                    handleCancel={this.handleModalCancel}/>}
+                {this.state.configServerUrlModalVisible&&<ConfigServerUrlModal
+                    appModuleId={this.state.appModule?this.state.appModule.id:""}
+                    businessModelId={this.state.selectedRows[0]?this.state.selectedRows[0].id:""}
+                    modalVisible={this.state.configServerUrlModalVisible}
+                    handleCancel={this.handleModalCancel}/>}
+                {this.state.exUserModalVisible&&<ConfigExUserModal
+                    appModuleId={this.state.appModule?this.state.appModule.id:""}
+                    businessModelId={this.state.selectedRows[0]?this.state.selectedRows[0].id:""}
+                    modalVisible={this.state.exUserModalVisible}
+                    handleCancel={this.handleModalCancel}/>}
+                {this.state.checkModalVisible&& <PropertiesForConditionPojoModal
+                    appModuleId={this.state.appModule?this.state.appModule.id:""}
+                    businessModelId={this.state.selectedRows[0]?this.state.selectedRows[0].id:""}
+                    modalVisible={this.state.checkModalVisible}
+                    handleCancel={this.handleModalCancel}/>
+                }
             </div>
         )
     }
