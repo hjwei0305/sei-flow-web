@@ -10,6 +10,7 @@ import AppModuleTable from "../components/mainData/AppModule/AppModuleTable";
 import WorkPageTable from "../components/mainData/WorkPage/WorkPageTable";
 import BusinessModelTable from "../components/mainData/businessModel/BusinessModelTable";
 import FlowTypeTable from "../components/mainData/FlowType/FlowTypeTable";
+import FlowDefinationView from "../components/mainData/FlowDefination/FlowDefinationView";
 
 export default class Routers extends Component {
     render() {
@@ -24,6 +25,7 @@ export default class Routers extends Component {
                     <Route path='/BusinessModelTable' component={BusinessModelTable}/>
                     {/*流程配置*/}
                     <Route path='/FlowTypeTable' component={FlowTypeTable}/>
+                    <Route path='/FlowDefinationView' component={FlowDefinationView}/>
                 </Switch>
             </Router>
 
