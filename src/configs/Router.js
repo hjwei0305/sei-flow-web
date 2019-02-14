@@ -9,6 +9,7 @@ import IndexView from "./IndexView";
 import AppModuleTable from "../components/mainData/AppModule/AppModuleTable";
 import WorkPageTable from "../components/mainData/WorkPage/WorkPageTable";
 import BusinessModelTable from "../components/mainData/businessModel/BusinessModelTable";
+import FlowTypeTable from "../components/mainData/FlowType/FlowTypeTable";
 
 export default class Routers extends Component {
     render() {
@@ -17,9 +18,12 @@ export default class Routers extends Component {
                 <Switch>
                     <Route path='/' exact component={IndexView}/>
                     <Route path='/Demo' component={Demo}/>
+                    {/*后台配置*/}
                     <Route path='/AppModuleTable' component={AppModuleTable}/>
                     <Route path='/WorkPageTable' component={WorkPageTable}/>
                     <Route path='/BusinessModelTable' component={BusinessModelTable}/>
+                    {/*流程配置*/}
+                    <Route path='/FlowTypeTable' component={FlowTypeTable}/>
                 </Switch>
             </Router>
 

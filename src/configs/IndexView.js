@@ -14,6 +14,8 @@ export default class IndexView extends Component {
                         <li><Link to='/AppModuleTable'>应用模块配置</Link></li>
                         <li><Link to='/WorkPageTable'>工作界面配置</Link></li>
                         <li><Link to='/BusinessModelTable'>业务实体管理</Link></li>
+                        <h4>流程配置：</h4>
+                        <li><Link to='/FlowTypeTable'>流程类型管理</Link></li>
                     </ul>
                 </nav>
             </header>
