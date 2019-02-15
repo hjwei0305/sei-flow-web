@@ -289,31 +289,6 @@ class FlowDefinationView extends Component {
         }
     };
 
-    groupSearchBtnCfg = () => {
-        return {
-            quickSearchCfg: {
-                style: {width: 250},
-                placeholder: "输入代码或名称查询",
-                onSearch: (v) => {
-                    //this.handleQuickSearchGroup(v)
-                }
-            }
-        }
-    }
-    groupBtnsCfg = () => {
-        return [
-            {
-                title: "新增",
-                checkRight: true,
-                propsCfg: {
-                    type: "primary",
-                    onClick: () => {
-                        //this.handleAddGroup()
-                    }
-                }
-            }
-        ]
-    }
     render() {
         const title = () => {
             return [
@@ -389,10 +364,6 @@ class FlowDefinationView extends Component {
                             <Col span={14}>{title()}</Col>
                             <Col span={10}  style={{textAlign: 'right'}}>{search()}</Col>
                         </Row>
-                        <ToolBar
-                            btnsCfg={this.groupBtnsCfg()}
-                            searchBtnCfg={this.groupSearchBtnCfg()}
-                        />
                         <SimpleTable
                             data={this.state.tableSearchValue ? this.state.tableData.filter(item => item.tag === true) : this.state.tableData}
                             columns={columns}
