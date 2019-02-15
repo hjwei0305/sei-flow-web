@@ -1,6 +1,7 @@
 export const host = window._host;
 export const baseAuthor = window._authorUri;
 export const baseUrl = window._apiUri;
+export const uploadUrl = "";
 
 export const defaultAppCode = ["BASIC-WEB","FLOW-WEB"];
 

@@ -11,6 +11,7 @@ import SimpleTable from "../../../commons/components/SimpleTable";
 import {hide, show} from "../../../configs/SharedReducer";
 import connect from "react-redux/es/connect/connect";
 import {listAllOrgs, listFlowDefination} from "./FlowDefinationService";
+import ToolBar from "../../../commons/components/toolbar/ToolBar";
 
 const DirectoryTree = Tree.DirectoryTree;
 const TreeNode = Tree.TreeNode;
@@ -287,6 +288,32 @@ class FlowDefinationView extends Component {
             }
         }
     };
+
+    groupSearchBtnCfg = () => {
+        return {
+            quickSearchCfg: {
+                style: {width: 250},
+                placeholder: "输入代码或名称查询",
+                onSearch: (v) => {
+                    //this.handleQuickSearchGroup(v)
+                }
+            }
+        }
+    }
+    groupBtnsCfg = () => {
+        return [
+            {
+                title: "新增",
+                checkRight: true,
+                propsCfg: {
+                    type: "primary",
+                    onClick: () => {
+                        //this.handleAddGroup()
+                    }
+                }
+            }
+        ]
+    }
     render() {
         const title = () => {
             return [
@@ -305,14 +332,14 @@ class FlowDefinationView extends Component {
 
         //表头搜索框
         const search = () => {
-            return [
-                <Search
-                    key="search"
-                    placeholder="输入代码或名称查询"
-                    onSearch={value => this.handleTableSearch(value)}
-                    style={{width: '220px'}}
-                    enterButton
-                />
+            return[
+            <Search
+                key="search"
+                placeholder="输入代码或名称查询"
+                onSearch={value => this.handleTableSearch(value)}
+                style={{width: '220px'}}
+                enterButton
+            />
             ]
         };
         return (
@@ -323,7 +350,7 @@ class FlowDefinationView extends Component {
                         <div className={"header-span"}>组织机构</div>
                     </div>
 
-                    <Row style={{background: '#f3f8fc', padding: 10, marginBottom: 5}}>
+                    <Row  type="flex" justify="space-between" style={{background: '#f3f8fc', padding: 10, marginBottom: 5}}>
                         <div ref={(div) => this.simpleDiv = div} style={{textAlign: 'right'}}>
                             <Search
                                 key="search"
@@ -360,8 +387,12 @@ class FlowDefinationView extends Component {
                         </div>
                         <Row style={{background: '#f3f8fc', padding: 10, marginBottom: 5}}>
                             <Col span={14}>{title()}</Col>
-                            <Col span={10} style={{textAlign: 'right'}}>{search()}</Col>
+                            <Col span={10}  style={{textAlign: 'right'}}>{search()}</Col>
                         </Row>
+                        <ToolBar
+                            btnsCfg={this.groupBtnsCfg()}
+                            searchBtnCfg={this.groupSearchBtnCfg()}
+                        />
                         <SimpleTable
                             data={this.state.tableSearchValue ? this.state.tableData.filter(item => item.tag === true) : this.state.tableData}
                             columns={columns}
