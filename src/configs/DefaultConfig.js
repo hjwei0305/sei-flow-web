@@ -3,7 +3,7 @@ export const baseAuthor = window._authorUri;
 export const baseUrl = window._apiUri;
 export const uploadUrl = "";
 
-export const defaultAppCode = ["REACT-BASIC-WEB","REACT-FLOW-WEB"];
+export const defaultAppCode = ["BASIC-WEB","REACT-FLOW-WEB"];
 
 export const defaultPageSize = 15;
 
