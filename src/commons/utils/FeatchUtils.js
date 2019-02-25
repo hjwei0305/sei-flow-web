@@ -30,11 +30,21 @@ instance.defaults.timeout = 100001
 
 //添加请求拦截器
 instance.interceptors.request.use(function(config){
-    if(config.url.indexOf('ByPage')!==-1){
-        if (config.params!==undefined){
-            config.params={'pageInfo':{'page':config.params.page?config.params.page:1,'rows':defaultPageSize},...config.params}
-        }else if (config.data!==undefined){
-            config.data={'pageInfo':{'page':config.data.page?config.data.page:1,'rows':defaultPageSize},...config.data}
+    if(config.url.indexOf('ByPage')!==-1) {
+        if (config.params !== undefined) {
+            config.params = {
+                pageInfo: config.params.pageInfo ? config.params.pageInfo : {
+                    'page': 1,
+                    'rows': defaultPageSize
+                }, ...config.params
+            }
+        } else if (config.data !== undefined) {
+            config.data = {
+                pageInfo: config.data.pageInfo ? config.data.pageInfo : {
+                    'page': 1,
+                    'rows': defaultPageSize
+                }, ...config.data
+            }
         }
     }
     if(!isLocalhost && config.url.indexOf('http')===-1){

@@ -181,16 +181,10 @@ class AppModuleTable extends Component {
 
         return (
             <div style={{width: this.props.width ? this.props.width : '100%'}}>
-                <Row style={{
-                    background: '#F3F8FC',
-                    padding: 5,
-                    paddingBottom: 5,
-                    border: '1px solid #e8e8e8',
-                    borderBottom: 'none'
-                }}>
-                    <Col span={14}>{title()}</Col>
-                    <Col span={10}><div  style={{textAlign: 'right'}}>{search()}</div></Col>
-                </Row>
+                <div  className={'tbar-box'}>
+                    <div  className={'tbar-btn-box'}>{title()}</div>
+                    <div  className={'tbar-search-box'}>{search()}</div>
+                </div>
                 <SimpleTable
                     rowsSelected={this.state.selectedRows}
                     onSelectRow={this.handleRowSelectChange}

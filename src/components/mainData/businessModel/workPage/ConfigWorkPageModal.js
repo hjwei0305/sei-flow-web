@@ -57,7 +57,7 @@ class ConfigWorkPageModal extends Component {
     leftService = async (params) => {
         let result = [];
         const {appModuleId,businessModelId} = this.props;
-        await listAllNotSelectEdByAppModuleId(`/${appModuleId}/${businessModelId}`).then((res) => {
+         await listAllNotSelectEdByAppModuleId(`/${appModuleId}/${businessModelId}`).then((res) => {
             result = res;
         })
         return result;

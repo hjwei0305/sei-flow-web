@@ -126,7 +126,12 @@ class WorkPageTable extends Component {
         });
     };
     selectChange = (record) => {
-        this.getDataSource({Q_EQ_appModuleId: record.id});
+        this.getDataSource({filters:[{
+                fieldName:"id",//筛选字段
+                operator:"EQ",//操作类型
+                value:record.id,//筛选值
+                fieldType:"String"//筛选类型
+            }]});
     };
     pageChange = (pageInfo) => {
         console.log("pageChange")

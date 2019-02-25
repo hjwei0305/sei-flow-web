@@ -325,7 +325,7 @@ class FlowDefinationView extends Component {
                         <div className={"header-span"}>组织机构</div>
                     </div>
 
-                    <Row  type="flex" justify="space-between" style={{background: '#f3f8fc', padding: 10, marginBottom: 5}}>
+                    <Row style={{background: '#f3f8fc', padding: 10, marginBottom: 5}}>
                         <div ref={(div) => this.simpleDiv = div} style={{textAlign: 'right'}}>
                             <Search
                                 key="search"

@@ -3,6 +3,7 @@ import httpUtils from "../../../commons/utils/FeatchUtils";
 import {baseUrl} from "../../../configs/DefaultConfig";
 
 export async function getWorkPage(params = {}) {
+    Object.assign(params,{sortOrders:[{property:'code',direction:'ASC'}],quickSearchProperties:["code","name"]});
     return httpUtils.postJson(baseUrl + "/workPageUrl/findByPage", params);
 }
 
