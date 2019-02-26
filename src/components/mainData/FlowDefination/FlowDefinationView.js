@@ -10,8 +10,11 @@ import {searchListByKeyWithTag} from "../../../commons/utils/CommonUtils";
 import SimpleTable from "../../../commons/components/SimpleTable";
 import {hide, show} from "../../../configs/SharedReducer";
 import connect from "react-redux/es/connect/connect";
-import {listAllOrgs, listFlowDefination} from "./FlowDefinationService";
-import ToolBar from "../../../commons/components/toolbar/ToolBar";
+import {
+    activateOrFreezeFlowDef, deleteFlowDefination, getFlowDefVersion, listAllOrgs,
+    listFlowDefination
+} from "./FlowDefinationService";
+import DefinationVersionModal from "./DefinationVersionModal";
 
 const DirectoryTree = Tree.DirectoryTree;
 const TreeNode = Tree.TreeNode;
@@ -19,19 +22,40 @@ const Search = Input.Search;
 const confirm = Modal.confirm;
 const columns = [
     {
-        title: '代码',
-        dataIndex: 'code',
-        width: 120
-    },
-    {
         title: '名称',
         dataIndex: 'name',
-        width: 160
+        width: 200
     },
     {
-        title: '岗位类别',
-        dataIndex: 'positionCategory.name',
-        width: 180
+        title: '定义KEY',
+        dataIndex: 'defKey',
+        width: 200
+    },
+    {
+        title: '流程类型',
+        dataIndex: 'flowType.name',
+        width: 200
+    },
+    {
+        title: '流程定义状态',
+        dataIndex: 'flowDefinationStatus',
+        width: 120,
+        render(text,record){
+            if('INIT' === text){
+                return '未发布';
+            }else if('Activate' === text){
+                return '激活';
+            }
+            else if('Freeze' === text){
+                return '冻结';
+            }
+            return "";
+        }
+    },
+    {
+        title: '优先级',
+        dataIndex: 'priority',
+        width: 120
     }
 ];
 
@@ -115,11 +139,11 @@ class FlowDefinationView extends Component {
     };
 
     //网络请求table控件数据
-    listAllCanAssignEmployeesIncludeSubNode = (param) => {
+    listFlowDefination = (param) => {
         this.setState({loading: true});
         listFlowDefination(param).then((result) => {
             this.setState({
-                tableData: result.rows, tableSelectRow: [], tableSearchValue: ""
+                tableData: result.rows, tableSelectRow: []
             });
         }).catch(err => {
         }).finally(() => {
@@ -133,9 +157,8 @@ class FlowDefinationView extends Component {
         let data = {};
         data = this.getNodeByKey(this.state.treeData, selectedKeys[0]);
         this.setState({selectedNode: data});
-
-        let params = {parentId: info.node.props.eventKey, includeSubNode: this.state.includeSubNode};
-        this.listAllCanAssignEmployeesIncludeSubNode(params);
+        let params = {orgId: info.node.props.eventKey};
+        this.listFlowDefination(params);
         this.setState({pathName: data.name ? data.name : '岗位'});
 
 
@@ -259,11 +282,95 @@ class FlowDefinationView extends Component {
     };
     onResetClick = () => {
         if (!this.judgeSelected()) return;
+        let thiz = this;
+        confirm({
+            title:"您确定要重置流程图位置吗？",
+            onOk(){
+                let id = thiz.state.tableSelectRow[0].id;
+                thiz.setState({loading:true});
+                getFlowDefVersion(id).then(result => {
+                    if (result.success) {
+                        message.success(result.message?result.message:"请求成功");
+                        //刷新本地数据
+                        let params = {orgId: thiz.state.selectedNode.id,quickSearchValue:thiz.state.tableSearchValue,pageInfo:thiz.state.pageInfo};
+                        thiz.listFlowDefination(params);
+                    } else {
+                        message.error(result.message?result.message:"请求失败");
+                    }
+                }).catch(e => {
+                }).finally(() => {
+                    thiz.setState({loading:false});
+                })
+            }
+        });
+    };
+    onActivateOrFreezeFlowDefClick=()=>{
+        if (!this.judgeSelected()) return;
+        let {tableSelectRow}=this.state;
+        let id =tableSelectRow[0].id;
+        let status='';
+        let title='';
+        if (tableSelectRow[0].flowDefinationStatus!=="INIT"){
+            if (tableSelectRow[0].flowDefinationStatus==='Activate'){
+                status='Freeze';
+                title='您确定要冻结吗？'
+            }else if (tableSelectRow[0].flowDefinationStatus==='Freeze'){
+                status='Activate';
+                title='您确定要激活吗？'
+            }
+        }
+        let thiz = this;
+        confirm({
+            title:title,
+            onOk(){
+                thiz.setState({loading:true});
+                activateOrFreezeFlowDef(id,status).then(result => {
+                    if (result.status==='SUCCESS') {
+                        message.success(result.message?result.message:"请求成功");
+                        //刷新本地数据
+                        let params = {orgId: thiz.state.selectedNode.id,quickSearchValue:thiz.state.tableSearchValue,pageInfo:thiz.state.pageInfo};
+                        thiz.listFlowDefination(params);
+                    } else {
+                        message.error(result.message?result.message:"请求失败");
+                    }
+                }).catch(e => {
+                }).finally(() => {
+                    thiz.setState({loading:false});
+                })
+            }
+        });
+
+
 
     };
+    onVersionClick = () => {
+        if (!this.judgeSelected()) return;
+        this.handleModalVisible(false,true)
+    };
+
     onDeleteClick = () => {
         if (!this.judgeSelected()) return;
-
+        let thiz = this;
+        confirm({
+            title:"数据将丢失，确定要删除吗？",
+            onOk(){
+                let id = thiz.state.tableSelectRow[0].id;
+                thiz.setState({loading:true});
+                deleteFlowDefination(id).then(result => {
+                    if (result.status==='SUCCESS') {
+                        message.success("请求成功");
+                        //刷新本地数据
+                        let params = {orgId: thiz.state.selectedNode.id,quickSearchValue:thiz.state.tableSearchValue,pageInfo:thiz.state.pageInfo};
+                        thiz.listFlowDefination(params);
+                    } else {
+                        message.error(result.message?result.message:"请求失败");
+                    }
+                }).catch(e => {
+                }).finally(() => {
+                    thiz.setState({loading:false});
+                })
+            }
+        });
     };
     onTableSelectRow = (tableSelectRow) => {
         this.setState({tableSelectRow});
@@ -275,8 +382,12 @@ class FlowDefinationView extends Component {
         }
         return true;
     };
-
-
+    handleModalVisible = (modalVisible=false,defVersionVisible=false) => {
+        this.setState({modalVisible,defVersionVisible})
+    };
+    handleModalCancel = () => {
+        this.handleModalVisible()
+    };
     getNodeByKey = (treeData, key) => {
         for (let item of treeData) {
             if (item.id === key) {
@@ -292,19 +403,32 @@ class FlowDefinationView extends Component {
     };
     
     render() {
+        const {tableSelectRow}=this.state;
         const title = () => {
-            return [
-                <Button key="addRule" style={{marginRight: '5px'}} type={"primary"}
-                        onClick={this.onAddClick}>新增</Button>,
-                <Button key="edit" style={{marginRight: '5px'}}
-                        onClick={this.onRefAddClick}>参考创建</Button>,
-                <Button key="edit" style={{marginRight: '5px'}}
-                        onClick={this.onEditClick}>编辑</Button>,
-                <Button key="config" style={{marginRight: '5px'}}
-                        onClick={this.onResetClick}>位置重置</Button>,
-                <Button key="config" style={{marginRight: '5px'}}
-                        onClick={this.onDeleteClick}>删除</Button>,
-            ]
+            let res=[];
+            res.push(<Button key="addRule" style={{marginRight: '5px'}} type={"primary"}
+                             onClick={this.onAddClick}>新增</Button>);
+            res.push(<Button key="refEdit" style={{marginRight: '5px'}}
+                             onClick={this.onRefAddClick}>参考创建</Button>);
+            res.push(<Button key="edit" style={{marginRight: '5px'}}
+                             onClick={this.onEditClick}>编辑</Button>);
+            res.push(<Button key="reset" style={{marginRight: '5px'}}
+                             onClick={this.onResetClick}>位置重置</Button>);
+            res.push(<Button key="version" style={{marginRight: '5px'}}
+                             onClick={this.onVersionClick}>流程定义版本管理</Button>);
+            // let statusText='';
+            // if (tableSelectRow[0]&&tableSelectRow[0].flowDefinationStatus!=="INIT"){
+            //     if (tableSelectRow[0].flowDefinationStatus==='Activate'){
+            //         statusText='冻结'
+            //     }else if (tableSelectRow[0].flowDefinationStatus==='Freeze'){
+            //         statusText='激活'
+            //     }
+            //     res.push(<Button key="status" style={{marginRight: '5px'}}
+            //                      onClick={this.onActivateOrFreezeFlowDefClick}>{statusText}</Button>);
+            // }
+            // res.push(<Button key="config" style={{marginRight: '5px'}}
+            //                  onClick={this.onDeleteClick}>删除</Button>);
+            return res
         };
 
         //表头搜索框
@@ -322,23 +446,24 @@ class FlowDefinationView extends Component {
         return (
             <div>
                 {/*左边的树状控件*/}
-                <Col span={10}>
+                <Col span={8}>
                     <div style={{margin: '10px 14px 10px'}}>
                         <div className={"header-span"}>组织机构</div>
                     </div>
-
-                    <Row style={{background: '#f3f8fc', padding: 10, marginBottom: 5}}>
-                        <div ref={(div) => this.simpleDiv = div} style={{textAlign: 'right'}}>
-                            <Search
-                                key="search"
-                                placeholder="输入分类名称查询"
-                                onSearch={e => this.handleSearch(e)}
-                                style={{width: '220px'}}
-                                enterButton
-                            />
+                    <div  className={'tbar-box'}>
+                        <div  className={'tbar-btn-box'}>&nbsp;</div>
+                        <div  className={'tbar-search-box'} ref={(div)=>this.simpleDiv=div}>
+                            <div>
+                                <Search
+                                    key="search"
+                                    placeholder="输入分类名称查询"
+                                    onSearch={e => this.handleSearch(e)}
+                                    style={{width: '220px'}}
+                                    enterButton
+                                />
+                            </div>
                         </div>
-                    </Row>
-
+                    </div>
                     {this.state.treeData.length > 0 ? (
                         <Card style={{height: this.state.scrollY + 50, overflow: "auto"}}>
                             <DirectoryTree
@@ -357,15 +482,15 @@ class FlowDefinationView extends Component {
 
                 </Col>
                 {/*右边的表格控件*/}
-                <Col span={14}>
+                <Col span={16}>
                     <div style={{marginLeft: "5px"}}>
                         <div style={{margin: '10px 14px 10px'}}>
                             <div className={"header-span"}>{this.state.pathName}</div>
                         </div>
-                        <Row style={{background: '#f3f8fc', padding: 10, marginBottom: 5}}>
-                            <Col span={14}>{title()}</Col>
-                            <Col span={10}  style={{textAlign: 'right'}}>{search()}</Col>
-                        </Row>
+                        <div  className={'tbar-box'}>
+                            <div  className={'tbar-btn-box'}>{title()}</div>
+                            <div  className={'tbar-search-box'}>{search()}</div>
+                        </div>
                         <SimpleTable
                             data={this.state.tableSearchValue ? this.state.tableData.filter(item => item.tag === true) : this.state.tableData}
                             columns={columns}
@@ -375,6 +500,10 @@ class FlowDefinationView extends Component {
                         />
                     </div>
                 </Col>
+                {this.state.defVersionVisible&&<DefinationVersionModal
+                    handleCancel={this.handleModalCancel }
+                    modalVisible={this.state.defVersionVisible}
+                    flowDefinationId={this.state.tableSelectRow[0]?this.state.tableSelectRow[0].id:""}/>}
             </div>
 
 

@@ -19,14 +19,14 @@ class ToolBar extends Component {
         let items = [];
 
         if (quickSearchCfg) {
-            quickSearchCfg.className = quickSearchCfg.className ? 'tbar-search' + " " + quickSearchCfg.className : 'tbar-search';
+            quickSearchCfg.className = quickSearchCfg.className ? `tbar-search ${quickSearchCfg.className}` : 'tbar-search';
             if(typeof quickSearchCfg.enterButton === "undefined"){
                 quickSearchCfg.enterButton = true;
             }
             items.push(<Input.Search key={'0'}  {...quickSearchCfg}/>);
         }
         if (advanceSearchCfg) {
-            advanceSearchCfg.style = {marginLeft: '6px', ...advanceSearchCfg.style};
+            advanceSearchCfg.style = {marginLeft: 6, ...advanceSearchCfg.style};
             items.push(<Button key={'1'} style={{...advanceSearchCfg.style}} onClick={() => {
                 this.setVisible(true)
             }}>{advanceSearchCfg.title}</Button>);
@@ -36,28 +36,34 @@ class ToolBar extends Component {
     setVisible = (visible) => {
         this.setState({visible: visible})
     }
-
+    getBtnItems = () => {
+        const {btnsCfg} = this.props;
+        let components = null;
+        if(btnsCfg){
+            components =  btnsCfg.map(
+                (item, i) => {
+                    if (item.checkRight) {
+                        item.propsCfg = item.propsCfg || {};
+                        item.propsCfg.className = item.propsCfg.className ? `tbar-btn ${item.propsCfg.className}` : "tbar-btn";
+                        if (item.type === "uploadFile") {
+                            return (<UploadFile key={i} title={item.title} {...item.propsCfg}/>)
+                        } else {
+                            return (<Button key={i} {...item.propsCfg}>{item.title}</Button>)
+                        }
+                    } else {
+                        return null;
+                    }
+                })
+        }
+        return components;
+    }
     render() {
         const {btnsCfg, searchBtnCfg} = this.props;
         return (
             <div className={'tbar-box'}>
                 <div className={'tbar-btn-box'}>
                     {
-                        btnsCfg ? btnsCfg.map(
-                            (item, i) => {
-                                if (item.checkRight) {
-                                    item.propsCfg = item.propsCfg || {};
-                                    item.propsCfg.className = item.propsCfg.className ? "tbar-btn" + " " + item.propsCfg.className : "tbar-btn";
-                                    if (item.type === "uploadFile") {
-                                        return (<UploadFile key={i} title={item.title} {...item.propsCfg}/>)
-                                    } else {
-                                        return (<Button key={i} {...item.propsCfg}>{item.title}</Button>)
-                                    }
-                                } else {
-                                    return null;
-                                }
-                            }
-                        ) : null
+                        this.getBtnItems()
                     }
                 </div>
                 <div className={'tbar-search-box'}>
@@ -70,12 +76,7 @@ class ToolBar extends Component {
                         <AdvanceSearchModal
                             visible={this.state.visible}
                             setVisible={this.setVisible}
-                            handleSearch={searchBtnCfg.advanceSearchCfg.handleSearch}
-                            //  afterClose={searchBtnCfg.advanceSearchCfg.afterClose}
-                            rowColNum={searchBtnCfg.advanceSearchCfg.rowColNum}
-                            modalTitle={searchBtnCfg.advanceSearchCfg.modalTitle}
-                            modalWidth={searchBtnCfg.advanceSearchCfg.modalWidth}
-                            formConfig={searchBtnCfg.advanceSearchCfg.formConfig}
+                            {...searchBtnCfg.advanceSearchCfg}
                         />
                     ) : null
                 }
