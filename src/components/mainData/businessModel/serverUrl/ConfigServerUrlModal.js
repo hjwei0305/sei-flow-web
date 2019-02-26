@@ -25,22 +25,29 @@ class ConfigServerUrlModal extends Component {
             modalVisible: false,
             confirmLoading: false,
             selectedRows: [],
-            isAdd: false
+            isAdd: false,
+            searchValue:""
         };
     }
 
     componentWillMount() {
-        let {businessModelId}=this.props;
-        this.getDataSource({Q_EQ_businessModelId:businessModelId})
+        this.getDataSource();
     }
 
     onRef = (ref) => {
         this.ref = ref
     };
-    getDataSource = (params) => {
+    getDataSource = (params={}) => {
+        let {businessModelId}=this.props;
+        Object.assign(params,{filters:[{
+                fieldName:"businessModel.id",//筛选字段
+                operator:"EQ",//操作类型
+                value:`${businessModelId}`,//筛选值
+                fieldType:"String"//筛选类型
+            }]});
         this.props.show();
         listServiceUrl(params).then(data => {
-            this.setState({data, selectedRows: [],searchValue:""})
+            this.setState({data, selectedRows: []})
         }).catch(e => {
         }).finally(() => {
             this.props.hide();
@@ -74,7 +81,7 @@ class ConfigServerUrlModal extends Component {
                     if (result.status==="SUCCESS") {
                         message.success(result.message?result.message:"请求成功");
                         //刷新本地数据
-                        this.getDataSource();
+                        this.getDataSource({quickSearchValue:this.state.searchValue});
                     } else {
                         message.error(result.message?result.message:"请求失败");
                     }
@@ -98,12 +105,15 @@ class ConfigServerUrlModal extends Component {
     };
 
     handleSearch = (value) => {
-        searchListByKeyWithTag(this.state.data, {keyword: value}).then(data => {
-            this.setState({data, searchValue: value})
-        })
+        this.setState({searchValue:value});
+        this.getDataSource({quickSearchValue:value});
     };
-
-
+    pageChange = (pageInfo) => {
+        this.setState({
+            pageInfo:pageInfo,
+        });
+        this.getDataSource({quickSearchValue:this.state.searchValue,pageInfo})
+    };
     render() {
         const columns = [
             {
@@ -174,8 +184,9 @@ class ConfigServerUrlModal extends Component {
                     <SimpleTable
                         rowsSelected={this.state.selectedRows}
                         onSelectRow={this.handleRowSelectChange}
-                        data={this.state.searchValue ? this.state.data.filter(item => item.tag === true) : this.state.data}
+                        data={this.state.data}
                         columns={columns}
+                        pageChange={this.pageChange}
                     />
                     <EditServerUrlModal
                         isAdd={this.state.isAdd}

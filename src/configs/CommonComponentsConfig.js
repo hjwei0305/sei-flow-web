@@ -1,5 +1,5 @@
 import {searchListByKey} from "../commons/utils/CommonUtils";
-import {getAllList} from "../components/mainData/AppModule/AppModuleService";
+import {getAllList,findAllAppModuleByAuth} from "../components/mainData/AppModule/AppModuleService";
 import {findAllByAuth} from "../components/mainData/FlowType/FlowTypeService";
 
 
@@ -23,6 +23,23 @@ export const appModuleConfig = {
     key: 'id',
     text: 'name'
 };
+//应用模块(auth)
+export const appModuleAuthConfig = {
+    columns: [{
+        title: '代码',
+        dataIndex: 'code',
+        width: 140
+    },
+        {
+            title: '名称',
+            dataIndex: 'name',
+        }],
+    dataService: findAllAppModuleByAuth,
+    searchService: searchListByKey,
+    key: 'id',
+    text: 'name'
+};
+
 //业务实体
 export const businessModelConfig = {
     columns: [

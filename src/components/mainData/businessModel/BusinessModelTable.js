@@ -11,7 +11,7 @@ import {Button, Col, Row, message, Input, Modal} from 'antd';
 import SimpleTable from "../../../commons/components/SimpleTable";
 import {hide, show} from "../../../configs/SharedReducer";
 import {deleteCorp, getBusinessModel, save} from "./BusinessModelService";
-import {appModuleConfig} from "../../../configs/CommonComponentsConfig";
+import {appModuleAuthConfig, appModuleConfig} from "../../../configs/CommonComponentsConfig";
 import SearchTable from "../../../commons/components/SearchTable";
 import BusinessModelModal from "./BusinessModelModal";
 import ConfigWorkPageModal from "./workPage/ConfigWorkPageModal";
@@ -42,7 +42,6 @@ class BusinessModelTable extends Component {
     }
 
     componentWillMount() {
-        //this.getDataSource()
     }
 
     onRef = (ref) => {
@@ -51,7 +50,7 @@ class BusinessModelTable extends Component {
     getDataSource = (params) => {
         this.props.show();
         getBusinessModel(params).then(data => {
-            this.setState({data, selectedRows: [], searchValue: ""})
+            this.setState({data, selectedRows: []})
         }).catch(e => {
         }).finally(() => {
             this.props.hide();
@@ -107,7 +106,12 @@ class BusinessModelTable extends Component {
                     if (result.status === "SUCCESS") {
                         message.success(result.message ? result.message : "请求成功");
                         //刷新本地数据
-                        this.getDataSource();
+                        this.getDataSource({quickSearchValue:this.state.searchValue,filters:[{
+                                fieldName:"appModule.id",//筛选字段
+                                operator:"EQ",//操作类型
+                                value:`${this.state.appModule.id}`,//筛选值
+                                fieldType:"String"//筛选类型
+                            }]});
                     } else {
                         message.error(result.message ? result.message : "请求失败");
                     }
@@ -131,7 +135,13 @@ class BusinessModelTable extends Component {
     };
 
     handleSearch = (value) => {
-        this.getDataSource({Quick_value: value});
+        this.setState({searchValue:value});
+        this.getDataSource({quickSearchValue:value,filters:[{
+                fieldName:"appModule.id",//筛选字段
+                operator:"EQ",//操作类型
+                value:`${this.state.appModule.id}`,//筛选值
+                fieldType:"String"//筛选类型
+            }]});
     };
 
     deleteClick = () => {
@@ -147,7 +157,12 @@ class BusinessModelTable extends Component {
                     if (result.status === "SUCCESS") {
                         message.success(result.message ? result.message : "请求成功");
                         //刷新本地数据
-                        thiz.getDataSource();
+                        thiz.getDataSource({quickSearchValue:this.state.searchValue,pageInfo:this.state.pageInfo,filters:[{
+                                fieldName:"appModule.id",//筛选字段
+                                operator:"EQ",//操作类型
+                                value:`${this.state.appModule.id}`,//筛选值
+                                fieldType:"String"//筛选类型
+                            }]});
                     } else {
                         message.error(result.message ? result.message : "请求失败");
                     }
@@ -160,14 +175,23 @@ class BusinessModelTable extends Component {
     };
     selectChange = (record) => {
         this.setState({appModule:record})
-        this.getDataSource({Q_EQ_appModuleId: record.id});
+        this.getDataSource({quickSearchValue:this.state.searchValue,filters:[{
+                fieldName:"appModule.id",//筛选字段
+                operator:"EQ",//操作类型
+                value:`${record.id}`,//筛选值
+                fieldType:"String"//筛选类型
+            }]});
     };
     pageChange = (pageInfo) => {
-        console.log("pageChange")
         this.setState({
             pageInfo:pageInfo,
         });
-        this.getDataSource({Quick_value:this.state.searchValue,...pageInfo})
+        this.getDataSource({quickSearchValue:this.state.searchValue,pageInfo,filters:[{
+                fieldName:"appModule.id",//筛选字段
+                operator:"EQ",//操作类型
+                value:`${this.state.appModule.id}`,//筛选值
+                fieldType:"String"//筛选类型
+            }]})
     };
     render() {
         const {appModule}=this.state;
@@ -204,7 +228,7 @@ class BusinessModelTable extends Component {
                 <SearchTable
                     key="searchTable"
                     initValue={true}
-                    isNotFormItem={true} config={appModuleConfig}
+                    isNotFormItem={true} config={appModuleAuthConfig}
                     style={{width: 220, marginRight: '8px'}}
                     selectChange={this.selectChange}/>,
                 <Button key="add" style={{marginRight: '8px'}}
@@ -248,7 +272,7 @@ class BusinessModelTable extends Component {
                 <SimpleTable
                     rowsSelected={this.state.selectedRows}
                     onSelectRow={this.handleRowSelectChange}
-                    data={this.state.searchValue ? this.state.data.filter(item => item.tag === true) : this.state.data}
+                    data={this.state.data}
                     columns={columns}
                     pageChange={this.pageChange}
                 />

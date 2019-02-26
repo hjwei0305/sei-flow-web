@@ -4,6 +4,9 @@ import {baseUrl} from "../../../configs/DefaultConfig";
 import {convertDataToFormData} from "../../../commons/utils/CommonUtils";
 
 export async function getBusinessModel(params = {}) {
+    Object.assign(params,{sortOrders:[{property:'createdDate',direction:'ASC'}],
+        quickSearchProperties:["name","className","appModule.code","businessDetailServiceUrl","lookUrl"]});
+
     return httpUtils.postJson(baseUrl + "/businessModel/findByPage", params);
 }
 export async function save(params = {}) {
@@ -24,6 +27,7 @@ export async function saveSetWorkPage(paramsPath="",params='') {
 }
 //服务地址
 export async function listServiceUrl(params = {}) {
+    Object.assign(params,{sortOrders:[{property:'code',direction:'ASC'}],quickSearchProperties:["url","depict","name","code"]});
     return httpUtils.postJson(baseUrl + "/flowServiceUrl/findByPage", params);
 }
 export async function saveServiceUrl(params = {}) {
@@ -31,6 +35,7 @@ export async function saveServiceUrl(params = {}) {
 }
 //执行人
 export async function listExUser(params = {}) {
+    Object.assign(params,{sortOrders:[{property:'lastEditedDate',direction:'DESC'}],quickSearchProperties:["name","code","url","param","depict"],});
     return httpUtils.postJson(baseUrl + "/flowExecutorConfig/findByFilters", params);
 }
 export async function saveExUser(params = {}) {
