@@ -26,7 +26,8 @@ class ConfigServerUrlModal extends Component {
             confirmLoading: false,
             selectedRows: [],
             isAdd: false,
-            searchValue:""
+            searchValue:"",
+            loading:false
         };
     }
 
@@ -45,12 +46,12 @@ class ConfigServerUrlModal extends Component {
                 value:`${businessModelId}`,//筛选值
                 fieldType:"String"//筛选类型
             }]});
-        this.props.show();
+        this.setState({loading:true});
         listServiceUrl(params).then(data => {
             this.setState({data, selectedRows: []})
         }).catch(e => {
         }).finally(() => {
-            this.props.hide();
+            this.setState({loading:false});
         })
     };
 
@@ -187,6 +188,7 @@ class ConfigServerUrlModal extends Component {
                         data={this.state.data}
                         columns={columns}
                         pageChange={this.pageChange}
+                        loading={this.state.loading}
                     />
                     <EditServerUrlModal
                         isAdd={this.state.isAdd}

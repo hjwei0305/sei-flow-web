@@ -28,7 +28,8 @@ class ConfigExUserModal extends Component {
             confirmLoading: false,
             selectedRows: [],
             isAdd: false,
-            searchValue:""
+            searchValue:"",
+            loading:false
         };
     }
 
@@ -47,12 +48,12 @@ class ConfigExUserModal extends Component {
                 value:`${businessModelId}`,//筛选值
                 fieldType:"String"//筛选类型
             }]});
-        this.props.show();
+        this.setState({loading:true});
         listExUser(params).then(data => {
             this.setState({data, selectedRows: []})
         }).catch(e => {
         }).finally(() => {
-            this.props.hide();
+            this.setState({loading:false});
         })
     };
 
@@ -126,7 +127,7 @@ class ConfigExUserModal extends Component {
             onOk(){
                 let params = {};
                 params = thiz.state.selectedRows[0].id;
-                thiz.props.show();
+                this.setState({loading:true});
                 deleteExUser(params).then(result => {
                     if (result.status==="SUCCESS") {
                         message.success(result.message?result.message:"请求成功");
@@ -137,7 +138,7 @@ class ConfigExUserModal extends Component {
                     }
                 }).catch(e => {
                 }).finally(() => {
-                    thiz.props.hide();
+                    this.setState({loading:false});
                 })
             }
         });
@@ -223,6 +224,7 @@ class ConfigExUserModal extends Component {
                         data={this.state.data}
                         columns={columns}
                         pageChange={this.pageChange}
+                        loading={this.state.loading}
                     />
                     <ExUserModal
                         isAdd={this.state.isAdd}

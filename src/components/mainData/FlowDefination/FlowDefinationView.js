@@ -103,8 +103,10 @@ class FlowDefinationView extends Component {
     getTreeData = (param) => {
         this.props.show();
         listAllOrgs(param).then((result) => {
-            this.setState({
-                treeData: result,
+            if (result.success){
+
+            }this.setState({
+                treeData: result.data,
             });
         }).catch(err => {
         }).finally(() => {

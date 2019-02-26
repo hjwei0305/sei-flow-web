@@ -12,7 +12,7 @@ import {baseUrl} from "../../../configs/DefaultConfig"
  * return 操作结果
  */
 export async function listAllOrgs(params={}){
-    return httpUtils.get(baseUrl+"/flowDefination/listAllOrgs",params);
+    return httpUtils.post(baseUrl+"/flowDefination/listAllOrgs",params);
 }
 
 export async function listFlowDefination(params={}){

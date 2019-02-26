@@ -302,7 +302,7 @@ class BusinessModelTable extends Component {
                     handleCancel={this.handleModalCancel}/>}
                 {this.state.checkModalVisible&& <PropertiesForConditionPojoModal
                     appModuleId={this.state.appModule?this.state.appModule.id:""}
-                    businessModelId={this.state.selectedRows[0]?this.state.selectedRows[0].id:""}
+                    className={this.state.selectedRows[0]?this.state.selectedRows[0].className:""}
                     modalVisible={this.state.checkModalVisible}
                     handleCancel={this.handleModalCancel}/>
                 }

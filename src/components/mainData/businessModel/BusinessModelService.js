@@ -44,4 +44,8 @@ export async function saveExUser(params = {}) {
 export async function deleteExUser(param=''){
     return httpUtils.delete(baseUrl+"/flowExecutorConfig/deleteById",param);
 }
+//条件属性
+export async function getPropertiesForConditionPojo(params = {}) {
+    return httpUtils.post(baseUrl + "/businessModel/getPropertiesForConditionPojo",params);
+}
 

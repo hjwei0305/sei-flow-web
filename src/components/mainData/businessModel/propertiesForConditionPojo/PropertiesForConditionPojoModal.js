@@ -8,6 +8,7 @@ import connect from "react-redux/es/connect/connect";
 import {message,Modal} from 'antd';
 import {show, hide} from '../../../../configs/SharedReducer'
 import {
+    getPropertiesForConditionPojo,
     listServiceUrl,
 } from "../BusinessModelService";
 import SimpleTable from "../../../../commons/components/SimpleTable";
@@ -23,61 +24,41 @@ class PropertiesForConditionPojoModal extends Component {
             modalVisible: false,
             confirmLoading: false,
             selectedRows: [],
-            isAdd: false
+            isAdd: false,
+            loading:false
         };
     }
 
     componentWillMount() {
-        let {businessModelId}=this.props;
-        this.getDataSource({Q_EQ_businessModelId:businessModelId})
+        this.getDataSource()
     }
 
     onRef = (ref) => {
         this.ref = ref
     };
-    getDataSource = (params) => {
-        this.props.show();
-        listServiceUrl(params).then(data => {
+    getDataSource = (params={}) => {
+        let {className}=this.props;
+        Object.assign(params,{businessModelCode:className});
+        this.setState({loading:true});
+        getPropertiesForConditionPojo(params).then(data => {
             this.setState({data, selectedRows: [],searchValue:""})
         }).catch(e => {
         }).finally(() => {
-            this.props.hide();
+            this.setState({loading:false});
         })
-    };
-
-    handleRowSelectChange = (selectedRows) => {
-        this.setState({selectedRows})
-    };
-    handleModalVisible = (modalVisible, isAdd) => {
-        this.setState({modalVisible, isAdd})
-    };
-    addClick = () => {
-        this.handleModalVisible(true, true)
-    };
-    editClick = () => {
-        if (!this.judgeSelected()) return;
-        this.handleModalVisible(true, false)
-    };
-
-    judgeSelected = () => {
-        if (this.state.selectedRows.length === 0) {
-            message.error("请选择一行数据！");
-            return false
-        }
-        return true
     };
 
     render() {
         const columns = [
             {
                 title: '属性',
-                dataIndex: 'properties',
+                dataIndex: 'code',
                 width:200
             },
             {
                 title: '名称',
                 dataIndex: 'name',
-                width:140
+                width:200
             },
 
 
@@ -87,7 +68,7 @@ class PropertiesForConditionPojoModal extends Component {
         return (
             <Modal title={<span className={'header-span'}>{"查看条件属性"}</span>}
                    visible={modalVisible}
-                   width={700}
+                   width={500}
                    maskClosable={false}
                    onCancel={handleCancel}
                    bodyStyle={{minHeight:500}}
@@ -96,9 +77,9 @@ class PropertiesForConditionPojoModal extends Component {
                 <div style={{width: this.props.width ? this.props.width : '100%'}}>
                     <SimpleTable
                         rowsSelected={this.state.selectedRows}
-                        onSelectRow={this.handleRowSelectChange}
                         data={this.state.searchValue ? this.state.data.filter(item => item.tag === true) : this.state.data}
                         columns={columns}
+                        loading={this.state.loading}
                     />
                 </div>
             </Modal>
@@ -108,24 +89,6 @@ class PropertiesForConditionPojoModal extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return {};
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        show: () => {
-            dispatch(show())
-        },
-        hide: () => {
-            dispatch(hide())
-        }
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(PropertiesForConditionPojoModal)
+export default PropertiesForConditionPojoModal
 
 
