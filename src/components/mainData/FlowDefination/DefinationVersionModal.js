@@ -127,9 +127,9 @@ class DefinationVersionModal extends Component {
             return [
                 <Button key="add" style={{marginRight: '8px'}}
                         onClick={this.editClick}>编辑</Button>,
-                <Button type={"refAdd"} key="edit" style={{marginRight: '8px'}}
+                <Button key="refAdd" style={{marginRight: '8px'}}
                         onClick={this.refClick}>参考创建</Button>,
-                <Button type={"check"} key="edit" style={{marginRight: '8px'}}
+                <Button key="check" style={{marginRight: '8px'}}
                         onClick={this.checkClick}>查看流程定义</Button>
             ]
         };
@@ -148,7 +148,7 @@ class DefinationVersionModal extends Component {
         };
         const {modalVisible,handleCancel} = this.props;
         return (
-            <Modal title={<span className={'header-span'}>{"服务地址管理"}</span>}
+            <Modal title={<span className={'header-span'}>{"流程定义版本管理"}</span>}
                    visible={modalVisible}
                    width={700}
                    maskClosable={false}

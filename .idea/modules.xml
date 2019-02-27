@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/flow-web.iml" filepath="$PROJECT_DIR$/.idea/modules/flow-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/flow-web_main.iml" filepath="$PROJECT_DIR$/.idea/modules/flow-web_main.iml" group="flow-web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/flow-web_test.iml" filepath="$PROJECT_DIR$/.idea/modules/flow-web_test.iml" group="flow-web" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.ecmp:hibernate-redis:1.0.9">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ecmp/hibernate-redis/1.0.9/c194fe526a1af2a05f77af2839cb13e0c962fa2b/hibernate-redis-1.0.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ecmp/hibernate-redis/1.0.9/22e12a6f30de25bc9b6d8d22f94f47b453072c3/hibernate-redis-1.0.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

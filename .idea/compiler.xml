@@ -4,6 +4,8 @@
     <bytecodeTargetLevel target="1.8">
       <module name="basic-web_main" target="1.8" />
       <module name="basic-web_test" target="1.8" />
+      <module name="flow-web_main" target="1.8" />
+      <module name="flow-web_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -416,18 +416,18 @@ class FlowDefinationView extends Component {
                              onClick={this.onResetClick}>位置重置</Button>);
             res.push(<Button key="version" style={{marginRight: '5px'}}
                              onClick={this.onVersionClick}>流程定义版本管理</Button>);
-            // let statusText='';
-            // if (tableSelectRow[0]&&tableSelectRow[0].flowDefinationStatus!=="INIT"){
-            //     if (tableSelectRow[0].flowDefinationStatus==='Activate'){
-            //         statusText='冻结'
-            //     }else if (tableSelectRow[0].flowDefinationStatus==='Freeze'){
-            //         statusText='激活'
-            //     }
-            //     res.push(<Button key="status" style={{marginRight: '5px'}}
-            //                      onClick={this.onActivateOrFreezeFlowDefClick}>{statusText}</Button>);
-            // }
-            // res.push(<Button key="config" style={{marginRight: '5px'}}
-            //                  onClick={this.onDeleteClick}>删除</Button>);
+            let statusText='';
+            if (tableSelectRow[0]&&tableSelectRow[0].flowDefinationStatus!=="INIT"){
+                if (tableSelectRow[0].flowDefinationStatus==='Activate'){
+                    statusText='冻结'
+                }else if (tableSelectRow[0].flowDefinationStatus==='Freeze'){
+                    statusText='激活'
+                }
+                res.push(<Button key="status" style={{marginRight: '5px'}}
+                                 onClick={this.onActivateOrFreezeFlowDefClick}>{statusText}</Button>);
+            }
+            res.push(<Button key="config" style={{marginRight: '5px'}}
+                             onClick={this.onDeleteClick}>删除</Button>);
             return res
         };
 

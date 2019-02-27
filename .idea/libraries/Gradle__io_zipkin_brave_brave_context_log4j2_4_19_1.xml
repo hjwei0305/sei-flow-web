@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: io.zipkin.brave:brave-context-log4j2:4.19.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.zipkin.brave/brave-context-log4j2/4.19.1/66859001f01636c6777b482d624d50ae9525d07c/brave-context-log4j2-4.19.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.zipkin.brave/brave-context-log4j2/4.19.1/367aea8539df785bf900049cd964bb7be2f75bc4/brave-context-log4j2-4.19.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.ecmp:flow-api:2.1.28">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ecmp/flow-api/2.1.28/f0a5462f9bc25b0dfe640d276e0c3870ac8d742b/flow-api-2.1.28.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ecmp/flow-api/2.1.28/4fd3fca2cd6132abd2a02959162745023a0c9886/flow-api-2.1.28-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

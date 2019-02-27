@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.ecmp:core-entity:2.0.115">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ecmp/core-entity/2.0.115/5794af18dd6e26a2c3915fddd5885e610d61f327/core-entity-2.0.115.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ecmp/core-entity/2.0.115/250fdbe869bb3da9271116eff92dd21e7c108eaa/core-entity-2.0.115-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

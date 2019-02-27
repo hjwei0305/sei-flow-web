@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: fr.opensagres.xdocreport:org.apache.poi.xwpf.converter.pdf:1.0.6">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/fr.opensagres.xdocreport/org.apache.poi.xwpf.converter.pdf/1.0.6/66ef8e25b2e3a60785e9a0841cfd74ef4c7e2ed6/org.apache.poi.xwpf.converter.pdf-1.0.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/fr.opensagres.xdocreport/org.apache.poi.xwpf.converter.pdf/1.0.6/af103f76cb4860efed7d3012cd0d0eb7b2e25078/org.apache.poi.xwpf.converter.pdf-1.0.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
