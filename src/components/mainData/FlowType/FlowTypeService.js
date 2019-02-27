@@ -3,6 +3,7 @@ import httpUtils from "../../../commons/utils/FeatchUtils";
 import {baseUrl} from "../../../configs/DefaultConfig";
 
 export async function getFlowType(params = {}) {
+    Object.assign(params,{sortOrders:[{property:'lastEditedDate',direction:'DESC'}],quickSearchProperties:["name","code","depict","businessModel.depict"],});
     return httpUtils.postJson(baseUrl + "/flowType/findByPage", params);
 }
 

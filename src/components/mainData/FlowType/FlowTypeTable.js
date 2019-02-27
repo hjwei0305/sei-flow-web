@@ -28,7 +28,8 @@ class FlowTypeTable extends Component {
             selectedRows: [],
             isAdd: false,
             pageInfo:null,
-            searchValue:""
+            searchValue:"",
+            businessMode:null
         };
     }
 
@@ -39,8 +40,16 @@ class FlowTypeTable extends Component {
     onRef = (ref) => {
         this.ref = ref
     };
-    getDataSource = (params) => {
+    getDataSource = (params={}) => {
         this.props.show();
+        if (!params.filters&&this.state.businessMode){
+            Object.assign(params,{filters:[{
+                    fieldName:"businessModel.id",//筛选字段
+                    operator:"EQ",//操作类型
+                    value:`${this.state.businessMode.id}`,//筛选值
+                    fieldType:"String"//筛选类型
+                }]})
+        }
         getFlowType(params).then(data => {
             this.setState({data, selectedRows: [], searchValue: ""})
         }).catch(e => {
@@ -98,7 +107,7 @@ class FlowTypeTable extends Component {
     };
 
     handleSearch = (value) => {
-        this.getDataSource({Quick_value: value});
+        this.getDataSource({quickSearchValue: value});
     };
 
     deleteClick = () => {
@@ -114,7 +123,7 @@ class FlowTypeTable extends Component {
                     if (result.status === "SUCCESS") {
                         message.success(result.message ? result.message : "请求成功");
                         //刷新本地数据
-                        thiz.getDataSource();
+                        thiz.getDataSource({quickSearchValue:thiz.state.searchValue,pageInfo:thiz.state.pageInfo});
                     } else {
                         message.error(result.message ? result.message : "请求失败");
                     }
@@ -126,44 +135,48 @@ class FlowTypeTable extends Component {
         });
     };
     selectChange = (record) => {
-        this.getDataSource({Q_EQ_businessModelId: record.id});
+        if (record&&record.id){
+            this.setState({businessMode:record});
+            this.getDataSource({filters:[{
+                    fieldName:"businessModel.id",//筛选字段
+                    operator:"EQ",//操作类型
+                    value:`${record.id}`,//筛选值
+                    fieldType:"String"//筛选类型
+                }],quickSearchValue:this.state.searchValue});
+        }else {
+            this.setState({businessMode:null});
+            this.getDataSource({quickSearchValue:this.state.searchValue});
+        }
+
     };
     pageChange = (pageInfo) => {
-        console.log("pageChange")
         this.setState({
             pageInfo:pageInfo,
         });
-        this.getDataSource({Quick_value:this.state.searchValue,...pageInfo})
+        this.getDataSource({quickSearchValue:this.state.searchValue,pageInfo})
     };
     render() {
         const columns = [
             {
+                title: '代码',
+                dataIndex: 'code',
+                width: 240
+            },
+            {
                 title: '名称',
                 dataIndex: 'name',
-                width: 300
-            },
-            {
-                title: 'URL地址',
-                dataIndex: 'url',
-                width: 400
-            },
-            {
-                title: '必须提交',
-                dataIndex: 'mustCommit',
-                width: 100,
-                render: (text, record) => {
-                    if (record.mustCommit) {
-                        return "是"
-                    } else {
-                        return "否"
-                    }
-                }
+                width: 240
             },
             {
                 title: '描述',
                 dataIndex: 'depict',
-                width: 400,
+                width: 300,
             },
+            {
+                title: '所属业务实体模型',
+                dataIndex: 'businessModel.depict',
+                width: 300
+            }
         ];
 
         const title = () => {
