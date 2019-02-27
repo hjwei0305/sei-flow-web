@@ -4,13 +4,11 @@
  */
 
 import React, {Component} from 'react'
-import {Form, Input, Modal, Tabs, InputNumber, Checkbox} from 'antd';
-import {cache} from "../../../commons/utils/CommonUtils";
+import {Form, Input, Modal} from 'antd';
 import SearchTable from "../../../commons/components/SearchTable";
-import {appModuleConfig, businessModelConfig} from "../../../configs/CommonComponentsConfig";
+import {businessModelConfig} from "../../../configs/CommonComponentsConfig";
 
 const FormItem = Form.Item;
-const TabPane = Tabs.TabPane;
 const {TextArea} = Input;
 
 class FlowTypeModal extends Component {

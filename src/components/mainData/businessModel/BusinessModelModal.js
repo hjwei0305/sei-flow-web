@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Form, Input, Modal, Row, Col, InputNumber, Checkbox} from 'antd';
+import {Form, Input, Modal, Row, Col} from 'antd';
 import SearchTable from "../../../commons/components/SearchTable";
 import {appModuleConfig} from "../../../configs/CommonComponentsConfig";
 

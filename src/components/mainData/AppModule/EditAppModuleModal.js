@@ -4,11 +4,10 @@
  */
 
 import React, {Component} from 'react'
-import {Form, Input, Modal, Tabs, InputNumber, Checkbox} from 'antd';
+import {Form, Input, Modal, Tabs, InputNumber} from 'antd';
 import {cache} from "../../../commons/utils/CommonUtils";
 
 const FormItem = Form.Item;
-const TabPane = Tabs.TabPane;
 
 class EditAppModuleModal extends Component {
     constructor(props) {
