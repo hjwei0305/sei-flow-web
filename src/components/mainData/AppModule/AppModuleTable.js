@@ -181,7 +181,7 @@ class AppModuleTable extends Component {
         };
 
         return (
-            <div style={{width: this.props.width ? this.props.width : '100%'}}>
+            <div>
                 <div  className={'tbar-box'}>
                     <div  className={'tbar-btn-box'}>{title()}</div>
                     <div  className={'tbar-search-box'}>{search()}</div>

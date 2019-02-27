@@ -68,7 +68,7 @@ class PropertiesForConditionPojoModal extends Component {
                    bodyStyle={{minHeight:500}}
                    footer={false}
             >
-                <div style={{width: this.props.width ? this.props.width : '100%'}}>
+                <div>
                     <SimpleTable
                         rowsSelected={this.state.selectedRows}
                         data={this.state.data}
