@@ -4,19 +4,15 @@
  */
 
 import React, {Component} from 'react'
-import connect from "react-redux/es/connect/connect";
-import {Button, Col, Row, message,Modal} from 'antd';
-import {show, hide} from '../../../../configs/SharedReducer'
+import {Button,message,Modal} from 'antd';
 import {
     listServiceUrl, saveServiceUrl,
 } from "../BusinessModelService";
-import {searchListByKeyWithTag} from "../../../../commons/utils/CommonUtils";
 import SimpleTable from "../../../../commons/components/SimpleTable";
 import {Input} from "antd/lib/index";
 import EditServerUrlModal from "./EditServerUrlModal";
 
 const Search = Input.Search;
-const confirm=Modal.confirm;
 class ConfigServerUrlModal extends Component {
     constructor(props) {
         super(props);
@@ -140,10 +136,8 @@ class ConfigServerUrlModal extends Component {
         ];
         const title = () => {
             return [
-
                 <Button type={"primary"} key="edit" style={{marginRight: '8px'}}
                         onClick={this.addClick}>新增</Button>,
-
                 <Button key="check" style={{marginRight: '8px'}}
                         onClick={this.editClick}>编辑</Button>
             ]
@@ -172,16 +166,10 @@ class ConfigServerUrlModal extends Component {
                    footer={false}
             >
                 <div style={{width: this.props.width ? this.props.width : '100%'}}>
-                    <Row style={{
-                        background: '#F3F8FC',
-                        padding: 5,
-                        paddingBottom: 5,
-                        border: '1px solid #e8e8e8',
-                        borderBottom: 'none'
-                    }}>
-                        <Col span={14}>{title()}</Col>
-                        <Col span={10}><div  style={{textAlign: 'right'}}>{search()}</div></Col>
-                    </Row>
+                    <div  className={'tbar-box'}>
+                        <div  className={'tbar-btn-box'}>{title()}</div>
+                        <div  className={'tbar-search-box'}>{search()}</div>
+                    </div>
                     <SimpleTable
                         rowsSelected={this.state.selectedRows}
                         onSelectRow={this.handleRowSelectChange}
@@ -206,24 +194,6 @@ class ConfigServerUrlModal extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return {};
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        show: () => {
-            dispatch(show())
-        },
-        hide: () => {
-            dispatch(hide())
-        }
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ConfigServerUrlModal)
+export default ConfigServerUrlModal
 
 

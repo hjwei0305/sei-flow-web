@@ -1,10 +1,10 @@
 /**
- * @description 岗位管理
+ * @description 流程定义
  * @author 李艳
  */
 import {Component} from "react";
 import React from "react";
-import {Button, Col, Modal, message, Row, Tree, Form, Card} from "antd";
+import {Button, Col, Modal, message} from "antd";
 import {Input} from "antd/lib/index";
 import {searchListByKeyWithTag} from "../../../commons/utils/CommonUtils";
 import SimpleTable from "../../../commons/components/SimpleTable";
@@ -15,9 +15,8 @@ import {
     listFlowDefination
 } from "./FlowDefinationService";
 import DefinationVersionModal from "./DefinationVersionModal";
+import StandardTree from "../../../commons/components/StandardTree";
 
-const DirectoryTree = Tree.DirectoryTree;
-const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 const columns = [
@@ -64,12 +63,8 @@ class FlowDefinationView extends Component {
         super(props);
         this.state = {
             treeData: [],
-            searchValue: "",
             tableSearchValue: "",
             tableData: [],
-            findResultData: [],
-            autoExpandParent: true,
-            expandedKeys: [],
             treeSelectedKeys: [],
             selectedNode: {},
             loading: false,
@@ -78,50 +73,12 @@ class FlowDefinationView extends Component {
             confirmLoading: false,
             isAdd: true,
             pathName: "流程定义管理",
-            scrollY: null,
-            includeSubNode: false,
-            isPositionConfig: false
         }
-    }
-
-    onModalRef = (ref) => {
-        this.modalRef = ref;
-    };
-
-    updateSize() {
-        if (this.simpleDiv) {
-            let yHeight = document.body.clientHeight - this.getElementTop(this.simpleDiv) - 5;
-            let scrollY = (this.props.heightY ? (this.props.heightY + 12) : (yHeight - 83));
-            this.setState({scrollY})
-        }
-    }
-
-    getElementTop(element) {
-        if (element) {
-            let actualTop = element.offsetTop;
-            let current = element.offsetParent;
-
-            while (current !== null) {
-                actualTop += current.offsetTop;
-                current = current.offsetParent;
-            }
-            return actualTop;
-        }
-        return 0;
     }
 
     componentWillMount() {
         this.getTreeData()
     };
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateSize.bind(this));
-    }
-
-    componentDidMount() {
-        this.updateSize();
-        window.addEventListener('resize', this.updateSize.bind(this));
-    }
 
     //网络请求树控件数据
     getTreeData = (param) => {
@@ -152,105 +109,14 @@ class FlowDefinationView extends Component {
     };
 
     //树节点选择触发
-    onTreeSelect = (selectedKeys, info) => {
+    onTreeSelect = (selectedKeys, selectedNodes) => {
         this.setState({treeSelectedKeys: selectedKeys});
-        let data = {};
-        data = this.getNodeByKey(this.state.treeData, selectedKeys[0]);
-        this.setState({selectedNode: data});
-        let params = {orgId: info.node.props.eventKey};
-        this.listFlowDefination(params);
-        this.setState({pathName: data.name ? data.name : '岗位'});
-
-
-    };
-
-    //查找树节点
-    handleSearch = (value) => {
-        let treeData = JSON.parse(JSON.stringify(this.state.treeData));
-        let findResultData = this.findNode(value, treeData);
-        this.keyList = [];
-        this.getExpandedKeys(findResultData);
-        let expandedKeys = this.keyList;
-        if (value === "") {//没有搜索关键字
-            this.setState({
-                findResultData: findResultData,
-                searchValue: value,
-                autoExpandParent: false,
-                expandedKeys: []
-            })
-        } else {
-            this.setState({
-                findResultData: findResultData,
-                searchValue: value,
-                autoExpandParent: true,
-                expandedKeys: expandedKeys
-            })
+        this.setState({selectedNode: selectedNodes[0]?selectedNodes[0]:{}});
+        if (selectedNodes[0]){
+            let params = {orgId: selectedNodes[0]?selectedNodes[0].id:""};
+            this.listFlowDefination(params);
+            this.setState({pathName: selectedNodes[0].name ? selectedNodes[0].name : '岗位'});
         }
-    };
-
-    getExpandedKeys = (data) => {
-        for (let item of data) {
-            this.keyList.push(item.id);
-            if (item.children && item.children.length > 0) {
-                this.getExpandedKeys(item.children)
-            }
-        }
-    };
-
-    //树控件展开时
-    onExpand = (expandedKeys) => {
-        this.setState({
-            expandedKeys,
-            autoExpandParent: false,
-        });
-    };
-
-    //查找关键字节点
-    findNode = (value, tree) => {
-        return tree.map(treeNode => {
-            //如果有子节点
-            if (treeNode.children && treeNode.children.length > 0) {
-                treeNode.children = this.findNode(value, treeNode.children);
-                //如果标题匹配
-                if (treeNode.name.indexOf(value) > -1) {
-                    return treeNode
-                } else {//如果标题不匹配，则查看子节点是否有匹配标题
-                    treeNode.children = this.findNode(value, treeNode.children);
-                    if (treeNode.children && treeNode.children.length > 0) {
-                        return treeNode
-                    }
-                }
-            } else {//没子节点
-                if (treeNode.name.indexOf(value) > -1) {
-                    return treeNode
-                }
-            }
-        }).filter((treeNode, i, self) => treeNode)
-    };
-
-    renderTreeNodes = (data) => {
-        return data.map((item) => {
-            const i = item.name.indexOf(this.state.searchValue);
-            const beforeStr = item.name.substr(0, i);
-            const afterStr = item.name.substr(i + this.state.searchValue.length);
-            const name = i > -1 ? (
-                <span>
-                    {beforeStr}
-                    <span style={{color: '#f50'}}>{this.state.searchValue}</span>
-                    {afterStr}
-                </span>
-            ) : <span>{item.name}</span>;
-            if (item.children && item.children.length > 0) {
-                return (
-                    <TreeNode title={name} key={item.id}>
-                        {this.renderTreeNodes(item.children)}
-                    </TreeNode>
-                );
-            }
-            return <TreeNode title={name} key={item.id} isLeaf/>;
-        });
-    };
-    onDragEnter = (info) => {
     };
 
     handleTableSearch = (value) => {
@@ -444,42 +310,15 @@ class FlowDefinationView extends Component {
             ]
         };
         return (
-            <div>
+            <div  className={"table-box"}>
                 {/*左边的树状控件*/}
                 <Col span={8}>
                     <div style={{margin: '10px 14px 10px'}}>
                         <div className={"header-span"}>组织机构</div>
                     </div>
-                    <div  className={'tbar-box'}>
-                        <div  className={'tbar-btn-box'}>&nbsp;</div>
-                        <div  className={'tbar-search-box'} ref={(div)=>this.simpleDiv=div}>
-                            <div>
-                                <Search
-                                    key="search"
-                                    placeholder="输入分类名称查询"
-                                    onSearch={e => this.handleSearch(e)}
-                                    style={{width: '220px'}}
-                                    enterButton
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    {this.state.treeData.length > 0 ? (
-                        <Card style={{height: this.state.scrollY + 50, overflow: "auto"}}>
-                            <DirectoryTree
-                                expandAction={"doubleClick"}
-                                onSelect={this.onTreeSelect}
-                                autoExpandParent={this.state.autoExpandParent}
-                                expandedKeys={this.state.expandedKeys}
-                                onExpand={this.onExpand}
-                                onDragEnter={this.onDragEnter}
-                                draggable>
-                                {this.renderTreeNodes(this.state.searchValue === "" ? this.state.treeData : this.state.findResultData)}
-                            </DirectoryTree>
-                        </Card>
-
-                    ) : null}
-
+                    <StandardTree
+                        onSelect={this.onTreeSelect}
+                        dadaSource={this.state.treeData}/>
                 </Col>
                 {/*右边的表格控件*/}
                 <Col span={16}>
@@ -525,7 +364,7 @@ const mapDispatchToProps = (dispatch) => {
         },
     }
 };
-FlowDefinationView = Form.create()(FlowDefinationView);
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

@@ -1,17 +1,14 @@
 /**
- * @description 配置服务地址
+ * @description 配置自定义执行人
  * @author 李艳
  */
 
 import React, {Component} from 'react'
-import connect from "react-redux/es/connect/connect";
 import {Button, Col, Row, message,Modal} from 'antd';
-import {show, hide} from '../../../../configs/SharedReducer'
 import {
     deleteExUser,
     listExUser, saveExUser
 } from "../BusinessModelService";
-import {searchListByKeyWithTag} from "../../../../commons/utils/CommonUtils";
 import SimpleTable from "../../../../commons/components/SimpleTable";
 import {Input} from "antd/lib/index";
 import ExUserModal from "./ExUserModal";
@@ -208,16 +205,10 @@ class ConfigExUserModal extends Component {
                    footer={false}
             >
                 <div style={{width: this.props.width ? this.props.width : '100%'}}>
-                    <Row style={{
-                        background: '#F3F8FC',
-                        padding: 5,
-                        paddingBottom: 5,
-                        border: '1px solid #e8e8e8',
-                        borderBottom: 'none'
-                    }}>
-                        <Col span={14}>{title()}</Col>
-                        <Col span={10}><div  style={{textAlign: 'right'}}>{search()}</div></Col>
-                    </Row>
+                    <div  className={'tbar-box'}>
+                        <div  className={'tbar-btn-box'}>{title()}</div>
+                        <div  className={'tbar-search-box'}>{search()}</div>
+                    </div>
                     <SimpleTable
                         rowsSelected={this.state.selectedRows}
                         onSelectRow={this.handleRowSelectChange}
@@ -242,24 +233,6 @@ class ConfigExUserModal extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return {};
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        show: () => {
-            dispatch(show())
-        },
-        hide: () => {
-            dispatch(hide())
-        }
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ConfigExUserModal)
+export default ConfigExUserModal
 
 

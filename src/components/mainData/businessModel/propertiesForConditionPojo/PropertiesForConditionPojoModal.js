@@ -4,18 +4,12 @@
  */
 
 import React, {Component} from 'react'
-import connect from "react-redux/es/connect/connect";
-import {message,Modal} from 'antd';
-import {show, hide} from '../../../../configs/SharedReducer'
+import {Modal} from 'antd';
 import {
     getPropertiesForConditionPojo,
-    listServiceUrl,
 } from "../BusinessModelService";
 import SimpleTable from "../../../../commons/components/SimpleTable";
-import {Input} from "antd/lib/index";
 
-const Search = Input.Search;
-const confirm=Modal.confirm;
 class PropertiesForConditionPojoModal extends Component {
     constructor(props) {
         super(props);
@@ -41,7 +35,7 @@ class PropertiesForConditionPojoModal extends Component {
         Object.assign(params,{businessModelCode:className});
         this.setState({loading:true});
         getPropertiesForConditionPojo(params).then(data => {
-            this.setState({data, selectedRows: [],searchValue:""})
+            this.setState({data, selectedRows: []})
         }).catch(e => {
         }).finally(() => {
             this.setState({loading:false});
@@ -77,7 +71,7 @@ class PropertiesForConditionPojoModal extends Component {
                 <div style={{width: this.props.width ? this.props.width : '100%'}}>
                     <SimpleTable
                         rowsSelected={this.state.selectedRows}
-                        data={this.state.searchValue ? this.state.data.filter(item => item.tag === true) : this.state.data}
+                        data={this.state.data}
                         columns={columns}
                         loading={this.state.loading}
                     />
