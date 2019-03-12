@@ -20,6 +20,7 @@ export function getHeader() {
         let auth = cache.get('Authorization');
         authHeader = {
             'Content-Type':'application/json;charset=UTF-8',
+            'Cache-Control': 'no-cache',
             'Authorization': auth?(auth.accessToken?auth.accessToken:''):''
         }
     } catch (e) {

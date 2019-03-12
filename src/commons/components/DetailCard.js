@@ -28,22 +28,20 @@ class DetailCard extends React.Component {
 
 
     render() {
-        const {showContent} = this.state
-        const title = this.props.title;
+        const {showContent} = this.state;
+        const {bodyStyle,title,headStyle,style} = this.props;
         return (
             <Card
-                style={{ width: '100%',border:'none'}}
-                title={title?[<div key="line" style={{'height':'80%','width':'5px',float:'left',
-                    'background':'rgb(30, 160, 222)',marginTop:'2px'}}>&nbsp;</div>
-                    ,<span key="title" style={{fontWeight:"bold"}}>{title}</span>]:null}
-                headStyle={{border:'none'}}
-                bodyStyle={{padding:"0 24px 24px 15px",...this.props.bodyStyle}}
+                style={{ width: '100%',border:'none',...style}}
+                title={<div className={"card-title"}>{title}</div>}
+                headStyle={{border:'none',boxSizing: "border-box",...headStyle}}
+                bodyStyle={{padding:"0px 10px 10px",boxSizing: "border-box",...bodyStyle}}
                 bordered={false}
                 extra={this.props.collapse===false ? null :
                     showContent?[this.props.extra,<Icon type="down" key='downIcon' onClick={() => this.showOrHidden('hidden')}/>]
                 :<Icon type="right" key='downIcon' onClick={() => this.showOrHidden('show')}/>}
             >
-                <div hidden={!showContent}>
+                <div hidden={!showContent} style={{height: "100%"}}>
                     {this.props.content?this.props.content:
                     React.Children.map(this.props.children, (child, i) => {
                         return child;

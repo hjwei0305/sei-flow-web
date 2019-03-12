@@ -5,10 +5,11 @@
  */
 
 import React, {Component} from "react"
-import {Button, Input} from "antd";
+import {Button, Form, Input} from "antd";
 import UploadFile from "../UploadFile";
 import AdvanceSearchModal from "./AdvanceSearchModal";
 import "./index.css"
+import {formItemLayout, getComponent, getDecoratorProps} from "./formConfigUtil";
 
 class ToolBar extends Component {
     state = {
@@ -20,7 +21,7 @@ class ToolBar extends Component {
 
         if (quickSearchCfg) {
             quickSearchCfg.className = quickSearchCfg.className ? `tbar-search ${quickSearchCfg.className}` : 'tbar-search';
-            if(typeof quickSearchCfg.enterButton === "undefined"){
+            if(quickSearchCfg.enterButton){
                 quickSearchCfg.enterButton = true;
             }
             items.push(<Input.Search key={'0'}  {...quickSearchCfg}/>);
@@ -42,13 +43,29 @@ class ToolBar extends Component {
         if(btnsCfg){
             components =  btnsCfg.map(
                 (item, i) => {
-                    if (item.checkRight) {
+                    if (item.checkRight !== false) {
                         item.propsCfg = item.propsCfg || {};
                         item.propsCfg.className = item.propsCfg.className ? `tbar-btn ${item.propsCfg.className}` : "tbar-btn";
-                        if (item.type === "uploadFile") {
-                            return (<UploadFile key={i} title={item.title} {...item.propsCfg}/>)
-                        } else {
-                            return (<Button key={i} {...item.propsCfg}>{item.title}</Button>)
+                        switch (item.type) {
+                            case "uploadFile":
+                                return (<UploadFile key={i} title={item.title} {...item.propsCfg}/>);
+                            case "form":
+                                return (
+                                    <Form
+                                        className={"tbar-form"}
+                                        key={i}
+                                        layout="inline"
+                                        //onSubmit={this.handleSearch}
+                                    >
+                                        {
+                                            item.formItems.map(item => (
+                                                this.getColItem(item)
+                                            ))
+                                        }
+                                        <Button type="primary" onClick={()=> this.handleSearch(item)}>查询</Button>
+                                    </Form>);
+                            default:
+                                return (<Button key={i} {...item.propsCfg}>{item.title}</Button>);
                         }
                     } else {
                         return null;
@@ -57,10 +74,30 @@ class ToolBar extends Component {
         }
         return components;
     }
-    render() {
-        const {btnsCfg, searchBtnCfg} = this.props;
+    handleSearch = (item) => {
+        this.props.form.validateFields((err,values)=>{
+            if(!err){
+                item.onSearch && item.onSearch(values)
+            }
+        })
+    }
+    getColItem = (item) => {
+        const {form} = this.props;
+        const {getFieldDecorator} = form;
         return (
-            <div className={'tbar-box'}>
+            <Form.Item
+                key={item.name}
+                {...(item.formItemLayout||formItemLayout)}
+                label={item.label}
+            >
+                { getFieldDecorator(item.name,{...getDecoratorProps(item,form)})(getComponent(item,form))}
+            </Form.Item>
+        );
+    }
+    render() {
+        const {btnsCfg, searchBtnCfg,border} = this.props;
+        return (
+            <div className={['tbar-box',border?'': 'no-border'].join(" ")}>
                 <div className={'tbar-btn-box'}>
                     {
                         this.getBtnItems()
@@ -85,5 +122,4 @@ class ToolBar extends Component {
         );
     }
 }
-
-export default ToolBar;
+export default Form.create()(ToolBar);

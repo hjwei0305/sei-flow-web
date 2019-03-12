@@ -110,9 +110,6 @@ export default class TreeSelectWithService extends Component{
                 }
             }
         }else{
-            if (!this.props.initValue){
-                return
-            }
             this.setState({value:defaultValue})
         }
     }

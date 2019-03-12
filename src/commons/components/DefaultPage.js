@@ -39,8 +39,8 @@ class DefaultPage extends React.Component {
         return (
             <div id="pageInfo">
                 <Pagination
-                    size="small"
-                    style={{background:'#F3F8FC',fontSize: 12,textAlign:"center",paddingTop:6,paddingBottom:6,position: 'relative'}}
+                    className={"pagination-box"}
+                    size={"small"}
                     showSizeChanger={true}
                     showQuickJumper={true}
                     defaultPageSize={defaultPageSize}

@@ -72,7 +72,7 @@ class SimpleTable extends PureComponent {
             }else{
                 this.setState({scrollY:null})
             }
-            
+
         }
         //自定义列配置，前增加一列序号，后增加一列空白行修复 antd table 列和数据对不齐的 bug
         this.customerCloumns(this.props.columns);
@@ -96,12 +96,20 @@ class SimpleTable extends PureComponent {
 
     //改变表格高度
     updateSize(){
+      const {inCard,heightY} = this.props;
         //当 simpleDiv 渲染后和heightY不等于 auto 的时候做
         if(this.simpleDiv&&this.props.heightY!=='auto'){
             //窗口可视高度-simpleDiv到顶高度-5的偏移量为表格的高度，此时simpleDiv正好到屏底
-            let yHeight = document.body.clientHeight-this.getElementTop(this.simpleDiv)-5;
+            let yHeight = document.body.clientHeight-this.getElementTop(this.simpleDiv)-10;
             //table 纵向滚动条长度，83为 分页条的高度
-            let scrollY=(this.props.heightY?(this.props.heightY+12):(yHeight-83));
+          let scrollY= "100%";
+          if(heightY){
+            scrollY = heightY+12
+          }else if(inCard===true){
+            scrollY = yHeight-110
+          }else{
+            scrollY = yHeight-90
+          }
             this.setState({scrollY})
         }
     }
@@ -139,7 +147,7 @@ class SimpleTable extends PureComponent {
             let sequence = {
                 title: null,
                 key:'sequence',
-                width:40,
+                width:80,
                 align:"center",
                 render: (text, record, index) => {
                     const {pageInfo} = this.state
@@ -160,7 +168,7 @@ class SimpleTable extends PureComponent {
         }else{
             withSequence = [...columns]
         }
-       
+
         if(this.simpleDiv){
             //获取列的总长度
             let sumWidth = getTotalWith(withSequence);
@@ -274,7 +282,7 @@ class SimpleTable extends PureComponent {
         return {checked:this.state.selectedRowKeys.includes(record[this.props.rowKey||'id']),
                 disabled:record.disabled};
     }
-    
+
     //用户手动拉列宽度
     handleResize = index => (e, { size }) => {
         this.setState(({ columns }) => {
@@ -319,9 +327,9 @@ class SimpleTable extends PureComponent {
             }),
           }));
         return (
-            <div id="defaultSimpleTable" 
+            <div id="defaultSimpleTable"
             className={this.props.className}
-            ref={(div)=>this.simpleDiv=div} 
+            ref={(div)=>this.simpleDiv=div}
             style={{background:'#fff',...this.props.style}}>
                 <Table
                     ref={(table)=>this.table=table}
@@ -331,7 +339,7 @@ class SimpleTable extends PureComponent {
                     components={{...components,header: {cell: ResizeableTitle}}}
                     rowSelection={this.props.rowSelection?this.props.rowSelection:rowSelection}
                     dataSource={filterData}
-                    bordered={true}
+                    bordered={this.props.bordered || false}
                     loading={loading}
                     pagination={false}
                     columns={columnsResize}

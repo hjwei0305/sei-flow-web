@@ -10,12 +10,13 @@
   background: #e6f7ff;
 }
 
-.tr-size > td{
-  padding: 8px 4px!important
-}
-
 .columns-size {
   padding: 8px 4px!important;
+  table-layout:fixed;
+  max-width: 80px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow:hidden;
 }
 
 .ant-table-thead > tr > th {
@@ -39,9 +40,9 @@
   text-align: center;
 }
 
-.ant-table-thead > tr:first-child > th{
+/*.ant-table-thead > tr:first-child > th{
   background: rgba(39,174,255,.2);
-}
+}*/
 .ant-table-tbody > tr:hover > td{
   background: rgba(52, 204, 251, 0);
 }

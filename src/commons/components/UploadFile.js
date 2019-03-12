@@ -184,13 +184,19 @@ class UploadFile extends React.Component {
             return null;
         }
         let actions = [];
-        this.props.showPreview !== false
+        let flag = this.props.showPreview !== false
         && (item.name.toLocaleLowerCase().includes("doc")||item.name.toLocaleLowerCase().includes("pdf")
-        ||item.name.toLocaleLowerCase().includes("docx")||item.name.toLocaleLowerCase().includes("jpg")
-        ||item.name.toLocaleLowerCase().includes("png"))
-        ?actions.push(<a target="_blank" href={item.thumbUrl}>预览</a>):null;
-        this.props.download !== false?actions.push(<a target="_blank" href={item.url}>下载</a>):null;
-        this.props.type !== 'show' && !this.props.disabled?actions.push(<a target="_blank" onClick={() => this.handleRemove(item)}>删除</a>):null;
+            ||item.name.toLocaleLowerCase().includes("docx")||item.name.toLocaleLowerCase().includes("jpg")
+            ||item.name.toLocaleLowerCase().includes("png"));
+        if(flag){
+            actions.push(<a target="_blank" href={item.thumbUrl}>预览</a>)
+        }
+        if(this.props.download !== false){
+            actions.push(<a target="_blank" href={item.url}>下载</a>)
+        }
+        if(this.props.type !== 'show'&& !this.props.disabled){
+            actions.push(<a target="_blank" onClick={() => this.handleRemove(item)}>删除</a>)
+        }
         return actions;
     }
 

@@ -5,18 +5,23 @@
 .tbar-box{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     min-width: 100px;
-    background: #F3F8FC;
+    background: #fff;
     padding: 5px;
     border: 1px solid #e8e8e8;
     box-sizing: border-box;
     border-bottom: none;
 }
+.tbar-box.no-border{
+  border: none;
+}
 .tbar-box .tbar-btn{
     margin-right: 5px;
 }
-.tbar-box .tbar-search{
-    width: 180px;
+.tbar-form{
+    display: flex;
+    align-items: center;
 }
 .search-btn{
     margin-left: 15px;
@@ -57,18 +62,6 @@
     margin-left: 20px;
     color: #4aa7ff;
 }
-/*.item-table .ant-table-thead > tr > th{
-    min-width: 100px;
-    padding: 5px;
-    word-break: normal;
-    !*white-space:nowrap;*!
-}
-.item-table .ant-table-tbody > tr > td{
-    min-width: 100px;
-    padding: 5px;
-    word-break: normal;
-    !*white-space:nowrap;*!
-}*/
 .form-card-box #defaultSimpleTable .ant-table-wrapper{
     height: auto!important;
 }
@@ -77,7 +70,6 @@
 }
 
 .form-card-box .editable-cell-value-wrap {
-    /*padding: 5px 12px;*/
     height: 30px;
     cursor: pointer;
 }

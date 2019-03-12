@@ -6,7 +6,6 @@
 import React from 'react';
 import {Layout} from "antd";
 import PropTypes from 'prop-types';
-import '../baseCss/base.css'
 const {Header, Content} = Layout;
 
 const PageHeader = props => {

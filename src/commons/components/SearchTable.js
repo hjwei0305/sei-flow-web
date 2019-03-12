@@ -169,7 +169,7 @@ class SearchTable extends Component {
 
     getDataSource(value, pageInfo) {
         this.setState({loading: true});
-        this.props.config.dataService({...value, ...pageInfo, ...this.params, Q_EQ_frozen__bool: 0}).then((res) => {
+        this.props.config.dataService({...value, pageInfo, ...this.params, Q_EQ_frozen__bool: 0}).then((res) => {
             if (res && !res.rows) {
                 res = res.filter(item => Object.keys(item).includes('frozen')?item.frozen!==true:true)
             }
@@ -196,7 +196,7 @@ class SearchTable extends Component {
     pageChange = (pagination) => {
         this.setState({pageInfo: pagination});
         if (!this.props.config.searchService) {
-            this.getDataSource({Quick_value: this.state.searchValue}, pagination);
+            this.getDataSource({quickSearchValue: this.state.searchValue}, pagination);
         }
     };
 
@@ -207,7 +207,7 @@ class SearchTable extends Component {
                 this.setState({filterData: data.rows ? data.rows : data})
             })
         } else {
-            let searchParam = {Quick_value: values}
+            let searchParam = {quickSearchValue: values}
             this.getDataSource(searchParam)
         }
         this.setState({searchValue: values})

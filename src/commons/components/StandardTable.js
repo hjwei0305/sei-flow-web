@@ -5,7 +5,6 @@ import React, { PureComponent } from 'react';
 import { Form,Button, Col,Row, message, Input } from 'antd';
 import { CreateForm } from './ModalForm';
 import './StandardTable.css'
-import '../baseCss/base.css'
 import SimpleTable from "./SimpleTable";
 import { checkRight } from "../utils/CommonUtils";
 
