@@ -4,15 +4,13 @@
  */
 import {Component} from "react";
 import React from "react";
-import {Modal, Tree, Card} from "antd";
-import {Input, message} from "antd/lib/index";
+import {Input, Tree, Card,message} from "antd";
 import {hide, show} from "../../configs/SharedReducer";
 import connect from "react-redux/es/connect/connect";
 
 const DirectoryTree = Tree.DirectoryTree;
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
-const confirm = Modal.confirm;
 
 class StandardTree extends Component {
   constructor(props) {

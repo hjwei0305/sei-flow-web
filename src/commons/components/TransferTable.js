@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Button, Checkbox, Col, Form, Input, Row} from 'antd';
+import {Button, Checkbox, Col, Form, Icon, Input, Row} from 'antd';
 import SimpleTable from './SimpleTable';
 import PropTypes from 'prop-types'
 import TreeSelectWithService from "./TreeSelectWithService";
@@ -212,7 +212,6 @@ class TransferTable extends PureComponent {
   };
 
   selectedWithServiceChange = (selectedKey) => {
-    console.log("selectedKey:",selectedKey);
     const {JointQueryService} = this.props;
     this.setState({selectedKey});
     if (selectedKey&&JointQueryService){
@@ -315,6 +314,7 @@ class TransferTable extends PureComponent {
       />
     }
     const {style} = this.props;
+    const {rightDisabled,leftDisabled}=this.state
     return (
       <Row style={{height: "100%",background: '#f3f3f3', ...style}}
            type="flex" justify="space-between" align="middle">
@@ -346,17 +346,22 @@ class TransferTable extends PureComponent {
           </DetailCard>
         </Col>
         <Col key='middle' span={1} style={{display: 'flex', flexDirection: "column", alignItems: "center"}}>
+
           <Button
             key="rightButton"
+            shape="circle"
             icon="left"
-            style={{'marginBottom': '30px'}}
-            disabled={this.state.rightDisabled}
+            style={{'marginBottom': '30px',color: rightDisabled?null:'#1890FF'}}
+            disabled={rightDisabled}
             onClick={this.handleLeftClick}
           />
+
           <Button
             key="leftButton"
+            shape="circle"
             icon="right"
-            disabled={this.state.leftDisabled}
+            disabled={leftDisabled}
+            style={{'marginBottom': '30px',color: leftDisabled?null:'#1890FF'}}
             onClick={this.handleRightClick}/>
         </Col>
         <Col key='right' span={11} style={{height: "100%"}}>

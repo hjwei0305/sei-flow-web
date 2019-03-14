@@ -155,17 +155,17 @@ class AppModuleTable extends Component {
       {
         title: '描述',
         dataIndex: 'remark',
-        width: 140
+        width: 200
       },
       {
         title: 'web服务代码',
         dataIndex: 'webBaseAddress',
-        width: 200
+        width: 220
       },
       {
         title: 'api服务代码',
         dataIndex: 'apiBaseAddress',
-        width: 200,
+        width: 220,
       },
     ];
 

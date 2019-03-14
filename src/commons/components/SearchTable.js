@@ -118,7 +118,12 @@ class SearchTable extends Component {
                 })
             } else {
                 let searchParam = {};
-                searchParam['Q_EQ_' + key] = value;
+              searchParam.filters=[{
+                fieldName:key,
+                operator:"EQ",
+                value:value,
+                fieldType:"String"
+              }];
                 this.props.config.dataService({...searchParam}).then(res => {
                     let list
                     if (res.rows) {
@@ -169,7 +174,18 @@ class SearchTable extends Component {
 
     getDataSource(value, pageInfo) {
         this.setState({loading: true});
-        this.props.config.dataService({...value, pageInfo, ...this.params, Q_EQ_frozen__bool: 0}).then((res) => {
+      //   let  frozenFilter={
+      //   fieldName:"frozen",
+      //   operator:"EQ",
+      //   value:0,
+      //   fieldType:"bool"
+      // };
+      //   if (value.filters){
+      //     value.filters.push(frozenFilter)
+      //   }else {
+      //     value.filters=[frozenFilter]
+      //   }
+        this.props.config.dataService({...value, pageInfo, ...this.params}).then((res) => {
             if (res && !res.rows) {
                 res = res.filter(item => Object.keys(item).includes('frozen')?item.frozen!==true:true)
             }

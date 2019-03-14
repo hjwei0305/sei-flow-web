@@ -32,7 +32,8 @@ class DetailCard extends React.Component {
         const {bodyStyle,title,headStyle,style} = this.props;
         return (
             <Card
-                style={{ width: '100%',border:'none',...style}}
+                className={this.props.className}
+                style={{ width: '100%',border:'none',boxSizing: "border-box",...style}}
                 title={<div className={"card-title"}>{title}</div>}
                 headStyle={{border:'none',boxSizing: "border-box",...headStyle}}
                 bodyStyle={{padding:"0px 10px 10px",boxSizing: "border-box",...bodyStyle}}

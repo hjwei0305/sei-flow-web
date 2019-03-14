@@ -62,7 +62,6 @@ export default class SelectWithService extends Component {
         if (nextProps.params &&
             this.props.params &&
             Object.values(nextProps.params).toString() !== Object.values(this.props.params).toString()) {
-                console.log('componentWillReceiveProps',nextProps)
                 if(this.props.initValue){
                     this.getDataSource(nextProps.params,true)
                 }else {

@@ -222,7 +222,7 @@ div,span{
   align-items: center;
   min-width: 100px;
   background: #fff;
-  padding: 5px;
+  padding: 8px;
   border: none;
   box-sizing: border-box;
 }
@@ -250,8 +250,13 @@ div,span{
 
 .tbar-table {
   display: flex;
-  height: 100%;
   flex-direction: column;
+  box-sizing: border-box;
+}
+.tbar-table.tbar-table-back {
+  height: 100%;
+  padding: 8px 16px;
+  background: #fff;
 }
 
 /*表格无边框设置*/
@@ -279,8 +284,8 @@ div,span{
 
 /*左右分配页面*/
 .page-breadcrumb .page-box.allocation-page {
-  background: #F0F2F5;
-  padding: 0;
+  /*background: #F0F2F5;*/
+  padding: 8px;
   box-sizing: border-box;
 }
 /*tab 穿梭框*/
@@ -299,9 +304,7 @@ div,span{
   height: calc(100%  - 45px);
   box-sizing: border-box;
 }
-/*.page-box .transfer-tab-box .ant-tabs-content{
-  &:nth-child(@{n}){
-    margin-left: @n*8px;
-  }
-}*/
+.page-box .child-card{
+  box-shadow: 0 2px 8px 0 #aaa;
+}
 

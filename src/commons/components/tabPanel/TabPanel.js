@@ -4,8 +4,8 @@
  * @Date: 2019/2/20
  */
 import React, {Component} from 'react';
-import {Dropdown, Icon, Menu, Spin, Tabs} from "antd";
-import {getUserInfo} from "../../utils/CommonUtils";
+import {Dropdown, Menu, Tabs} from "antd";
+import {getUserInfo, isLocalhost} from "../../utils/CommonUtils";
 
 const TabPane = Tabs.TabPane;
 
@@ -50,9 +50,10 @@ class TabPanel extends Component {
                 this.setState({loadings: true});
                 //不存在则新开页签
                 let url = this.addTokenToUrl(tab.url);
-                url = url.replace("decmp.changhong.com","localhost:3000")
+                //todo 测试代码
+              url = url.replace("dsei.changhong.com","localhost:3000")
                 const closable = tab.closable !== false;
-                panes.push({title: tab.title, url, id: activeKey, closable});
+                panes.push({title: tab.title, url, id: activeKey, closable, featureCode: tab.featureCode});
                 this.setState({panes, activeKey});
             }else{
                 //激活
@@ -62,11 +63,11 @@ class TabPanel extends Component {
     }
     addTokenToUrl = (url) =>{
         let userInfo = getUserInfo()||{};
-        const {sessionId=""} = userInfo;
+        const {sessionId="", userId="", account=""} = userInfo;
         if (url.indexOf("?") !== -1) {
-            return url + "&_s=" + sessionId;
+            return url + "&_s=" + sessionId + '&userId='+userId + '&account='+account;
         } else {
-            return url + "?_s=" + sessionId;
+            return url + "?_s=" + sessionId + '&userId='+userId + '&account='+account;
         }
     }
     remove = (targetKey) => {
@@ -173,7 +174,7 @@ class TabPanel extends Component {
                 {
                     panes && panes.map(pane =>(
                         <TabPane tab={this.operations(pane)} key={pane.id} className={"main-tabpanel"} closable={pane.closable}>
-                                {pane.url ? <iframe frameBorder={0} id={pane.id} className={"iframe-box"} src={pane.url} onLoad = {()=>this.handleIframeLoad(pane.id)}/> : null}
+                                {pane.url ? <iframe frameBorder={0} id={pane.id} className={"iframe-box"} src={`${pane.url}&featureId=${pane.id}&featureCode=${pane.featureCode}`} onLoad = {()=>this.handleIframeLoad(pane.id)}/> : null}
                         </TabPane>
                     ))
                 }

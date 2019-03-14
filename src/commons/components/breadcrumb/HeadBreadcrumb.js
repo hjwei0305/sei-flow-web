@@ -29,6 +29,7 @@ class HeadBreadcrumb extends Component {
 
   render() {
     const {style,className,children, pathData, rightExtra, rightExtraClass, extra, extraClass, autoScroll} = this.props;
+    const hasHead = extra || pathData || rightExtra;
     return (
       <div className={"page-breadcrumb "+(!pathData&&!rightExtra?"no-breadcrumb":"")} >
         {
@@ -50,7 +51,7 @@ class HeadBreadcrumb extends Component {
         {
           extra ? <div className={extraClass || "bread-extra"}>{extra}</div> : null
         }
-        <div className={["page-box",pathData? "page-box-head":"page-box-no-head",className ? className : ""].join(" ")} style={{...style}}>
+        <div className={["page-box",hasHead ? "page-box-head":"page-box-no-head",className ? className : ""].join(" ")} style={{...style}}>
           {
             autoScroll ? (
               <Scrollbars autoHide={true}>
