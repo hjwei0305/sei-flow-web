@@ -14,6 +14,7 @@ import {deleteCorp, getWorkPage, save} from "./WorkPageService";
 import {appModuleConfig} from "../../../configs/CommonComponentsConfig";
 import SearchTable from "../../../commons/components/SearchTable";
 import WorkPageModal from "./WorkPageModal";
+import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
 
 const Search = Input.Search;
 const confirm = Modal.confirm;
@@ -27,9 +28,9 @@ class WorkPageTable extends Component {
             confirmLoading: false,
             selectedRows: [],
             isAdd: false,
-            pageInfo:null,
-            searchValue:"",
-            appModule:{}
+            pageInfo: null,
+            searchValue: "",
+            appModule: {}
         };
     }
 
@@ -58,8 +59,8 @@ class WorkPageTable extends Component {
     addClick = () => {
         this.handleModalVisible(true, true)
     };
-    editClick = () => {
-        if (!this.judgeSelected()) return;
+    editClick = (record) => {
+        this.setState({editData: record});
         this.handleModalVisible(true, false)
     };
     handleSave = () => {
@@ -74,12 +75,14 @@ class WorkPageTable extends Component {
                     if (result.status === "SUCCESS") {
                         message.success(result.message ? result.message : "请求成功");
                         //刷新本地数据
-                        this.getDataSource({quickSearchValue:this.state.searchValue,filters:[{
-                                fieldName:"appModuleId",//筛选字段
-                                operator:"EQ",//操作类型
-                                value:`${this.state.appModule.id}`,//筛选值
-                                fieldType:"String"//筛选类型
-                            }]});
+                        this.getDataSource({
+                            quickSearchValue: this.state.searchValue, filters: [{
+                                fieldName: "appModuleId",//筛选字段
+                                operator: "EQ",//操作类型
+                                value: `${this.state.appModule.id}`,//筛选值
+                                fieldType: "String"//筛选类型
+                            }]
+                        });
                     } else {
                         message.error(result.message ? result.message : "请求失败");
                     }
@@ -103,34 +106,37 @@ class WorkPageTable extends Component {
     };
 
     handleSearch = (value) => {
-        this.setState({searchValue:value});
-        this.getDataSource({quickSearchValue:value,filters:[{
-                fieldName:"appModuleId",//筛选字段
-                operator:"EQ",//操作类型
-                value:`${this.state.appModule.id}`,//筛选值
-                fieldType:"String"//筛选类型
-            }]});
+        this.setState({searchValue: value});
+        this.getDataSource({
+            quickSearchValue: value, filters: [{
+                fieldName: "appModuleId",//筛选字段
+                operator: "EQ",//操作类型
+                value: `${this.state.appModule.id}`,//筛选值
+                fieldType: "String"//筛选类型
+            }]
+        });
     };
 
-    deleteClick = () => {
-        if (!this.judgeSelected()) return;
+    deleteClick = (record) => {
         let thiz = this;
         confirm({
             title: "确定要删除吗？",
             onOk() {
                 let params = {};
-                params = thiz.state.selectedRows[0].id;
+                params = record.id;
                 thiz.props.show();
                 deleteCorp(params).then(result => {
                     if (result.status === "SUCCESS") {
                         message.success(result.message ? result.message : "请求成功");
                         //刷新本地数据
-                        thiz.getDataSource({quickSearchValue:thiz.state.searchValue,pageInfo:thiz.state.pageInfo,filters:[{
-                                fieldName:"appModuleId",//筛选字段
-                                operator:"EQ",//操作类型
-                                value:`${thiz.state.appModule.id}`,//筛选值
-                                fieldType:"String"//筛选类型
-                            }]});
+                        thiz.getDataSource({
+                            quickSearchValue: thiz.state.searchValue, pageInfo: thiz.state.pageInfo, filters: [{
+                                fieldName: "appModuleId",//筛选字段
+                                operator: "EQ",//操作类型
+                                value: `${thiz.state.appModule.id}`,//筛选值
+                                fieldType: "String"//筛选类型
+                            }]
+                        });
                     } else {
                         message.error(result.message ? result.message : "请求失败");
                     }
@@ -142,27 +148,47 @@ class WorkPageTable extends Component {
         });
     };
     selectChange = (record) => {
-        this.setState({appModule:record});
-        this.getDataSource({quickSearchValue:this.state.searchValue,filters:[{
-                fieldName:"appModuleId",//筛选字段
-                operator:"EQ",//操作类型
-                value:`${record.id}`,//筛选值
-                fieldType:"String"//筛选类型
-            }]});
+        this.setState({appModule: record});
+        this.getDataSource({
+            quickSearchValue: this.state.searchValue, filters: [{
+                fieldName: "appModuleId",//筛选字段
+                operator: "EQ",//操作类型
+                value: `${record.id}`,//筛选值
+                fieldType: "String"//筛选类型
+            }]
+        });
     };
     pageChange = (pageInfo) => {
         this.setState({
-            pageInfo:pageInfo,
+            pageInfo: pageInfo,
         });
-        this.getDataSource({quickSearchValue:this.state.searchValue,pageInfo,filters:[{
-                fieldName:"appModuleId",//筛选字段
-                operator:"EQ",//操作类型
-                value:`${this.state.appModule.id}`,//筛选值
-                fieldType:"String"//筛选类型
-            }]})
+        this.getDataSource({
+            quickSearchValue: this.state.searchValue, pageInfo, filters: [{
+                fieldName: "appModuleId",//筛选字段
+                operator: "EQ",//操作类型
+                value: `${this.state.appModule.id}`,//筛选值
+                fieldType: "String"//筛选类型
+            }]
+        })
     };
+
     render() {
         const columns = [
+            {
+                title: "操作",
+                width: 120,
+                dataIndex: "operator",
+                render: (text, record, index) => {
+                    return (
+                        <div className={'row-operator'} onClick={(e) => {
+                            e.stopPropagation()
+                        }}>
+                            <a className={'row-operator-item'} onClick={() => this.editClick(record)}>编辑</a>
+                            <a className={'row-operator-item'} onClick={() => this.deleteClick(record)}>删除</a>
+                        </div>
+                    )
+                }
+            },
             {
                 title: '名称',
                 dataIndex: 'name',
@@ -198,14 +224,9 @@ class WorkPageTable extends Component {
                     key="searchTable"
                     initValue={true}
                     isNotFormItem={true} config={appModuleConfig}
-                    style={{width: 220, marginRight: '8px'}}
+                    style={{width: 220}}
                     selectChange={this.selectChange}/>,
-                <Button key="edit" style={{marginRight: '8px'}}
-                        onClick={this.addClick}>新增</Button>,
-                <Button key="check" style={{marginRight: '8px'}}
-                        onClick={this.editClick}>编辑</Button>,
-                <Button key="frozen" style={{marginRight: '8px'}}
-                        onClick={this.deleteClick}>删除</Button>,
+                <Button key="edit" onClick={this.addClick}>新增</Button>,
             ]
         };
 
@@ -216,34 +237,36 @@ class WorkPageTable extends Component {
                     key="search"
                     placeholder="输入代码或名称查询"
                     onSearch={value => this.handleSearch(value)}
-                    style={{width: 230}}
-                    enterButton
+                    style={{width: 220}}
+                    allowClear
                 />
             ]
         };
-
+        const {editData, data, selectedRows, isAdd, modalVisible, confirmLoading} = this.state;
         return (
-            <div>
-                <div  className={'tbar-box'}>
-                    <div  className={'tbar-btn-box'}>{title()}</div>
-                    <div  className={'tbar-search-box'}>{search()}</div>
+            <HeadBreadcrumb>
+                <div>
+                    <div className={'tbar-box'}>
+                        <div className={'tbar-btn-box'}>{title()}</div>
+                        <div className={'tbar-search-box'}>{search()}</div>
+                    </div>
+                    <SimpleTable
+                        rowsSelected={selectedRows}
+                        onSelectRow={this.handleRowSelectChange}
+                        data={data}
+                        columns={columns}
+                        pageChange={this.pageChange}
+                    />
+                    <WorkPageModal
+                        isAdd={isAdd}
+                        modalVisible={modalVisible}
+                        confirmLoading={confirmLoading}
+                        handleOk={this.handleSave}
+                        handleCancel={this.handleModalCancel}
+                        onRef={this.onRef}
+                        defaultValue={editData ? editData : {}}/>
                 </div>
-                <SimpleTable
-                    rowsSelected={this.state.selectedRows}
-                    onSelectRow={this.handleRowSelectChange}
-                    data={ this.state.data}
-                    columns={columns}
-                    pageChange={this.pageChange}
-                />
-                <WorkPageModal
-                    isAdd={this.state.isAdd}
-                    modalVisible={this.state.modalVisible}
-                    confirmLoading={this.state.confirmLoading}
-                    handleOk={this.handleSave}
-                    handleCancel={this.handleModalCancel}
-                    onRef={this.onRef}
-                    defaultValue={this.state.selectedRows[0] ? this.state.selectedRows[0] : {}}/>
-            </div>
+            </HeadBreadcrumb>
         )
     }
 }

@@ -310,7 +310,7 @@ class FlowDefinationView extends Component {
             ]
         };
         return (
-            <div  className={"table-box"}>
+            <div>
                 {/*左边的树状控件*/}
                 <Col span={8}>
                     <div style={{margin: '10px 14px 10px'}}>

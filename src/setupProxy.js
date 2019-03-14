@@ -3,10 +3,10 @@
  * @Author: CHEHSHUANG
  * @Date: 2019/2/16
  */
-const proxy = require('http-proxy-middleware')
+const proxy = require('http-proxy-middleware');
 
 module.exports = function (app) {
-    app.use(proxy('/basic-service/', {target: 'http://decmp.changhong.com', changeOrigin: true}))
-    app.use(proxy('/basic-web/', {target: 'http://decmp.changhong.com', changeOrigin: true}))
-    app.use(proxy('/flow-service/', {target: 'http://decmp.changhong.com', changeOrigin: true}))
+    app.use(proxy('/basic-service/', {target: 'http://dsei.changhong.com/api-gateway', changeOrigin: true}));
+    app.use(proxy('/flow-service/', {target: 'http://dsei.changhong.com/api-gateway', changeOrigin: true}));
+    app.use(proxy('/auth-service/', {target: 'http://dsei.changhong.com', changeOrigin: true}))
 }
