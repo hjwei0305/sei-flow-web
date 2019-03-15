@@ -38,7 +38,7 @@ class BusinessModelModal extends Component {
             },
         };
 
-        const {confirmLoading, modalVisible, handleOk, handleCancel, defaultValue, operateFlag} = this.props;
+        const {confirmLoading, modalVisible, handleOk, handleCancel, defaultValue, operateFlag,appModuleId} = this.props;
         const {getFieldDecorator} = this.props.form;
         let title = "编辑业务实体";
         let FormValue = defaultValue;
@@ -48,7 +48,6 @@ class BusinessModelModal extends Component {
         }else if(operateFlag==='refAdd'){
             title = "参考创建业务实体";
         }
-        FormValue.appModule = defaultValue.appModule;
         return (
             <div>
                 <Modal title={<span className={'header-span'}>{title}</span>}
@@ -66,7 +65,7 @@ class BusinessModelModal extends Component {
                                 {...formItemLayout}
                                 label="应用模块">
                                 {getFieldDecorator('appModule.id', {
-                                    initialValue: FormValue.appModule ? FormValue.appModule.id : "",
+                                    initialValue: appModuleId ? appModuleId : "",
                                     rules: [{required: true, message: '请选择应用模块!'}]
                                 })(
                                     <SearchTable config={appModuleConfig} initValue={false}/>

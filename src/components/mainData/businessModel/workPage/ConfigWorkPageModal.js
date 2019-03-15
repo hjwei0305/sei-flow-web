@@ -13,42 +13,38 @@ import {listAllNotSelectEdByAppModuleId, listAllSelectEdByAppModuleId, saveSetWo
 
 class ConfigWorkPageModal extends Component {
 
-    onRef=(ref)=>{
-        this.ref=ref;
+    onRef = (ref) => {
+        this.ref = ref;
     };
-    handleLeftClick = async (rows,rightData) => {
-        console.log("rows is ", rows);
-        console.log("rightData is ", rightData);
-        const {appModuleId,businessModelId} = this.props;
+    handleLeftClick = async (rows, rightData) => {
+        const {appModuleId, businessModelId} = this.props;
         let ids = [];
         for (let data of rightData) {
-            if (rows.findIndex(item=>item.id===data.id)>-1){
+            if (rows.findIndex(item => item.id === data.id) > -1) {
                 continue;
             }
             ids.push(data.id);
         }
-        await saveSetWorkPage(`/${businessModelId}`,ids.join(',')).then((data) => {
+        await saveSetWorkPage(`/${businessModelId}`, ids.join(',')).then((data) => {
         }).catch(err => {
             this.props.hide()
         })
 
     }
 
-    handleRightClick = async (rows,rightData) => {
-        console.log("rows is ", rows);
-        console.log("rightData is ", rightData);
-        const {appModuleId,businessModelId} = this.props;
+    handleRightClick = async (rows, rightData) => {
+        const {appModuleId, businessModelId} = this.props;
         let ids = [];
         for (let i = 0; i < rows.length; i++) {
             ids.push(rows[i].id);
         }
         for (let data of rightData) {
-            if (rows.findIndex(item=>item.id===data.id)>-1){
+            if (rows.findIndex(item => item.id === data.id) > -1) {
                 continue;
             }
             ids.push(data.id);
         }
-        await saveSetWorkPage(`/${businessModelId}`,ids.join(',')).then((data) => {
+        await saveSetWorkPage(`/${businessModelId}`, ids.join(',')).then((data) => {
         }).catch(err => {
             this.props.hide()
         })
@@ -56,60 +52,64 @@ class ConfigWorkPageModal extends Component {
 
     leftService = async (params) => {
         let result = [];
-        const {appModuleId,businessModelId} = this.props;
-         await listAllNotSelectEdByAppModuleId(`/${appModuleId}/${businessModelId}`).then((res) => {
-            result = res;
-        })
-        return result;
+        const {appModuleId, businessModelId} = this.props;
 
+        let moduleId = "";
+        if (!params.selectedKey) {
+            moduleId = appModuleId;
+        } else {
+            moduleId = params.selectedKey;
+        }
+        await listAllNotSelectEdByAppModuleId("/" + `${moduleId}/${businessModelId}`).then((res) => {
+            result = res;
+        });
+        return result;
     };
 
     rightService = async (params) => {
         let result = [];
-        const {appModuleId,businessModelId} = this.props;
+        const {appModuleId, businessModelId} = this.props;
         await listAllSelectEdByAppModuleId({businessModelId}).then((res) => {
             result = res
         });
         return result;
     };
 
-     JointQueryService=async(key)=> {
-         const {appModuleId,businessModelId} = this.props;
-         // if (this.ref){
-         //     this.ref.loadRightData({key,businessModelId})
-         // }
+    JointQueryService = async (key) => {
+        const {appModuleId, businessModelId} = this.props;
         let result = [];
-        await listAllNotSelectEdByAppModuleId(`/${key}/${businessModelId}`).then((res) => {
+        await listAllNotSelectEdByAppModuleId("/" + `${key}/${businessModelId}`).then((res) => {
             result = res
         });
         return result;
     };
 
     render() {
+        const {appModuleId} = this.props;
         const leftColumns = [
             {
                 title: '名称',
                 dataIndex: 'name',
-                width:200
+                width: 200
             },
             {
                 title: 'URL地址',
                 dataIndex: 'url',
-                width:300
+                width: 300
             }
         ];
-        const searchTableConfig = {...appModuleConfig, lable: "应用模块"};
-        const {modalVisible,handleCancel} = this.props;
+        const searchTableConfig = {...appModuleConfig, lable: "应用模块", defaultValue: appModuleId,props:{canNotClear:true}};
+        const {modalVisible, handleCancel} = this.props;
         return (
             <Modal title={<span className={'header-span'}>{"工作界面配置"}</span>}
                    visible={modalVisible}
                    width={1000}
                    maskClosable={false}
                    onCancel={handleCancel}
-                   bodyStyle={{minHeight:500}}
+                   bodyStyle={{minHeight: 500}}
                    footer={false}
             >
-                <div style={{textAlign:"center"}}>
+                <div style={{textAlign: "center"}}>
                     <TransferTable
                         width={900}
                         handleLeftClick={this.handleLeftClick.bind(this)}

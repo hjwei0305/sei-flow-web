@@ -31,9 +31,11 @@ class TransferTable extends PureComponent {
   }
 
   componentWillMount() {
-    const {treeSelectConfig} = this.props;
+    const {treeSelectConfig,searchTableConfig} = this.props;
     if (treeSelectConfig && treeSelectConfig.defaultValue) {
       this.setState({selectedKey: treeSelectConfig.defaultValue})
+    }else if (searchTableConfig&&searchTableConfig.defaultValue){
+        this.setState({selectedKey: searchTableConfig.defaultValue})
     }
     if (this.props.initValue !== false) {
       this.loadLeftData();
@@ -239,6 +241,7 @@ class TransferTable extends PureComponent {
 
   selectChange = (select) => {
     this.setState({selectedKey: select.id, leftSearchValue: ''});
+    console.log("select:",select)
     const {JointQueryService} = this.props;
     if (select.id&&JointQueryService){
       this.setState({leftLoading: true});
@@ -278,6 +281,7 @@ class TransferTable extends PureComponent {
         treeSelectConfig && <span style={{marginLeft: 5}} key={"treeSelecteWithService"}>
                         <TreeSelectWithService
                           value={this.state.selectedKey}
+                          {...treeSelectConfig.props}
                           config={treeSelectConfig} width={220} onChange={this.selectedWithServiceChange}/></span>,
 
         checkBoxConfig && <span style={{marginLeft: 5}}
@@ -289,7 +293,9 @@ class TransferTable extends PureComponent {
         searchTableConfig && <span style={{marginLeft: 5}}
                                    key={"searchTableLable"}>{searchTableConfig.lable ? searchTableConfig.lable + ":" : ""}</span>,
         searchTableConfig && <span style={{marginLeft: 5}} key={"searchTable"}>
-                       <SearchTable isNotFormItem={true} config={searchTableConfig} initValue={false}
+                       <SearchTable isNotFormItem={true} config={searchTableConfig}
+                                    value={this.state.selectedKey}
+                                    {...searchTableConfig.props}
                                     selectChange={this.selectChange} style={{width: 220, marginLeft: 5}}/>
                     </span>
 

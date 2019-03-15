@@ -17,7 +17,8 @@ export async function deleteCorp(param=''){
 }
 //工作界面
 export async function listAllNotSelectEdByAppModuleId(paramsPath="") {
-    return httpUtils.get(baseUrl + "/workPageUrl/findNotSelectEdByAppModuleId"+paramsPath);
+    // return httpUtils.get(baseUrl + "/workPageUrl/findNotSelectEdByAppModuleId"+paramsPath,{});
+    return httpUtils.get(baseUrl + "/workPageUrl/findNotSelectEdByAppModuleId"+paramsPath,{});
 }
 export async function listAllSelectEdByAppModuleId(params = {}) {
     return httpUtils.get(baseUrl + "/workPageUrl/findSelectEdByBusinessModelId", params);
