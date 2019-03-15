@@ -183,8 +183,8 @@ class WorkPageTable extends Component {
                         <div className={'row-operator'} onClick={(e) => {
                             e.stopPropagation()
                         }}>
-                            <a className={'row-operator-item'} onClick={() => this.editClick(record)}>编辑</a>
-                            <a className={'row-operator-item'} onClick={() => this.deleteClick(record)}>删除</a>
+                            <a className={'row-operator-item'} key={"edit"+index} onClick={() => this.editClick(record)}>编辑</a>
+                            <a className={'row-operator-item'} key={"delete" +index} onClick={() => this.deleteClick(record)}>删除</a>
                         </div>
                     )
                 }
@@ -220,13 +220,15 @@ class WorkPageTable extends Component {
 
         const title = () => {
             return [
-                <SearchTable
-                    key="searchTable"
-                    initValue={true}
-                    isNotFormItem={true} config={appModuleConfig}
-                    style={{width: 220}}
-                    selectChange={this.selectChange}/>,
-                <Button key="edit" onClick={this.addClick}>新增</Button>,
+                <span key={"select"} className={"primaryButton"}>应用模块：
+                    <SearchTable
+                        key="searchTable"
+                        initValue={true}
+                        isNotFormItem={true} config={appModuleConfig}
+                        style={{width: 220}}
+                        selectChange={this.selectChange}/>
+                </span>,
+                <Button  key={"add"} className={"primaryButton"} onClick={this.addClick}>新增</Button>,
             ]
         };
 

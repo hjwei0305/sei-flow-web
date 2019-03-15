@@ -83,13 +83,6 @@ class AppModuleTable extends Component {
       }
     })
   };
-  judgeSelected = () => {
-    if (this.state.selectedRows.length === 0) {
-      message.error("请选择一行数据！");
-      return false
-    }
-    return true
-  };
 
   handleModalCancel = () => {
     this.handleModalVisible(false)

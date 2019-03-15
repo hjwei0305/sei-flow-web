@@ -89,7 +89,8 @@ class WorkPageModal extends Component {
                         {...formItemLayout}
                         label="必须提交">
                         {getFieldDecorator('mustCommit', {
-                            initialValue: !!FormValue.mustCommit,
+                            initialValue: FormValue.mustCommit,
+                            valuePropName: "checked"
                         })(
                             <Checkbox/>
                         )}
