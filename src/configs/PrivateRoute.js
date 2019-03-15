@@ -20,7 +20,7 @@ class PrivateRoute extends Component {
         }
     }
     componentWillMount(){
-        let urlParams = queryString.parse(this.props.location.search);
+        // let urlParams = queryString.parse(this.props.location.search);
    /*     if(urlParams && urlParams._s){
             httpUtils.get(check_host+basicAuthor+"/checkToken?_s="+urlParams._s+'&AppCode='+defaultAppCode.toString()).then(res => {
                 if(res.success){
