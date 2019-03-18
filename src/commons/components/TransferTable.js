@@ -247,7 +247,7 @@ class TransferTable extends PureComponent {
       this.setState({leftLoading: true});
       JointQueryService(select.id).then(res => {
         this.setState({
-          leftData: res,
+          leftData: res instanceof Array ? res : [],
           leftLoading: false,
           leftRowsSelected: [],
           rightDisabled: true,

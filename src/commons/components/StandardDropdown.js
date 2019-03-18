@@ -19,7 +19,6 @@ class StandardDropdown extends Component {
   getVisibleOperaters = () => {
     let visibleOperaters = [];
     const {operator} = this.props;
-    console.log("operator:",operator)
     if (operator){
       operator.map(item=>{
         if (item.props.operateCode&&item.props.children){
@@ -29,7 +28,6 @@ class StandardDropdown extends Component {
         }
       });
     }
-    console.log("visibleOperaters:",visibleOperaters)
      return visibleOperaters
   };
   getOverFlow = () => {
