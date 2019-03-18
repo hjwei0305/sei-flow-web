@@ -246,6 +246,7 @@ div,span{
 .row-operator-item:not(:last-child) {
   font-size: 14px;
   margin-right: 12px;
+  text-decoration: none;
 }
 
 .tbar-table {

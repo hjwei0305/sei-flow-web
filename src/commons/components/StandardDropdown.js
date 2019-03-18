@@ -16,25 +16,42 @@ class StandardDropdown extends Component {
     super(props);
     this.state = {};
   }
-
+  getVisibleOperaters = () => {
+    let visibleOperaters = [];
+    const {operator} = this.props;
+    console.log("operator:",operator)
+    if (operator){
+      operator.map(item=>{
+        if (item.props.operateCode&&item.props.children){
+          visibleOperaters.push(item)
+        }else if(!item.operateCode){
+          visibleOperaters.push(item)
+        }
+      });
+    }
+    console.log("visibleOperaters:",visibleOperaters)
+     return visibleOperaters
+  };
   getOverFlow = () => {
-    const {operator, overlay} = this.props;
-    let overData = operator;
-    if (overlay && operator.length > overlay) {
-      overData = operator.slice(0, overlay);
-    } else if (!overlay && operator.length > 2) {
-      overData = operator.slice(0, 2);//没配置overlay时默认展开两个item
+    let visibleOperaters=this.getVisibleOperaters();
+    const {overlay} = this.props;
+    let overData = visibleOperaters;
+    if (overlay && visibleOperaters.length > overlay) {
+      overData = visibleOperaters.slice(0, overlay);
+    } else if (!overlay && visibleOperaters.length > 2) {
+      overData = visibleOperaters.slice(0, 2);//没配置overlay时默认展开两个item
     }
     return overData
   };
 
   getMenu = () => {
-    const {operator, overlay} = this.props;
+    let visibleOperaters=this.getVisibleOperaters();
+    const {overlay} = this.props;
     let menuData = [];
     if (overlay) {
-      menuData = operator.slice(overlay, operator.length);
+      menuData = visibleOperaters.slice(overlay, visibleOperaters.length);
     } else {
-      menuData = operator.slice(2, operator.length);
+      menuData = visibleOperaters.slice(2, visibleOperaters.length);
     }
     return <Menu>
       {menuData.map((item, i) => {
@@ -47,13 +64,13 @@ class StandardDropdown extends Component {
 
   render() {
     const {operator, overlay} = this.props;
-
+    let visibleOperaters=this.getVisibleOperaters();
     return (
       <div style={{textAlign: "center"}}>
         {this.getOverFlow()}
-        {(!overlay && operator.length > 2) || (overlay && operator.length > overlay) ?
+        {(!overlay && visibleOperaters.length > 2) || (overlay && visibleOperaters.length > overlay) ?
           <Dropdown overlay={this.getMenu()}>
-            <a className="ant-dropdown-link" href="#">
+            <a className="ant-dropdown-link">
               ...
             </a>
           </Dropdown> : null}
