@@ -17,9 +17,9 @@ export const _loginUrl = check_host+"/react-basic-web/login";
 
 export const defaultAppCode = ["BASIC-WEB","REACT-FLOW-WEB"];
 
-export const defaultPageSize = 2;
+export const defaultPageSize = 15;
 export const rowGutter = 20;
-export const defaultPageSizeOptions = ['2', '50', '100'];
+export const defaultPageSizeOptions = ['15', '50', '100'];
 
 
 
