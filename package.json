@@ -48,7 +48,8 @@
         "REACT_APP_CHECK_URL": "http://dsei.changhong.com",
         "REACT_APP_AUTHOR_URI": "/auth-service",
         "REACT_APP_API_URI": "/flow-service",
-        "REACT_APP_BASIC_API":"/basic-service"
+        "REACT_APP_BASIC_API":"/basic-service",
+        "REACT_APP_MODULE_NAME": "RRACT-FLOW"
       }
     },
     "build:dev": {
@@ -58,7 +59,8 @@
         "REACT_APP_CHECK_URL": "http://dsei.changhong.com",
         "REACT_APP_AUTHOR_URI": "/auth-service",
         "REACT_APP_API_URI": "/flow-service",
-        "REACT_APP_BASIC_API":"/basic-service"
+        "REACT_APP_BASIC_API":"/basic-service",
+        "REACT_APP_MODULE_NAME": "RRACT-FLOW"
       }
     },
     "build:test": {
@@ -68,7 +70,8 @@
         "REACT_APP_CHECK_URL": "http://tsei.changhong.com",
         "REACT_APP_AUTHOR_URI": "/auth-service",
         "REACT_APP_API_URI": "/flow-service",
-        "REACT_APP_BASIC_API":"/basic-service"
+        "REACT_APP_BASIC_API":"/basic-service",
+        "REACT_APP_MODULE_NAME": "RRACT-FLOW"
       }
     },
     "build:production": {
@@ -78,7 +81,8 @@
         "REACT_APP_CHECK_URL": "http://dsei.changhong.com",
         "REACT_APP_AUTHOR_URI": "/auth-service",
         "REACT_APP_API_URI": "/flow-service",
-        "REACT_APP_BASIC_API":"/basic-service"
+        "REACT_APP_BASIC_API":"/basic-service",
+        "REACT_APP_MODULE_NAME": "RRACT-FLOW"
       }
     }
   },

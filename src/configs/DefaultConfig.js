@@ -4,7 +4,10 @@ const {
     REACT_APP_AUTHOR_URI,
     REACT_APP_API_URI,
     REACT_APP_BASIC_API,
+    REACT_APP_MODULE_NAME,
 } = process.env;
+
+console.log(REACT_APP_MODULE_NAME, 'MODULE_NAME');
 
 export const host = REACT_APP_HOST;
 export const check_host = REACT_APP_CHECK_URL;
