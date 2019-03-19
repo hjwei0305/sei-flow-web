@@ -55,6 +55,7 @@ class ExUserModal extends Component {
                        afterClose={this.handleClose}
                        confirmLoading={confirmLoading}
                        maskClosable={false}
+                       centered={true}
                 >
                     <FormItem
                         style={{display: "none"}}

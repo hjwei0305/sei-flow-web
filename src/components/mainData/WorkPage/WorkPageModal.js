@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Form, Input, Modal, Tabs, Checkbox} from 'antd';
+import {Form, Input, Modal, Checkbox} from 'antd';
 import SearchTable from "../../../commons/components/SearchTable";
 import {appModuleConfig} from "../../../configs/CommonComponentsConfig";
 
@@ -47,7 +47,7 @@ class WorkPageModal extends Component {
         }
         return (
             <div>
-                <Modal title={<span className={'header-span'}>{title}</span>}
+                <Modal title={title}
                        visible={modalVisible}
                        onOk={handleOk}
                        onCancel={handleCancel}

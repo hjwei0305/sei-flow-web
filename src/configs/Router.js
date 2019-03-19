@@ -5,7 +5,7 @@ import React, {Component, Suspense, lazy} from 'react';
 import {BrowserRouter as Router, Route as NoAuthRoute, Switch, Redirect} from 'react-router-dom'
 import Route from './PrivateRoute'
 import {Spin} from "antd";
-
+import Login from "../components/login";
 const Demo = lazy(() => import('../commons/components/Demo'));
 const IndexView = lazy(() => import('./IndexView'));
 const AppModuleTable = lazy(() => import('../components/mainData/AppModule/AppModuleTable'));
@@ -23,6 +23,8 @@ export default class Routers extends Component {
                 >
                     <Switch>
                         <Route path='/' exact component={IndexView}/>
+                        <NoAuthRoute path="/login" component={Login}/>
+                        <Route path='/index' component={IndexView}/>
                         <Route path='/Demo' component={Demo}/>
                         {/*后台配置*/}
                         <Route path='/AppModuleTable' component={AppModuleTable}/>

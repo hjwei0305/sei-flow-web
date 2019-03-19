@@ -4,8 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Form, Input, Modal, Tabs, InputNumber} from 'antd';
-import {cache} from "../../../commons/utils/CommonUtils";
+import {Form, Input, Modal, InputNumber} from 'antd';
 
 const FormItem = Form.Item;
 
@@ -46,7 +45,7 @@ class EditAppModuleModal extends Component {
         }
         return (
             <div>
-                <Modal title={<span className={'header-span'}>{title}</span>}
+                <Modal title={title}
                        visible={modalVisible}
                        onOk={handleOk}
                        onCancel={handleCancel}

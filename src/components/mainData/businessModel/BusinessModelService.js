@@ -16,14 +16,14 @@ export async function deleteCorp(param=''){
     return httpUtils.delete(baseUrl+"/businessModel/deleteById",param);
 }
 //工作界面
-export async function listAllNotSelectEdByAppModuleId(paramsPath="") {
+export async function listAllNotSelectEdByAppModuleId(paramsPath='') {
     // return httpUtils.get(baseUrl + "/workPageUrl/findNotSelectEdByAppModuleId"+paramsPath,{});
     return httpUtils.get(baseUrl + "/workPageUrl/findNotSelectEdByAppModuleId"+paramsPath,{});
 }
 export async function listAllSelectEdByAppModuleId(params = {}) {
     return httpUtils.get(baseUrl + "/workPageUrl/findSelectEdByBusinessModelId", params);
 }
-export async function saveSetWorkPage(paramsPath="",params='') {
+export async function saveSetWorkPage(paramsPath='',params='') {
     return httpUtils.postJson(baseUrl + "/businessWorkPageUrl/saveBusinessWorkPageUrlByIds"+paramsPath,params);
 }
 //服务地址

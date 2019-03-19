@@ -50,7 +50,7 @@ class BusinessModelModal extends Component {
         }
         return (
             <div>
-                <Modal title={<span className={'header-span'}>{title}</span>}
+                <Modal title={title}
                        visible={modalVisible}
                        onOk={handleOk}
                        onCancel={handleCancel}
@@ -58,6 +58,7 @@ class BusinessModelModal extends Component {
                        afterClose={this.handleClose}
                        confirmLoading={confirmLoading}
                        maskClosable={false}
+                       centered={true}
                 >
                     <Row>
                         <Col span={12}>

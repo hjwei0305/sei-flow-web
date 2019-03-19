@@ -67,6 +67,7 @@ class PropertiesForConditionPojoModal extends Component {
                    onCancel={handleCancel}
                    bodyStyle={{minHeight:500}}
                    footer={false}
+                   centered={true}
             >
                 <div>
                     <SimpleTable

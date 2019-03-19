@@ -21,7 +21,7 @@ export function getHeader() {
         authHeader = {
             'Content-Type':'application/json;charset=UTF-8',
             'Cache-Control': 'no-cache',
-            "Authorization":auth?(auth.accessToken?auth.accessToken:""):""
+             "Authorization":auth?(auth.accessToken?auth.accessToken:""):"",
         }
     } catch (e) {
     }

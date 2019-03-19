@@ -13,10 +13,9 @@ import {listAllNotSelectEdByAppModuleId, listAllSelectEdByAppModuleId, saveSetWo
 
 class ConfigWorkPageModal extends Component {
 
-    onRef = (ref) => {
-        this.ref = ref;
-    };
+    //删除分配
     handleLeftClick = async (rows, rightData) => {
+        // console.log("left:",rows,"right:",rightData)
         const {appModuleId, businessModelId} = this.props;
         let ids = [];
         for (let data of rightData) {
@@ -32,7 +31,9 @@ class ConfigWorkPageModal extends Component {
 
     }
 
+    //插入分配
     handleRightClick = async (rows, rightData) => {
+        // console.log("left:",rows,"right:",rightData)
         const {appModuleId, businessModelId} = this.props;
         let ids = [];
         for (let i = 0; i < rows.length; i++) {
@@ -108,6 +109,7 @@ class ConfigWorkPageModal extends Component {
                    onCancel={handleCancel}
                    bodyStyle={{minHeight: 500}}
                    footer={false}
+                   centered={true}
             >
                 <div style={{textAlign: "center"}}>
                     <TransferTable
@@ -123,7 +125,6 @@ class ConfigWorkPageModal extends Component {
                         heightY={250}
                         leftSearch={false}
                         rightSearch={false}
-                        onRef={this.onRef}
                     />
                 </div>
             </Modal>

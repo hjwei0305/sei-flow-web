@@ -343,7 +343,7 @@ class SimpleTable extends PureComponent {
                     loading={loading}
                     pagination={false}
                     columns={columnsResize}
-                    expandedRowRender={this.props.expandedRowRender}
+                   // expandedRowRender={this.props.expandedRowRender}
                     rowClassName={this.rowClassName}
                     scroll={this.props.pagination === false?{x:scrollX}:{y:scrollY?scrollY:null,x:scrollX}}
                     onRow={onRow || ((record,index) => {

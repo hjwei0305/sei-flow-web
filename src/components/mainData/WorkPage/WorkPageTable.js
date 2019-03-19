@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Col, Row, message, Input, Modal} from 'antd';
+import {Button,message, Input, Modal} from 'antd';
 import SimpleTable from "../../../commons/components/SimpleTable";
 import {hide, show} from "../../../configs/SharedReducer";
 import {deleteCorp, getWorkPage, save} from "./WorkPageService";

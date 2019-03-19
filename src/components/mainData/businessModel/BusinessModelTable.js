@@ -7,11 +7,11 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Col, Row, message, Input, Modal} from 'antd';
+import {Button, message, Input, Modal} from 'antd';
 import SimpleTable from "../../../commons/components/SimpleTable";
 import {hide, show} from "../../../configs/SharedReducer";
 import {deleteCorp, getBusinessModel, save} from "./BusinessModelService";
-import {appModuleAuthConfig, appModuleConfig} from "../../../configs/CommonComponentsConfig";
+import {appModuleAuthConfig} from "../../../configs/CommonComponentsConfig";
 import SearchTable from "../../../commons/components/SearchTable";
 import BusinessModelModal from "./BusinessModelModal";
 import ConfigWorkPageModal from "./workPage/ConfigWorkPageModal";

@@ -90,7 +90,6 @@ class AppModuleTable extends Component {
 
   handleSearch = (value) => {
     searchListByKeyWithTag(this.state.data, {keyword: value},["code","name"]).then(data => {
-      console.log("data:", data)
       this.setState({data, searchValue: value})
     })
   };

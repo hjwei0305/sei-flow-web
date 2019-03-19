@@ -9,7 +9,10 @@ div,span{
   margin: 10px 10%;
   padding-top: 10px;
 }
-
+.ant-modal-header .ant-modal-title{
+  color: rgba(0,0,0,0.85);
+  font-weight: normal !important;
+}
 .layout-header.ant-layout-header {
   background: #ffffff
 }
@@ -246,7 +249,6 @@ div,span{
 .row-operator-item:not(:last-child) {
   font-size: 14px;
   margin-right: 12px;
-  text-decoration: none;
 }
 
 .tbar-table {
@@ -275,6 +277,13 @@ div,span{
   padding: 5px;
   text-align: right;
   box-sizing: border-box;
+}
+#pageInfo .ant-select-dropdown-menu-item{
+  font-size: 12px;
+}
+#pageInfo .ant-select-dropdown-menu-item.ant-select-dropdown-menu-item-selected{
+  font-weight: normal;
+  color: #1890ff;
 }
 .card-body-content{
   padding-left: 24px;
@@ -307,5 +316,11 @@ div,span{
 }
 .page-box .child-card{
   box-shadow: 0 2px 8px 0 #aaa;
+}
+.text-short{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 180px;
 }
 

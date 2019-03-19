@@ -350,7 +350,6 @@ class SearchTable extends Component {
     }
 
     render() {
-        console.log(this.props.value,this.props.isNotFormItem,this.state.value,this.props.canNotClear)
         const suffix = !this.props.disabled&& ([
           this.props.value ||(this.props.isNotFormItem&&this.state.value)? !this.props.canNotClear?<Icon key="emptyClick" type="close" onClick={this.emptyValue}/>:"":"",
             <Icon key="selectClict" type="down" onClick={this.showDrop}/>,

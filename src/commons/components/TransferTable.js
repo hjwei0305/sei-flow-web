@@ -31,11 +31,11 @@ class TransferTable extends PureComponent {
   }
 
   componentWillMount() {
-    const {treeSelectConfig,searchTableConfig} = this.props;
+    const {treeSelectConfig, searchTableConfig} = this.props;
     if (treeSelectConfig && treeSelectConfig.defaultValue) {
       this.setState({selectedKey: treeSelectConfig.defaultValue})
-    }else if (searchTableConfig&&searchTableConfig.defaultValue){
-        this.setState({selectedKey: searchTableConfig.defaultValue})
+    } else if (searchTableConfig && searchTableConfig.defaultValue) {
+      this.setState({selectedKey: searchTableConfig.defaultValue})
     }
     if (this.props.initValue !== false) {
       this.loadLeftData();
@@ -57,6 +57,10 @@ class TransferTable extends PureComponent {
     if (beTree && leftTreeService) {
       service = leftTreeService;
     }
+    // if (params&&!params.selectedKey&&this.state.selectedKey){
+    //   params.selectedKey=this.state.selectedKey
+    // }
+    // console.log("selectedKey:",params.selectedKey)
     this.setState({leftLoading: true});
     service({...params, pageInfo}).then(res => {
       this.setState({
@@ -177,28 +181,44 @@ class TransferTable extends PureComponent {
   }
 
   handleRightClick = () => {
+    let params = {};
+    if (this.state.selectedKey) {
+      params.selectedKey = this.state.selectedKey
+    }
+    if (this.props.checkBoxConfig) {
+      params.includeSubNode = this.state.includeSubNode
+    }
     this.props.handleRightClick(this.state.leftRowsSelected, this.state.rightData).then(() => {
-      this.loadRightData();
-      this.loadLeftData();
+      if (this.props.updateLeftByJointQueryService){
+        this.doJointQueryService(this.state.selectedKey)
+        this.loadRightData(params);
+      }else {
+        this.loadLeftData(params);
+        this.loadRightData(params);
+      }
     })
   }
 
   handleLeftClick = () => {
     if (this.props.handleLeftClick) {
+      let params = {};
+      if (this.state.selectedKey) {
+        params.selectedKey = this.state.selectedKey
+      }
+      if (this.props.checkBoxConfig) {
+        params.includeSubNode = this.state.includeSubNode
+      }
       this.props.handleLeftClick(this.state.rightRowsSelected, this.state.rightData).then(() => {
         if (this.state.leftData.rows) {
-          let params = {quickSearchValue: this.state.leftSearchValue};
-          if (this.props.checkBoxConfig) {
-            params.includeSubNode = this.state.includeSubNode
-          }
-          if (this.state.selectedKey) {
-            params.selectedKey = this.state.selectedKey
-          }
-          this.loadLeftData(params);
-        } else {
-          this.loadLeftData();
+          params.quickSearchValue = this.state.leftSearchValue
         }
-        this.loadRightData();
+        if (this.props.updateLeftByJointQueryService){
+          this.doJointQueryService(this.state.selectedKey)
+          this.loadRightData(params);
+        }else {
+          this.loadLeftData(params);
+          this.loadRightData(params);
+        }
       })
     }
   }
@@ -214,38 +234,19 @@ class TransferTable extends PureComponent {
   };
 
   selectedWithServiceChange = (selectedKey) => {
-    const {JointQueryService} = this.props;
-    this.setState({selectedKey});
-    if (selectedKey&&JointQueryService){
-      JointQueryService(selectedKey).then(res => {
-        this.setState({
-          leftData: res instanceof Array ? res : [],
-          leftLoading: false,
-          leftRowsSelected: [],
-          rightDisabled: true,
-          leftDisabled: true
-        })
-      }).catch(err => {
-        this.setState({leftLoading: false});
-      })
-    }else {
-      let params = {quickSearchValue: this.state.leftSearchValue};
-      if (this.props.checkBoxConfig) {
-        params.includeSubNode = this.state.includeSubNode
-      }
-      //params.selectedKey = selectedKey;
-      this.loadLeftData(params);
-    }
+    this.setState({selectedKey, leftSearchValue: ''});
+    this.doJointQueryService(selectedKey)
 
   };
-
   selectChange = (select) => {
     this.setState({selectedKey: select.id, leftSearchValue: ''});
-    console.log("select:",select)
+    this.doJointQueryService(select.id)
+  };
+  doJointQueryService = (key) => {
     const {JointQueryService} = this.props;
-    if (select.id&&JointQueryService){
+    if (key && JointQueryService) {
       this.setState({leftLoading: true});
-      JointQueryService(select.id).then(res => {
+      JointQueryService(key, this.state.includeSubNode).then(res => {
         this.setState({
           leftData: res instanceof Array ? res : [],
           leftLoading: false,
@@ -256,17 +257,14 @@ class TransferTable extends PureComponent {
       }).catch(err => {
         this.setState({leftLoading: false});
       })
-    }else {
+    } else {
       let params = {quickSearchValue: this.state.leftSearchValue};
       if (this.props.checkBoxConfig) {
         params.includeSubNode = this.state.includeSubNode
       }
-      //params.selectedKey = selectedKey;
       this.loadLeftData(params);
     }
-
   };
-
   render() {
     const {
       rightData,
@@ -301,7 +299,9 @@ class TransferTable extends PureComponent {
 
       ]
     }
-
+    const rightTitle = () => {
+      return [<div>&nbsp;{" "}</div>]
+    }
     const leftSearch = () => {
       return this.props.leftSearch === false ? null : <Input.Search
         placeholder="请输入关键字查询"
@@ -319,10 +319,10 @@ class TransferTable extends PureComponent {
         allowClear
       />
     }
-    const {style} = this.props;
-    const {rightDisabled,leftDisabled}=this.state
+    const {style,className} = this.props;
+    const {rightDisabled, leftDisabled} = this.state
     return (
-      <Row style={{height: "100%",background: '#f3f3f3', ...style}}
+      <Row className={className} style={{height: "100%", background: '#f3f3f3', ...style}}
            type="flex" justify="space-between" align="middle">
         <Col key='left' span={12} style={{height: "100%"}}>
           <DetailCard
@@ -352,12 +352,11 @@ class TransferTable extends PureComponent {
           </DetailCard>
         </Col>
         <Col key='middle' span={1} style={{display: 'flex', flexDirection: "column", alignItems: "center"}}>
-
           <Button
             key="rightButton"
             shape="circle"
             icon="left"
-            style={{'marginBottom': '30px',color: rightDisabled?null:'#1890FF'}}
+            style={{'marginBottom': '30px', color: rightDisabled ? null : '#1890FF'}}
             disabled={rightDisabled}
             onClick={this.handleLeftClick}
           />
@@ -367,7 +366,7 @@ class TransferTable extends PureComponent {
             shape="circle"
             icon="right"
             disabled={leftDisabled}
-            style={{'marginBottom': '30px',color: leftDisabled?null:'#1890FF'}}
+            style={{'marginBottom': '30px', color: leftDisabled ? null : '#1890FF'}}
             onClick={this.handleRightClick}/>
         </Col>
         <Col key='right' span={11} style={{height: "100%"}}>
@@ -377,7 +376,7 @@ class TransferTable extends PureComponent {
             bodyStyle={{height: "calc(100% - 53px)"}}
           >
             {!this.state.beTree && <div className={'tbar-box'}>
-              <div className={'tbar-btn-box'}>&nbsp;{" "}</div>
+              <div className={'tbar-btn-box'}>{rightTitle()}</div>
               <div className={'tbar-search-box'}>{rightSearch()}</div>
             </div>}
             {!this.state.beTree && <SimpleTable

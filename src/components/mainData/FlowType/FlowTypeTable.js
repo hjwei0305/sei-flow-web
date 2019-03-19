@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Col, Row, message, Input, Modal} from 'antd';
+import {Button, message, Input, Modal} from 'antd';
 import SimpleTable from "../../../commons/components/SimpleTable";
 import {hide, show} from "../../../configs/SharedReducer";
 import {deleteCorp, getFlowType, save} from "./FlowTypeService";
@@ -201,12 +201,13 @@ class FlowTypeTable extends Component {
 
         const title = () => {
             return [
+                <span key={"select"} className={"primaryButton"}>业务实体：
                 <SearchTable
                     key="searchTable"
                     initValue={false}
                     isNotFormItem={true} config={businessModelConfig}
                     style={{width: 220}}
-                    selectChange={this.selectChange}/>,
+                    selectChange={this.selectChange}/></span>,
                 <Button key="edit" onClick={this.addClick}>新增</Button>
             ]
         };
