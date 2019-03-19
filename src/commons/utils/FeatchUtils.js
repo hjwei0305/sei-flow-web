@@ -21,7 +21,7 @@ export function getHeader() {
         authHeader = {
             'Content-Type':'application/json;charset=UTF-8',
             'Cache-Control': 'no-cache',
-            'Authorization': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWkiLCJpcCI6IlVua25vd24iLCJ1c2VyTmFtZSI6IuWFqOWxgOeuoeeQhuWRmCIsInVzZXJJZCI6IjhmOWYzYTkyLTNmODItMTFlNy1hYzZmLTAwNTA1NjkzMGM2YiIsInJhbmRvbUtleSI6IjJBNzY3QTdDLTQ2MjYtMTFFOS1BODkyLTAyNDJDMEE4NDQwQyIsImF1dGhvcml0eVBvbGljeSI6Ikdsb2JhbEFkbWluIiwibG9nb3V0VXJsIjpudWxsLCJhcHBJZCI6IkI4MDMzMEI0LTNBMEMtNkIzQS01NDc3LTczQTA2N0VBOTNDQyIsInVzZXJUeXBlIjoiRW1wbG95ZWUiLCJleHAiOjE1NTI4MzQ1MzQsImlhdCI6MTU1MjU0NjUzNCwidGVuYW50IjoiZ2xvYmFsIiwiYWNjb3VudCI6InNlaSIsImVtYWlsIjpudWxsfQ.xBEIfbIan1aEbXmzCleodf5Dts8rgD9iEimTt6uV9r5LdNQgQO0rBDexRNtSfcH5V8jekjSSc3rQR7BT0eMsqw'//auth?(auth.accessToken?auth.accessToken:''):''
+            "Authorization":auth?(auth.accessToken?auth.accessToken:""):""
         }
     } catch (e) {
     }
