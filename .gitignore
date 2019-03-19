@@ -1,0 +1,8 @@
+node_modules/
+/.idea/*
+.history/
+.DS_Store
+package-lock.json
+launch.json
+settiongs.json
+yarn.lock
