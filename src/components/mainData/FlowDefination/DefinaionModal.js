@@ -45,7 +45,7 @@ class DefinaionModal extends Component {
       &id=${editData.flowDefination.id}&isFromVersion=${true}`
     }else if(operator==="versionView"){//从流程版本定义进来的
       title = "查看流程定义";
-      src=flowDefUrl+`/showLook?id=${editData.flowDefination.id}&_s=${auth.sessionId}`
+      src=flowDefUrl+`/showLook?id=${editData.id}&_s=${auth.sessionId}`
     }
 
     return (
