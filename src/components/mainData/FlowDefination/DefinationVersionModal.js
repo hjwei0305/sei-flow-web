@@ -219,7 +219,7 @@ class DefinationVersionModal extends Component {
         const {definationModalVisible,selectedRows,data,editData,operator}=this.state;
         const {modalVisible,handleCancel,selectedNode} = this.props;
         return (
-            <Modal title={<span className={'header-span'}>{"流程定义版本管理"}</span>}
+            <Modal title={"流程定义版本管理"}
                    visible={modalVisible}
                    width={700}
                    maskClosable={false}

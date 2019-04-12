@@ -196,7 +196,7 @@ class ConfigExUserModal extends Component {
         };
         const {modalVisible,handleCancel} = this.props;
         return (
-            <Modal title={<span className={'header-span'}>{"自定义执行人配置"}</span>}
+            <Modal title={"自定义执行人配置"}
                    visible={modalVisible}
                    width={700}
                    maskClosable={false}

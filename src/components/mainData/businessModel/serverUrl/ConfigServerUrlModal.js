@@ -157,7 +157,7 @@ class ConfigServerUrlModal extends Component {
         };
         const {modalVisible,handleCancel} = this.props;
         return (
-            <Modal title={<span className={'header-span'}>{"服务地址管理"}</span>}
+            <Modal title={"服务地址管理"}
                    visible={modalVisible}
                    width={700}
                    maskClosable={false}

@@ -46,7 +46,7 @@ class EditServerUrlModal extends Component {
         }
         return (
             <div>
-                <Modal title={<span className={'header-span'}>{title}</span>}
+                <Modal title={title}
                        visible={modalVisible}
                        onOk={handleOk}
                        onCancel={handleCancel}

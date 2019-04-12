@@ -60,7 +60,7 @@ class PropertiesForConditionPojoModal extends Component {
 
         const {modalVisible,handleCancel} = this.props;
         return (
-            <Modal title={<span className={'header-span'}>{"查看条件属性"}</span>}
+            <Modal title={"查看条件属性"}
                    visible={modalVisible}
                    width={500}
                    maskClosable={false}

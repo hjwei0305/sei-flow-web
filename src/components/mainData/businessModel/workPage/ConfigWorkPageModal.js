@@ -102,7 +102,7 @@ class ConfigWorkPageModal extends Component {
         const searchTableConfig = {...appModuleConfig, lable: "应用模块", defaultValue: appModuleId,props:{canNotClear:true}};
         const {modalVisible, handleCancel} = this.props;
         return (
-            <Modal title={<span className={'header-span'}>{"工作界面配置"}</span>}
+            <Modal title={"工作界面配置"}
                    visible={modalVisible}
                    width={1000}
                    maskClosable={false}
