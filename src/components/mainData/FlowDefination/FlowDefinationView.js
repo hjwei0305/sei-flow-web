@@ -217,7 +217,7 @@ class FlowDefinationView extends Component {
   };
   onTableSelectRow = (tableSelectRow) => {
     this.setState({tableSelectRow});
-    this.state.setState({editData: tableSelectRow[0] ? tableSelectRow[0] : {}});
+    this.setState({editData: tableSelectRow[0] ? tableSelectRow[0] : {}});
   };
   judgeSelected = () => {
     if (!this.state.tableSelectRow[0]) {
@@ -244,6 +244,8 @@ class FlowDefinationView extends Component {
             let ops = [];
             ops.push(<a className={'row-operator-item'} key={"edit" + index}
                         onClick={() => this.onEditClick(record)}>编辑</a>);
+            ops.push(<a className={'row-operator-item'} key={"deleteDef" + index}
+                        onClick={() => this.onDeleteClick(record)}>删除</a>);
             ops.push(<a className={'row-operator-item'} key={"versionDef" + index}
                         onClick={() => this.onVersionClick(record)}>流程定义版本管理</a>);
             let statusText = '';
@@ -256,8 +258,6 @@ class FlowDefinationView extends Component {
               ops.push(<a className={'row-operator-item'} key={"configWorkPage" + index}
                           onClick={() => this.onActivateOrFreezeFlowDefClick(record)}>{statusText}</a>);
             }
-            ops.push(<a className={'row-operator-item'} key={"deleteDef" + index}
-                        onClick={() => this.onDeleteClick(record)}>流程定义版本管理</a>);
             return ops;
           }
           return (
@@ -343,7 +343,7 @@ class FlowDefinationView extends Component {
             >
               <StandardTree
                 onSelect={this.onTreeSelect}
-                dadaSource={this.state.treeData}/>
+                dadaSource={this.state.treeData?this.state.treeData:[]}/>
             </DetailCard>
           </Col>
           {/*右边的表格控件*/}

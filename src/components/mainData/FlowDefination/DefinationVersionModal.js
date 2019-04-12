@@ -224,7 +224,7 @@ class DefinationVersionModal extends Component {
                    width={700}
                    maskClosable={false}
                    onCancel={handleCancel}
-                   bodyStyle={{minHeight:500}}
+                   bodyStyle={{maxHeight:500}}
                    footer={false}
             >
                 <div  className={'tbar-box'}>
@@ -246,7 +246,7 @@ class DefinationVersionModal extends Component {
                 selectedNode={selectedNode ? selectedNode : {}}
                 editData={editData ? editData : {}}
                 flowDefinationId={editData ? editData.id : ""}
-              />}}
+              />}
             </Modal>
         );
     }
