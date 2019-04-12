@@ -43,7 +43,7 @@ class DefinationVersionModal extends Component {
             }]});
         this.setState({loading:true});
         listFlowDefinationHistory(params).then(data => {
-            this.setState({data, selectedRows: []})
+            this.setState({data})
         }).catch(e => {
         }).finally(() => {
             this.setState({loading:false});
@@ -120,6 +120,8 @@ class DefinationVersionModal extends Component {
   };
   handleModalCancel = () => {
     this.setState({definationModalVisible:false})
+    //刷新本地数据
+    this.getDataSource()
   };
     render() {
         const columns = [

@@ -232,7 +232,17 @@ class FlowDefinationView extends Component {
   handleModalCancel = () => {
     this.handleModalVisible()
   };
-
+  handleDefinationModalCancel = () => {
+    this.handleModalVisible()
+    //刷新本地数据
+    const {selectedNode,tableSearchValue,pageInfo}=this.state;
+    let params = {
+      orgId: selectedNode.id,
+      quickSearchValue:tableSearchValue,
+      pageInfo: pageInfo
+    };
+    this.listFlowDefination(params);
+  };
   render() {
     const columns = [
       {
@@ -373,7 +383,7 @@ class FlowDefinationView extends Component {
             flowDefinationId={editData ? editData.id : ""}/>}
           {definationModalVisible && <DefinaionModal
             operator={operator}
-            handleCancel={this.handleModalCancel}
+            handleCancel={this.handleDefinationModalCancel}
             modalVisible={definationModalVisible}
             selectedNode={selectedNode ? selectedNode : {}}
             editData={editData ? editData : {}}
