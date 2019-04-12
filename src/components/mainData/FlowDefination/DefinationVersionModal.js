@@ -9,7 +9,9 @@ import {Button, Col, Row, message,Modal} from 'antd';
 import {show, hide} from '../../../configs/SharedReducer'
 import SimpleTable from "../../../commons/components/SimpleTable";
 import {Input} from "antd/lib/index";
-import {listFlowDefinationHistory} from "./FlowDefinationService";
+import {activateOrFreezeFlowDef, activateOrFreezeFlowVer, listFlowDefinationHistory} from "./FlowDefinationService";
+import DefinaionModal from "./DefinaionModal";
+import StandardDropdown from "../../../commons/components/StandardDropdown";
 
 const Search = Input.Search;
 const confirm=Modal.confirm;
@@ -54,12 +56,16 @@ class DefinationVersionModal extends Component {
 
     refClick = () => {
         if (!this.judgeSelected()) return;
+      this.setState({editData: this.state.selectedRows[0]});
+      this.setState({operator: "versionRef",definationModalVisible:true})
     };
-    checkClick = () => {
-        if (!this.judgeSelected()) return;
+    checkClick = (record) => {
+      this.setState({editData: record});
+      this.setState({operator: "versionView",definationModalVisible:true})
     };
-    editClick = () => {
-        if (!this.judgeSelected()) return;
+    editClick = (record) => {
+      this.setState({editData: record});
+      this.setState({operator: "versionEdit",definationModalVisible:true})
     };
     judgeSelected = () => {
         if (this.state.selectedRows.length === 0) {
@@ -79,8 +85,76 @@ class DefinationVersionModal extends Component {
         });
         this.getDataSource({quickSearchValue:this.state.searchValue,pageInfo})
     };
+  onActivateOrFreezeFlowDefClick = (record) => {
+    let id = record.id;
+    let status = '';
+    let title = '';
+    if (record.flowDefinationStatus !== "INIT") {
+      if (record.flowDefinationStatus === 'Activate') {
+        status = 'Freeze';
+        title = '您确定要冻结吗？'
+      } else if (record.flowDefinationStatus === 'Freeze') {
+        status = 'Activate';
+        title = '您确定要激活吗？'
+      }
+    }
+    let thiz = this;
+    confirm({
+      title: title,
+      onOk() {
+        thiz.setState({loading: true});
+        activateOrFreezeFlowVer(id, status).then(result => {
+          if (result.status === 'SUCCESS') {
+            message.success(result.message ? result.message : "请求成功");
+            //刷新本地数据
+            thiz.getDataSource()
+          } else {
+            message.error(result.message ? result.message : "请求失败");
+          }
+        }).catch(e => {
+        }).finally(() => {
+          thiz.setState({loading: false});
+        })
+      }
+    });
+  };
+  handleModalCancel = () => {
+    this.setState({definationModalVisible:false})
+  };
     render() {
         const columns = [
+          {
+            title: "操作",
+            width: 180,
+            dataIndex: "operator",
+            render: (text, record, index) => {
+              let ops = () => {
+                let ops = [];
+                ops.push(<a className={'row-operator-item'} key={"edit" + index}
+                            onClick={() => this.editClick(record)}>编辑</a>);
+                ops.push(<a className={'row-operator-item'} key={"checkClick" + index}
+                            onClick={() => this.checkClick(record)}>查看流程定义</a>);
+                let statusText = '';
+                if (record && record.flowDefinationStatus !== "INIT") {
+                  if (record.flowDefinationStatus === 'Activate') {
+                    statusText = '冻结'
+                  } else if (record.flowDefinationStatus === 'Freeze') {
+                    statusText = '激活'
+                  }
+                  ops.push(<a className={'row-operator-item'} key={"configWorkPage" + index}
+                              onClick={() => this.onActivateOrFreezeFlowDefClick(record)}>{statusText}</a>);
+                }
+                return ops;
+              }
+              return (
+                <div className={'row-operator'} onClick={(e) => {
+                  e.stopPropagation()
+                }}>
+                  <StandardDropdown operator={ops()}/>
+                </div>
+              )
+            }
+          },
             {
                 title: '名称',
                 dataIndex: 'name',
@@ -125,12 +199,8 @@ class DefinationVersionModal extends Component {
         ];
         const title = () => {
             return [
-                <Button key="add" style={{marginRight: '8px'}}
-                        onClick={this.editClick}>编辑</Button>,
                 <Button key="refAdd" style={{marginRight: '8px'}}
                         onClick={this.refClick}>参考创建</Button>,
-                <Button key="check" style={{marginRight: '8px'}}
-                        onClick={this.checkClick}>查看流程定义</Button>
             ]
         };
 
@@ -146,7 +216,8 @@ class DefinationVersionModal extends Component {
                 />
             ]
         };
-        const {modalVisible,handleCancel} = this.props;
+        const {definationModalVisible,selectedRows,data,editData,operator}=this.state;
+        const {modalVisible,handleCancel,selectedNode} = this.props;
         return (
             <Modal title={<span className={'header-span'}>{"流程定义版本管理"}</span>}
                    visible={modalVisible}
@@ -161,13 +232,21 @@ class DefinationVersionModal extends Component {
                     <div  className={'tbar-search-box'}>{search()}</div>
                 </div>
                     <SimpleTable
-                        rowsSelected={this.state.selectedRows}
+                        rowsSelected={selectedRows}
                         onSelectRow={this.handleRowSelectChange}
-                        data={this.state.data}
+                        data={data}
                         columns={columns}
                         pageChange={this.pageChange}
                         loading={this.state.loading}
                     />
+              {definationModalVisible && <DefinaionModal
+                operator={operator}
+                handleCancel={this.handleModalCancel}
+                modalVisible={definationModalVisible}
+                selectedNode={selectedNode ? selectedNode : {}}
+                editData={editData ? editData : {}}
+                flowDefinationId={editData ? editData.id : ""}
+              />}}
             </Modal>
         );
     }

@@ -15,6 +15,7 @@ export const baseUrl = REACT_APP_API_URI;
 export const basicAuthor = REACT_APP_AUTHOR_URI;
 export const basicApi = REACT_APP_BASIC_API;
 export const uploadUrl = "";
+export const flowDefUrl="http://dsei.changhong.com:80/flow-web/design";
 //登陆地址
 export const _loginUrl = check_host+"/react-basic-web/login";
 

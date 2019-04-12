@@ -32,6 +32,9 @@ export async function listFlowDefinationHistory(params={}){
 export async function activateOrFreezeFlowDef(id="",status=""){
     return httpUtils.post(baseUrl+"/flowDefination/changeStatus"+`/${id}`+`/${status}`,{});
 }
+export async function activateOrFreezeFlowVer(id="",status=""){
+  return httpUtils.post(baseUrl+"/flowDefVersion/changeStatus"+`/${id}`+`/${status}`,{});
+}
 export async function deleteFlowDefination(id=""){
     return httpUtils.delete(baseUrl+"/flowDefination/deleteById",id);
 }
