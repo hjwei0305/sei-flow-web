@@ -7,7 +7,7 @@ import React, {Component} from 'react';
 import {Route} from 'react-router-dom'
 import httpUtils from "../commons/utils/FeatchUtils";
 import {cache} from "../commons/utils/CommonUtils";
-import {_loginUrl, basicAuthor, check_host, defaultAppCode} from "./DefaultConfig";
+import {_loginUrl} from "./DefaultConfig";
 import queryString from "query-string";
 import {Spin} from 'antd';
 

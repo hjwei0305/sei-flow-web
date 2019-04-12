@@ -3,7 +3,7 @@
  */
 import axios from 'axios';
 import { message } from 'antd';
-import { defaultPageSize,host }from '../../configs/DefaultConfig';
+import { defaultPageSize,gatewayHost }from '../../configs/DefaultConfig';
 import { isLocalhost,cache } from "./CommonUtils";
 
 const instance = axios.create({
@@ -21,7 +21,7 @@ export function getHeader() {
         authHeader = {
             'Content-Type':'application/json;charset=UTF-8',
             'Cache-Control': 'no-cache',
-             "Authorization":auth?(auth.accessToken?auth.accessToken:""):"",
+            'Authorization': auth?(auth.accessToken?auth.accessToken:''):''
         }
     } catch (e) {
     }
@@ -49,7 +49,7 @@ instance.interceptors.request.use(function(config){
         }
     }
     if(!isLocalhost && config.url.indexOf('http')===-1){
-        config.url=host+config.url
+        config.url=gatewayHost+config.url
     }
     return config;
 },function(error){

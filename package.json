@@ -44,45 +44,26 @@
     "start": {
       "command": "react-app-rewired start",
       "env": {
-        "REACT_APP_HOST": "http://dsei.changhong.com/api-gateway",
-        "REACT_APP_CHECK_URL": "http://dsei.changhong.com",
-        "REACT_APP_AUTHOR_URI": "/auth-service",
-        "REACT_APP_API_URI": "/flow-service",
-        "REACT_APP_BASIC_API":"/basic-service",
-        "REACT_APP_MODULE_NAME": "RRACT-FLOW"
+        "REACT_APP_HOST": "http://dsei.changhong.com",
+        "REACT_APP_MODULE_NAME": "REACT_FLOW"
       }
     },
     "build:dev": {
       "command": "react-app-rewired build",
       "env": {
-        "REACT_APP_HOST": "http://dsei.changhong.com/api-gateway",
-        "REACT_APP_CHECK_URL": "http://dsei.changhong.com",
-        "REACT_APP_AUTHOR_URI": "/auth-service",
-        "REACT_APP_API_URI": "/flow-service",
-        "REACT_APP_BASIC_API":"/basic-service",
-        "REACT_APP_MODULE_NAME": "RRACT-FLOW"
+        "REACT_APP_MODULE_NAME": "REACT_FLOW"
       }
     },
     "build:test": {
       "command": "react-app-rewired build",
       "env": {
-        "REACT_APP_HOST": "http://tsei.changhong.com/api-gateway",
-        "REACT_APP_CHECK_URL": "http://tsei.changhong.com",
-        "REACT_APP_AUTHOR_URI": "/auth-service",
-        "REACT_APP_API_URI": "/flow-service",
-        "REACT_APP_BASIC_API":"/basic-service",
-        "REACT_APP_MODULE_NAME": "RRACT-FLOW"
+        "REACT_APP_MODULE_NAME": "REACT_FLOW"
       }
     },
     "build:production": {
       "command": "react-app-rewired build",
       "env": {
-        "REACT_APP_HOST": "http://dsei.changhong.com/api-gateway",
-        "REACT_APP_CHECK_URL": "http://dsei.changhong.com",
-        "REACT_APP_AUTHOR_URI": "/auth-service",
-        "REACT_APP_API_URI": "/flow-service",
-        "REACT_APP_BASIC_API":"/basic-service",
-        "REACT_APP_MODULE_NAME": "RRACT-FLOW"
+        "REACT_APP_MODULE_NAME": "REACT_FLOW"
       }
     }
   },
