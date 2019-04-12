@@ -45,25 +45,29 @@
       "command": "react-app-rewired start",
       "env": {
         "REACT_APP_HOST": "http://dsei.changhong.com",
-        "REACT_APP_MODULE_NAME": "REACT_FLOW"
+        "REACT_APP_MODULE_NAME": "REACT_FLOW",
+        "SKIP_PREFLIGHT_CHECK": "true"
       }
     },
     "build:dev": {
       "command": "react-app-rewired build",
       "env": {
-        "REACT_APP_MODULE_NAME": "REACT_FLOW"
+        "REACT_APP_MODULE_NAME": "REACT_FLOW",
+        "SKIP_PREFLIGHT_CHECK": "true"
       }
     },
     "build:test": {
       "command": "react-app-rewired build",
       "env": {
-        "REACT_APP_MODULE_NAME": "REACT_FLOW"
+        "REACT_APP_MODULE_NAME": "REACT_FLOW",
+        "SKIP_PREFLIGHT_CHECK": "true"
       }
     },
     "build:production": {
       "command": "react-app-rewired build",
       "env": {
-        "REACT_APP_MODULE_NAME": "REACT_FLOW"
+        "REACT_APP_MODULE_NAME": "REACT_FLOW",
+        "SKIP_PREFLIGHT_CHECK": "true"
       }
     }
   },
