@@ -318,14 +318,17 @@ class FlowDefinationView extends Component {
     ];
     const {tableSelectRow, operator, editData, definationModalVisible, selectedNode} = this.state;
     const title = () => {
-      let res = [];
-      res.push(<Button key="addRule" style={{marginRight: '5px'}} type={"primary"}
-                       onClick={this.onAddClick}>新增</Button>);
-      res.push(<Button key="refEdit" style={{marginRight: '5px'}}
-                       onClick={this.onRefAddClick}>参考创建</Button>);
-      res.push(<Button key="reset" style={{marginRight: '5px'}}
-                       onClick={this.onResetClick}>位置重置</Button>);
-      return res
+      return [
+        <Button key="addRule"  className={"primaryButton"} type={"primary"}
+                      onClick={this.onAddClick}>新增</Button>,
+        <Button.Group  className={"primaryButton"}>
+          <Button key="refEdit"
+                  onClick={this.onRefAddClick}>参考创建</Button>
+          <Button key="reset"
+                  onClick={this.onResetClick}>位置重置</Button>
+        </Button.Group>
+
+      ]
     };
     //表头搜索框
     const search = () => {

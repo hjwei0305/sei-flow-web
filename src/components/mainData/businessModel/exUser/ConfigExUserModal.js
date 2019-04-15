@@ -172,12 +172,12 @@ class ConfigExUserModal extends Component {
         const title = () => {
             return [
 
-                <Button type={"primary"} key="edit" style={{marginRight: '8px'}}
+                <Button type={"primary"} key="edit" className={"primaryButton"}
                         onClick={this.addClick}>新增</Button>,
 
-                <Button key="check" style={{marginRight: '8px'}}
+                <Button key="check" className={"primaryButton"}
                         onClick={this.editClick}>编辑</Button>,
-                <Button key="delete" style={{marginRight: '8px'}}
+                <Button key="delete" className={"primaryButton"}
                         onClick={this.deleteClick}>删除</Button>,
             ]
         };
