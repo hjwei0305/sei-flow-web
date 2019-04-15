@@ -321,7 +321,7 @@ class FlowDefinationView extends Component {
       return [
         <Button key="addRule"  className={"primaryButton"} type={"primary"}
                       onClick={this.onAddClick}>新增</Button>,
-        <Button.Group  className={"primaryButton"}>
+        <Button.Group key={"ButtonGroup"} className={"primaryButton"}>
           <Button key="refEdit"
                   onClick={this.onRefAddClick}>参考创建</Button>
           <Button key="reset"
