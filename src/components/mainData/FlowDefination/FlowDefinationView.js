@@ -81,7 +81,7 @@ class FlowDefinationView extends Component {
     this.setState({treeSelectedKeys: selectedKeys});
     this.setState({selectedNode: selectedNodes[0] ? selectedNodes[0] : {}});
     if (selectedNodes[0]) {
-      let params = {orgId: selectedNodes[0] ? selectedNodes[0].id : ""};
+      let params = {Q_EQ_orgId: selectedNodes[0] ? selectedNodes[0].id : ""};
       this.listFlowDefination(params);
       this.setState({pathName: selectedNodes[0].name ? selectedNodes[0].name : '岗位'});
     }
@@ -125,7 +125,7 @@ class FlowDefinationView extends Component {
             message.success(result.message ? result.message : "请求成功");
             //刷新本地数据
             let params = {
-              orgId: thiz.state.selectedNode.id,
+              Q_EQ_orgId: thiz.state.selectedNode.id,
               quickSearchValue: thiz.state.tableSearchValue,
               pageInfo: thiz.state.pageInfo
             };
@@ -165,7 +165,7 @@ class FlowDefinationView extends Component {
             message.success(result.message ? result.message : "请求成功");
             //刷新本地数据
             let params = {
-              orgId: thiz.state.selectedNode.id,
+              Q_EQ_orgId: thiz.state.selectedNode.id,
               quickSearchValue: thiz.state.tableSearchValue,
               pageInfo: thiz.state.pageInfo
             };
@@ -200,7 +200,7 @@ class FlowDefinationView extends Component {
             message.success("请求成功");
             //刷新本地数据
             let params = {
-              orgId: thiz.state.selectedNode.id,
+              Q_EQ_orgId: thiz.state.selectedNode.id,
               quickSearchValue: thiz.state.tableSearchValue,
               pageInfo: thiz.state.pageInfo
             };
@@ -237,7 +237,7 @@ class FlowDefinationView extends Component {
     //刷新本地数据
     const {selectedNode,tableSearchValue,pageInfo}=this.state;
     let params = {
-      orgId: selectedNode.id,
+      Q_EQ_orgId: selectedNode.id,
       quickSearchValue:tableSearchValue,
       pageInfo: pageInfo
     };

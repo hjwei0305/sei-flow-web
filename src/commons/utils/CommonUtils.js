@@ -2,9 +2,9 @@ import moment from 'moment';
 
 /**
  * 列表本地搜索,返回数据源，数据源每个子项上加搜索结果的 tag
- * @param {源数据} data 
- * @param {搜索条件，对象，如；{key:'123'} } searchParam 
- * @param {自定义搜索字段，如未填会全字段搜索，排除 id和租户代码字段} keys 
+ * @param {源数据} data
+ * @param {搜索条件，对象，如；{key:'123'} } searchParam
+ * @param {自定义搜索字段，如未填会全字段搜索，排除 id和租户代码字段} keys
  */
 export async function searchListByKeyWithTag(data, searchParam, keys = []) {
     let list
@@ -64,9 +64,9 @@ function getSubValue(item,nextKey) {
 
 /**
  * 列表本地搜索,返回过滤结果
- * @param {源数据} data 
- * @param {搜索条件，对象，如；{key:'123'} } searchParam 
- * @param {自定义搜索字段，如未填会全字段搜索，排除 id和租户代码字段} keys 
+ * @param {源数据} data
+ * @param {搜索条件，对象，如；{key:'123'} } searchParam
+ * @param {自定义搜索字段，如未填会全字段搜索，排除 id和租户代码字段} keys
  */
 export async function searchListByKey(data, searchParam, keys = []) {
     let result = []
@@ -184,7 +184,7 @@ export function openNewTab(uri, title, closeCurrent = false, id = undefined) {
 
 /**
  *  当前页面展示时回调，主要用于更新
- * @param {页签获取焦点时的回调方法} callBack 
+ * @param {页签获取焦点时的回调方法} callBack
  */
 export function tabForceCallBack(callBack){
     let con = window.top.homeView;
@@ -333,3 +333,49 @@ export function objectIsEqual (obj1, obj2){
     }
     return true
 };
+export const convertSearchFilter = (params = {}) => {
+  const {
+    quickSearchProperties = [],
+    pageInfo = {page: 1, rows: 15},
+    ...search
+  } = params;
+  const keys = Object.keys(search);
+  const quickSearchValue = keys.includes("quickValue") ? search["quickValue"] : "";
+  const filtersKeys = keys.filter(item => item.includes("Q_"));
+  const filters = filtersKeys.map(item => {
+    let itemArr = item.split("_");//Q_EQ_id_String
+    return {
+      operator: itemArr.length >= 2 ? itemArr[1] : "EQ",//操作类型
+      fieldName: itemArr.length >= 3 ? itemArr[2] : "",//筛选字段
+      fieldType: itemArr.length >= 4 ? itemArr[3] : "String",//筛选类型
+      value: search[item]//筛选值
+    };
+  });
+  const sortOrdersKeys = keys.filter(item => item.includes("S_"));
+  const sortOrders = sortOrdersKeys.map(item => {
+    let itemArr = item.split("_");//S_id
+    return {
+      property: itemArr.length >= 2 ? itemArr[1] : "",//排序字段
+      direction: search[item]//排序类型 ASC DESC
+    };
+
+  });
+  let otherParams = {};
+  keys.filter(key => {
+    //otherParams = [];
+    const bool = key.includes("Q_") || key.includes("S_") || key.includes("quickValue");
+    if (!bool) {
+      otherParams[key] = search[key]
+    }
+  });
+
+  let resParams = {
+    quickSearchProperties,
+    quickSearchValue,
+    filters,
+    sortOrders,
+    pageInfo,
+    ...otherParams
+  };
+  return resParams;
+}

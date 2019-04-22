@@ -1,13 +1,15 @@
 import httpUtils  from "../../../commons/utils/FeatchUtils";
 import {baseUrl} from "../../../configs/DefaultConfig"
+import {convertSearchFilter} from "../../../commons/utils/CommonUtils";
 
 export async function listAllOrgs(params={}){
     return httpUtils.post(baseUrl+"/flowDefination/listAllOrgs",params);
 }
 
 export async function listFlowDefination(params={}){
-    Object.assign(params,{sortOrders:[{property:'lastEditedDate',direction:'DESC'}],quickSearchProperties:["name","defKey"],});
-    return httpUtils.postJson(baseUrl+"/flowDefination/findByPage",params);
+  // sortOrders:[{property:'lastEditedDate',direction:'DESC'}]
+    Object.assign(params,{S_lastEditedDate:"DESC",quickSearchProperties:["name","defKey"],});
+    return httpUtils.postJson(baseUrl+"/flowDefination/findByPage",convertSearchFilter(params));
 }
 
 export async function getFlowDefVersion(id=""){
