@@ -391,7 +391,7 @@ class FlowDefinationView extends Component {
             selectedNode={selectedNode ? selectedNode : {}}
             editData={editData ? editData : {}}
             flowDefinationId={editData ? editData.id : ""}
-          />}}
+          />}
         </Row>
       </HeadBreadcrumb>
     )
