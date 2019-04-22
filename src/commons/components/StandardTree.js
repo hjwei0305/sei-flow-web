@@ -90,7 +90,12 @@ class StandardTree extends Component {
     }
   };
   onCheck = (selectedKeys) => {
-    let selectedNodes = getNodesByKeys(this.state.dadaSource, selectedKeys);
+    let selectedNodes=[]
+    if (selectedKeys&&selectedKeys instanceof Array){
+      selectedNodes = getNodesByKeys(this.state.dadaSource, selectedKeys);
+    }else if(selectedKeys&&selectedKeys.checked) {
+      selectedNodes = getNodesByKeys(this.state.dadaSource, selectedKeys.checked);
+    }
     if (this.props.onCheck) {
       this.props.onCheck(selectedKeys, selectedNodes)
     }
