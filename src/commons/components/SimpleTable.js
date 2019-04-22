@@ -4,12 +4,15 @@
  * @date 2018.9.19
  */
 import React, { PureComponent } from 'react';
+import ReactDOM from 'react-dom';
 import { Table} from 'antd';
 import { Resizable } from 'react-resizable';
 import DefaultPage from './DefaultPage'
 import { defaultPageSize }from '../../configs/DefaultConfig';
+import PerfectScrollbar from 'perfect-scrollbar';
 import PropTypes from 'prop-types';
-import './StandardTable.css'
+import './StandardTable.css';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 //用户可以拖动列宽
 const ResizeableTitle = (props) => {
@@ -78,6 +81,11 @@ class SimpleTable extends PureComponent {
         this.customerCloumns(this.props.columns);
         //准备展示数据，主要为区分后端分页和前端分页
         this.prepareData(this.props.data);
+        this.wrappedScroller();
+    }
+
+    componentDidUpdate() {
+        this.wrappedScroller();
     }
 
     //通过元素获取该元素到顶层的距离
@@ -113,7 +121,16 @@ class SimpleTable extends PureComponent {
             this.setState({scrollY})
         }
     }
-
+    wrappedScroller = () => {
+        if (this.ps) {
+            this.ps.destroy();
+            this.ps = null;
+        }
+        const antdTableDom = ReactDOM.findDOMNode(this.antdTable);
+        const antTableBody = antdTableDom.querySelector('.ant-table-body');
+        this.ps = new PerfectScrollbar(antTableBody);
+        this.ps && this.ps.update();
+    }
     /**
      * 准备数据，应为后端请求返回数据格式不统一，做一些处理
      * 后端可能返回直接展示数据也可能返回带分页信息数据，需要分别处理
@@ -332,7 +349,7 @@ class SimpleTable extends PureComponent {
             ref={(div)=>this.simpleDiv=div}
             style={{background:'#fff',...this.props.style}}>
                 <Table
-                    ref={(table)=>this.table=table}
+                    ref={(table)=>this.antdTable=table}
                     checkBox={checkBox}
                     style={this.props.pagination === false?null:scrollY?{height:scrollY+50}:null}
                     rowKey={rowKey||'id'}

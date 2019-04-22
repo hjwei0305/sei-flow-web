@@ -9,6 +9,9 @@ div,span{
   margin: 10px 10%;
   padding-top: 10px;
 }
+.ant-table-header {
+  overflow-y: hidden !important;
+}
 .ant-modal-header .ant-modal-title{
   color: rgba(0,0,0,0.85);
   font-weight: normal !important;
@@ -130,6 +133,27 @@ div,span{
 .failColor {
   color: red;
 }
+/*流程状态*/
+.is-notStart{
+  background-color: #4682b4;
+  text-overflow: ellipsis;
+}
+.is-processing{
+  background-color: #ff943d;
+  text-overflow: ellipsis;
+}
+.is-completed{
+  background-color: #7bd549;
+  text-overflow: ellipsis;
+}
+.base-status {
+  font-size: 16px;
+  border-radius: 3px;
+  color: white;
+  padding: 0 5px;
+  margin-right: 20px;
+}
+
 
 .upload-style {
   display: inline-block;
@@ -221,7 +245,7 @@ div,span{
 }
 /*页签内容区域-灰色边距设置*/
 .page-box .transfer-tab-box .tab-content{
-  height: 100%;
+  height: calc(100% - 16px);
   margin: 8px;
 }
 /*按钮间距*/
@@ -230,14 +254,13 @@ div,span{
 }
 /*单据- 页脚*/
 .page-box .footer{
-  position: fixed;
-  height: 38px;
-  bottom: 8px;
-  padding-right: 8px;
+  position: relative;
+  height: 45px;
+  bottom: 0;
+  padding: 8px;
   right: 0;
-  left: 9px;
   background: #fff;
-  width: calc(100% - 18px);
+  border-top: 1px solid #f3f3f3;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -275,28 +298,8 @@ div,span{
 .order-create-info>.createdDate{
   text-overflow: ellipsis;
 }
-/*流程状态*/
-.is-notStart{
-  background-color: #4682b4;
-  text-overflow: ellipsis;
-}
-.is-processing{
-  background-color: #ff943d;
-  text-overflow: ellipsis;
-}
-.is-completed{
-  background-color: #7bd549;
-  text-overflow: ellipsis;
-}
-.base-status {
-  font-size: 16px;
-  border-radius: 3px;
-  color: white;
-  padding: 0 5px;
-  margin-right: 20px;
-}
 /*左右布局（父子页面）- 右界面样式*/
-.page-box .child-card{
+.child-card{
   box-shadow: 0 2px 8px 0 #aaa;
 }
 /*文字缩略*/
