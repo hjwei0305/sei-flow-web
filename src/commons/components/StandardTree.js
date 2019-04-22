@@ -2,11 +2,13 @@
  * @description 树控件
  * @author 李艳
  */
-import {Component} from "react";
-import React from "react";
+import React,{Component} from "react";
 import {Input, Tree, Card,message} from "antd";
 import {hide, show} from "../../configs/SharedReducer";
 import connect from "react-redux/es/connect/connect";
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
+import ReactDOM from "react-dom";
 
 const DirectoryTree = Tree.DirectoryTree;
 const TreeNode = Tree.TreeNode;
@@ -32,7 +34,9 @@ class StandardTree extends Component {
     if (this.simpleDiv) {
       let yHeight = document.body.clientHeight - this.getElementTop(this.simpleDiv) - 5;
       let scrollY = (this.props.heightY ? (this.props.heightY + 12) : (yHeight - 83));
-      this.setState({scrollY})
+      this.setState({scrollY},() => {
+            this.ps && this.ps.update();
+      })
     }
   }
 
@@ -58,11 +62,22 @@ class StandardTree extends Component {
     this.updateSize();
     window.addEventListener('resize', this.updateSize);
   }
-
+   wrappedScroller = () => {
+      if (this.ps) {
+          this.ps.destroy();
+          this.ps = null;
+      }
+     const simpleDivDom = ReactDOM.findDOMNode(this.simpleDiv);
+      this.ps = new PerfectScrollbar(simpleDivDom);
+      this.ps && this.ps.update();
+    }
   componentWillReceiveProps(nextProp) {
-    const {dadaSource} = nextProp;
+    let {dadaSource} = nextProp;
+    if(!(dadaSource instanceof Array)){
+      dadaSource=[dadaSource];
+    }
     if (this.state.dada !== dadaSource) {
-      this.setState({dadaSource})
+      this.setState({dadaSource},()=>this.wrappedScroller())
     }
   }
 
@@ -237,11 +252,12 @@ class StandardTree extends Component {
             />
           </div>
         </div>
-
-        <div ref={(div) => this.simpleDiv = div}>
+        <div ref={(div) => this.simpleDiv = div}  style={{position: "relative"}}>
+          <Card style={{height: (this.state.scrollY||0) + 70}} bordered={false} bodyStyle={{padding: "0 0px 0px 30px"}}>
           {this.state.dadaSource.length > 0 ? (
-            <Card style={{height: this.state.scrollY + 82, overflow: "auto"}} bordered={false}>
               <DirectoryTree
+                checkedKeys={this.props.selectedKeys?this.props.selectedKeys:this.state.selectedKeys}
+                checkStrictly={this.props.checkStrictly||false}
                 expandAction={"doubleClick"}
                 onSelect={this.onSelect}
                 autoExpandParent={this.state.autoExpandParent}
@@ -254,8 +270,8 @@ class StandardTree extends Component {
                 onDrop={this.onDrop}>
                 {this.renderTreeNodes(this.state.searchValue === "" ? this.state.dadaSource : this.state.findResultData)}
               </DirectoryTree>
-            </Card>
           ) : null}
+          </Card>
         </div>
       </div>
     )
