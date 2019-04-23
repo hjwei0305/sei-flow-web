@@ -118,7 +118,6 @@ class BusinessModelTable extends Component {
                         message.error(result.message ? result.message : "请求失败");
                       this.setState({confirmLoading: false});
                     }
-
                 }).catch(e => {
                   this.setState({confirmLoading: false});
                 })

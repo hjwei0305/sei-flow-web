@@ -82,12 +82,13 @@ class ConfigExUserModal extends Component {
                         message.success(result.message?result.message:"请求成功");
                         //刷新本地数据
                         this.getDataSource({quickSearchValue:this.state.searchValue});
+                      this.setState({confirmLoading: false, modalVisible: false});
                     } else {
                         message.error(result.message?result.message:"请求失败");
+                      this.setState({confirmLoading: false});
                     }
                 }).catch(e => {
-                }).finally(() => {
-                    this.setState({confirmLoading: false, modalVisible: false});
+                  this.setState({confirmLoading: false});
                 })
             }
         })

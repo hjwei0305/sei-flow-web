@@ -83,12 +83,13 @@ class WorkPageTable extends Component {
                                 fieldType: "String"//筛选类型
                             }]
                         });
+                      this.setState({confirmLoading: false, modalVisible: false});
                     } else {
                         message.error(result.message ? result.message : "请求失败");
+                      this.setState({confirmLoading: false});
                     }
                 }).catch(e => {
-                }).finally(() => {
-                    this.setState({confirmLoading: false, modalVisible: false});
+                  this.setState({confirmLoading: false});
                 })
             }
         })
