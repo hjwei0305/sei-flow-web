@@ -126,7 +126,7 @@ class ConfigExUserModal extends Component {
             onOk(){
                 let params = {};
                 params = thiz.state.selectedRows[0].id;
-                this.setState({loading:true});
+              thiz.setState({loading:true});
                 deleteExUser(params).then(result => {
                     if (result.status==="SUCCESS") {
                         message.success(result.message?result.message:"请求成功");
@@ -137,7 +137,7 @@ class ConfigExUserModal extends Component {
                     }
                 }).catch(e => {
                 }).finally(() => {
-                    this.setState({loading:false});
+                  thiz.setState({loading:false});
                 })
             }
         });
@@ -203,7 +203,7 @@ class ConfigExUserModal extends Component {
                    width={700}
                    maskClosable={false}
                    onCancel={handleCancel}
-                   bodyStyle={{minHeight:500}}
+                   bodyStyle={{maxHeight:500}}
                    footer={false}
                    centered={true}
             >

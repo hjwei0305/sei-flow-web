@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Form, Input, Modal, Tabs} from 'antd';
+import {Form, Input, Modal, Tabs,Row} from 'antd';
 
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
@@ -57,64 +57,63 @@ class ExUserModal extends Component {
                        maskClosable={false}
                        centered={true}
                 >
-                    <FormItem
-                        style={{display: "none"}}
-                        label="id">
-                        {getFieldDecorator('id', {
-                            initialValue: FormValue.id ? FormValue.id : "",
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="代码">
-                        {getFieldDecorator('code', {
-                            initialValue: FormValue.code ? FormValue.code : "",
-                            rules: [{required: true,pattern: '^[A-Za-z0-9]+$', message: '代码允许输入字母和数字!'}]
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="名称">
-                        {getFieldDecorator('name', {
-                            initialValue: FormValue.name ? FormValue.name : "",
-                            rules: [{required: true, message: '请填写名称!'}]
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="API地址">
-                        {getFieldDecorator('url', {
-                            initialValue: FormValue.url ? FormValue.url : "",
-                            rules: [{required: true, message: '请填写API地址!'}]
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="参数">
-                        {getFieldDecorator('param', {
-                            initialValue: FormValue.param ? FormValue.param : "",
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="描述">
-                        {getFieldDecorator('depict', {
-                            initialValue: FormValue.depict ? FormValue.depict : "",
-                        })(
-                            <TextArea rows={4} autosize={false}/>
-                        )}
-                    </FormItem>
+                  <Row><FormItem
+                    style={{display: "none"}}
+                    label="id">
+                    {getFieldDecorator('id', {
+                      initialValue: FormValue.id ? FormValue.id : "",
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
+                  <Row><FormItem
+                    {...formItemLayout}
+                    label="代码">
+                    {getFieldDecorator('code', {
+                      initialValue: FormValue.code ? FormValue.code : "",
+                      rules: [{required: true,pattern: '^[A-Za-z0-9]+$', message: '代码允许输入字母和数字!'}]
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
+                  <Row><FormItem
+                    {...formItemLayout}
+                    label="名称">
+                    {getFieldDecorator('name', {
+                      initialValue: FormValue.name ? FormValue.name : "",
+                      rules: [{required: true, message: '请填写名称!'}]
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
+                  <Row><FormItem
+                    {...formItemLayout}
+                    label="API地址">
+                    {getFieldDecorator('url', {
+                      initialValue: FormValue.url ? FormValue.url : "",
+                      rules: [{required: true, message: '请填写API地址!'}]
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
+                  <Row><FormItem
+                    {...formItemLayout}
+                    label="参数">
+                    {getFieldDecorator('param', {
+                      initialValue: FormValue.param ? FormValue.param : "",
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
+                  <Row><FormItem
+                    {...formItemLayout}
+                    label="描述">
+                    {getFieldDecorator('depict', {
+                      initialValue: FormValue.depict ? FormValue.depict : "",
+                    })(
+                      <TextArea rows={4} autosize={false}/>
+                    )}
+                  </FormItem></Row>
                 </Modal>
             </div>
         );
