@@ -210,7 +210,7 @@ class FlowTypeTable extends Component {
                     isNotFormItem={true} config={businessModelConfig}
                     style={{width: 220}}
                     selectChange={this.selectChange}/></span>,
-                <Button key="edit" onClick={this.addClick}>新增</Button>
+                <Button key="edit" onClick={this.addClick} type={"primary"}>新增</Button>
             ]
         };
 

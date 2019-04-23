@@ -230,7 +230,7 @@ class WorkPageTable extends Component {
                         style={{width: 220}}
                         selectChange={this.selectChange}/>
                 </span>,
-                <Button  key={"add"} className={"primaryButton"} onClick={this.addClick}>新增</Button>,
+                <Button  key={"add"} className={"primaryButton"} onClick={this.addClick} type={"primary"}>新增</Button>,
             ]
         };
 
