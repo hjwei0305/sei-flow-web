@@ -70,6 +70,7 @@ class WorkPageModal extends Component {
                         label="应用模块">
                         {getFieldDecorator('appModuleId', {
                             initialValue: FormValue.appModuleId ? FormValue.appModuleId : "",
+                          rules: [{required: true, message: '请选择应用模块!'}]
                         })(
                             <SearchTable config={appModuleConfig} initValue={false}/>
                         )}
