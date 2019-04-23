@@ -50,26 +50,35 @@ class TransferTable extends PureComponent {
     }
   }
 
-  loadLeftData = (params, pageInfo, beTree = this.state.beTree) => {
+  loadLeftData = async (params, pageInfo, beTree = this.state.beTree) => {
     this.setState({beTree});
     const {leftService, leftTreeService} = this.props;
     let service = leftService;
     if (beTree && leftTreeService) {
       service = leftTreeService;
     }
-    // if (params&&!params.selectedKey&&this.state.selectedKey){
-    //   params.selectedKey=this.state.selectedKey
-    // }
+    if (params && !params.selectedKey && this.state.selectedKey) {
+      params.selectedKey = this.state.selectedKey
+    }
     // console.log("selectedKey:",params.selectedKey)
     this.setState({leftLoading: true});
     service({...params, pageInfo}).then(res => {
       this.setState({
-        leftData: res instanceof Array ? res : [],
+        // leftData: res instanceof Array || res.rows ? res : [],
         leftLoading: false,
         leftRowsSelected: [],
         rightDisabled: true,
-        leftDisabled: true
+        leftDisabled: true,
+        // leftSearchValue:res.rows?this.state.leftSearchValue:""
       })
+      if (res instanceof Array) {
+        let searchLeftKey = this.props.searchLeftKey || ["code", "name"];
+        searchListByKeyWithTag(res, {keyword: this.state.leftSearchValue}, searchLeftKey).then(data => {
+          this.setState({leftData: data})
+        })
+      }else {
+        this.setState({leftData: res instanceof Array || res.rows ? res : []})
+      }
     }).catch(err => {
       this.setState({leftLoading: false});
     })
@@ -85,12 +94,19 @@ class TransferTable extends PureComponent {
     this.setState({rightLoading: true});
     service({...params, pageInfo}).then(res => {
       this.setState({
-        rightData: res instanceof Array ? res : [],
+        //rightData: res instanceof Array ? res : [],
         rightLoading: false,
         rightRowsSelected: [],
         rightDisabled: true,
-        leftDisabled: true
+        leftDisabled: true,
+        // rightSearchValue:res.rows?this.state.rightSearchValue:""
       })
+      if (res instanceof Array) {
+        let searchRightKey = this.props.searchRightKey || ["code", "name"];
+        searchListByKeyWithTag(res, {keyword: this.state.rightSearchValue}, searchRightKey).then(data => {
+          this.setState({rightData: data})
+        })
+      }
     }).catch(err => {
       this.setState({rightLoading: false});
     })
@@ -164,7 +180,8 @@ class TransferTable extends PureComponent {
       this.loadLeftData(params);
     } else {
       if (value !== "") {
-        searchListByKeyWithTag(this.state.leftData, {keyword: value}, ["code", "name"]).then(res => {
+        let searchLeftKey = this.props.searchLeftKey || ["code", "name"];
+        searchListByKeyWithTag(this.state.leftData, {keyword: value}, searchLeftKey).then(res => {
           this.setState({leftData: res})
         })
       }
@@ -173,8 +190,9 @@ class TransferTable extends PureComponent {
 
   handleRightSearch = (value) => {
     this.setState({rightSearchValue: value})
+    let searchRightKey = this.props.searchRightKey || ["code", "name"];
     if (value !== "") {
-      searchListByKeyWithTag(this.state.rightData, {keyword: value}, ["code", "name"]).then(res => {
+      searchListByKeyWithTag(this.state.rightData, {keyword: value}, searchRightKey).then(res => {
         this.setState({rightData: res})
       })
     }
@@ -189,10 +207,10 @@ class TransferTable extends PureComponent {
       params.includeSubNode = this.state.includeSubNode
     }
     this.props.handleRightClick(this.state.leftRowsSelected, this.state.rightData).then(() => {
-      if (this.props.updateLeftByJointQueryService){
+      if (this.props.updateLeftByJointQueryService) {
         this.doJointQueryService(this.state.selectedKey)
         this.loadRightData(params);
-      }else {
+      } else {
         this.loadLeftData(params);
         this.loadRightData(params);
       }
@@ -212,10 +230,10 @@ class TransferTable extends PureComponent {
         if (this.state.leftData.rows) {
           params.quickSearchValue = this.state.leftSearchValue
         }
-        if (this.props.updateLeftByJointQueryService){
+        if (this.props.updateLeftByJointQueryService) {
           this.doJointQueryService(this.state.selectedKey)
           this.loadRightData(params);
-        }else {
+        } else {
           this.loadLeftData(params);
           this.loadRightData(params);
         }
@@ -239,21 +257,35 @@ class TransferTable extends PureComponent {
 
   };
   selectChange = (select) => {
-    this.setState({selectedKey: select.id, leftSearchValue: ''});
-    this.doJointQueryService(select.id)
+    const {searchTableConfig} = this.props;
+    const {key} = searchTableConfig;
+    if (select) {
+      this.setState({selectedKey: select[key], leftSearchValue: ''});
+      this.doJointQueryService(select[key], select)
+    } else {
+      this.setState({selectedKey: null, leftSearchValue: ''});
+      this.doJointQueryService(null)
+    }
+
   };
-  doJointQueryService = (key) => {
+  doJointQueryService = (key, select) => {
     const {JointQueryService} = this.props;
     if (key && JointQueryService) {
       this.setState({leftLoading: true});
-      JointQueryService(key, this.state.includeSubNode).then(res => {
+      JointQueryService(key, this.state.includeSubNode, select).then(res => {
         this.setState({
-          leftData: res instanceof Array ? res : [],
+          leftData: res instanceof Array || res.rows ? res : [],
           leftLoading: false,
           leftRowsSelected: [],
           rightDisabled: true,
           leftDisabled: true
         })
+        if (res instanceof Array) {
+          let searchLeftKey = this.props.searchLeftKey || ["code", "name"];
+          searchListByKeyWithTag(res, {keyword: this.state.leftSearchValue}, searchLeftKey).then(data => {
+            this.setState({leftData: data})
+          })
+        }
       }).catch(err => {
         this.setState({leftLoading: false});
       })
@@ -265,6 +297,7 @@ class TransferTable extends PureComponent {
       this.loadLeftData(params);
     }
   };
+
   render() {
     const {
       rightData,
@@ -300,7 +333,7 @@ class TransferTable extends PureComponent {
       ]
     }
     const rightTitle = () => {
-      return [<div>&nbsp;{" "}</div>]
+      return [<div key={"rightTitle"}>&nbsp;{" "}</div>]
     }
     const leftSearch = () => {
       return this.props.leftSearch === false ? null : <Input.Search
@@ -319,14 +352,15 @@ class TransferTable extends PureComponent {
         allowClear
       />
     }
-    const {style,className} = this.props;
-    const {rightDisabled, leftDisabled} = this.state
+    const {style, className, leftSpan, rightSpan} = this.props;
+    const {rightDisabled, leftDisabled} = this.state;
+
     return (
       <Row className={className} style={{height: "100%", background: '#f3f3f3', ...style}}
            type="flex" justify="space-between" align="middle">
-        <Col key='left' span={12} style={{height: "100%"}}>
+        <Col key='left' span={leftSpan ? leftSpan : 12} style={{height: "100%"}}>
           <DetailCard
-            title="未分配"
+            title={this.props.leftTitle ? this.props.leftTitle : "未分配"}
             style={{height: "100%"}}
             bodyStyle={{height: "calc(100% - 53px)"}}
           >
@@ -369,9 +403,9 @@ class TransferTable extends PureComponent {
             style={{'marginBottom': '30px', color: leftDisabled ? null : '#1890FF'}}
             onClick={this.handleRightClick}/>
         </Col>
-        <Col key='right' span={11} style={{height: "100%"}}>
+        <Col key='right' span={rightSpan ? rightSpan : 11} style={{height: "100%"}}>
           <DetailCard
-            title="已分配"
+            title={this.props.rightTitle ? this.props.rightTitle : "已分配"}
             style={{height: "100%"}}
             bodyStyle={{height: "calc(100% - 53px)"}}
           >

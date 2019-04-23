@@ -111,9 +111,9 @@ class ConfigWorkPageModal extends Component {
                    footer={false}
                    centered={true}
             >
-                <div style={{textAlign: "center"}}>
                     <TransferTable
                         width={900}
+                        style={{background:"#fff"}}
                         handleLeftClick={this.handleLeftClick.bind(this)}
                         handleRightClick={this.handleRightClick.bind(this)}
                         searchTableConfig={searchTableConfig}
@@ -126,7 +126,6 @@ class ConfigWorkPageModal extends Component {
                         leftSearch={false}
                         rightSearch={false}
                     />
-                </div>
             </Modal>
         );
     }
