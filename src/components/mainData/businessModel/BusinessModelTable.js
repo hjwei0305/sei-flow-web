@@ -228,7 +228,7 @@ class BusinessModelTable extends Component {
             },
             {
                 title: '应用模块Code',
-                dataIndex: 'appModuleCode',
+                dataIndex: 'appModule.code',
                 width: 120,
             },
             {
