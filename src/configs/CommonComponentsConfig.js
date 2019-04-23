@@ -49,7 +49,7 @@ export const businessModelConfig = {
         },
         {
             title: '所属应用模块',
-            dataIndex: 'businessModel.appModule.name',
+            dataIndex: 'appModule.name',
         }],
     dataService: findAllByAuth,
     searchService: searchListByKey,
