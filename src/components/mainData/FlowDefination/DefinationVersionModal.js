@@ -214,7 +214,7 @@ class DefinationVersionModal extends Component {
                     placeholder="输入代码或名称查询"
                     onSearch={value => this.handleSearch(value)}
                     style={{ width: 230}}
-                    enterButton
+                    allowClear
                 />
             ]
         };

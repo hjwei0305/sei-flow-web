@@ -353,7 +353,7 @@ class FlowDefinationView extends Component {
           placeholder="输入代码或名称查询"
           onSearch={value => this.handleTableSearch(value)}
           style={{width: '220px'}}
-          enterButton
+          allowClear
         />
       ]
     };
