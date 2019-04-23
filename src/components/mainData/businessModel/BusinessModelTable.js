@@ -144,7 +144,8 @@ class BusinessModelTable extends Component {
         let thiz = this;
         const {appModule,searchValue,pageInfo,selectedRows}=thiz.state;
         confirm({
-            title: "确定要删除吗？",
+          title: "温馨提示",
+          content: "确定要删除吗？",
             onOk() {
                 let params = {};
                 params = record.id;

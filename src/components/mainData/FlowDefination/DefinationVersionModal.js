@@ -100,7 +100,8 @@ class DefinationVersionModal extends Component {
     }
     let thiz = this;
     confirm({
-      title: title,
+      title: "温馨提示",
+      content: title,
       onOk() {
         thiz.setState({loading: true});
         activateOrFreezeFlowVer(id, status).then(result => {

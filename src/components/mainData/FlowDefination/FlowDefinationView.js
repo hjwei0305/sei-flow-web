@@ -120,7 +120,8 @@ class FlowDefinationView extends Component {
     if (!this.judgeSelected()) return;
     let thiz = this;
     confirm({
-      title: "您确定要重置流程图位置吗？",
+      title: "温馨提示",
+      content:"您确定要重置流程图位置吗？",
       onOk() {
         let id = thiz.state.tableSelectRow[0].id;
         thiz.setState({loading: true});
@@ -161,7 +162,8 @@ class FlowDefinationView extends Component {
     }
     let thiz = this;
     confirm({
-      title: title,
+      content: title,
+      title: "温馨提示",
       onOk() {
         thiz.setState({loading: true});
         activateOrFreezeFlowDef(id, status).then(result => {
@@ -195,7 +197,8 @@ class FlowDefinationView extends Component {
     this.setState({editData: record});
     let thiz = this;
     confirm({
-      title: "数据将丢失，确定要删除吗？",
+      content:"数据将丢失，确定要删除吗？",
+      title: "温馨提示",
       onOk() {
         let id = record.id;
         thiz.setState({loading: true});

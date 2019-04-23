@@ -120,7 +120,8 @@ class ConfigExUserModal extends Component {
         if (!this.judgeSelected()) return;
         let thiz = this;
         confirm({
-            title:"确定要删除吗？",
+          title: "温馨提示",
+          content: "确定要删除吗？",
             onOk(){
                 let params = {};
                 params = thiz.state.selectedRows[0].id;

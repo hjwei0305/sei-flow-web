@@ -97,7 +97,8 @@ class AppModuleTable extends Component {
   deleteClick = (record) => {
     let thiz = this;
     confirm({
-      title: "确定要删除吗？",
+      title: "温馨提示",
+      content:"确定要删除吗？",
       onOk() {
         let params = {};
         params = record.id;
