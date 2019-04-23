@@ -113,10 +113,12 @@ class BusinessModelTable extends Component {
                                 value:`${appModule.id}`,//筛选值
                                 fieldType:"String"//筛选类型
                             }]});
+                      this.setState({confirmLoading: false, modalVisible: false});
                     } else {
                         message.error(result.message ? result.message : "请求失败");
+                      this.setState({confirmLoading: false});
                     }
-                  this.setState({confirmLoading: false, modalVisible: false});
+
                 }).catch(e => {
                   this.setState({confirmLoading: false});
                 })
