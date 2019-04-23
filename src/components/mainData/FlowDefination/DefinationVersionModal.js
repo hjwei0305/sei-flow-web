@@ -227,7 +227,7 @@ class DefinationVersionModal extends Component {
                    width={700}
                    maskClosable={false}
                    onCancel={handleCancel}
-                   bodyStyle={{maxHeight:500}}
+                   bodyStyle={{height:500}}
                    footer={false}
             >
                 <div  className={'tbar-box'}>
@@ -235,6 +235,7 @@ class DefinationVersionModal extends Component {
                     <div  className={'tbar-search-box'}>{search()}</div>
                 </div>
                     <SimpleTable
+                      heightY={300}
                         rowsSelected={selectedRows}
                         onSelectRow={this.handleRowSelectChange}
                         data={data}
