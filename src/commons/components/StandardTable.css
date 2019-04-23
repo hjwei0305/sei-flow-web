@@ -59,4 +59,9 @@
   right: -5px;
   cursor: col-resize;
 }
+.cell-text-short{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
