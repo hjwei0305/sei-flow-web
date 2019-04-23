@@ -12,9 +12,9 @@ export const basicApi = "/basic-service";
 export const uploadUrl = "";
 export const flowDefUrl=REACT_APP_HOST+"/flow-web/design";
 
-export const defaultPageSize = 15;
+export const defaultPageSize = 4;
 export const rowGutter = 20;
-export const defaultPageSizeOptions = ['15', '50', '100'];
+export const defaultPageSizeOptions = ['4', '50', '100'];
 
 
 

@@ -18,7 +18,7 @@ import DefinationVersionModal from "./DefinationVersionModal";
 import StandardTree from "../../../commons/components/StandardTree";
 import DetailCard from "../../../commons/components/DetailCard";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
-import {rowGutter} from "../../../configs/DefaultConfig";
+import {defaultPageSize, rowGutter} from "../../../configs/DefaultConfig";
 import StandardDropdown from "../../../commons/components/StandardDropdown";
 import DefinaionModal from "./DefinaionModal";
 
@@ -68,7 +68,7 @@ class FlowDefinationView extends Component {
     this.setState({loading: true});
     listFlowDefination(param).then((result) => {
       this.setState({
-        tableData: result.rows, tableSelectRow: []
+        tableData: result, tableSelectRow: []
       });
     }).catch(err => {
     }).finally(() => {
@@ -81,16 +81,20 @@ class FlowDefinationView extends Component {
     this.setState({treeSelectedKeys: selectedKeys});
     this.setState({selectedNode: selectedNodes[0] ? selectedNodes[0] : {}});
     if (selectedNodes[0]) {
-      let params = {Q_EQ_orgId: selectedNodes[0] ? selectedNodes[0].id : ""};
+      let params = {Q_EQ_orgId: selectedNodes[0] ? selectedNodes[0].id : "",pageInfo:{page:1,rows:defaultPageSize}};
       this.listFlowDefination(params);
       this.setState({pathName: selectedNodes[0].name ? selectedNodes[0].name : '岗位'});
     }
   };
 
-  handleTableSearch = (value) => {
-    searchListByKeyWithTag(this.state.tableData, {keyword: value}, ["code", "name"]).then(res => {
-      this.setState({tableData: res, tableSearchValue: value})
-    })
+  handleTableSearch = (quickValue) => {
+    //刷新本地数据
+    let params = {
+      Q_EQ_orgId: this.state.selectedNode.id,
+      quickValue,
+      pageInfo:this.state.pageInfo
+    };
+    this.listFlowDefination(params);
   };
   onAddClick = () => {
     if (this.state.selectedNode && JSON.stringify(this.state.selectedNode) !== "{}") {
@@ -126,7 +130,7 @@ class FlowDefinationView extends Component {
             //刷新本地数据
             let params = {
               Q_EQ_orgId: thiz.state.selectedNode.id,
-              quickSearchValue: thiz.state.tableSearchValue,
+              quickValue: thiz.state.tableSearchValue,
               pageInfo: thiz.state.pageInfo
             };
             thiz.listFlowDefination(params);
@@ -166,7 +170,7 @@ class FlowDefinationView extends Component {
             //刷新本地数据
             let params = {
               Q_EQ_orgId: thiz.state.selectedNode.id,
-              quickSearchValue: thiz.state.tableSearchValue,
+              quickValue: thiz.state.tableSearchValue,
               pageInfo: thiz.state.pageInfo
             };
             thiz.listFlowDefination(params);
@@ -201,7 +205,7 @@ class FlowDefinationView extends Component {
             //刷新本地数据
             let params = {
               Q_EQ_orgId: thiz.state.selectedNode.id,
-              quickSearchValue: thiz.state.tableSearchValue,
+              quickValue: thiz.state.tableSearchValue,
               pageInfo: thiz.state.pageInfo
             };
             thiz.listFlowDefination(params);
@@ -238,11 +242,22 @@ class FlowDefinationView extends Component {
     const {selectedNode,tableSearchValue,pageInfo}=this.state;
     let params = {
       Q_EQ_orgId: selectedNode.id,
-      quickSearchValue:tableSearchValue,
+      quickValue:tableSearchValue,
       pageInfo: pageInfo
     };
     this.listFlowDefination(params);
   };
+  pageChange = (pageInfo) => {
+    const {quickValue} = this.state;
+    this.setState({pageInfo});
+    //刷新本地数据
+    let params = {
+      Q_EQ_orgId: this.state.selectedNode.id,
+      quickValue,
+      pageInfo
+    };
+    this.listFlowDefination(params);
+  }
   render() {
     const columns = [
       {
@@ -371,11 +386,12 @@ class FlowDefinationView extends Component {
                 <div className={'tbar-search-box'}>{search()}</div>
               </div>
               <SimpleTable
-                data={this.state.tableSearchValue ? this.state.tableData.filter(item => item.tag === true) : this.state.tableData}
+                data={this.state.tableData}
                 columns={columns}
                 loading={this.state.loading}
                 onSelectRow={this.onTableSelectRow}
                 rowsSelected={this.state.tableSelectRow}
+                pageChange={this.pageChange}
               />
             </DetailCard>
           </Col>
