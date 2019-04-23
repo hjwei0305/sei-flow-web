@@ -116,9 +116,9 @@ class BusinessModelTable extends Component {
                     } else {
                         message.error(result.message ? result.message : "请求失败");
                     }
+                  this.setState({confirmLoading: false, modalVisible: false});
                 }).catch(e => {
-                }).finally(() => {
-                    this.setState({confirmLoading: false, modalVisible: false});
+                  this.setState({confirmLoading: false});
                 })
             }
         })
