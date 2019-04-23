@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Form, Input, Modal, Tabs} from 'antd';
+import {Form, Input, Modal, Tabs,Row} from 'antd';
 
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
@@ -56,56 +56,55 @@ class EditServerUrlModal extends Component {
                        maskClosable={false}
                        centered={true}
                 >
-                    <FormItem
-                        style={{display: "none"}}
-                        label="id">
-                        {getFieldDecorator('id', {
-                            initialValue: FormValue.id ? FormValue.id : "",
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="代码">
-                        {getFieldDecorator('code', {
-                            initialValue: FormValue.code ? FormValue.code : "",
-                            rules: [{required: true,pattern: '^[A-Za-z0-9]+$', message: '代码允许输入字母和数字!'}]
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
+                  <Row><FormItem
+                    style={{display: "none"}}
+                    label="id">
+                    {getFieldDecorator('id', {
+                      initialValue: FormValue.id ? FormValue.id : "",
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
+                  <Row><FormItem
+                    {...formItemLayout}
+                    label="代码">
+                    {getFieldDecorator('code', {
+                      initialValue: FormValue.code ? FormValue.code : "",
+                      rules: [{required: true,pattern: '^[A-Za-z0-9]+$', message: '代码允许输入字母和数字!'}]
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
+                  <Row><FormItem
+                    {...formItemLayout}
+                    label="名称">
+                    {getFieldDecorator('name', {
+                      initialValue: FormValue.name ? FormValue.name : "",
+                      rules: [{required: true, message: '请填写名称!'}]
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
+                  <Row><FormItem
+                    {...formItemLayout}
+                    label="URL">
+                    {getFieldDecorator('url', {
+                      initialValue: FormValue.url ? FormValue.url : "",
+                      rules: [{required: true, message: '请填写URL!'}]
 
-                    <FormItem
-                        {...formItemLayout}
-                        label="名称">
-                        {getFieldDecorator('name', {
-                            initialValue: FormValue.name ? FormValue.name : "",
-                            rules: [{required: true, message: '请填写名称!'}]
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="URL">
-                        {getFieldDecorator('url', {
-                            initialValue: FormValue.url ? FormValue.url : "",
-                            rules: [{required: true, message: '请填写URL!'}]
-
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="描述">
-                        {getFieldDecorator('remark', {
-                            initialValue: FormValue.remark ? FormValue.remark : "",
-                        })(
-                            <Input/>
-                        )}
-                    </FormItem>
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
+                  <Row><FormItem
+                    {...formItemLayout}
+                    label="描述">
+                    {getFieldDecorator('remark', {
+                      initialValue: FormValue.remark ? FormValue.remark : "",
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem></Row>
                 </Modal>
             </div>
         );
