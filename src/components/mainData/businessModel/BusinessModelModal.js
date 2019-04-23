@@ -203,16 +203,18 @@ class BusinessModelModal extends Component {
                             </FormItem>
                         </Col>
                     </Row>
+                  <Row>
                     <FormItem
-                        label="描述"
-                        labelCol={{span: 5}}
-                        wrapperCol={{span: 19}}>
-                        {getFieldDecorator('depict', {
-                            initialValue: FormValue.depict ? FormValue.depict : "",
-                        })(
-                            <TextArea rows={3} autosize={false}/>
-                        )}
+                      label="描述"
+                      labelCol={{span: 5}}
+                      wrapperCol={{span: 19}}>
+                      {getFieldDecorator('depict', {
+                        initialValue: FormValue.depict ? FormValue.depict : "",
+                      })(
+                        <TextArea rows={3} autosize={false}/>
+                      )}
                     </FormItem>
+                  </Row>
                     <FormItem
                         style={{display: "none"}}
                         label="id">
