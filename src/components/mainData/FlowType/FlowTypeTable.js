@@ -241,14 +241,14 @@ class FlowTypeTable extends Component {
                         columns={columns}
                         pageChange={this.pageChange}
                     />
-                    <FlowTypeModal
+                  {modalVisible&&<FlowTypeModal
                         isAdd={isAdd}
                         modalVisible={modalVisible}
                         confirmLoading={confirmLoading}
                         handleOk={this.handleSave}
                         handleCancel={this.handleModalCancel}
                         onRef={this.onRef}
-                        defaultValue={editData ? editData : {}}/>
+                        defaultValue={editData ? editData : {}}/>}
                 </div>
             </HeadBreadcrumb>
         )
