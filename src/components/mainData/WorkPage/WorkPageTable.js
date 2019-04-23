@@ -246,7 +246,7 @@ class WorkPageTable extends Component {
                 />
             ]
         };
-        const {editData, data, selectedRows, isAdd, modalVisible, confirmLoading} = this.state;
+        const {editData, data, selectedRows, isAdd, modalVisible, confirmLoading,appModule} = this.state;
         return (
             <HeadBreadcrumb>
                 <div>
@@ -268,7 +268,8 @@ class WorkPageTable extends Component {
                         handleOk={this.handleSave}
                         handleCancel={this.handleModalCancel}
                         onRef={this.onRef}
-                        defaultValue={editData ? editData : {}}/>
+                        defaultValue={editData ? editData : {}}
+                        appModule={appModule}/>
                 </div>
             </HeadBreadcrumb>
         )

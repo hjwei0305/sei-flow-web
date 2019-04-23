@@ -37,7 +37,7 @@ class WorkPageModal extends Component {
             },
         };
 
-        const {confirmLoading, modalVisible, handleOk, handleCancel, defaultValue, isAdd} = this.props;
+        const {confirmLoading, modalVisible, handleOk, handleCancel, defaultValue, isAdd,appModule} = this.props;
         const {getFieldDecorator} = this.props.form;
         let title = "编辑";
         let FormValue = defaultValue;
@@ -69,10 +69,9 @@ class WorkPageModal extends Component {
                         {...formItemLayout}
                         label="应用模块">
                         {getFieldDecorator('appModuleId', {
-                            initialValue: FormValue.appModuleId ? FormValue.appModuleId : "",
-                          rules: [{required: true, message: '请选择应用模块!'}]
+                            initialValue: appModule ? appModule.id : "",
                         })(
-                            <SearchTable config={appModuleConfig} initValue={false}/>
+                            <SearchTable config={appModuleConfig} initValue={false} disabled={true}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -102,6 +101,7 @@ class WorkPageModal extends Component {
                         label="URL地址">
                         {getFieldDecorator('url', {
                             initialValue: FormValue.url ? FormValue.url : "",
+                          rules: [{required: true, message: '请填写URL地址!'}]
                         })(
                             <Input/>
                         )}
@@ -111,6 +111,7 @@ class WorkPageModal extends Component {
                         label="描述">
                         {getFieldDecorator('depict', {
                             initialValue: FormValue.depict ? FormValue.depict : "",
+                          rules: [{required: true, message: '请填写描述!'}]
                         })(
                             <Input/>
                         )}
