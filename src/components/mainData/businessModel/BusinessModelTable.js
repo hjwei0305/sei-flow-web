@@ -252,7 +252,7 @@ class BusinessModelTable extends Component {
                     isNotFormItem={true} config={appModuleAuthConfig}
                     style={{width: 220}}
                     selectChange={this.selectChange}/></span>,
-                <Button key="add" className={"primaryButton"}
+                <Button key="add" className={"primaryButton"} type={"primary"}
                         onClick={this.addClick}>新增</Button>,
                 <Button key="refAdd" className={"primaryButton"}
                         onClick={this.refClick}>参考创建</Button>,
