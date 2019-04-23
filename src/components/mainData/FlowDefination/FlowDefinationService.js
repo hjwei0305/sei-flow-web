@@ -13,7 +13,7 @@ export async function listFlowDefination(params={}){
 }
 
 export async function getFlowDefVersion(id=""){
-    return httpUtils.get(baseUrl+"/flowDefination/getFlowDefVersion"+`/${id}`,{});
+    return httpUtils.get(baseUrl+"/flowDefination/resetPosition"+`/${id}`,{});
 }
 
 export async function listFlowDefinationHistory(params={}){
