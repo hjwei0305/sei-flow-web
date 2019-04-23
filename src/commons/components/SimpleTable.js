@@ -116,7 +116,7 @@ class SimpleTable extends PureComponent {
           }else if(inCard===true){
             scrollY = yHeight-110
           }else{
-            scrollY = yHeight-90
+            scrollY = yHeight-84
           }
             this.setState({scrollY})
         }
@@ -159,10 +159,22 @@ class SimpleTable extends PureComponent {
 
     customerCloumns = (columns) =>{
         let withSequence;
+        columns = columns.map(col => {
+        if(!col.render){
+          col.render = (text,record,index) => {
+            if(text){
+              return <div className={"cell-text-short"} title={text}>{text}</div>
+            }
+            return null;
+          }
+        }
+        return col;
+      });
         //自动加序号列和补全列
+        const {showOrderTitle=true} = this.props;
         if(!this.props.noSequence){
             let sequence = {
-                title: null,
+                title: showOrderTitle ? "序号":null,
                 key:'sequence',
                 width:80,
                 align:"center",
@@ -421,7 +433,9 @@ SimpleTable.protoType={
     //设置 div 样式
     className:PropTypes.string,
     //是否分页
-    pagination:PropTypes.bool
+    pagination:PropTypes.bool,
+    //是否显示序号文字
+    showOrderTitle: PropTypes.bool
 }
 
 export default SimpleTable;
