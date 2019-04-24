@@ -164,7 +164,7 @@ class ConfigServerUrlModal extends Component {
                    width={700}
                    maskClosable={false}
                    onCancel={handleCancel}
-                   bodyStyle={{minHeight:500}}
+                   bodyStyle={{minHeight:400}}
                    footer={false}
                    centered={true}
             >
