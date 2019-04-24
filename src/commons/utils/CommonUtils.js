@@ -544,3 +544,6 @@ export const checkCode = (rule, value, callback) => {
   }
   callback();
 };
+export const checkInputCode = () => {
+  return {validator: checkCode};
+};
