@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react'
 import {Form, Input, Modal, InputNumber} from 'antd';
+import {checkCode} from "../../../commons/utils/CommonUtils";
 
 const FormItem = Form.Item;
 
@@ -68,7 +69,7 @@ class EditAppModuleModal extends Component {
                         label="代码">
                         {getFieldDecorator('code', {
                             initialValue: FormValue.code ? FormValue.code : "",
-                            rules: [{required: true,pattern: '^[A-Za-z0-9]+$', message: '代码允许输入字母和数字!'}]
+                            rules: [{required: true, message: '请输入代码!'},{validator:checkCode}]
                         })(
                             <Input/>
                         )}
