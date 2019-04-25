@@ -331,7 +331,10 @@ class FlowDefinationView extends Component {
       {
         title: '优先级',
         dataIndex: 'priority',
-        width: 120
+        width: 120,
+        render(text){
+          return <div style={{textAlign:"right"}}>{text}</div>
+        }
       }
     ];
     const {tableSelectRow, operator, editData, definationModalVisible, selectedNode} = this.state;
