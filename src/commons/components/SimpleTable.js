@@ -162,7 +162,7 @@ class SimpleTable extends PureComponent {
         columns = columns.map(col => {
         if(!col.render){
           col.render = (text,record,index) => {
-            if(text){
+            if(text!==undefined||text!==null){
               return <div className={"cell-text-short"} title={text}>{text}</div>
             }
             return null;

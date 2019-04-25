@@ -57,7 +57,13 @@ class WorkPageTable extends Component {
         this.setState({modalVisible, isAdd})
     };
     addClick = () => {
+      const {appModule}=this.state;
+      if(appModule&&appModule.id){
         this.handleModalVisible(true, true)
+      }else {
+        message.error("请选择应用模块！")
+      }
+
     };
     editClick = (record) => {
         this.setState({editData: record});

@@ -153,18 +153,18 @@ class ConfigServerUrlModal extends Component {
                     placeholder="输入代码或名称查询"
                     onSearch={value => this.handleSearch(value)}
                     style={{ width: 230}}
-                    enterButton
+                    allowClear
                 />
             ]
         };
         const {modalVisible,handleCancel} = this.props;
         return (
-            <Modal title={"服务地址管理"}
+            <Modal title={"配置服务地址"}
                    visible={modalVisible}
                    width={700}
                    maskClosable={false}
                    onCancel={handleCancel}
-                   bodyStyle={{minHeight:500}}
+                   bodyStyle={{minHeight:400}}
                    footer={false}
                    centered={true}
             >

@@ -22,7 +22,7 @@ class DefinaionModal extends Component {
   render() {
     const {confirmLoading, modalVisible, handleOk, handleCancel, operator, editData={}, selectedNode} = this.props;
     let auth =getUserInfo();
-     console.log("auth:",auth)
+     //console.log("editData:",editData)
     let src = flowDefUrl;
     src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
     let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
