@@ -56,7 +56,7 @@ class DefinaionModal extends Component {
                footer={false}
                bodyStyle={{textAlign:"center"}}
         >
-          {editData.id&&selectedNode.id&&<iframe style={{width: "1200px", height: "600px", textAlign: "center"}} src={src}/>}
+          <iframe style={{width: "1200px", height: "600px", textAlign: "center"}} src={src}/>
         </Modal>
       </div>
     );
