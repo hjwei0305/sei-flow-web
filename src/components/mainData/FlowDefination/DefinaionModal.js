@@ -20,7 +20,7 @@ class DefinaionModal extends Component {
   }
 
   render() {
-    const {confirmLoading, modalVisible, handleOk, handleCancel, operator, editData={}, selectedNode} = this.props;
+    const {confirmLoading, modalVisible, handleOk, handleCancel, operator, editData={}, selectedNode={}} = this.props;
     let auth =getUserInfo();
      //console.log("editData:",editData)
     let src = flowDefUrl;
