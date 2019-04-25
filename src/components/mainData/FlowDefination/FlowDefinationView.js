@@ -107,14 +107,12 @@ class FlowDefinationView extends Component {
   };
   onRefAddClick = () => {
     if (!this.judgeSelected()) return;
-    this.setState({editData: this.state.tableSelectRow[0]});
     this.handleModalVisible(false, false, true);
-    this.setState({operator: "refAdd"})
+    this.setState({operator: "refAdd",editData: this.state.tableSelectRow[0]})
   };
   onEditClick = (record) => {
-    this.setState({editData: record});
     this.handleModalVisible(false, false, true);
-    this.setState({operator: "edit"})
+    this.setState({operator: "edit",editData: record})
   };
   onResetClick = () => {
     if (!this.judgeSelected()) return;
@@ -189,8 +187,8 @@ class FlowDefinationView extends Component {
 
   };
   onVersionClick = (record) => {
+    this.handleModalVisible(false, true);
     this.setState({editData: record});
-    this.handleModalVisible(false, true)
   };
 
   onDeleteClick = (record) => {
@@ -406,7 +404,7 @@ class FlowDefinationView extends Component {
             handleCancel={this.handleModalCancel}
             modalVisible={this.state.defVersionVisible}
             flowDefinationId={editData ? editData.id : ""}/>}
-          {definationModalVisible && <DefinaionModal
+          {definationModalVisible &&selectedNode&&editData&& <DefinaionModal
             operator={operator}
             handleCancel={this.handleDefinationModalCancel}
             modalVisible={definationModalVisible}

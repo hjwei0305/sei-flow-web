@@ -59,16 +59,13 @@ class DefinationVersionModal extends Component {
 
   refClick = () => {
     if (!this.judgeSelected()) return;
-    this.setState({editData: this.state.selectedRows[0]});
-    this.setState({operator: "versionRef", definationModalVisible: true})
+    this.setState({operator: "versionRef", definationModalVisible: true,editData: this.state.selectedRows[0]})
   };
   checkClick = (record) => {
-    this.setState({editData: record});
-    this.setState({operator: "versionView", definationModalVisible: true})
+    this.setState({operator: "versionView", definationModalVisible: true,editData: record})
   };
   editClick = (record) => {
-    this.setState({editData: record});
-    this.setState({operator: "versionEdit", definationModalVisible: true})
+    this.setState({operator: "versionEdit", definationModalVisible: true,editData: record})
   };
   judgeSelected = () => {
     if (this.state.selectedRows.length === 0) {
@@ -253,7 +250,7 @@ class DefinationVersionModal extends Component {
           pageChange={this.pageChange}
           loading={this.state.loading}
         />
-        {definationModalVisible && <DefinaionModal
+        {definationModalVisible&&selectedNode&&editData && <DefinaionModal
           operator={operator}
           handleCancel={this.handleModalCancel}
           modalVisible={definationModalVisible}
