@@ -29,20 +29,16 @@ class DefinaionModal extends Component {
     let title = "新增";
     if (operator==="edit") {
       title = "编辑";
-      src=src+`&businessModelId=${editData.flowType.businessModel.id}&businessModelCode=${editData.flowType.businessModel.className}
-      &id=${editData.id}`
+      src=src+`&businessModelId=${editData.flowType.businessModel.id}&businessModelCode=${editData.flowType.businessModel.className}&id=${editData.id}`
     }else if(operator==="refAdd"){
       title = "参考创建";
-      src=src+`&orgName=${orgName}&businessModelId=${editData.flowType.businessModel.id}&businessModelCode=${editData.flowType.businessModel.className}
-      &id=${editData.id}&isFromVersion=${false}&isCopy=${true}`
+      src=src+`&orgName=${orgName}&businessModelId=${editData.flowType.businessModel.id}&businessModelCode=${editData.flowType.businessModel.className}&id=${editData.id}&isFromVersion=${false}&isCopy=${true}`
     }else if(operator==="versionRef"){//从流程版本定义进来的
       title = "参考创建";
-      src=src+`&businessModelId=${editData.flowDefination.flowType.businessModel.id}&businessModelCode=${editData.flowDefination.flowType.businessModel.className}
-      &id=${editData.flowDefination.id}&isFromVersion=${true}&isCopy=${true}`
+      src=src+`&businessModelId=${editData.flowDefination.flowType.businessModel.id}&businessModelCode=${editData.flowDefination.flowType.businessModel.className}&id=${editData.flowDefination.id}&isFromVersion=${true}&isCopy=${true}`
     }else if(operator==="versionEdit"){//从流程版本定义进来的
       title = "编辑";
-      src=src+`&businessModelId=${editData.flowDefination.flowType.businessModel.id}&businessModelCode=${editData.flowDefination.flowType.businessModel.className}
-      &id=${editData.flowDefination.id}&isFromVersion=${true}`
+      src=src+`&businessModelId=${editData.flowDefination.flowType.businessModel.id}&businessModelCode=${editData.flowDefination.flowType.businessModel.className}&id=${editData.flowDefination.id}&isFromVersion=${true}`
     }else if(operator==="versionView"){//从流程版本定义进来的
       title = "查看流程定义";
       src=flowDefUrl+`/showLook?id=${editData.id}&_s=${auth.sessionId}`
