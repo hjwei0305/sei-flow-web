@@ -404,7 +404,7 @@ class FlowDefinationView extends Component {
             handleCancel={this.handleModalCancel}
             modalVisible={this.state.defVersionVisible}
             flowDefinationId={editData ? editData.id : ""}/>}
-          {definationModalVisible &&selectedNode&&editData&& <DefinaionModal
+          {definationModalVisible &&<DefinaionModal
             operator={operator}
             handleCancel={this.handleDefinationModalCancel}
             modalVisible={definationModalVisible}

@@ -250,7 +250,7 @@ class DefinationVersionModal extends Component {
           pageChange={this.pageChange}
           loading={this.state.loading}
         />
-        {definationModalVisible&&selectedNode&&editData && <DefinaionModal
+        {definationModalVisible&&<DefinaionModal
           operator={operator}
           handleCancel={this.handleModalCancel}
           modalVisible={definationModalVisible}

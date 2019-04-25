@@ -43,7 +43,6 @@ class DefinaionModal extends Component {
       title = "查看流程定义";
       src=flowDefUrl+`/showLook?id=${editData.id}&_s=${auth.sessionId}`
     }
-
     return (
       <div>
         <Modal title={title}
