@@ -172,7 +172,7 @@ class DefinationVersionModal extends Component {
       {
         title: '版本号',
         dataIndex: 'versionCode',
-        width: 120,
+        width: 60,
         render(text) {
           return <div style={{textAlign: "right"}}>{text}</div>
         }
@@ -180,7 +180,7 @@ class DefinationVersionModal extends Component {
       {
         title: '优先级',
         dataIndex: 'priority',
-        width: 120,
+        width: 60,
         render(text){
           return <div style={{textAlign:"right"}}>{text}</div>
         }
