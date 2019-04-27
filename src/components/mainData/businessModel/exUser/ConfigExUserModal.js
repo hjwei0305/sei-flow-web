@@ -122,7 +122,7 @@ class ConfigExUserModal extends Component {
         let thiz = this;
         confirm({
           title: "温馨提示",
-          content: "确定要删除吗？",
+          content: "删除后不可恢复，是否确定删除？",
             onOk(){
                 let params = {};
                 params = thiz.state.selectedRows[0].id;

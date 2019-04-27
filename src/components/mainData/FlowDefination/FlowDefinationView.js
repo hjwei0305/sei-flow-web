@@ -195,8 +195,8 @@ class FlowDefinationView extends Component {
     this.setState({editData: record});
     let thiz = this;
     confirm({
-      content:"数据将丢失，确定要删除吗？",
       title: "温馨提示",
+      content: "删除后不可恢复，是否确定删除？",
       onOk() {
         let id = record.id;
         thiz.setState({loading: true});
