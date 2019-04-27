@@ -34,6 +34,9 @@ export async function listServiceUrl(params = {}) {
 export async function saveServiceUrl(params = {}) {
     return httpUtils.postJson(baseUrl + "/flowServiceUrl/save",JSON.stringify(params));
 }
+export async function deleteServiceUrl(params = {}) {
+  return httpUtils.delete(baseUrl + "/flowServiceUrl/deleteById",params);
+}
 //执行人
 export async function listExUser(params = {}) {
     Object.assign(params,{sortOrders:[{property:'lastEditedDate',direction:'DESC'}],quickSearchProperties:["name","code","url","param","depict"],});
