@@ -202,7 +202,7 @@ class FlowDefinationView extends Component {
         thiz.setState({loading: true});
         deleteFlowDefination(id).then(result => {
           if (result.status === 'SUCCESS') {
-            message.success("请求成功");
+            message.success(result.message ? result.message : "请求成功");
             //刷新本地数据
             let params = {
               Q_EQ_orgId: thiz.state.selectedNode.id,
