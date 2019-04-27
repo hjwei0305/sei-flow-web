@@ -79,7 +79,7 @@ class WorkPageModal extends Component {
                         label="名称">
                         {getFieldDecorator('name', {
                             initialValue: FormValue.name ? FormValue.name : "",
-                            rules: [{required: true, message: '请填写名称!'}]
+                            rules: [{required: true, message: '请填写名称!',whitespace:true}]
                         })(
                             <Input/>
                         )}
@@ -101,7 +101,7 @@ class WorkPageModal extends Component {
                         label="URL地址">
                         {getFieldDecorator('url', {
                             initialValue: FormValue.url ? FormValue.url : "",
-                          rules: [{required: true, message: '请填写URL地址!'}]
+                          rules: [{required: true, message: '请填写URL地址!',whitespace:true}]
                         })(
                             <Input/>
                         )}
@@ -111,7 +111,7 @@ class WorkPageModal extends Component {
                         label="描述">
                         {getFieldDecorator('depict', {
                             initialValue: FormValue.depict ? FormValue.depict : "",
-                          rules: [{required: true, message: '请填写描述!'}]
+                          rules: [{required: true, message: '请填写描述!',whitespace:true}]
                         })(
                             <Input/>
                         )}

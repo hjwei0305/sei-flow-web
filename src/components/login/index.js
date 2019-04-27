@@ -78,7 +78,7 @@ class LoginForm extends Component {
                 showTenant && <Item>
                   {
                     getFieldDecorator('tenantCode', {
-                      rules: [{required: false, message: '请输入租户账号!'}]
+                      rules: [{required: false, message: '请输入租户账号!',whitespace:true}]
                     })(
                       <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="租户账号"/>
                     )

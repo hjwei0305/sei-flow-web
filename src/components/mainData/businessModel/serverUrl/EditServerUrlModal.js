@@ -71,7 +71,7 @@ class EditServerUrlModal extends Component {
                     label="代码">
                     {getFieldDecorator('code', {
                       initialValue: FormValue.code ? FormValue.code : "",
-                      rules: [{required: true, message: '请输入代码!'},{validator:checkCode}]
+                      rules: [{required: true, message: '请输入代码!',whitespace:true},{validator:checkCode}]
                     })(
                       <Input/>
                     )}
@@ -81,7 +81,7 @@ class EditServerUrlModal extends Component {
                     label="名称">
                     {getFieldDecorator('name', {
                       initialValue: FormValue.name ? FormValue.name : "",
-                      rules: [{required: true, message: '请填写名称!'}]
+                      rules: [{required: true,whitespace:true, message: '请填写名称!'}]
                     })(
                       <Input/>
                     )}
@@ -91,7 +91,7 @@ class EditServerUrlModal extends Component {
                     label="URL">
                     {getFieldDecorator('url', {
                       initialValue: FormValue.url ? FormValue.url : "",
-                      rules: [{required: true, message: '请填写URL!'}]
+                      rules: [{required: true, message: '请填写URL!',whitespace:true}]
 
                     })(
                       <Input/>

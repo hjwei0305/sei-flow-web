@@ -79,7 +79,7 @@ class BusinessModelModal extends Component {
                                 label="名称">
                                 {getFieldDecorator('name', {
                                     initialValue: FormValue.name ? FormValue.name : "",
-                                    rules: [{required: true, message: '请填写名称!'}]
+                                    rules: [{required: true, message: '请填写名称!',whitespace:true}]
                                 })(
                                     <Input/>
                                 )}
@@ -93,7 +93,7 @@ class BusinessModelModal extends Component {
                                 label="类全路径">
                                 {getFieldDecorator('className', {
                                     initialValue: FormValue.className ? FormValue.className : "",
-                                    rules: [{required: true, message: '请填写类全路径!'}]
+                                    rules: [{required: true, message: '请填写类全路径!',whitespace:true}]
                                 })(
                                     <Input/>
                                 )}
@@ -105,7 +105,7 @@ class BusinessModelModal extends Component {
                                 label="条件属性说明服务地址">
                                 {getFieldDecorator('conditonProperties', {
                                     initialValue: FormValue.conditonProperties ? FormValue.conditonProperties : "",
-                                    rules: [{required: true, message: '请填写条件属性说明服务地址!'}]
+                                    rules: [{required: true, message: '请填写条件属性说明服务地址!',whitespace:true}]
                                 })(
                                     <Input/>
                                 )}
@@ -119,7 +119,7 @@ class BusinessModelModal extends Component {
                                 label="条件属性值服务地址">
                                 {getFieldDecorator('conditonPValue', {
                                     initialValue: FormValue.conditonPValue ? FormValue.conditonPValue : "",
-                                    rules: [{required: true, message: '请填写条件属性值服务地址!'}]
+                                    rules: [{required: true, message: '请填写条件属性值服务地址!',whitespace:true}]
                                 })(
                                     <Input/>
                                 )}
@@ -131,7 +131,7 @@ class BusinessModelModal extends Component {
                                 label="条件属性初始值服务地址">
                                 {getFieldDecorator('conditonPSValue', {
                                     initialValue: FormValue.conditonPSValue ? FormValue.conditonPSValue : "",
-                                    rules: [{required: true, message: '请填写条件属性初始值服务地址!'}]
+                                    rules: [{required: true, message: '请填写条件属性初始值服务地址!',whitespace:true}]
                                 })(
                                     <Input/>
                                 )}
@@ -145,7 +145,7 @@ class BusinessModelModal extends Component {
                                 label="流程状态重置服务地址">
                                 {getFieldDecorator('conditonStatusRest', {
                                     initialValue: FormValue.conditonStatusRest ? FormValue.conditonStatusRest : "",
-                                    rules: [{required: true, message: '请填写流程状态重置服务地址!'}]
+                                    rules: [{required: true, message: '请填写流程状态重置服务地址!',whitespace:true}]
                                 })(
                                     <Input/>
                                 )}
@@ -170,7 +170,7 @@ class BusinessModelModal extends Component {
                                 label="提交任务地址">
                                 {getFieldDecorator('completeTaskServiceUrl', {
                                     initialValue: FormValue.completeTaskServiceUrl ? FormValue.completeTaskServiceUrl : "",
-                                    rules: [{required: true, message: '请填写提交任务地址!'}]
+                                    rules: [{required: true, message: '请填写提交任务地址!',whitespace:true}]
                                 })(
                                     <Input/>
                                 )}
@@ -182,7 +182,7 @@ class BusinessModelModal extends Component {
                                 label="表单明细URL">
                                 {getFieldDecorator('businessDetailServiceUrl', {
                                     initialValue: FormValue.businessDetailServiceUrl ? FormValue.businessDetailServiceUrl : "",
-                                    rules: [{required: true, message: '请填写表单明细URL!'}]
+                                    rules: [{required: true, message: '请填写表单明细URL!',whitespace:true}]
                                 })(
                                     <Input/>
                                 )}
@@ -196,7 +196,7 @@ class BusinessModelModal extends Component {
                                 label="表单URL">
                                 {getFieldDecorator('lookUrl', {
                                     initialValue: FormValue.lookUrl ? FormValue.lookUrl : "",
-                                    rules: [{required: true, message: '请填写条件属性值服务地址!'}]
+                                    rules: [{required: true, message: '请填写条件属性值服务地址!',whitespace:true}]
                                 })(
                                     <Input/>
                                 )}
