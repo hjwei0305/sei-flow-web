@@ -35,7 +35,7 @@ class DefinaionModal extends Component {
       src=src+`&orgName=${orgName}&businessModelId=${editData.flowType.businessModel.id}&businessModelCode=${editData.flowType.businessModel.className}&id=${editData.id}&isFromVersion=${false}&isCopy=${true}`
     }else if(operator==="versionRef"){//从流程版本定义进来的
       title = "参考创建";
-      src=src+`&versionCode=${editData.versionCode}&businessModelId=${editData.flowDefination.flowType.businessModel.id}&businessModelCode=${editData.flowDefination.flowType.businessModel.className}&id=${editData.flowDefination.id}&isFromVersion=${false}&isCopy=${true}&orgName=${selectedNode.name}`
+      src=src+`&versionCode=${editData.versionCode}&businessModelId=${editData.flowDefination.flowType.businessModel.id}&businessModelCode=${editData.flowDefination.flowType.businessModel.className}&id=${editData.flowDefination.id}&isFromVersion=${false}&isCopy=${true}&orgName=${orgName}`
     }else if(operator==="versionEdit"){//从流程版本定义进来的
       title = "编辑";
       src=src+`&versionCode=${editData.versionCode}&businessModelId=${editData.flowDefination.flowType.businessModel.id}&businessModelCode=${editData.flowDefination.flowType.businessModel.className}&id=${editData.flowDefination.id}&isFromVersion=${true}`
