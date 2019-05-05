@@ -111,7 +111,7 @@ class FlowDefinationView extends Component {
       src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
       let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
       let title = "新增";
-      mainTabAction.tabOpen({id: tableSelectRow[0].id + 'add', name: title, featureUrl: "DefinaionPage"})
+      mainTabAction.tabOpen({id: tableSelectRow[0].id + 'add', name: title, featureUrl: src})
     } else {
       message.error('请选择组织机构')
     }
