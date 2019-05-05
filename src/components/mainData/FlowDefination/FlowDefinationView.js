@@ -103,7 +103,7 @@ class FlowDefinationView extends Component {
   onAddClick = () => {
     if (this.state.selectedNode && JSON.stringify(this.state.selectedNode) !== "{}") {
       // this.handleModalVisible(false, false, true);
-      if (!this.judgeSelected()) return;
+      // if (!this.judgeSelected()) return;
       this.setState({operator: "add"})
       const {selectedNode = {}, tableSelectRow} = this.state;
       let auth = getUserInfo();
@@ -111,7 +111,7 @@ class FlowDefinationView extends Component {
       src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
       let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
       let title = "新增";
-      mainTabAction.tabOpen({id: tableSelectRow[0].id + 'add', name: title, featureUrl: src})
+      mainTabAction.tabOpen({id: 'add', name: title, featureUrl: src})
     } else {
       message.error('请选择组织机构')
     }
