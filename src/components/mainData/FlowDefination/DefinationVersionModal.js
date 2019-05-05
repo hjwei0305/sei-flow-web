@@ -12,6 +12,9 @@ import {Input} from "antd/lib/index";
 import {activateOrFreezeFlowDef, activateOrFreezeFlowVer, listFlowDefinationHistory} from "./FlowDefinationService";
 import DefinaionModal from "./DefinaionModal";
 import StandardDropdown from "../../../commons/components/StandardDropdown";
+import {getUserInfo} from "../../../commons/utils/CommonUtils";
+import {flowDefUrl} from "../../../configs/DefaultConfig";
+import {mainTabAction} from "sei-utils";
 
 const Search = Input.Search;
 const confirm = Modal.confirm;
@@ -59,13 +62,39 @@ class DefinationVersionModal extends Component {
 
   refClick = () => {
     if (!this.judgeSelected()) return;
-    this.setState({operator: "versionRef", definationModalVisible: true,editData: this.state.selectedRows[0]})
+    const {selectedRows}=this.state;
+    const {selectedNode}=this.props;
+    this.setState({operator: "versionRef", definationModalVisible: true,editData: selectedRows})
+    let auth =getUserInfo();
+    let src = flowDefUrl;
+    src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
+    let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
+    let title = "参考创建";
+    src=src+`&versionCode=${selectedRows[0].versionCode}&businessModelId=${selectedRows[0].flowDefination.flowType.businessModel.id}&businessModelCode=${selectedRows[0].flowDefination.flowType.businessModel.className}&id=${selectedRows[0].flowDefination.id}&isFromVersion=${false}&isCopy=${true}&orgName=${orgName}`
+    mainTabAction.tabOpen({id: selectedRows[0].id + 'versionRef', name: title, featureUrl: src})
   };
   checkClick = (record) => {
     this.setState({operator: "versionView", definationModalVisible: true,editData: record})
+    // const {selectedRows}=this.state;
+    const {selectedNode}=this.props;
+    let auth =getUserInfo();
+    let src = flowDefUrl;
+    src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
+    let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
+    let title = "查看流程定义";
+    src=flowDefUrl+`/showLook?id=${record.id}&_s=${auth.sessionId}`
+    mainTabAction.tabOpen({id: record.id + 'versionView', name: title, featureUrl: src})
   };
   editClick = (record) => {
     this.setState({operator: "versionEdit", definationModalVisible: true,editData: record})
+    const {selectedNode}=this.props;
+    let auth =getUserInfo();
+    let src = flowDefUrl;
+    src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
+    let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
+    let title = "编辑";
+    src=src+`&versionCode=${record.versionCode}&businessModelId=${record.flowDefination.flowType.businessModel.id}&businessModelCode=${record.flowDefination.flowType.businessModel.className}&id=${record.flowDefination.id}&isFromVersion=${true}`
+    mainTabAction.tabOpen({id: record.id + 'versionView', name: title, featureUrl: src})
   };
   judgeSelected = () => {
     if (this.state.selectedRows.length === 0) {
@@ -250,14 +279,14 @@ class DefinationVersionModal extends Component {
           pageChange={this.pageChange}
           loading={this.state.loading}
         />
-        {definationModalVisible&&<DefinaionModal
-          operator={operator}
-          handleCancel={this.handleModalCancel}
-          modalVisible={definationModalVisible}
-          selectedNode={selectedNode ? selectedNode : {}}
-          editData={editData ? editData : {}}
-          flowDefinationId={editData ? editData.id : ""}
-        />}
+        {/*{definationModalVisible&&<DefinaionModal*/}
+          {/*operator={operator}*/}
+          {/*handleCancel={this.handleModalCancel}*/}
+          {/*modalVisible={definationModalVisible}*/}
+          {/*selectedNode={selectedNode ? selectedNode : {}}*/}
+          {/*editData={editData ? editData : {}}*/}
+          {/*flowDefinationId={editData ? editData.id : ""}*/}
+        {/*/>}*/}
       </Modal>
     );
   }

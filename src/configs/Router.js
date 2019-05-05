@@ -13,6 +13,7 @@ const WorkPageTable = lazy(() => import('../components/mainData/WorkPage/WorkPag
 const BusinessModelTable = lazy(() => import('../components/mainData/businessModel/BusinessModelTable'));
 const FlowTypeTable = lazy(() => import('../components/mainData/FlowType/FlowTypeTable'));
 const FlowDefinationView = lazy(() => import('../components/mainData/FlowDefination/FlowDefinationView'));
+const DefinaionPage = lazy(() => import('../components/mainData/FlowDefination/DefinaionPage'));
 
 export default class Routers extends Component {
     render() {
@@ -33,6 +34,7 @@ export default class Routers extends Component {
                         {/*流程配置*/}
                         <Route path='/FlowTypeTable' component={FlowTypeTable}/>
                         <Route path='/FlowDefinationView' component={FlowDefinationView}/>
+                       <Route path='/DefinaionPage' component={DefinaionPage}/>
                     </Switch>
                 </Suspense>
 

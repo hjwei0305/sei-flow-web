@@ -6,7 +6,6 @@ import {Component} from "react";
 import React from "react";
 import {Button, Col, Row, Modal, message} from "antd";
 import {Input} from "antd/lib/index";
-import {searchListByKeyWithTag} from "../../../commons/utils/CommonUtils";
 import SimpleTable from "../../../commons/components/SimpleTable";
 import {hide, show} from "../../../configs/SharedReducer";
 import connect from "react-redux/es/connect/connect";
@@ -18,9 +17,11 @@ import DefinationVersionModal from "./DefinationVersionModal";
 import StandardTree from "../../../commons/components/StandardTree";
 import DetailCard from "../../../commons/components/DetailCard";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
-import {defaultPageSize, rowGutter} from "../../../configs/DefaultConfig";
+import {defaultPageSize, flowDefUrl, rowGutter} from "../../../configs/DefaultConfig";
 import StandardDropdown from "../../../commons/components/StandardDropdown";
 import DefinaionModal from "./DefinaionModal";
+import {mainTabAction} from 'sei-utils'
+import {getUserInfo} from "../../../commons/utils/CommonUtils";
 
 const Search = Input.Search;
 const confirm = Modal.confirm;
@@ -81,7 +82,10 @@ class FlowDefinationView extends Component {
     this.setState({treeSelectedKeys: selectedKeys});
     this.setState({selectedNode: selectedNodes[0] ? selectedNodes[0] : {}});
     if (selectedNodes[0]) {
-      let params = {Q_EQ_orgId: selectedNodes[0] ? selectedNodes[0].id : "",pageInfo:{page:1,rows:defaultPageSize}};
+      let params = {
+        Q_EQ_orgId: selectedNodes[0] ? selectedNodes[0].id : "",
+        pageInfo: {page: 1, rows: defaultPageSize}
+      };
       this.listFlowDefination(params);
       this.setState({pathName: selectedNodes[0].name ? selectedNodes[0].name : '岗位'});
     }
@@ -92,14 +96,22 @@ class FlowDefinationView extends Component {
     let params = {
       Q_EQ_orgId: this.state.selectedNode.id,
       quickValue,
-      pageInfo:this.state.pageInfo
+      pageInfo: this.state.pageInfo
     };
     this.listFlowDefination(params);
   };
   onAddClick = () => {
     if (this.state.selectedNode && JSON.stringify(this.state.selectedNode) !== "{}") {
-      this.handleModalVisible(false, false, true);
+      // this.handleModalVisible(false, false, true);
+      if (!this.judgeSelected()) return;
       this.setState({operator: "add"})
+      const {selectedNode = {}, tableSelectRow} = this.state;
+      let auth = getUserInfo();
+      let src = flowDefUrl;
+      src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
+      let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
+      let title = "新增";
+      mainTabAction.tabOpen({id: tableSelectRow[0].id + 'add', name: title, featureUrl: "DefinaionPage"})
     } else {
       message.error('请选择组织机构')
     }
@@ -107,19 +119,34 @@ class FlowDefinationView extends Component {
   };
   onRefAddClick = () => {
     if (!this.judgeSelected()) return;
-    this.handleModalVisible(false, false, true);
-    this.setState({operator: "refAdd",editData: this.state.tableSelectRow[0]})
+    // this.handleModalVisible(false, false, true);
+    const {selectedNode = {},tableSelectRow} = this.state;
+    this.setState({operator: "refAdd", editData: tableSelectRow})
+    let auth = getUserInfo();
+    let src = flowDefUrl;
+    src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
+    let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
+    let title = "参考创建";
+    src = src + `&orgName=${orgName}&businessModelId=${tableSelectRow[0].flowType.businessModel.id}&businessModelCode=${tableSelectRow[0].flowType.businessModel.className}&id=${tableSelectRow[0].id}&isFromVersion=${false}&isCopy=${true}`
+    mainTabAction.tabOpen({id: tableSelectRow[0].id + 'refAdd', name: title, featureUrl: src})
   };
   onEditClick = (record) => {
     this.handleModalVisible(false, false, true);
-    this.setState({operator: "edit",editData: record})
+    this.setState({operator: "edit", editData: record})
+    const {selectedNode = {}} = this.state;
+    let auth = getUserInfo();
+    let src = flowDefUrl;
+    src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
+    let title = "编辑";
+    src = src + `&businessModelId=${record.flowType.businessModel.id}&businessModelCode=${record.flowType.businessModel.className}&id=${record.id}`
+    mainTabAction.tabOpen({id: record.id + 'edit', name: title, featureUrl: src})
   };
   onResetClick = () => {
     if (!this.judgeSelected()) return;
     let thiz = this;
     confirm({
       title: "温馨提示",
-      content:"您确定要重置流程图位置吗？",
+      content: "您确定要重置流程图位置吗？",
       onOk() {
         let id = thiz.state.tableSelectRow[0].id;
         thiz.setState({loading: true});
@@ -240,10 +267,10 @@ class FlowDefinationView extends Component {
   handleDefinationModalCancel = () => {
     this.handleModalVisible()
     //刷新本地数据
-    const {selectedNode,tableSearchValue,pageInfo}=this.state;
+    const {selectedNode, tableSearchValue, pageInfo} = this.state;
     let params = {
       Q_EQ_orgId: selectedNode.id,
-      quickValue:tableSearchValue,
+      quickValue: tableSearchValue,
       pageInfo: pageInfo
     };
     this.listFlowDefination(params);
@@ -259,6 +286,7 @@ class FlowDefinationView extends Component {
     };
     this.listFlowDefination(params);
   }
+
   render() {
     const columns = [
       {
@@ -330,16 +358,16 @@ class FlowDefinationView extends Component {
         title: '优先级',
         dataIndex: 'priority',
         width: 120,
-        render(text){
-          return <div style={{textAlign:"right"}}>{text}</div>
+        render(text) {
+          return <div style={{textAlign: "right"}}>{text}</div>
         }
       }
     ];
-    const {tableSelectRow, operator, editData, definationModalVisible, selectedNode} = this.state;
-    const title = () => {
+    const {tableSelectRow, operator, editData, definationModalVisible, selectedNode = {}} = this.state;
+    const button = () => {
       return [
-        <Button key="addRule"  className={"primaryButton"} type={"primary"}
-                      onClick={this.onAddClick}>新增</Button>,
+        <Button key="addRule" className={"primaryButton"} type={"primary"}
+                onClick={this.onAddClick}>新增</Button>,
         <Button.Group key={"ButtonGroup"} className={"primaryButton"}>
           <Button key="refEdit"
                   onClick={this.onRefAddClick}>参考创建</Button>
@@ -361,6 +389,7 @@ class FlowDefinationView extends Component {
         />
       ]
     };
+
     return (
       <HeadBreadcrumb
         className={"allocation-page"}
@@ -375,7 +404,7 @@ class FlowDefinationView extends Component {
             >
               <StandardTree
                 onSelect={this.onTreeSelect}
-                dadaSource={this.state.treeData?this.state.treeData:[]}/>
+                dadaSource={this.state.treeData ? this.state.treeData : []}/>
             </DetailCard>
           </Col>
           {/*右边的表格控件*/}
@@ -386,7 +415,7 @@ class FlowDefinationView extends Component {
               style={{height: "100%"}}
             >
               <div className={'tbar-box'}>
-                <div className={'tbar-btn-box'}>{title()}</div>
+                <div className={'tbar-btn-box'}>{button()}</div>
                 <div className={'tbar-search-box'}>{search()}</div>
               </div>
               <SimpleTable
@@ -404,14 +433,14 @@ class FlowDefinationView extends Component {
             handleCancel={this.handleModalCancel}
             modalVisible={this.state.defVersionVisible}
             flowDefinationId={editData ? editData.id : ""}/>}
-          {definationModalVisible &&<DefinaionModal
-            operator={operator}
-            handleCancel={this.handleDefinationModalCancel}
-            modalVisible={definationModalVisible}
-            selectedNode={selectedNode ? selectedNode : {}}
-            editData={editData ? editData : {}}
-            flowDefinationId={editData ? editData.id : ""}
-          />}
+          {/*{definationModalVisible &&<DefinaionModal*/}
+          {/*operator={operator}*/}
+          {/*handleCancel={this.handleDefinationModalCancel}*/}
+          {/*modalVisible={definationModalVisible}*/}
+          {/*selectedNode={selectedNode ? selectedNode : {}}*/}
+          {/*editData={editData ? editData : {}}*/}
+          {/*flowDefinationId={editData ? editData.id : ""}*/}
+          {/*/>}*/}
         </Row>
       </HeadBreadcrumb>
     )
