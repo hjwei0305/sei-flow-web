@@ -69,7 +69,7 @@ class BusinessModelModal extends Component {
                                     initialValue: appModuleId ? appModuleId : "",
                                     rules: [{required: true, message: '请选择应用模块!'}]
                                 })(
-                                    <SearchTable config={appModuleConfig} initValue={false}/>
+                                    <SearchTable disabled config={appModuleConfig} initValue={false}/>
                                 )}
                             </FormItem>
                         </Col>
