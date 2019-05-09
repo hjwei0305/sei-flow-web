@@ -245,7 +245,7 @@ class WorkPageTable extends Component {
             return [
                 <Search
                     key="search"
-                    placeholder="输入代码或名称查询"
+                    placeholder="输入关键字搜索"
                     onSearch={value => this.handleSearch(value)}
                     style={{width: 220}}
                     allowClear

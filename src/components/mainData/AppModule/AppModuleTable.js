@@ -190,6 +190,11 @@ class AppModuleTable extends Component {
         dataIndex: 'apiBaseAddress',
         width: 220,
       },
+      {
+        title: '排序',
+        dataIndex: 'rank',
+        width: 80
+      }
     ];
 
     const title = () => {
