@@ -69,7 +69,7 @@ class EditAppModuleModal extends Component {
                         label="代码">
                         {getFieldDecorator('code', {
                             initialValue: FormValue.code ? FormValue.code : "",
-                            rules: [{required: true, message: '请输入代码!',whitespace:true},{validator:checkCode}]
+                            rules: [{required: true, message: '请输入代码!',whitespace:true},{max:20,message:'不超过20个字符！'},{validator:checkCode}]
                         })(
                             <Input />
                         )}

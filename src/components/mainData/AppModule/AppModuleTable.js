@@ -14,7 +14,8 @@ import {deleteCorp, getAllList, save} from "./AppModuleService";
 import {searchListByKeyWithTag} from "../../../commons/utils/CommonUtils";
 import EditAppModuleModal from "./EditAppModuleModal";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
-
+import {getWorkPage} from "../WorkPage/WorkPageService";
+import {getBusinessModel} from "../businessModel/BusinessModelService";
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -104,18 +105,46 @@ class AppModuleTable extends Component {
         let params = {};
         params = record.id;
         thiz.props.show();
-        deleteCorp(params).then(result => {
-          if (result.status === "SUCCESS") {
-            message.success(result.message ? result.message : "请求成功");
-            //刷新本地数据
-            thiz.getDataSource();
-          } else {
-            message.error(result.message ? result.message : "请求失败");
+        /*校验下面是否有业务实体和工作界面配置:建议改为后端校验*/
+        getBusinessModel({filters: [{
+            fieldName: "appModule.id",//筛选字段
+            operator: "EQ",//操作类型
+            value: params,//筛选值
+            fieldType: "String"//筛选类型
+          }]}).then(data=>{
+          if(data.records > 0){
+            message.warn("该应用模块下面配置有业务实体，不能删除！")
+            thiz.props.hide();
+            return;
           }
-        }).catch(e => {
-        }).finally(() => {
-          thiz.props.hide();
-        })
+          getWorkPage({
+            filters: [{
+              fieldName: "appModuleId",//筛选字段
+              operator: "EQ",//操作类型
+              value: params,//筛选值
+              fieldType: "String"//筛选类型
+            }]
+          }).then(data => {
+            if(data.records > 0){
+              message.warn("该应用模块下面配置有工作界面，不能删除！")
+              thiz.props.hide();
+              return;
+            }
+            /*删除*/
+            deleteCorp(params).then(result => {
+              if (result.status === "SUCCESS") {
+                message.success(result.message ? result.message : "请求成功");
+                //刷新本地数据
+                thiz.getDataSource();
+              } else {
+                message.error(result.message ? result.message : "请求失败");
+              }
+            }).catch(e => {
+            }).finally(() => {
+              thiz.props.hide();
+            })
+          });
+        });
       }
     });
   };
