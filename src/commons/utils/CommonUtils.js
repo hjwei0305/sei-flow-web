@@ -535,3 +535,15 @@ export const number = {
         return this.divide(Math.round(this.times(num, base)), base);
     }
 }
+export const checkInputCode = () => {
+  return {validator: checkCode};
+};
+//校验输入的code不能是双字节字符
+export const checkCode = (rule, value, callback) => {
+  const reg = /[^\x00-\xff]/g;
+  if (value&&reg.test(value)) {
+    callback("不能输入中文字符");
+    return false;
+  }
+  callback();
+};
