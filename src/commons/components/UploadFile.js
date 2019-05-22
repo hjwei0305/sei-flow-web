@@ -1,6 +1,6 @@
 import React from 'react';
-import {Upload, Icon, Button, List, Avatar, Skeleton, Modal,message} from 'antd';
-import {uploadUrl, host} from "../../configs/DefaultConfig";
+import {Avatar, Button, Icon, List, message, Modal, Skeleton, Upload} from 'antd';
+import {gatewayHost, uploadUrl} from "../../configs/DefaultConfig";
 import httpUtils from "../utils/FeatchUtils";
 import PropTypes from 'prop-types';
 import './upload.css'
@@ -51,7 +51,7 @@ class UploadFile extends React.Component {
         //图片格式显示系统的预览
         if (fileName.toLocaleLowerCase().includes('png') || fileName.toLocaleLowerCase().includes('jpg') || fileName.toLocaleLowerCase().includes('gif')
             || fileName.toLocaleLowerCase().includes('jpeg')) {
-            return host + uploadUrl + '/supplierRegister/preview?docId=' + id;
+            return gatewayHost + uploadUrl + '/supplierRegister/preview?docId=' + id;
         }
         return fileIcon.defaultIcon
     }
@@ -70,7 +70,7 @@ class UploadFile extends React.Component {
                                 name: item.fileName,   // 文件名
                                 status: 'done', // 状态有：uploading done error removed
                                 response: [item.id], // 服务端响应内容
-                                url: host + uploadUrl + '/supplierRegister/download?docId=' + item.id, // 下载链接额外的 HTML 属性
+                                url: gatewayHost + uploadUrl + '/supplierRegister/download?docId=' + item.id, // 下载链接额外的 HTML 属性
                                 thumbUrl: window._previewUrl+ "/" + item.id,
                                 uploadedTime:item.uploadedTime,
                                 uploadUserName:item.uploadUserName
@@ -114,7 +114,7 @@ class UploadFile extends React.Component {
             }
             fileList.map(item => {
                 if (item.status === 'done') {
-                    item.url = host + uploadUrl + '/supplierRegister/download?docId=' + item.response[0]
+                    item.url = gatewayHost + uploadUrl + '/supplierRegister/download?docId=' + item.response[0]
                     item.thumbUrl = window._previewUrl+ "/" + item.response[0]
                 }
             })
@@ -165,7 +165,7 @@ class UploadFile extends React.Component {
     getHeaders = () => {
         let auth;
         try {
-            auth = JSON.parse(localStorage.getItem('Authorization'));
+            auth = JSON.parse(sessionStorage.getItem('Authorization'));
         } catch (e) {
         }
         return {

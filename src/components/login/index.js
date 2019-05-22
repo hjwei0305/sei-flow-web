@@ -31,8 +31,8 @@ class LoginForm extends Component {
       if(res.success&&res.data){
         if (res.data.loginStatus === "success") {
           message.success("登录成功");
-          localStorage.setItem('Authorization', JSON.stringify(res.data));
-          localStorage.setItem('_s', res.sessionId);
+            sessionStorage.setItem('Authorization', JSON.stringify(res.data));
+            sessionStorage.setItem('_s', res.data.sessionId);
           setTimeout(() => {
             this.props.history.push({pathname: '/index', state: params})
           }, 200)//延迟进入
@@ -80,7 +80,7 @@ class LoginForm extends Component {
                     getFieldDecorator('tenantCode', {
                       rules: [{required: false, message: '请输入租户账号!',whitespace:true}]
                     })(
-                      <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="租户账号"/>
+                      <Input autofocus="autofocus" prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="租户账号"/>
                     )
                   }
                 </Item>
@@ -89,7 +89,7 @@ class LoginForm extends Component {
               <Item>
                 {
                   getFieldDecorator('account', {
-                    rules: [{required: true, message: '请输入用户名!'}]
+                    rules: [{required: true, message: '请输入用户名!',whitespace:true}]
                   })(
                     <Input ref={(inst) => {
                       this.userInput = inst;
@@ -100,7 +100,7 @@ class LoginForm extends Component {
               <Item>
                 {
                   getFieldDecorator('password', {
-                    rules: [{required: true, message: '请输入密码!'}]
+                    rules: [{required: true, message: '请输入密码!',whitespace:true}]
                   })(
                     <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
                            placeholder="密码"/>
