@@ -14,6 +14,7 @@ const BusinessModelTable = lazy(() => import('../components/mainData/businessMod
 const FlowTypeTable = lazy(() => import('../components/mainData/FlowType/FlowTypeTable'));
 const FlowDefinationView = lazy(() => import('../components/mainData/FlowDefination/FlowDefinationView'));
 const DefinaionPage = lazy(() => import('../components/mainData/FlowDefination/DefinaionPage'));
+const FlowInstanceTable = lazy(() => import('../components/mainData/FlowInstance/FlowInstanceTable'));
 
 export default class Routers extends Component {
     render() {
@@ -34,7 +35,9 @@ export default class Routers extends Component {
                         {/*流程配置*/}
                         <Route path='/FlowTypeTable' component={FlowTypeTable}/>
                         <Route path='/FlowDefinationView' component={FlowDefinationView}/>
-                       <Route path='/DefinaionPage' component={DefinaionPage}/>
+                        <Route path='/DefinaionPage' component={DefinaionPage}/>
+                        {/*流程监管*/}
+                        <Route path='/FlowInstanceTable' component={FlowInstanceTable}/>
                     </Switch>
                 </Suspense>
 
