@@ -15,6 +15,7 @@ const FlowTypeTable = lazy(() => import('../components/mainData/FlowType/FlowTyp
 const FlowDefinationView = lazy(() => import('../components/mainData/FlowDefination/FlowDefinationView'));
 const DefinaionPage = lazy(() => import('../components/mainData/FlowDefination/DefinaionPage'));
 const FlowInstanceTable = lazy(() => import('../components/mainData/FlowInstance/FlowInstanceTable'));
+const TurnToDoTable = lazy(() => import('../components/mainData/TurnToDo/TurnToDoTable'));
 
 export default class Routers extends Component {
     render() {
@@ -38,6 +39,7 @@ export default class Routers extends Component {
                         <Route path='/DefinaionPage' component={DefinaionPage}/>
                         {/*流程监管*/}
                         <Route path='/FlowInstanceTable' component={FlowInstanceTable}/>
+                        <Route path='/TurnToDoTable' component={TurnToDoTable}/>
                     </Switch>
                 </Suspense>
 

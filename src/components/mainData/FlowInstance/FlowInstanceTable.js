@@ -352,7 +352,7 @@ class FlowInstanceTable extends Component {
       {
         title: '工作说明',
         dataIndex: 'businessModelRemark',
-        width: 360,
+        width: 360
       },
       {
         title: '开始时间',

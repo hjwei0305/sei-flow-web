@@ -60,16 +60,13 @@ class TransferTable extends PureComponent {
     if (params && !params.selectedKey && this.state.selectedKey) {
       params.selectedKey = this.state.selectedKey
     }
-    // console.log("selectedKey:",params.selectedKey)
     this.setState({leftLoading: true});
     service({...params, pageInfo}).then(res => {
       this.setState({
-        // leftData: res instanceof Array || res.rows ? res : [],
         leftLoading: false,
         leftRowsSelected: [],
         rightDisabled: true,
         leftDisabled: true,
-        // leftSearchValue:res.rows?this.state.leftSearchValue:""
       })
       if (res instanceof Array) {
         let searchLeftKey = this.props.searchLeftKey || ["code", "name"];
@@ -94,12 +91,10 @@ class TransferTable extends PureComponent {
     this.setState({rightLoading: true});
     service({...params, pageInfo}).then(res => {
       this.setState({
-        //rightData: res instanceof Array ? res : [],
         rightLoading: false,
         rightRowsSelected: [],
         rightDisabled: true,
         leftDisabled: true,
-        // rightSearchValue:res.rows?this.state.rightSearchValue:""
       })
       if (res instanceof Array) {
         let searchRightKey = this.props.searchRightKey || ["code", "name"];
@@ -313,7 +308,7 @@ class TransferTable extends PureComponent {
                         <TreeSelectWithService
                           value={this.state.selectedKey}
                           {...treeSelectConfig.props}
-                          config={treeSelectConfig} width={220} onChange={this.selectedWithServiceChange}/></span>,
+                          config={treeSelectConfig} width={200} onChange={this.selectedWithServiceChange}/></span>,
 
         checkBoxConfig && <span style={{marginLeft: 5}}
                                 key={"checkboxLable"}>{checkBoxConfig.lable ? checkBoxConfig.lable + ":" : ""}</span>,
@@ -327,7 +322,7 @@ class TransferTable extends PureComponent {
                        <SearchTable isNotFormItem={true} config={searchTableConfig}
                                     value={this.state.selectedKey}
                                     {...searchTableConfig.props}
-                                    selectChange={this.selectChange} style={{width: 220, marginLeft: 5}}/>
+                                    selectChange={this.selectChange} style={{width: 200, marginLeft: 5}}/>
                     </span>
 
       ]
@@ -339,7 +334,7 @@ class TransferTable extends PureComponent {
       return this.props.leftSearch === false ? null : <Input.Search
         placeholder="请输入关键字查询"
         onSearch={value => this.handleLeftSearch(value)}
-        style={{width: 220}}
+        style={{width: 200}}
         allowClear
       />
     }
@@ -348,7 +343,7 @@ class TransferTable extends PureComponent {
       return this.props.rightSearch === false ? null : <Input.Search
         placeholder="请输入关键字查询"
         onSearch={value => this.handleRightSearch(value)}
-        style={{width: 220}}
+        style={{width: 200}}
         allowClear
       />
     }
@@ -369,7 +364,7 @@ class TransferTable extends PureComponent {
               <div className={'tbar-search-box'}>{leftSearch()}</div>
             </div>}
             {!this.state.beTree && <SimpleTable
-              checkBox
+              checkBox={!this.props.radio}
               data={leftData.rows ? leftData : this.state.leftSearchValue ? leftData.filter(item => item.tag) : leftData}
               loading={this.state.leftLoading}
               heightY={this.props.heightY}
@@ -380,6 +375,9 @@ class TransferTable extends PureComponent {
               onSelectRow={this.leftOnSelectRow}
             />}
             {this.state.beTree && <StandardTree
+              key={"StandardTree1"}
+              selectedKeys={this.state.leftRowsSelected?this.state.leftRowsSelected.map(item=>item.id):[]}
+              checkStrictly={true}
               checkable
               dadaSource={leftData}
               onCheck={this.onLeftTreeCheck}/>}
@@ -414,7 +412,7 @@ class TransferTable extends PureComponent {
               <div className={'tbar-search-box'}>{rightSearch()}</div>
             </div>}
             {!this.state.beTree && <SimpleTable
-              checkBox
+              checkBox={!this.props.radio}
               heightY={this.props.heightY}
               style={{overflow: 'auto'}}
               loading={this.state.rightLoading}
@@ -425,6 +423,9 @@ class TransferTable extends PureComponent {
               pageChange={this.rightPageChange}
             />}
             {this.state.beTree && <StandardTree
+              key={"StandardTree2"}
+              selectedKeys={this.state.rightRowsSelected?this.state.rightRowsSelected.map(item=>item.id):[]}
+              checkStrictly={true}
               checkable
               dadaSource={rightData}
               onCheck={this.onRightTreeCheck}
