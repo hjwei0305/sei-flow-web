@@ -209,7 +209,7 @@ class FlowInstanceTable extends Component {
       {
         title: '创建时间',
         dataIndex: 'createdDate',
-        width: 150
+        width: 180
       }
     ];
 

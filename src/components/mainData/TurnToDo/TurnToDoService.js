@@ -3,7 +3,7 @@ import httpUtils from "../../../commons/utils/FeatchUtils";
 import {baseUrl} from "../../../configs/DefaultConfig";
 
 export async function getAllTaskByTenant(params = {}) {
-  Object.assign(params,{sortOrders:[{property:'lastEditedDate',direction:'DESC'}],quickSearchProperties:["flowName","taskName","flowInstance.businessCode","executorName","executorAccount","depict"],});
+  Object.assign(params,{sortOrders:[{property:'createdDate',direction:'DESC'}],quickSearchProperties:["flowName","taskName","flowInstance.businessCode","executorName","executorAccount","depict"],});
   return httpUtils.postJson(baseUrl + "/flowTask/findAllByTenant?appModuleId="+params.appModuleId+"&businessModelId="+params.businessModelId+"&flowTypeId="+params.flowTypeId, params);
 }
 
