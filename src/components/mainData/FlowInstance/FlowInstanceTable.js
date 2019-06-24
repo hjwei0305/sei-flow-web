@@ -388,7 +388,7 @@ class FlowInstanceTable extends Component {
                     key="searchAppModelTable"
                     initValue={true}
                     isNotFormItem={true} config={appModuleAuthConfig}
-                    style={{width: 220}}
+                    style={{width: 180}}
                     selectChange={this.selectChangeAppModel}/></span>,
           <span key={"selectBusinessModel"} className={"primaryButton"} >业务实体：
                   <SearchTable
@@ -396,7 +396,7 @@ class FlowInstanceTable extends Component {
                     key="searchBusinessModelTable"
                     initValue={false}
                     isNotFormItem={true} params = {{"appModuleId":this.state.appModuleId}} config={businessModelByAppModelConfig}
-                    style={{width: 220}}
+                    style={{width: 180}}
                     selectChange={this.selectChangeBusinessModel}/></span>,
         <span key={"selectFlowType"} className={"primaryButton"} >流程类型：
                   <SearchTable
@@ -404,7 +404,7 @@ class FlowInstanceTable extends Component {
                     key="searchFlowType"
                     initValue={false}
                     isNotFormItem={true} params = {{"businessModelId":this.state.businessModelId}} config={flowTypeByBusinessModelConfig}
-                    style={{width: 220}}
+                    style={{width: 180}}
                     selectChange={this.selectChangeFlowType}/></span>,
         <span key={"checkInFlow"} className={"primaryButton"} >流程中：
                    <Checkbox  defaultChecked={true} onChange={this.checkChangeInFlow} /></span>
