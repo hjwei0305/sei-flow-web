@@ -15,14 +15,12 @@ import {appModuleAuthConfig,businessModelByAppModelConfig,flowTypeByBusinessMode
 import SearchTable from "../../../commons/components/SearchTable";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
 import StandardDropdown from "../../../commons/components/StandardDropdown";
-import AnyOneSelected from './AnyOneSelected';
+import TurnToDoSelected from './TurnToDoSelected';
 
-const confirm = Modal.confirm
 const Search = Input.Search;
 
-class FlowInstanceTable extends Component {
+class TurnToDoTable extends Component {
   selectedOne=null;
-  currentClick=null;
   currentRecord=null;
 
   constructor(props) {
@@ -163,7 +161,6 @@ class FlowInstanceTable extends Component {
         render: (text, record, index) => {
           let ops = [
             <a className={'row-operator-item'} key="delegate" onClick={()=>{
-              this.currentClick="转办";
               this.currentRecord=record;
               this.setState({selectUserModal:true});}}>转办</a>
             ]
@@ -270,7 +267,7 @@ class FlowInstanceTable extends Component {
             pageChange={this.pageChange}
           />
           <Modal
-            title={`指定${this.currentClick}人`}
+            title={`指定转办人`}
             bodyStyle={{maxHeight:"720px",overflow:"auto"}}
             width={window.innerWidth*0.8}
             visible={this.state.selectUserModal}
@@ -279,7 +276,7 @@ class FlowInstanceTable extends Component {
             destroyOnClose={true}
             maskClosable={false}
           >
-            <AnyOneSelected type='radio' selectChange={(id)=>this.selectedOne=id}/>
+            <TurnToDoSelected type='radio' selectChange={(id)=>this.selectedOne=id}/>
           </Modal>
         </div>
       </HeadBreadcrumb>
@@ -306,7 +303,7 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FlowInstanceTable)
+)(TurnToDoTable)
 
 
 

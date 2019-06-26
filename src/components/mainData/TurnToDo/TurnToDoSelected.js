@@ -1,6 +1,6 @@
 /**
- * @description 添加借款人弹窗
- * @author 李艳
+ * @description 任意转办弹窗
+ * @author 何灿坤
  */
 
 import React, { Component } from 'react'
