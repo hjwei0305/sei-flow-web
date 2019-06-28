@@ -24,6 +24,7 @@ export default class IndexView extends Component {
             <li><Link to='/FlowInstanceTable'>流程实例管理</Link></li>
             <li><Link to='/TurnToDoTable'>任意转办</Link></li>
             <li><Link to='/AddSignTable'>加签管理</Link></li>
+            <li><Link to='/SubtractTable'>减签管理</Link></li>
           </ul>
         </nav>
       </header>

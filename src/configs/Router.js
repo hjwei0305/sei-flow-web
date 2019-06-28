@@ -17,6 +17,7 @@ const DefinaionPage = lazy(() => import('../components/mainData/FlowDefination/D
 const FlowInstanceTable = lazy(() => import('../components/mainData/FlowInstance/FlowInstanceTable'));
 const TurnToDoTable = lazy(() => import('../components/mainData/TurnToDo/TurnToDoTable'));
 const AddSignTable = lazy(() => import('../components/mainData/AddSign/AddSignTable'));
+const SubtractTable = lazy(() => import('../components/mainData/SubtractSign/SubtractSignTable'));
 
 export default class Routers extends Component {
     render() {
@@ -42,6 +43,7 @@ export default class Routers extends Component {
                         <Route path='/FlowInstanceTable' component={FlowInstanceTable}/>
                         <Route path='/TurnToDoTable' component={TurnToDoTable}/>
                         <Route path='/AddSignTable' component={AddSignTable}/>
+                        <Route path='/SubtractTable' component={SubtractTable}/>
                     </Switch>
                 </Suspense>
 
