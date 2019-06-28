@@ -13,7 +13,7 @@ import {hide, show} from "../../../configs/SharedReducer";
 import {getAllAddSignList, setAddSignExecutorList} from "./AddSignService";
 import {searchListByKeyWithTag} from "../../../commons/utils/CommonUtils";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
-import AssSignSelected from './AssSignSelected';
+import AssSignSelected from './AddSignSelected';
 
 const Search = Input.Search;
 
@@ -69,7 +69,7 @@ class AddSignTable extends Component {
       if (res.status === 'SUCCESS') {
         this.currentRecord = null;
         this.selectedOne = null;
-        message.success('加签成功！');
+        message.success(res.message);
         thiz.getDataSource();
       } else {
         message.error(res.message);
