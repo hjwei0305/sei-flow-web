@@ -320,21 +320,16 @@ class FlowInstanceTable extends Component {
     const columns = [
       {
         title: "操作",
-        width: 100,
+        width: 200,
         dataIndex: "operator",
         render: (text, record, index) => {
-          let ops = [
-            <a className={'row-operator-item'} key={"detail" + index} onClick={() => this.handleDetail(record)}>查看</a>,
-            <a className={'row-operator-item'} key={"history" + index} onClick={() => this.handleHistory(record)}>历史</a>,
-            <a className={'row-operator-item'} key={"end" + index} onClick={() => this.handleEnd(record)}>强制终止</a>
-          ]
-
-
           return (
             <div className={'row-operator'} key={"operator" + index} onClick={(e) => {
               e.stopPropagation()
             }}>
-              <StandardDropdown operator={ops}/>
+              <a className={'row-operator-item'} key={"detail" + index} onClick={() => this.handleDetail(record)}>查看</a>
+              <a className={'row-operator-item'} key={"history" + index} onClick={() => this.handleHistory(record)}>历史</a>
+              <a className={'row-operator-item'} key={"end" + index} onClick={() => this.handleEnd(record)}>强制终止</a>
             </div>
           )
         }
