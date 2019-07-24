@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Route as NoAuthRoute, Switch, Redirect} from 'r
 import Route from './PrivateRoute'
 import {Spin} from "antd";
 import Login from "../components/login";
+
 const Demo = lazy(() => import('../commons/components/Demo'));
 const IndexView = lazy(() => import('./IndexView'));
 const AppModuleTable = lazy(() => import('../components/mainData/AppModule/AppModuleTable'));
@@ -18,37 +19,39 @@ const FlowInstanceTable = lazy(() => import('../components/mainData/FlowInstance
 const TurnToDoTable = lazy(() => import('../components/mainData/TurnToDo/TurnToDoTable'));
 const AddSignTable = lazy(() => import('../components/mainData/AddSign/AddSignTable'));
 const SubtractTable = lazy(() => import('../components/mainData/SubtractSign/SubtractSignTable'));
+const PushFlowTaskTable = lazy(() => import('../components/mainData/PushFlowTask/PushFlowTaskTable'))
 
 export default class Routers extends Component {
-    render() {
-        return (
-            <Router basename="/react-flow-web">
-                <Suspense
-                    fallback={<Spin/>}
-                >
-                    <Switch>
-                        <Route path='/' exact component={IndexView}/>
-                        <NoAuthRoute path="/login" component={Login}/>
-                        <Route path='/index' component={IndexView}/>
-                        <Route path='/Demo' component={Demo}/>
-                        {/*后台配置*/}
-                        <Route path='/AppModuleTable' component={AppModuleTable}/>
-                        <Route path='/WorkPageTable' component={WorkPageTable}/>
-                        <Route path='/BusinessModelTable' component={BusinessModelTable}/>
-                        {/*流程配置*/}
-                        <Route path='/FlowTypeTable' component={FlowTypeTable}/>
-                        <Route path='/FlowDefinationView' component={FlowDefinationView}/>
-                        <Route path='/DefinaionPage' component={DefinaionPage}/>
-                        {/*流程监管*/}
-                        <Route path='/FlowInstanceTable' component={FlowInstanceTable}/>
-                        <Route path='/TurnToDoTable' component={TurnToDoTable}/>
-                        <Route path='/AddSignTable' component={AddSignTable}/>
-                        <Route path='/SubtractTable' component={SubtractTable}/>
-                    </Switch>
-                </Suspense>
+  render() {
+    return (
+      <Router basename="/react-flow-web">
+        <Suspense
+          fallback={<Spin/>}
+        >
+          <Switch>
+            <Route path='/' exact component={IndexView}/>
+            <NoAuthRoute path="/login" component={Login}/>
+            <Route path='/index' component={IndexView}/>
+            <Route path='/Demo' component={Demo}/>
+            {/*后台配置*/}
+            <Route path='/AppModuleTable' component={AppModuleTable}/>
+            <Route path='/WorkPageTable' component={WorkPageTable}/>
+            <Route path='/BusinessModelTable' component={BusinessModelTable}/>
+            {/*流程配置*/}
+            <Route path='/FlowTypeTable' component={FlowTypeTable}/>
+            <Route path='/FlowDefinationView' component={FlowDefinationView}/>
+            <Route path='/DefinaionPage' component={DefinaionPage}/>
+            {/*流程监管*/}
+            <Route path='/FlowInstanceTable' component={FlowInstanceTable}/>
+            <Route path='/PushFlowTaskTable' component={PushFlowTaskTable}/>
+            <Route path='/TurnToDoTable' component={TurnToDoTable}/>
+            <Route path='/AddSignTable' component={AddSignTable}/>
+            <Route path='/SubtractTable' component={SubtractTable}/>
+          </Switch>
+        </Suspense>
 
-            </Router>
+      </Router>
 
-        );
-    }
+    );
+  }
 }
