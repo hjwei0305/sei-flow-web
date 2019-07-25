@@ -26,9 +26,9 @@ const interceptors = {
                 }
             }
         }
-        if(!isLocalhost || config.url.indexOf('http')===-1){
-            config.url=gatewayHost+config.url
-        }
+        // if(!isLocalhost || config.url.indexOf('http')===-1){
+        //   config.url=gatewayHost+config.url
+        // }
         return config;
     }, (err) => {
         return Promise.reject(err);
