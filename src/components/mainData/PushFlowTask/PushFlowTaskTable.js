@@ -37,7 +37,7 @@ class FlowInstanceTable extends Component {
       businessModelId: "",
       flowType: null,
       flowTypeId: "",
-      checkInBasic: false
+      checkInBasic: true
     };
   }
 
@@ -67,7 +67,7 @@ class FlowInstanceTable extends Component {
         }, {
           fieldName: "pushType",
           operator: "EQ",//操作类型
-          value: this.state.checkInBasic == false ? "basic" : "",//筛选值
+          value: this.state.checkInBasic ? "basic" : "business",//筛选值
           fieldType: "String"//筛选类型
         }]
       })
@@ -120,7 +120,7 @@ class FlowInstanceTable extends Component {
         }, {
           fieldName: "pushType",
           operator: "EQ",//操作类型
-          value: this.state.checkInBasic == false ? "basic" : "",//筛选值
+          value: this.state.checkInBasic ? "basic" : "business",//筛选值
           fieldType: "String"//筛选类型
         }], quickSearchValue: this.state.searchValue
       });
@@ -142,7 +142,7 @@ class FlowInstanceTable extends Component {
         }, {
           fieldName: "pushType",
           operator: "EQ",//操作类型
-          value: this.state.checkInBasic == false ? "basic" : "",//筛选值
+          value: this.state.checkInBasic ? "basic" : "business",//筛选值
           fieldType: "String"//筛选类型
         }], quickSearchValue: this.state.searchValue
       });
@@ -165,7 +165,7 @@ class FlowInstanceTable extends Component {
         }, {
           fieldName: "pushType",
           operator: "EQ",//操作类型
-          value: this.state.checkInBasic == false ? "basic" : "",//筛选值
+          value: this.state.checkInBasic ? "basic" : "business",//筛选值
           fieldType: "String"//筛选类型
         }], quickSearchValue: this.state.searchValue
       });
@@ -180,7 +180,7 @@ class FlowInstanceTable extends Component {
         }, {
           fieldName: "pushType",
           operator: "EQ",//操作类型
-          value: this.state.checkInBasic == false ? "basic" : "",//筛选值
+          value: this.state.checkInBasic ? "basic" : "business",//筛选值
           fieldType: "String"//筛选类型
         }], quickSearchValue: this.state.searchValue
       });
@@ -208,7 +208,7 @@ class FlowInstanceTable extends Component {
         }, {
           fieldName: "pushType",
           operator: "EQ",//操作类型
-          value: this.state.checkInBasic == false ? "basic" : "",//筛选值
+          value: this.state.checkInBasic ? "basic" : "business",//筛选值
           fieldType: "String"//筛选类型
         }], quickSearchValue: this.state.searchValue
       });
@@ -228,14 +228,14 @@ class FlowInstanceTable extends Component {
         }, {
           fieldName: "pushType",
           operator: "EQ",//操作类型
-          value: this.state.checkInBasic == false ? "basic" : "",//筛选值
+          value: this.state.checkInBasic ? "basic" : "business",//筛选值
           fieldType: "String"//筛选类型
         }], quickSearchValue: this.state.searchValue
       });
     }
   };
   checkChangeInBasic = (checkInfo) => {
-    this.setState({checkInBasic: !checkInfo.target.checked});
+    this.setState({checkInBasic: checkInfo.target.checked});
     this.getDataSource({
       filters: [{
         fieldName: "appModuleId",//筛选字段(应用模块)
@@ -255,7 +255,7 @@ class FlowInstanceTable extends Component {
       }, {
         fieldName: "pushType",
         operator: "EQ",//操作类型
-        value: ((!checkInfo.target.checked) == false) ? "basic" : "",//筛选值
+        value: checkInfo.target.checked ? "basic" : "business",//筛选值
         fieldType: "String"//筛选类型
       }], quickSearchValue: this.state.searchValue
     });
@@ -391,7 +391,7 @@ class FlowInstanceTable extends Component {
                     config={flowTypeByBusinessModelConfig}
                     style={{width: 180}}
                     selectChange={this.selectChangeFlowType}/></span>,
-        <span key={"checkInBasic"} className={"primaryButton"}> 推送BASIC：
+        <span key={"checkInBasic"} className={"primaryButton"}> 推送类型（BASIC/业务模块）：
                    <Checkbox defaultChecked={true} onChange={this.checkChangeInBasic}/></span>
       ]
     };
