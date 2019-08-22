@@ -11,11 +11,10 @@ import {Modal, message, Input, Checkbox} from 'antd';
 import SimpleTable from "../../../commons/components/SimpleTable";
 import {hide, show} from "../../../configs/SharedReducer";
 import {getFlowInstance,endForce} from "./FlowInstanceService";
+import {ApproveHistory} from 'seid';
 import {appModuleAuthConfig,businessModelByAppModelConfig,flowTypeByBusinessModelConfig} from "../../../configs/CommonComponentsConfig";
 import SearchTable from "../../../commons/components/SearchTable";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
-import ApproveHistory from '../../../commons/components/ApproveHistory';
-import StandardDropdown from "../../../commons/components/StandardDropdown";
 import { mainTabAction } from 'sei-utils';
 
 const confirm = Modal.confirm
