@@ -19,7 +19,9 @@ const FlowInstanceTable = lazy(() => import('../components/mainData/FlowInstance
 const TurnToDoTable = lazy(() => import('../components/mainData/TurnToDo/TurnToDoTable'));
 const AddSignTable = lazy(() => import('../components/mainData/AddSign/AddSignTable'));
 const SubtractTable = lazy(() => import('../components/mainData/SubtractSign/SubtractSignTable'));
-const PushFlowTaskTable = lazy(() => import('../components/mainData/PushFlowTask/PushFlowTaskTable'))
+const PushFlowTaskTable = lazy(() => import('../components/mainData/PushFlowTask/PushFlowTaskTable'));
+const BusinessModel2View = lazy(() => import('../components/mainData/DefaultBusinessModel2/BusinessModel2View'));
+
 
 export default class Routers extends Component {
   render() {
@@ -41,6 +43,8 @@ export default class Routers extends Component {
             <Route path='/FlowTypeTable' component={FlowTypeTable}/>
             <Route path='/FlowDefinationView' component={FlowDefinationView}/>
             <Route path='/DefinaionPage' component={DefinaionPage}/>
+            {/*通用单据*/}
+            <Route path='/BusinessModel2View' component={BusinessModel2View}/>
             {/*流程监管*/}
             <Route path='/FlowInstanceTable' component={FlowInstanceTable}/>
             <Route path='/PushFlowTaskTable' component={PushFlowTaskTable}/>
