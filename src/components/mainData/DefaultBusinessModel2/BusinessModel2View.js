@@ -100,7 +100,7 @@ class BusinessModel2View extends Component {
       quickValue,
       pageInfo: this.state.pageInfo
     };
-    this.listBusinessModel2(params);
+    this.listModel2(params);
   };
 
 
@@ -111,7 +111,7 @@ class BusinessModel2View extends Component {
       quickValue: this.state.tableSearchValue,
       pageInfo: this.state.pageInfo
     };
-    this.listBusinessModel2(params);
+    this.listModel2(params);
   }
 
   handleSave = () => {
@@ -131,7 +131,7 @@ class BusinessModel2View extends Component {
               quickValue: this.state.tableSearchValue,
               pageInfo: this.state.pageInfo
             };
-            this.listBusinessModel2(params);
+            this.listModel2(params);
             this.setState({loading: false, modalVisible: false});
           } else {
             message.error(result.message ? result.message : "请求失败");
@@ -188,7 +188,7 @@ class BusinessModel2View extends Component {
               quickValue: thiz.state.tableSearchValue,
               pageInfo: thiz.state.pageInfo
             };
-            thiz.listBusinessModel2(params);
+            thiz.listModel2(params);
           } else {
             message.error(result.message ? result.message : "请求失败");
           }
@@ -218,7 +218,7 @@ class BusinessModel2View extends Component {
       quickValue,
       pageInfo
     };
-    this.listBusinessModel2(params);
+    this.listModel2(params);
   }
 
   render() {
