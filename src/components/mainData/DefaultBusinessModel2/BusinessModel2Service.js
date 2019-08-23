@@ -19,4 +19,9 @@ export async function saveBusinessModel(params = {}) {
   return httpUtils.postJson(baseUrl + "/defaultBusinessModel2/save",JSON.stringify(params));
 }
 
+export async function findById(id){
+  return httpUtils.get(baseUrl+"/defaultBusinessModel2/findOne",{id:id});
+}
+
+
 
