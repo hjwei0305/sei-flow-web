@@ -87,7 +87,7 @@ class FlowDefinationView extends Component {
         pageInfo: {page: 1, rows: defaultPageSize}
       };
       this.listFlowDefination(params);
-      this.setState({pathName: selectedNodes[0].name ? selectedNodes[0].name : '岗位'});
+      this.setState({pathName: selectedNodes[0].name ? selectedNodes[0].name : '流程定义管理'});
     }
   };
 
@@ -98,7 +98,7 @@ class FlowDefinationView extends Component {
       quickValue,
       pageInfo: this.state.pageInfo
     };
-    this.listFlowDefination(params);
+    this.setState({tableSearchValue:quickValue},()=>this.listFlowDefination(params));
   };
   onAddClick = () => {
     if (this.state.selectedNode && JSON.stringify(this.state.selectedNode) !== "{}") {
@@ -384,6 +384,7 @@ class FlowDefinationView extends Component {
           key="search"
           placeholder="输入代码或名称查询"
           onSearch={value => this.handleTableSearch(value)}
+          onChange={(e)=>{if(!e.target.value){this.handleTableSearch(e.target.value)}}}
           style={{width: '220px'}}
           allowClear
         />
