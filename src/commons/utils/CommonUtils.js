@@ -295,20 +295,6 @@ export function isInclude(array, obj) {
     }
 };
 
-export function transToChiness(n) {
-    if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n))
-        return seiIntl.get({key: 'flow_000207', desc: '数据非法'});
-    var unit =seiIntl.get({key: 'flow_000208', desc: '千百拾亿千百拾万千百拾元角分'}), str = "";
-    n += "00";
-    var p = n.indexOf('.');
-    if (p >= 0)
-        n = n.substring(0, p) + n.substr(p + 1, 2);
-    unit = unit.substr(unit.length - n.length);
-    for (var i = 0; i < n.length; i++)
-        str +=seiIntl.get({key: 'flow_000209', desc: '零壹贰叁肆伍陆柒捌玖'}).charAt(n.charAt(i)) + unit.charAt(i);
-    return str.replace(/{seiIntl.get({key: 'flow_000210', desc: '零(千'})}|{seiIntl.get({key: 'flow_000211', desc: '百'})}|{seiIntl.get({key: 'flow_000212', desc: '拾'})}|{seiIntl.get({key: 'flow_000213', desc: '角)'})}/g, seiIntl.get({key: 'flow_000214', desc: seiIntl.get({key: 'flow_000214', desc: '零'})})).replace(/{seiIntl.get({key: 'flow_000215', desc: '(零)'})}+/g, seiIntl.get({key: 'flow_000214', desc: seiIntl.get({key: 'flow_000214', desc: '零'})})).replace(/{seiIntl.get({key: 'flow_000216', desc: '零(万'})}|{seiIntl.get({key: 'flow_000217', desc: '亿'})}|{seiIntl.get({key: 'flow_000218', desc: '{seiIntl.get({key: 'flow_000221', desc: '{seiIntl.get({key: 'flow_000223', desc: '元'})}零?'})})'})}/g, "$1").replace(/({seiIntl.get({key: 'flow_000217', desc: '亿'})})万|壹({seiIntl.get({key: 'flow_000212', desc: '拾'})})/g, "$1$2").replace(/^{seiIntl.get({key: 'flow_000221', desc: '{seiIntl.get({key: 'flow_000223', desc: '元'})}零?'})}?|{seiIntl.get({key: 'flow_000222', desc: '零分'})}/g, "").replace(/{seiIntl.get({key: 'flow_000221', desc: '{seiIntl.get({key: 'flow_000223', desc: '元'})}零?'})}$/g, "{seiIntl.get({key: 'flow_000221', desc: '{seiIntl.get({key: 'flow_000223', desc: '元'})}零?'})}整");
-}
-
 export function objectIsEqual(obj1, obj2) {
     let map1 = this.objToStrMap(obj1);
     let map2 = this.objToStrMap(obj2);
