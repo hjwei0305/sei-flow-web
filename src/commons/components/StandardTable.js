@@ -7,7 +7,8 @@ import { CreateForm } from './ModalForm';
 import './StandardTable.css'
 import SimpleTable from "./SimpleTable";
 import { checkRight } from "../utils/CommonUtils";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 class StandardTable extends PureComponent {
     constructor(props) {
         super(props);
@@ -53,11 +54,11 @@ class StandardTable extends PureComponent {
 
     editModal = flag =>{
         if(this.state.selectedRows.length===0) {
-            message.error('请选择一行数据！');
+            message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
             return;
         }
         if(this.state.selectedRows.length>1) {
-            message.error('只能选择一行数据！');
+            message.error(seiIntl.get({key: 'flow_000256', desc: '只能选择一行数据！'}));
             return;
         }
         this.handleModalVisible(flag);
@@ -71,11 +72,11 @@ class StandardTable extends PureComponent {
 
     handleFrozen = () => {
         if(this.state.selectedRows.length===0) {
-            message.error('请选择一行数据！');
+            message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
             return;
         }
         if(this.state.selectedRows.length>1) {
-            message.error('只能选择一行数据！');
+            message.error(seiIntl.get({key: 'flow_000256', desc: '只能选择一行数据！'}));
             return;
         }
         if(this.props.handleFrozen){
@@ -126,7 +127,7 @@ class StandardTable extends PureComponent {
 
         const search = ()=> {
             return (this.props.showSearch===false?null:<Input.Search
-                placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:"请输入代码或名称查询"}
+                placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:seiIntl.get({key: 'flow_000257', desc: '请输入代码或名称查询'})}
                 onSearch={value => this.handleSearch(value)}
                 style={{marginRight:30,width:230}}
                 enterButton
@@ -139,12 +140,12 @@ class StandardTable extends PureComponent {
                 checkRight(rightControl[0])&&<Button key="add" type="primary" style={{marginRight:'8px'}} onClick={() => {
                     this.setState({modalType:'add'});
                     this.handleModalVisible(true)}
-                }>新增</Button>,
+                }>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
                 checkRight(rightControl[1])&&
                 <Button key="edit" style={{marginRight:'8px'}} disabled={this.state.buttonEditDisable}
                 onClick={() => {
                     this.setState({modalType:'edit'});
-                    this.editModal(true)}}>编辑</Button>,
+                    this.editModal(true)}}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</Button>,
                 checkRight(rightControl[2])&&<Button key="freeze" style={{marginRight:'8px'}} onClick={this.handleFrozen}
                   disabled={this.state.buttonFreezeDisable}>
                     {this.state.selectedRows[0]?this.state.selectedRows[0].frozen?'解冻':'冻结':'冻结'}</Button>

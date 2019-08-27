@@ -12,7 +12,8 @@ import {
 import SimpleTable from "../../../../commons/components/SimpleTable";
 import {Input} from "antd/lib/index";
 import ExUserModal from "./ExUserModal";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 
 const Search = Input.Search;
 const confirm=Modal.confirm;
@@ -79,12 +80,12 @@ class ConfigExUserModal extends Component {
                 params.businessModel.id=this.props.businessModelId;
                 saveExUser(params).then(result => {
                     if (result.status==="SUCCESS") {
-                        message.success(result.message?result.message:"请求成功");
+                        message.success(result.message?result.message:seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
                         //刷新本地数据
                         this.getDataSource({quickSearchValue:this.state.searchValue});
                       this.setState({confirmLoading: false, modalVisible: false});
                     } else {
-                        message.error(result.message?result.message:"请求失败");
+                        message.error(result.message?result.message:seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
                       this.setState({confirmLoading: false});
                     }
                 }).catch(e => {
@@ -95,7 +96,7 @@ class ConfigExUserModal extends Component {
     };
     judgeSelected = () => {
         if (this.state.selectedRows.length === 0) {
-            message.error("请选择一行数据！");
+            message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
             return false
         }
         return true
@@ -121,19 +122,19 @@ class ConfigExUserModal extends Component {
         if (!this.judgeSelected()) return;
         let thiz = this;
         confirm({
-          title: "温馨提示",
-          content: "删除后不可恢复，是否确定删除？",
+          title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+          content: seiIntl.get({key: 'flow_000029', desc: '删除后不可恢复，是否确定删除？'}),
             onOk(){
                 let params = {};
                 params = thiz.state.selectedRows[0].id;
               thiz.setState({loading:true});
                 deleteExUser(params).then(result => {
                     if (result.status==="SUCCESS") {
-                        message.success(result.message?result.message:"请求成功");
+                        message.success(result.message?result.message:seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
                         //刷新本地数据
                         thiz.getDataSource({quickSearchValue:thiz.state.searchValue,pageInfo:thiz.state.pageInfo})
                     } else {
-                        message.error(result.message?result.message:"请求失败");
+                        message.error(result.message?result.message:seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
                     }
                 }).catch(e => {
                 }).finally(() => {
@@ -146,27 +147,27 @@ class ConfigExUserModal extends Component {
     render() {
         const columns = [
             {
-                title: '代码',
+                title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
                 dataIndex: 'code',
                 width:140
             },
             {
-                title: '名称',
+                title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
                 dataIndex: 'name',
                 width:140
             },
             {
-                title: 'API地址',
+                title: seiIntl.get({key: 'flow_000153', desc: 'API地址'}),
                 dataIndex: 'url',
                 width:200
             },
             {
-                title: '参数',
+                title: seiIntl.get({key: 'flow_000155', desc: '参数'}),
                 dataIndex: 'param',
                 width:200
             },
             {
-                title: '描述',
+                title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
                 dataIndex: 'depict',
                 width:200
             }
@@ -175,12 +176,12 @@ class ConfigExUserModal extends Component {
             return [
 
                 <Button type={"primary"} key="edit" className={"primaryButton"}
-                        onClick={this.addClick}>新增</Button>,
+                        onClick={this.addClick}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
 
                 <Button key="check" className={"primaryButton"}
-                        onClick={this.editClick}>编辑</Button>,
+                        onClick={this.editClick}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</Button>,
                 <Button key="delete" className={"primaryButton"}
-                        onClick={this.deleteClick}>删除</Button>,
+                        onClick={this.deleteClick}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</Button>,
             ]
         };
 
@@ -189,7 +190,7 @@ class ConfigExUserModal extends Component {
             return [
                 <Search
                     key="search"
-                    placeholder="输入代码或名称查询"
+                    placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
                     onSearch={value => this.handleSearch(value)}
                     style={{ width: 230}}
                     allowClear
@@ -198,7 +199,7 @@ class ConfigExUserModal extends Component {
         };
         const {modalVisible,handleCancel} = this.props;
         return (
-            <Modal title={"自定义执行人配置"}
+            <Modal title={seiIntl.get({key: 'flow_000156', desc: '自定义执行人配置'})}
                    visible={modalVisible}
                    width={700}
                    maskClosable={false}

@@ -5,7 +5,8 @@ import React, {Component} from 'react';
 import {Button, Col, Icon, Modal, Row, Tabs, Form, List, Timeline, Divider, Select, message} from "antd";
 import httpUtils from "../utils/FeatchUtils";
 import {isEmpty} from 'lodash';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -37,7 +38,7 @@ class ApproveHistory extends Component {
       getFlowHistoryInfo(formData).then(res => {
         if (!isEmpty(res)) {
           selectItem = res.map((item, index) => {
-            return item.flowInstance.flowName + "于" + item.flowInstance.createdDate + "发起";
+            return item.flowInstance.flowName + seiIntl.get({key: 'flow_000271', desc: '于'}) + item.flowInstance.createdDate + seiIntl.get({key: 'flow_000272', desc: '发起'});
           });
           this.setState({
             data: res[0] || {},
@@ -47,7 +48,7 @@ class ApproveHistory extends Component {
             selectValue: selectItem[0]
           })
         } else {
-          message.error("未找到相应流程历史")
+          message.error(seiIntl.get({key: 'flow_000273', desc: '未找到相应流程历史'}))
           this.props.setHistoryKey(null);
         }
       }).catch(err => {
@@ -64,16 +65,16 @@ class ApproveHistory extends Component {
     var minute = Math.floor((value - day * 60 * 60 * 1000 * 24 - hour * 60 * 60 * 1000) / (60 * 1000));
     var second = Math.floor((value - day * 60 * 60 * 1000 * 24 - hour * 60 * 60 * 1000 - minute * 60 * 1000) / 1000);
     if (day > 0) {
-      strVar += day + "天";
+      strVar += day + seiIntl.get({key: 'flow_000274', desc: '天'});
     }
     if (hour > 0) {
-      strVar += hour + "小时";
+      strVar += hour + seiIntl.get({key: 'flow_000275', desc: '小时'});
     }
     if (minute > 0) {
-      strVar += minute + "分";
+      strVar += minute + seiIntl.get({key: 'flow_000276', desc: '分'});
     }
     if (second > 0) {
-      strVar += second + "秒";
+      strVar += second + seiIntl.get({key: 'flow_000277', desc: '秒'});
     }
     return strVar;
   };
@@ -112,7 +113,7 @@ class ApproveHistory extends Component {
     let flowTaskList = this.state.data.flowTaskList;
     return (
       <Modal
-        title={flowInstance.flowName + '详情'}
+        title={flowInstance.flowName + seiIntl.get({key: 'flow_000278', desc: '详情'})}
         bodyStyle={{maxHeight: "480px", overflow: "auto"}}
         width="735px"
         visible={this.state.visible}
@@ -122,7 +123,7 @@ class ApproveHistory extends Component {
         destroyOnClose={true}
         footer={[
           <Button key="submit" type="primary" onClick={this.okHandle}>
-            确定
+            {seiIntl.get({key: 'flow_000258', desc: '确定'})}
           </Button>,
         ]}
         maskClosable={false}
@@ -130,7 +131,7 @@ class ApproveHistory extends Component {
         <Row gutter={10}>
           <Col span={19}><FormItem
             {...formItemLayout}
-            label={<b>启动历史</b>}
+            label={<b>{seiIntl.get({key: 'flow_000279', desc: '启动历史'})}</b>}
 
           >
             <Select style={{width: "100%"}}
@@ -144,20 +145,20 @@ class ApproveHistory extends Component {
             {/*</RadioGroup>*/}
           </FormItem></Col>
           <Col span={5} style={{marginTop: "3px"}}>
-            <Button icon="search" onClick={this.gotoFlowMap}>查看流程图</Button></Col>
+            <Button icon="search" onClick={this.gotoFlowMap}>{seiIntl.get({key: 'flow_000280', desc: '查看流程图'})}</Button></Col>
         </Row>
 
         <Tabs defaultActiveKey="1" style={{align: "center"}}
         >
           <TabPane tab={<span><Icon
             type="task"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            当前处理状态&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+            {seiIntl.get({key: 'flow_000281', desc: '当前处理状态'})}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}
                    key="1">
 
             {flowTaskList.length === 0 ? flowHistoryList && flowHistoryList[flowHistoryList.length - 1].depict[0] === "【" ?
-              <div style={{fontSize: "24px", width: "100%", marginLeft: "250px", marginTop: "20px"}}><b>该流程已被终止 </b>
+              <div style={{fontSize: "24px", width: "100%", marginLeft: "250px", marginTop: "20px"}}><b>{seiIntl.get({key: 'flow_000282', desc: '该流程已被终止'})} </b>
               </div>
-              : <div style={{fontSize: "24px", width: "100%", marginLeft: "250px", marginTop: "20px"}}><b>流程已处理完成 </b>
+              : <div style={{fontSize: "24px", width: "100%", marginLeft: "250px", marginTop: "20px"}}><b>{seiIntl.get({key: 'flow_000283', desc: '流程已处理完成'})} </b>
               </div>
               :
               <List
@@ -170,8 +171,8 @@ class ApproveHistory extends Component {
                   <List.Item>
                     <List.Item.Meta
                       description={
-                        <div><Col span={12}>等待处理人：{item.ownerName}</Col><Col span={1}><Divider type="vertical"/></Col>
-                          <Col span={11} style={{textAlign: "right"}}>任务到达时间：{item.lastEditedDate}</Col></div>}
+                        <div><Col span={12}>{seiIntl.get({key: 'flow_000284', desc: '等待处理人：'})}{item.ownerName}</Col><Col span={1}><Divider type="vertical"/></Col>
+                          <Col span={11} style={{textAlign: "right"}}>{seiIntl.get({key: 'flow_000285', desc: '任务到达时间：'})}{item.lastEditedDate}</Col></div>}
                     />
                   </List.Item>
                   </>
@@ -181,11 +182,11 @@ class ApproveHistory extends Component {
           </TabPane>
           <TabPane tab={<span><Icon
             type=""/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            流程处理历史&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span>}
+            {seiIntl.get({key: 'flow_000286', desc: '流程处理历史'})}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span>}
                    key="2">
             <Row>
               <Col span={8}>
-                <div style={{color: "#18A9FF"}}><Icon type="flag"/><b>流程启动</b></div>
+                <div style={{color: "#18A9FF"}}><Icon type="flag"/><b>{seiIntl.get({key: 'flow_000287', desc: '流程启动'})}</b></div>
               </Col>
               <Col span={16}>
                 <div
@@ -206,13 +207,13 @@ class ApproveHistory extends Component {
                         <div><b>{item.flowTaskName}</b></div>
                       </Col>
                       <Col span={17}>
-                        <div style={{float: "right"}}>处理人：{item.executorName + item.actEndTime}
+                        <div style={{float: "right"}}>{seiIntl.get({key: 'flow_000288', desc: '处理人：'})}{item.executorName + item.actEndTime}
                         </div>
                       </Col>
                     </Row>
                     <Row gutter={10} style={{marginTop: "5px"}}>
                       <Col span={21} offset={2}>
-                        <div style={{float: "right", marginRight: "10px"}}>耗时：
+                        <div style={{float: "right", marginRight: "10px"}}>{seiIntl.get({key: 'flow_000289', desc: '耗时：'})}
                           {this.changeLongToString(item.actDurationInMillis)}</div>
                       </Col>
                     </Row>
@@ -221,7 +222,7 @@ class ApproveHistory extends Component {
                         <div style={{
                           float: "right",
                           marginRight: item.depict[0] === "【" ? "5px" : "10px"
-                        }}>处理摘要：
+                        }}>{seiIntl.get({key: 'flow_000290', desc: '处理摘要：'})}
                           {item.depict}</div>
                       </Col>
                     </Row>
@@ -233,7 +234,7 @@ class ApproveHistory extends Component {
                 <Divider/>
                 <Row>
                   <Col span={8}>
-                    <div style={{color: "#18A9FF"}}><Icon type="flag"/><b>流程结束</b></div>
+                    <div style={{color: "#18A9FF"}}><Icon type="flag"/><b>{seiIntl.get({key: 'flow_000137', desc: '流程结束'})}</b></div>
                   </Col>
                   <Col span={16}>
                     <div style={{

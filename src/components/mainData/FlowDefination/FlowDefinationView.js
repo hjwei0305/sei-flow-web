@@ -22,7 +22,8 @@ import StandardDropdown from "../../../commons/components/StandardDropdown";
 import DefinaionModal from "./DefinaionModal";
 import {mainTabAction} from 'sei-utils'
 import {getUserInfo} from "../../../commons/utils/CommonUtils";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -40,7 +41,7 @@ class FlowDefinationView extends Component {
       modalVisible: false,
       confirmLoading: false,
       operator: "add",
-      pathName: "流程定义管理",
+      pathName: seiIntl.get({key: 'flow_000009', desc: '流程定义管理'}),
     }
   }
 
@@ -87,7 +88,7 @@ class FlowDefinationView extends Component {
         pageInfo: {page: 1, rows: defaultPageSize}
       };
       this.listFlowDefination(params);
-      this.setState({pathName: selectedNodes[0].name ? selectedNodes[0].name : '岗位'});
+      this.setState({pathName: selectedNodes[0].name ? selectedNodes[0].name : seiIntl.get({key: 'flow_000112', desc: '岗位'})});
     }
   };
 
@@ -110,10 +111,10 @@ class FlowDefinationView extends Component {
       let src = flowDefUrl;
       src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
       let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
-      let title = "新增";
+      let title =seiIntl.get({key: 'flow_000039', desc: '新增'});
       mainTabAction.tabOpen({id: 'add', name: title, featureUrl: src})
     } else {
-      message.error('请选择组织机构')
+      message.error(seiIntl.get({key: 'flow_000113', desc: '请选择组织机构'}))
     }
 
   };
@@ -126,7 +127,7 @@ class FlowDefinationView extends Component {
     let src = flowDefUrl;
     src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
     let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
-    let title = "参考创建";
+    let title =seiIntl.get({key: 'flow_000114', desc: '参考创建'});
     src = src + `&orgName=${orgName}&businessModelId=${tableSelectRow[0].flowType.businessModel.id}&businessModelCode=${tableSelectRow[0].flowType.businessModel.className}&id=${tableSelectRow[0].id}&isFromVersion=${false}&isCopy=${true}`
     mainTabAction.tabOpen({id: tableSelectRow[0].id + 'refAdd', name: title, featureUrl: src})
   };
@@ -137,7 +138,7 @@ class FlowDefinationView extends Component {
     let auth = getUserInfo();
     let src = flowDefUrl;
     src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
-    let title = "编辑";
+    let title =seiIntl.get({key: 'flow_000031', desc: '编辑'});
     src = src + `&businessModelId=${record.flowType.businessModel.id}&businessModelCode=${record.flowType.businessModel.className}&id=${record.id}`
     mainTabAction.tabOpen({id: record.id + 'edit', name: title, featureUrl: src})
   };
@@ -145,14 +146,14 @@ class FlowDefinationView extends Component {
     if (!this.judgeSelected()) return;
     let thiz = this;
     confirm({
-      title: "温馨提示",
-      content: "您确定要重置流程图位置吗？",
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: seiIntl.get({key: 'flow_000115', desc: '您确定要重置流程图位置吗？'}),
       onOk() {
         let id = thiz.state.tableSelectRow[0].id;
         thiz.setState({loading: true});
         getFlowDefVersion(id).then(result => {
           if (result.success) {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             let params = {
               Q_EQ_orgId: thiz.state.selectedNode.id,
@@ -161,7 +162,7 @@ class FlowDefinationView extends Component {
             };
             thiz.listFlowDefination(params);
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
           }
         }).catch(e => {
         }).finally(() => {
@@ -179,21 +180,21 @@ class FlowDefinationView extends Component {
     if (record.flowDefinationStatus !== "INIT") {
       if (record.flowDefinationStatus === 'Activate') {
         status = 'Freeze';
-        title = '您确定要冻结吗？'
+        title =seiIntl.get({key: 'flow_000116', desc: '您确定要冻结吗？'})
       } else if (record.flowDefinationStatus === 'Freeze') {
         status = 'Activate';
-        title = '您确定要激活吗？'
+        title =seiIntl.get({key: 'flow_000117', desc: '您确定要激活吗？'})
       }
     }
     let thiz = this;
     confirm({
       content: title,
-      title: "温馨提示",
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
       onOk() {
         thiz.setState({loading: true});
         activateOrFreezeFlowDef(id, status).then(result => {
           if (result.status === 'SUCCESS') {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             let params = {
               Q_EQ_orgId: thiz.state.selectedNode.id,
@@ -202,7 +203,7 @@ class FlowDefinationView extends Component {
             };
             thiz.listFlowDefination(params);
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
           }
         }).catch(e => {
         }).finally(() => {
@@ -222,14 +223,14 @@ class FlowDefinationView extends Component {
     this.setState({editData: record});
     let thiz = this;
     confirm({
-      title: "温馨提示",
-      content: "删除后不可恢复，是否确定删除？",
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: seiIntl.get({key: 'flow_000029', desc: '删除后不可恢复，是否确定删除？'}),
       onOk() {
         let id = record.id;
         thiz.setState({loading: true});
         deleteFlowDefination(id).then(result => {
           if (result.status === 'SUCCESS') {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             let params = {
               Q_EQ_orgId: thiz.state.selectedNode.id,
@@ -238,7 +239,7 @@ class FlowDefinationView extends Component {
             };
             thiz.listFlowDefination(params);
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
           }
         }).catch(e => {
         }).finally(() => {
@@ -253,7 +254,7 @@ class FlowDefinationView extends Component {
   };
   judgeSelected = () => {
     if (!this.state.tableSelectRow[0]) {
-      message.error('请选择一行数据！');
+      message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
       return false;
     }
     return true;
@@ -290,24 +291,24 @@ class FlowDefinationView extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width: 180,
         dataIndex: "operator",
         render: (text, record, index) => {
           let ops = () => {
             let ops = [];
             ops.push(<a className={'row-operator-item'} key={"edit" + index}
-                        onClick={() => this.onEditClick(record)}>编辑</a>);
+                        onClick={() => this.onEditClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>);
             ops.push(<a className={'row-operator-item'} key={"deleteDef" + index}
-                        onClick={() => this.onDeleteClick(record)}>删除</a>);
+                        onClick={() => this.onDeleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>);
             ops.push(<a className={'row-operator-item'} key={"versionDef" + index}
-                        onClick={() => this.onVersionClick(record)}>流程定义版本管理</a>);
+                        onClick={() => this.onVersionClick(record)}>{seiIntl.get({key: 'flow_000118', desc: '流程定义版本管理'})}</a>);
             let statusText = '';
             if (record && record.flowDefinationStatus !== "INIT") {
               if (record.flowDefinationStatus === 'Activate') {
-                statusText = '冻结'
+                statusText =seiIntl.get({key: 'flow_000119', desc: '冻结'});
               } else if (record.flowDefinationStatus === 'Freeze') {
-                statusText = '激活'
+                statusText =seiIntl.get({key: 'flow_000120', desc: '激活'});
               }
               ops.push(<a className={'row-operator-item'} key={"configWorkPage" + index}
                           onClick={() => this.onActivateOrFreezeFlowDefClick(record)}>{statusText}</a>);
@@ -324,38 +325,38 @@ class FlowDefinationView extends Component {
         }
       },
       {
-        title: '名称',
+        title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
         width: 200
       },
       {
-        title: '定义KEY',
+        title: seiIntl.get({key: 'flow_000121', desc: '定义KEY'}),
         dataIndex: 'defKey',
         width: 200
       },
       {
-        title: '流程类型',
+        title: seiIntl.get({key: 'flow_000056', desc: '流程类型'}),
         dataIndex: 'flowType.name',
         width: 200
       },
       {
-        title: '流程定义状态',
+        title: seiIntl.get({key: 'flow_000122', desc: '流程定义状态'}),
         dataIndex: 'flowDefinationStatus',
         width: 120,
         render(text, record) {
           if ('INIT' === text) {
-            return '未发布';
+            return seiIntl.get({key: 'flow_000123', desc: '未发布'});
           } else if ('Activate' === text) {
-            return '激活';
+            return seiIntl.get({key: 'flow_000120', desc: '激活'});
           }
           else if ('Freeze' === text) {
-            return '冻结';
+            return seiIntl.get({key: 'flow_000119', desc: '冻结'});
           }
           return "";
         }
       },
       {
-        title: '优先级',
+        title: seiIntl.get({key: 'flow_000124', desc: '优先级'}),
         dataIndex: 'priority',
         width: 120,
         render(text) {
@@ -367,12 +368,12 @@ class FlowDefinationView extends Component {
     const button = () => {
       return [
         <Button key="addRule" className={"primaryButton"} type={"primary"}
-                onClick={this.onAddClick}>新增</Button>,
+                onClick={this.onAddClick}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
         <Button.Group key={"ButtonGroup"} className={"primaryButton"}>
           <Button key="refEdit"
-                  onClick={this.onRefAddClick}>参考创建</Button>
+                  onClick={this.onRefAddClick}>{seiIntl.get({key: 'flow_000114', desc: '参考创建'})}</Button>
           <Button key="reset"
-                  onClick={this.onResetClick}>位置重置</Button>
+                  onClick={this.onResetClick}>{seiIntl.get({key: 'flow_000125', desc: '位置重置'})}</Button>
         </Button.Group>
 
       ]
@@ -382,7 +383,7 @@ class FlowDefinationView extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入代码或名称查询"
+          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleTableSearch(value)}
           style={{width: '220px'}}
           allowClear
@@ -399,7 +400,7 @@ class FlowDefinationView extends Component {
           {/*左边的树状控件*/}
           <Col span={8} style={{height: "100%"}}>
             <DetailCard
-              title="组织机构"
+              title={seiIntl.get({key: 'flow_000126', desc: '组织机构'})}
               style={{height: "100%"}}
             >
               <StandardTree

@@ -10,7 +10,8 @@ import {show, hide} from '../../../../configs/SharedReducer'
 import TransferTable from "../../../../commons/components/TransferTable";
 import {appModuleConfig} from "../../../../configs/CommonComponentsConfig";
 import {listAllNotSelectEdByAppModuleId, listAllSelectEdByAppModuleId, saveSetWorkPage} from "../BusinessModelService";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 class ConfigWorkPageModal extends Component {
 
     //删除分配
@@ -89,20 +90,20 @@ class ConfigWorkPageModal extends Component {
         const {appModuleId} = this.props;
         const leftColumns = [
             {
-                title: '名称',
+                title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
                 dataIndex: 'name',
                 width: 200
             },
             {
-                title: 'URL地址',
+                title: seiIntl.get({key: 'flow_000033', desc: 'URL地址'}),
                 dataIndex: 'url',
                 width: 300
             }
         ];
-        const searchTableConfig = {...appModuleConfig, lable: "应用模块", defaultValue: appModuleId,props:{canNotClear:true}};
+        const searchTableConfig = {...appModuleConfig, lable: seiIntl.get({key: 'flow_000041', desc: '应用模块'}), defaultValue: appModuleId,props:{canNotClear:true}};
         const {modalVisible, handleCancel} = this.props;
         return (
-            <Modal title={"工作界面配置"}
+            <Modal title={seiIntl.get({key: 'flow_000005', desc: '工作界面配置'})}
                    visible={modalVisible}
                    width={1000}
                    maskClosable={false}

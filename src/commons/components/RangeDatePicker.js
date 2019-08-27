@@ -6,7 +6,8 @@
 import React, {Component} from "react"
 import {DatePicker} from "antd"
 import moment from "moment";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 export default  class RangeDatePicker extends Component {
     static getDerivedStateFromProps(nextProps) {
         if ('value' in nextProps) {
@@ -69,7 +70,7 @@ export default  class RangeDatePicker extends Component {
             <div style={{display: "flex", alignItems: "center"}}>
                 <div style={{flex: 1}} onClick={this.onClick}>
                     <DatePicker
-                        placeholder={"开始日期"}
+                        placeholder={seiIntl.get({key: 'flow_000263', desc: '开始日期'})}
                         style={{width: "100%"}}
                         value={startDate}
                         disabled={this.props.disabled}
@@ -81,7 +82,7 @@ export default  class RangeDatePicker extends Component {
                 <div style={{width: 20, textAlign: "center"}}>{splitStr}</div>
                 <div style={{flex: 1}} onClick={this.onClick}>
                     <DatePicker
-                        placeholder={"结束日期"}
+                        placeholder={seiIntl.get({key: 'flow_000264', desc: '结束日期'})}
                         style={{width: "100%"}}
                         value={endDate}
                         format={format}

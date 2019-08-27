@@ -15,7 +15,8 @@ import EditServerUrlModal from "./EditServerUrlModal";
 import {deleteCorp} from "../../AppModule/AppModuleService";
 import {hide, show} from "../../../../configs/SharedReducer";
 import {connect} from "react-redux";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const Search = Input.Search;
 
 class ConfigServerUrlModal extends Component {
@@ -60,19 +61,19 @@ class ConfigServerUrlModal extends Component {
   deleteClick = (record) => {
     let thiz = this;
     Modal.confirm({
-      title: "温馨提示",
-      content: "删除后不可恢复，是否确定删除？",
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: seiIntl.get({key: 'flow_000029', desc: '删除后不可恢复，是否确定删除？'}),
       onOk() {
         let params = "";
         params = record.id;
         thiz.props.show();
         deleteServiceUrl(params).then(result => {
           if (result.status === "SUCCESS") {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             thiz.getDataSource({quickSearchValue: thiz.state.searchValue});
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
           }
         }).catch(e => {
         }).finally(() => {
@@ -106,12 +107,12 @@ class ConfigServerUrlModal extends Component {
         params.businessModel.id = this.props.businessModelId;
         saveServiceUrl(params).then(result => {
           if (result.status === "SUCCESS") {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             this.getDataSource({quickSearchValue: this.state.searchValue});
             this.setState({confirmLoading: false, modalVisible: false});
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
             this.setState({confirmLoading: false});
           }
 
@@ -123,7 +124,7 @@ class ConfigServerUrlModal extends Component {
   };
   judgeSelected = () => {
     if (this.state.selectedRows.length === 0) {
-      message.error("请选择一行数据！");
+      message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
       return false
     }
     return true
@@ -147,7 +148,7 @@ class ConfigServerUrlModal extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width: 60,
         dataIndex: "operator",
         render: (text, record, index) => {
@@ -155,18 +156,18 @@ class ConfigServerUrlModal extends Component {
             <div className={'row-operator'} onClick={(e) => {
               e.stopPropagation()
             }}>
-              <a className={'row-operator-item'} onClick={() => this.deleteClick(record)}>删除</a>
+              <a className={'row-operator-item'} onClick={() => this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>
             </div>
           )
         }
       },
       {
-        title: '代码',
+        title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: 'code',
         width: 140
       },
       {
-        title: '名称',
+        title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
         width: 140
       },
@@ -176,7 +177,7 @@ class ConfigServerUrlModal extends Component {
         width: 200
       },
       {
-        title: '描述',
+        title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
         dataIndex: 'depict',
         width: 200
       }
@@ -184,9 +185,9 @@ class ConfigServerUrlModal extends Component {
     const title = () => {
       return [
         <Button type={"primary"} key="edit" className={"primaryButton"}
-                onClick={this.addClick}>新增</Button>,
+                onClick={this.addClick}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
         <Button key="check" className={"primaryButton"}
-                onClick={this.editClick}>编辑</Button>
+                onClick={this.editClick}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</Button>
       ]
     };
 
@@ -195,7 +196,7 @@ class ConfigServerUrlModal extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入代码或名称查询"
+          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleSearch(value)}
           style={{width: 230}}
           allowClear
@@ -204,7 +205,7 @@ class ConfigServerUrlModal extends Component {
     };
     const {modalVisible, handleCancel} = this.props;
     return (
-      <Modal title={"配置服务地址"}
+      <Modal title={seiIntl.get({key: 'flow_000150', desc: '配置服务地址'})}
              visible={modalVisible}
              width={700}
              maskClosable={false}

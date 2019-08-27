@@ -16,7 +16,8 @@ import {appModuleAuthConfig,businessModelByAppModelConfig,flowTypeByBusinessMode
 import SearchTable from "../../../commons/components/SearchTable";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
 import { mainTabAction } from 'sei-utils';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const confirm = Modal.confirm
 const Search = Input.Search;
 
@@ -97,7 +98,7 @@ class FlowInstanceTable extends Component {
     } else {
       url=`${url}&id=${data.businessId}`
     }
-    mainTabAction.tabOpen({id:data.businessId,name:'查看表单',featureUrl:url})
+    mainTabAction.tabOpen({id:data.businessId,name:seiIntl.get({key: 'flow_000098', desc: '查看表单'}),featureUrl:url})
   };
   handleSearch = (value) => {
     this.setState({searchValue: value});
@@ -113,13 +114,13 @@ class FlowInstanceTable extends Component {
   handleEnd = (record) =>{
     let thiz = this;
     confirm({
-      title: '温馨提示',
-      content: `您确定要强制终止【${record.businessCode}】吗？`,
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: `{seiIntl.get({key: 'flow_000099', desc: '您确定要强制终止【'})}${record.businessCode}{seiIntl.get({key: 'flow_000100', desc: '】吗？'})}`,
       onOk: () => {
         thiz.props.show();
         endForce(record.id).then(res=>{
           if(res.status==='SUCCESS'){
-            message.success('流程终止成功');
+            message.success(seiIntl.get({key: 'flow_000101', desc: '流程终止成功'}));
             thiz.getDataSource();
           }else{
             message.error(res.message);
@@ -318,16 +319,16 @@ class FlowInstanceTable extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width: 200,
         dataIndex: "operator",
         render: (text, record, index) => {
           let ops = () => {
             let ops = [];
-            ops.push(<a className={'row-operator-item'} key={"detail" + index} onClick={() => this.handleDetail(record)}>查看</a>);
-            ops.push(<a className={'row-operator-item'} key={"history" + index} onClick={() => this.handleHistory(record)}>历史</a>);
+            ops.push(<a className={'row-operator-item'} key={"detail" + index} onClick={() => this.handleDetail(record)}>{seiIntl.get({key: 'flow_000102', desc: '查看'})}</a>);
+            ops.push(<a className={'row-operator-item'} key={"history" + index} onClick={() => this.handleHistory(record)}>{seiIntl.get({key: 'flow_000103', desc: '历史'})}</a>);
             if (!record.ended) {
-              ops.push(<a className={'row-operator-item'} key={"end" + index} onClick={() => this.handleEnd(record)}>强制终止</a>);
+              ops.push(<a className={'row-operator-item'} key={"end" + index} onClick={() => this.handleEnd(record)}>{seiIntl.get({key: 'flow_000104', desc: '强制终止'})}</a>);
             }
             return ops;
           }
@@ -338,41 +339,41 @@ class FlowInstanceTable extends Component {
         }
       },
       {
-        title: '流程名称',
+        title: seiIntl.get({key: 'flow_000047', desc: '流程名称'}),
         dataIndex: 'flowName',
         width: 200
       },
       {
-        title: '业务编号',
+        title: seiIntl.get({key: 'flow_000076', desc: '业务编号'}),
         dataIndex: 'businessCode',
         width: 150
       },
       {
-        title: '工作说明',
+        title: seiIntl.get({key: 'flow_000105', desc: '工作说明'}),
         dataIndex: 'businessModelRemark',
         width: 360
       },
       {
-        title: '开始时间',
+        title: seiIntl.get({key: 'flow_000106', desc: '开始时间'}),
         dataIndex: 'startDate',
         width: 180
       },
       {
-        title: '结束时间',
+        title: seiIntl.get({key: 'flow_000107', desc: '结束时间'}),
         dataIndex: 'endDate',
         width: 180
       },
       {
-        title: '流程状态',
+        title: seiIntl.get({key: 'flow_000108', desc: '流程状态'}),
         dataIndex: 'ended',
         width: 120,
         render: (text, record) => {
           if (record.manuallyEnd) {
-            return "强制终止"
+            return seiIntl.get({key: 'flow_000104', desc: '强制终止'})
           } else  if(record.ended) {
-            return "结束"
+            return seiIntl.get({key: 'flow_000109', desc: '结束'})
           } else {
-            return "处理中"
+            return seiIntl.get({key: 'flow_000110', desc: '处理中'})
           }
         }
       }
@@ -380,31 +381,31 @@ class FlowInstanceTable extends Component {
 
     const title = () => {
       return [
-          <span key={"selectAppModel"} className={"primaryButton"} >应用模块：
+          <span key={"selectAppModel"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000038', desc: '应用模块：'})}
                   <SearchTable
-                    title={"应用模块"}
+                    title={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}
                     key="searchAppModelTable"
                     initValue={true}
                     isNotFormItem={true} config={appModuleAuthConfig}
                     style={{width: 180}}
                     selectChange={this.selectChangeAppModel}/></span>,
-          <span key={"selectBusinessModel"} className={"primaryButton"} >业务实体：
+          <span key={"selectBusinessModel"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
                   <SearchTable
-                    title={"业务实体"}
+                    title={seiIntl.get({key: 'flow_000054', desc: '业务实体'})}
                     key="searchBusinessModelTable"
                     initValue={false}
                     isNotFormItem={true} params = {{"appModuleId":this.state.appModuleId}} config={businessModelByAppModelConfig}
                     style={{width: 180}}
                     selectChange={this.selectChangeBusinessModel}/></span>,
-        <span key={"selectFlowType"} className={"primaryButton"} >流程类型：
+        <span key={"selectFlowType"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000055', desc: '流程类型：'})}
                   <SearchTable
-                    title={"流程类型"}
+                    title={seiIntl.get({key: 'flow_000056', desc: '流程类型'})}
                     key="searchFlowType"
                     initValue={false}
                     isNotFormItem={true} params = {{"businessModelId":this.state.businessModelId}} config={flowTypeByBusinessModelConfig}
                     style={{width: 180}}
                     selectChange={this.selectChangeFlowType}/></span>,
-        <span key={"checkInFlow"} className={"primaryButton"} >流程中：
+        <span key={"checkInFlow"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000111', desc: '流程中：'})}
                    <Checkbox  defaultChecked={true} onChange={this.checkChangeInFlow} /></span>
       ]
     };
@@ -414,7 +415,7 @@ class FlowInstanceTable extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入代码或名称查询"
+          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleSearch(value)}
           style={{width: 220}}
           allowClear

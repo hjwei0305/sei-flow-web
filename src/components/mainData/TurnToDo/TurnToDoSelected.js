@@ -6,7 +6,8 @@
 import React, { Component } from 'react'
 import TransferTable from "../../../commons/components/TransferTable";
 import { listAllOrgs, listAllUserByOrgId } from './TurnToDoService';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 class AnyOneSelected extends Component {
     constructor(props) {
         super(props);
@@ -88,10 +89,10 @@ class AnyOneSelected extends Component {
     render() {
         const columns = [
             {
-                title: "代码",
+                title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
                 dataIndex: "code",
             }, {
-                title: "名称",
+                title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
                 dataIndex: "userName",
             }
         ];
@@ -110,8 +111,8 @@ class AnyOneSelected extends Component {
                 rightColumns={columns}
                 searchLeftKey={['code', 'userName']}
                 heightY={250}
-                rightTitle={"已选择"}
-                leftTitle={"所有人员"}
+                rightTitle={seiIntl.get({key: 'flow_000059', desc: '已选择'})}
+                leftTitle={seiIntl.get({key: 'flow_000060', desc: '所有人员'})}
             />
         );
     }

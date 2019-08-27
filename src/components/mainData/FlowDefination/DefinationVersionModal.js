@@ -15,7 +15,8 @@ import StandardDropdown from "../../../commons/components/StandardDropdown";
 import {getUserInfo} from "../../../commons/utils/CommonUtils";
 import {flowDefUrl} from "../../../configs/DefaultConfig";
 import {mainTabAction} from "sei-utils";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -69,7 +70,7 @@ class DefinationVersionModal extends Component {
     let src = flowDefUrl;
     src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
     let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
-    let title = "参考创建";
+    let title =seiIntl.get({key: 'flow_000114', desc: '参考创建'});
     src=src+`&versionCode=${selectedRows[0].versionCode}&businessModelId=${selectedRows[0].flowDefination.flowType.businessModel.id}&businessModelCode=${selectedRows[0].flowDefination.flowType.businessModel.className}&id=${selectedRows[0].flowDefination.id}&isFromVersion=${false}&isCopy=${true}&orgName=${orgName}`
     mainTabAction.tabOpen({id: selectedRows[0].id + 'versionRef', name: title, featureUrl: src})
   };
@@ -81,7 +82,7 @@ class DefinationVersionModal extends Component {
     let src = flowDefUrl;
     src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
     let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
-    let title = "查看流程定义";
+    let title =seiIntl.get({key: 'flow_000127', desc: '查看流程定义'});
     src=flowDefUrl+`/showLook?id=${record.id}&_s=${auth.sessionId}`
     mainTabAction.tabOpen({id: record.id + 'versionView', name: title, featureUrl: src})
   };
@@ -92,13 +93,13 @@ class DefinationVersionModal extends Component {
     let src = flowDefUrl;
     src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
     let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
-    let title = "编辑";
+    let title =seiIntl.get({key: 'flow_000031', desc: '编辑'});
     src=src+`&versionCode=${record.versionCode}&businessModelId=${record.flowDefination.flowType.businessModel.id}&businessModelCode=${record.flowDefination.flowType.businessModel.className}&id=${record.flowDefination.id}&isFromVersion=${true}`
     mainTabAction.tabOpen({id: record.id + 'versionView', name: title, featureUrl: src})
   };
   judgeSelected = () => {
     if (this.state.selectedRows.length === 0) {
-      message.error("请选择一行数据！");
+      message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
       return false
     }
     return true
@@ -121,25 +122,25 @@ class DefinationVersionModal extends Component {
     if (record.flowDefinationStatus !== "INIT") {
       if (record.flowDefinationStatus === 'Activate') {
         status = 'Freeze';
-        title = '您确定要冻结吗？'
+        title =seiIntl.get({key: 'flow_000116', desc: '您确定要冻结吗？'})
       } else if (record.flowDefinationStatus === 'Freeze') {
         status = 'Activate';
-        title = '您确定要激活吗？'
+        title =seiIntl.get({key: 'flow_000117', desc: '您确定要激活吗？'})
       }
     }
     let thiz = this;
     confirm({
-      title: "温馨提示",
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
       content: title,
       onOk() {
         thiz.setState({loading: true});
         activateOrFreezeFlowVer(id, status).then(result => {
           if (result.status === 'SUCCESS') {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             thiz.getDataSource()
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
           }
         }).catch(e => {
         }).finally(() => {
@@ -157,22 +158,22 @@ class DefinationVersionModal extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width: 180,
         dataIndex: "operator",
         render: (text, record, index) => {
           let ops = () => {
             let ops = [];
             ops.push(<a className={'row-operator-item'} key={"edit" + index}
-                        onClick={() => this.editClick(record)}>编辑</a>);
+                        onClick={() => this.editClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>);
             ops.push(<a className={'row-operator-item'} key={"checkClick" + index}
-                        onClick={() => this.checkClick(record)}>查看流程定义</a>);
+                        onClick={() => this.checkClick(record)}>{seiIntl.get({key: 'flow_000127', desc: '查看流程定义'})}</a>);
             let statusText = '';
             if (record && record.flowDefinationStatus !== "INIT") {
               if (record.flowDefinationStatus === 'Activate') {
-                statusText = '冻结'
+                statusText =seiIntl.get({key: 'flow_000119', desc: '冻结'})
               } else if (record.flowDefinationStatus === 'Freeze') {
-                statusText = '激活'
+                statusText =seiIntl.get({key: 'flow_000120', desc: '激活'})
               }
               ops.push(<a className={'row-operator-item'} key={"configWorkPage" + index}
                           onClick={() => this.onActivateOrFreezeFlowDefClick(record)}>{statusText}</a>);
@@ -189,17 +190,17 @@ class DefinationVersionModal extends Component {
         }
       },
       {
-        title: '名称',
+        title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
         width: 200
       },
       {
-        title: '定义KEY',
+        title: seiIntl.get({key: 'flow_000121', desc: '定义KEY'}),
         dataIndex: 'defKey',
         width: 200
       },
       {
-        title: '版本号',
+        title: seiIntl.get({key: 'flow_000128', desc: '版本号'}),
         dataIndex: 'versionCode',
         width: 60,
         render(text) {
@@ -207,7 +208,7 @@ class DefinationVersionModal extends Component {
         }
       },
       {
-        title: '优先级',
+        title: seiIntl.get({key: 'flow_000124', desc: '优先级'}),
         dataIndex: 'priority',
         width: 60,
         render(text){
@@ -215,23 +216,23 @@ class DefinationVersionModal extends Component {
         }
       },
       {
-        title: '流程定义状态',
+        title: seiIntl.get({key: 'flow_000122', desc: '流程定义状态'}),
         dataIndex: 'flowDefinationStatus',
         width: 120,
         render(text, record) {
           if ('INIT' === text) {
-            return '未发布';
+            return seiIntl.get({key: 'flow_000123', desc: '未发布'});
           } else if ('Activate' === text) {
-            return '激活';
+            return seiIntl.get({key: 'flow_000120', desc: '激活'});
           }
           else if ('Freeze' === text) {
-            return '冻结';
+            return seiIntl.get({key: 'flow_000119', desc: '冻结'});
           }
           return "";
         }
       },
       {
-        title: '描述',
+        title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
         dataIndex: 'depict',
         width: 120
       },
@@ -239,7 +240,7 @@ class DefinationVersionModal extends Component {
     const title = () => {
       return [
         <Button key="refAdd" style={{marginRight: '8px'}}
-                onClick={this.refClick}>参考创建</Button>,
+                onClick={this.refClick}>{seiIntl.get({key: 'flow_000114', desc: '参考创建'})}</Button>,
       ]
     };
 
@@ -248,7 +249,7 @@ class DefinationVersionModal extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入代码或名称查询"
+          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleSearch(value)}
           style={{width: 230}}
           allowClear
@@ -258,7 +259,7 @@ class DefinationVersionModal extends Component {
     const {definationModalVisible, selectedRows, data, editData, operator} = this.state;
     const {modalVisible, handleCancel, selectedNode} = this.props;
     return (
-      <Modal title={"流程定义版本管理"}
+      <Modal title={seiIntl.get({key: 'flow_000118', desc: '流程定义版本管理'})}
              visible={modalVisible}
              width={700}
              maskClosable={false}

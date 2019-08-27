@@ -8,7 +8,8 @@ import {Button, Checkbox, Form, Icon, Input, message, Spin} from 'antd'
 import './index.css'
 import {login} from "./service";
 import md5 from "md5"
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const {Item} = Form;
 
 class LoginForm extends Component {
@@ -30,28 +31,28 @@ class LoginForm extends Component {
     login(params).then(res => {
       if(res.success&&res.data){
         if (res.data.loginStatus === "success") {
-          message.success("登录成功");
+          message.success(seiIntl.get({key: 'flow_000189', desc: '登录成功'}));
             sessionStorage.setItem('Authorization', JSON.stringify(res.data));
             sessionStorage.setItem('_s', res.data.sessionId);
           setTimeout(() => {
             this.props.history.push({pathname: '/index', state: params})
           }, 200)//延迟进入
         } else if (res.data.loginStatus === "multiTenant") {
-          message.error("登录时需要传入租户代码");
+          message.error(seiIntl.get({key: 'flow_000190', desc: '登录时需要传入租户代码'}));
           this.setState({showTenant: true})
         } else if (res.data.loginStatus === "captchaError") {
-          message.error("验证码错误");
+          message.error(seiIntl.get({key: 'flow_000191', desc: '验证码错误'}));
         } else if (res.data.loginStatus === "frozen") {
-          message.error("账号被冻结");
+          message.error(seiIntl.get({key: 'flow_000192', desc: '账号被冻结'}));
         } else if (res.data.loginStatus === "locked") {
-          message.error("账号被锁定");
+          message.error(seiIntl.get({key: 'flow_000193', desc: '账号被锁定'}));
         } else if (res.data.loginStatus === "failure") {
-          message.error("账号密码错误或账号不存在");
+          message.error(seiIntl.get({key: 'flow_000194', desc: '账号密码错误或账号不存在'}));
         } else {
-          message.error("登录失败");
+          message.error(seiIntl.get({key: 'flow_000195', desc: '登录失败'}));
         }
       }else {
-        message.error("登录失败");
+        message.error(seiIntl.get({key: 'flow_000195', desc: '登录失败'}));
       }
     })
       .finally(() => {
@@ -67,20 +68,20 @@ class LoginForm extends Component {
     const {showTenant} = this.state;
     const {getFieldDecorator} = this.props.form;
     return (
-      <Spin size="large" className="loading" spinning={this.state.isLoading} tip={'加载中'}>
+      <Spin size="large" className="loading" spinning={this.state.isLoading} tip={seiIntl.get({key: 'flow_000000', desc: '加载中'})}>
         <div className={'login'}>
           <div className={'login-form'}>
             <div className="login-logo">
-              <div className="login-name">sei平台</div>
+              <div className="login-name">{seiIntl.get({key: 'flow_000196', desc: 'sei平台'})}</div>
             </div>
             <Form onSubmit={this.handleSubmit} style={{maxWidth: '300px'}}>
               {
                 showTenant && <Item>
                   {
                     getFieldDecorator('tenantCode', {
-                      rules: [{required: false, message: '请输入租户账号!',whitespace:true}]
+                      rules: [{required: false, message: seiIntl.get({key: 'flow_000197', desc: '请输入租户账号!'}),whitespace:true}]
                     })(
-                      <Input autofocus="autofocus" prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="租户账号"/>
+                      <Input autofocus="autofocus" prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder={seiIntl.get({key: 'flow_000198', desc: '租户账号'})}/>
                     )
                   }
                 </Item>
@@ -89,21 +90,21 @@ class LoginForm extends Component {
               <Item>
                 {
                   getFieldDecorator('account', {
-                    rules: [{required: true, message: '请输入用户名!',whitespace:true}]
+                    rules: [{required: true, message: seiIntl.get({key: 'flow_000199', desc: '请输入用户名!'}),whitespace:true}]
                   })(
                     <Input ref={(inst) => {
                       this.userInput = inst;
-                    }} prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="用户名"/>
+                    }} prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder={seiIntl.get({key: 'flow_000200', desc: '用户名'})}/>
                   )
                 }
               </Item>
               <Item>
                 {
                   getFieldDecorator('password', {
-                    rules: [{required: true, message: '请输入密码!',whitespace:true}]
+                    rules: [{required: true, message: seiIntl.get({key: 'flow_000201', desc: '请输入密码!'}),whitespace:true}]
                   })(
                     <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
-                           placeholder="密码"/>
+                           placeholder={seiIntl.get({key: 'flow_000202', desc: '密码'})}/>
                   )
                 }
               </Item>
@@ -113,11 +114,11 @@ class LoginForm extends Component {
                     valuePropName: 'checked',
                     initialValue: true,
                   })(
-                    <Checkbox>记住我</Checkbox>
+                    <Checkbox>{seiIntl.get({key: 'flow_000203', desc: '记住我'})}</Checkbox>
                   )}
-                <a className="login-form-forgot" style={{float: 'right'}}>忘记密码?</a>
+                <a className="login-form-forgot" style={{float: 'right'}}>{seiIntl.get({key: 'flow_000204', desc: '忘记密码?'})}?</a>
                 <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
-                  登录
+                  {seiIntl.get({key: 'flow_000205', desc: '登录'})}
                 </Button>
               </Item>
             </Form>

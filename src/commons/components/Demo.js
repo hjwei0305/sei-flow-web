@@ -12,7 +12,8 @@ import {cache} from "../utils/CommonUtils";
 import {Button, Menu, Icon, Select, Popconfirm} from "antd";
 import StandardTree from "./StandardTree";
 import StandardDropdown from "./StandardDropdown";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const SubMenu = Menu.SubMenu;
 const Option = Select.Option;
 
@@ -60,9 +61,9 @@ class Demo extends Component {
         {/*columns={col}*/}
         {/*data={this.state.tableData}/>*/}
         <Button onClick={() => {
-        }}>接口测试</Button>
+        }}>{seiIntl.get({key: 'flow_000267', desc: '接口测试'})}</Button>
         <Button onClick={() => {
-        }}>接口测试2</Button>
+        }}>{seiIntl.get({key: 'flow_000268', desc: '接口测试2'})}</Button>
         {/*<StandardTree*/}
         {/*checkable*/}
         {/*dadaSource={this.state.treeData}/>*/}

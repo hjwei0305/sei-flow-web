@@ -6,7 +6,9 @@ import {BrowserRouter as Router, Route as NoAuthRoute, Switch, Redirect} from 'r
 import Route from './PrivateRoute'
 import {Spin} from "antd";
 import Login from "../components/login";
+import { seiLocale } from 'sei-utils';
 
+const { seiIntl } = seiLocale;
 const Demo = lazy(() => import('../commons/components/Demo'));
 const IndexView = lazy(() => import('./IndexView'));
 const AppModuleTable = lazy(() => import('../components/mainData/AppModule/AppModuleTable'));

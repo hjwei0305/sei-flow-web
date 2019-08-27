@@ -4,7 +4,8 @@
 
 import React, { Component } from 'react';
 import { TreeSelect } from 'antd';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const TreeNode = TreeSelect.TreeNode;
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
@@ -35,7 +36,7 @@ export default class TreeSelectWithService extends Component{
             }else{
                 this.setState({dataSource})
             }
-                            
+
         })
     };
 
@@ -128,7 +129,7 @@ export default class TreeSelectWithService extends Component{
                 style={{ width: this.props.width?this.props.width:'100%' }}
                 value={this.state.value}
                 dropdownStyle={{ maxHeight: 260, overflow: 'auto' }}
-                placeholder="请选择"
+                placeholder={seiIntl.get({key: 'flow_000246', desc: '请选择'})}
                 allowClear={true}
                 treeCheckable={this.props.treeCheckable}
                 showCheckedStrategy={SHOW_PARENT}

@@ -4,7 +4,8 @@
  */
 import React, {Component} from 'react';
 import {Button, Modal} from "antd";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 class StandardModal extends Component {
 
     render() {
@@ -17,7 +18,7 @@ class StandardModal extends Component {
         //默认的footer
         const button = [
             <Button key="ok" type="primary" {...okButtonProps} loading={confirmLoading}
-                    onClick={onOk}>{okText ? okText : "确定"}</Button>,
+                    onClick={onOk}>{okText ? okText : seiIntl.get({key: 'flow_000258', desc: '确定'})}</Button>,
             <Button key="cancel" type="default" {...cancelButtonProps} onClick={onCancel}>
                 {cancelText ? cancelText : "取消"}
             </Button>,
@@ -62,8 +63,8 @@ export function confirm(props) {
     const {title,onOk,onCancel,okText, cancelText,cancelButtonProps ,okButtonProps} = props
     Modal.confirm({
         title:<span className={'header-span'}>{title}</span>,
-        cancelText: okText ? okText : "确定",
-        okText:cancelText ? cancelText : "取消",
+        cancelText: okText ? okText : seiIntl.get({key: 'flow_000258', desc: '确定'}),
+        okText:cancelText ? cancelText : seiIntl.get({key: 'flow_000259', desc: '取消'}),
         okButtonProps: cancelButtonProps?cancelButtonProps:{type: "default"},
         cancelButtonProps: okButtonProps?okButtonProps:{type: "primary"},
         destroyOnClose:true,

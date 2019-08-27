@@ -16,6 +16,8 @@ import EditAppModuleModal from "./EditAppModuleModal";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
 import {getWorkPage} from "../WorkPage/WorkPageService";
 import {getBusinessModel} from "../businessModel/BusinessModelService";
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -71,12 +73,12 @@ class AppModuleTable extends Component {
         this.setState({confirmLoading: true});
         save(params).then(result => {
           if (result.status === "SUCCESS") {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             this.getDataSource();
             this.setState({confirmLoading: false, modalVisible: false});
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
             this.setState({confirmLoading: false});
           }
         }).catch(e => {
@@ -99,8 +101,8 @@ class AppModuleTable extends Component {
   deleteClick = (record) => {
     let thiz = this;
     confirm({
-      title: "温馨提示",
-      content: "删除后不可恢复，是否确定删除？",
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: seiIntl.get({key: 'flow_000029', desc: '删除后不可恢复，是否确定删除？'}),
       onOk() {
         let params = {};
         params = record.id;
@@ -113,7 +115,7 @@ class AppModuleTable extends Component {
             fieldType: "String"//筛选类型
           }]}).then(data=>{
           if(data.records > 0){
-            message.warn("该应用模块下面配置有业务实体，不能删除！")
+            message.warn(seiIntl.get({key: 'flow_000181', desc: '该应用模块下面配置有业务实体，不能删除！'}))
             thiz.props.hide();
             return;
           }
@@ -126,18 +128,18 @@ class AppModuleTable extends Component {
             }]
           }).then(data => {
             if(data.records > 0){
-              message.warn("该应用模块下面配置有工作界面，不能删除！")
+              message.warn(seiIntl.get({key: 'flow_000182', desc: '该应用模块下面配置有工作界面，不能删除！'}))
               thiz.props.hide();
               return;
             }
             /*删除*/
             deleteCorp(params).then(result => {
               if (result.status === "SUCCESS") {
-                message.success(result.message ? result.message : "请求成功");
+                message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
                 //刷新本地数据
                 thiz.getDataSource();
               } else {
-                message.error(result.message ? result.message : "请求失败");
+                message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
               }
             }).catch(e => {
             }).finally(() => {
@@ -152,7 +154,7 @@ class AppModuleTable extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width:120,
         dataIndex: "operator",
         render: (text, record, index) => {
@@ -160,38 +162,38 @@ class AppModuleTable extends Component {
             <div className={'row-operator'}  onClick={(e) => {
               e.stopPropagation()
             }}>
-              <a className={'row-operator-item'} onClick={()=>this.editClick(record)}>编辑</a>
-              <a className={'row-operator-item'} onClick={()=>this.deleteClick(record)}>删除</a>
+              <a className={'row-operator-item'} onClick={()=>this.editClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>
+              <a className={'row-operator-item'} onClick={()=>this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>
             </div>
           )
         }
       },
       {
-        title: '代码',
+        title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: 'code',
       },
       {
-        title: '名称',
+        title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
         width: 200
       },
       {
-        title: '描述',
+        title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
         dataIndex: 'remark',
         width: 200
       },
       {
-        title: 'web服务代码',
+        title: seiIntl.get({key: 'flow_000183', desc: 'web服务代码'}),
         dataIndex: 'webBaseAddress',
         width: 220
       },
       {
-        title: 'api服务代码',
+        title: seiIntl.get({key: 'flow_000184', desc: 'api服务代码'}),
         dataIndex: 'apiBaseAddress',
         width: 220,
       },
       {
-        title: '排序',
+        title: seiIntl.get({key: 'flow_000177', desc: '排序'}),
         dataIndex: 'rank',
         width: 80
       }
@@ -199,7 +201,7 @@ class AppModuleTable extends Component {
 
     const title = () => {
       return [
-        <Button type={"primary"}  className={"primaryButton"}  key="edit" onClick={this.addClick}>新增</Button>,
+        <Button type={"primary"}  className={"primaryButton"}  key="edit" onClick={this.addClick}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
       ]
     };
 
@@ -208,7 +210,7 @@ class AppModuleTable extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入名称或代码进行查询"
+          placeholder={seiIntl.get({key: 'flow_000069', desc: '输入名称或代码进行查询'})}
           onSearch={value => this.handleSearch(value)}
           style={{width: 220}}
           allowClear

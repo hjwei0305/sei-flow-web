@@ -6,11 +6,12 @@
 import React  from 'react';
 import { Modal } from 'antd';
 import StandardForm from "./StandardForm";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 
 export const CreateForm = props => {
     const { modalVisible, checkValue, doubleLine,trebleLine, editData,handleAdd, addConfig, handleModalVisible, modalType } = props;
-    
+
     const okHandle = () => {
         this.form.validateFields((err, fieldsValue) => {
             if (err) return;
@@ -31,7 +32,7 @@ export const CreateForm = props => {
     if(addConfig){
         return (
             <Modal
-                title={<span className={'header-span'}>{modalType==='edit'?'编辑':'新增'}</span>}
+                title={<span className={'header-span'}>{modalType==='edit'?seiIntl.get({key: 'flow_000031', desc: '编辑'}):seiIntl.get({key: 'flow_000039', desc: '新增'})}</span>}
                 bodyStyle={{maxHeight:400}}
                 width={doubleLine||trebleLine?1040:520}
                 visible={modalVisible}

@@ -7,7 +7,8 @@ import React, {Component} from 'react'
 import {message} from 'antd';
 import TransferTable from "../../../commons/components/TransferTable";
 import {listAllOrgs, listAllUserByOrgId, getAddSignExecutorList} from './AddSignService';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 class AnyOneSelected extends Component {
   selectedNew = [];
 
@@ -28,7 +29,7 @@ class AnyOneSelected extends Component {
     //原有执行人不能移除
     for (let data of this.state.oldExecutorData) {
       if (rows.findIndex(item => item.id === data.id) > -1) {
-        message.warn('不能移除原有执行人！【' + data.userName + '】');
+        message.warn(seiIntl.get({key: 'flow_000188', desc: '不能移除原有执行人！【'}) + data.userName + '】');
         return;
       }
       continue;
@@ -124,10 +125,10 @@ class AnyOneSelected extends Component {
   render() {
     const columns = [
       {
-        title: "代码",
+        title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: "code",
       }, {
-        title: "名称",
+        title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: "userName",
       }
     ];
@@ -146,8 +147,8 @@ class AnyOneSelected extends Component {
         rightColumns={columns}
         searchLeftKey={['code', 'userName']}
         heightY={250}
-        leftTitle={"所有人员"}
-        rightTitle={"会签执行人"}
+        leftTitle={seiIntl.get({key: 'flow_000060', desc: '所有人员'})}
+        rightTitle={seiIntl.get({key: 'flow_000071', desc: '会签执行人'})}
       />
     );
   }

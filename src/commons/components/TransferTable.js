@@ -7,7 +7,8 @@ import SearchTable from "./SearchTable";
 import {searchListByKeyWithTag} from "../utils/CommonUtils";
 import StandardTree from "./StandardTree";
 import DetailCard from "./DetailCard";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const FormItem = Form.Item;
 
 class TransferTable extends PureComponent {
@@ -332,7 +333,7 @@ class TransferTable extends PureComponent {
     }
     const leftSearch = () => {
       return this.props.leftSearch === false ? null : <Input.Search
-        placeholder="请输入关键字查询"
+        placeholder={seiIntl.get({key: 'flow_000247', desc: '请输入关键字查询'})}
         onSearch={value => this.handleLeftSearch(value)}
         style={{width: 200}}
         allowClear
@@ -341,7 +342,7 @@ class TransferTable extends PureComponent {
 
     const rightSearch = () => {
       return this.props.rightSearch === false ? null : <Input.Search
-        placeholder="请输入关键字查询"
+        placeholder={seiIntl.get({key: 'flow_000247', desc: '请输入关键字查询'})}
         onSearch={value => this.handleRightSearch(value)}
         style={{width: 200}}
         allowClear
@@ -355,7 +356,7 @@ class TransferTable extends PureComponent {
            type="flex" justify="space-between" align="middle">
         <Col key='left' span={leftSpan ? leftSpan : 12} style={{height: "100%"}}>
           <DetailCard
-            title={this.props.leftTitle ? this.props.leftTitle : "未分配"}
+            title={this.props.leftTitle ? this.props.leftTitle : seiIntl.get({key: 'flow_000248', desc: '未分配'})}
             style={{height: "100%"}}
             bodyStyle={{height: "calc(100% - 53px)"}}
           >
@@ -403,7 +404,7 @@ class TransferTable extends PureComponent {
         </Col>
         <Col key='right' span={rightSpan ? rightSpan : 11} style={{height: "100%"}}>
           <DetailCard
-            title={this.props.rightTitle ? this.props.rightTitle : "已分配"}
+            title={this.props.rightTitle ? this.props.rightTitle : seiIntl.get({key: 'flow_000249', desc: '已分配'})}
             style={{height: "100%"}}
             bodyStyle={{height: "calc(100% - 53px)"}}
           >

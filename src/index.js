@@ -12,10 +12,8 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 ReactDOM.render(
-    <LocaleProvider locale={zhCN}>
-        <Provider store={MainStore}>
-            <App />
-        </Provider>
-    </LocaleProvider>,
-    document.getElementById('root'));
+  <Provider store={MainStore}>
+    <App/>
+  </Provider>,
+  document.getElementById('root'));
 registerServiceWorker();
