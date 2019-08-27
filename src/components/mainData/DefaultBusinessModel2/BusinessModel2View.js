@@ -17,7 +17,8 @@ import DetailCard from "../../../commons/components/DetailCard";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
 import {defaultPageSize, rowGutter} from "../../../configs/DefaultConfig";
 import StandardDropdown from "../../../commons/components/StandardDropdown";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 
 const Search = Input.Search;
 const confirm = Modal.confirm;
@@ -36,7 +37,7 @@ class BusinessModel2View extends Component {
       modalVisible: false,
       isAdd: false,
       operator: "add",
-      pathName: "采购订单管理",
+      pathName: seiIntl.get({key: 'flow_000129', desc: '采购订单管理'}),
       historyKey:""
     }
   }
@@ -75,7 +76,7 @@ class BusinessModel2View extends Component {
       };
       this.listModel2(params);
       this.setState({
-        pathName: selectedNodes[0].name ? selectedNodes[0].name : '采购订单管理'
+        pathName: selectedNodes[0].name ? selectedNodes[0].name : seiIntl.get({key: 'flow_000129', desc: '采购订单管理'})
       });
     }
   };
@@ -124,7 +125,7 @@ class BusinessModel2View extends Component {
         this.setState({loading: true});
         saveBusinessModel(params).then(result => {
           if (result.status === "SUCCESS") {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             let params = {
               Q_EQ_orgId: this.state.selectedNode.id,
@@ -134,7 +135,7 @@ class BusinessModel2View extends Component {
             this.listModel2(params);
             this.setState({loading: false, modalVisible: false});
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
             this.setState({loading: false});
           }
         }).catch(e => {
@@ -149,7 +150,7 @@ class BusinessModel2View extends Component {
     if (this.state.selectedNode && JSON.stringify(this.state.selectedNode) !== "{}") {
       this.handleModalVisible(true, true, this.state.selectedNode.name);
     } else {
-      message.error('请选择组织机构')
+      message.error(seiIntl.get({key: 'flow_000113', desc: '请选择组织机构'}))
     }
   };
 
@@ -158,7 +159,7 @@ class BusinessModel2View extends Component {
       this.setState({editData: record});
       this.handleModalVisible(true, false, this.state.selectedNode.name);
     } else {
-      message.error('请选择组织机构');
+      message.error(seiIntl.get({key: 'flow_000113', desc: '请选择组织机构'}));
     }
   };
 
@@ -174,14 +175,14 @@ class BusinessModel2View extends Component {
     this.setState({editData: record});
     let thiz = this;
     confirm({
-      title: "温馨提示",
-      content: "删除后不可恢复，是否确定删除？",
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: seiIntl.get({key: 'flow_000029', desc: '删除后不可恢复，是否确定删除？'}),
       onOk() {
         let id = record.id;
         thiz.setState({loading: true});
         deleteBusinessModel2(id).then(result => {
           if (result.status === 'SUCCESS') {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             let params = {
               Q_EQ_orgId: thiz.state.selectedNode.id,
@@ -190,7 +191,7 @@ class BusinessModel2View extends Component {
             };
             thiz.listModel2(params);
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
           }
         }).catch(e => {
         }).finally(() => {
@@ -224,21 +225,21 @@ class BusinessModel2View extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width: 160,
         dataIndex: "operator",
         render: (text, record, index) => {
           let ops = () => {
             let ops = [];
             if ("INIT" == record.flowStatus) {
-              ops.push(<a className={'row-operator-item'} key={"edit" + index} onClick={() => this.onEditClick(record)}>编辑</a>);
-              ops.push(<a className={'row-operator-item'} key={"delete" + index} onClick={() => this.onDeleteClick(record)}>删除</a>);
-              ops.push(<StartFlow businessKey={record.id} linkStyle style={{marginRight: 8}} name={"提交审批"} callBack={this.getPageData}
+              ops.push(<a className={'row-operator-item'} key={"edit" + index} onClick={() => this.onEditClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>);
+              ops.push(<a className={'row-operator-item'} key={"delete" + index} onClick={() => this.onDeleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>);
+              ops.push(<StartFlow businessKey={record.id} linkStyle style={{marginRight: 8}} name={seiIntl.get({key: 'flow_000130', desc: '提交审批'})} callBack={this.getPageData}
                                   businessModelCode={'com.ecmp.flow.entity.DefaultBusinessModel2'}/>);
             }
             if ("INPROCESS" == record.flowStatus || "COMPLETED" == record.flowStatus) {
               ops.push(<a className={'row-operator-item'} key={"history" + index}
-                          onClick={() => this.onHistroy(record)}>流程历史</a>);
+                          onClick={() => this.onHistroy(record)}>{seiIntl.get({key: 'flow_000131', desc: '流程历史'})}</a>);
             }
             return ops;
           }
@@ -253,52 +254,52 @@ class BusinessModel2View extends Component {
         }
       },
       {
-        title: "业务单号",
+        title: seiIntl.get({key: 'flow_000132', desc: '业务单号'}),
         dataIndex: "businessCode",
         width: 120
       },
       {
-        title: '业务名称',
+        title: seiIntl.get({key: 'flow_000133', desc: '业务名称'}),
         dataIndex: 'name',
         width: 120
       },
       {
-        title: '申请说明',
+        title: seiIntl.get({key: 'flow_000134', desc: '申请说明'}),
         dataIndex: 'applyCaption',
         width: 120
       },
       {
-        title: '当前流程状态',
+        title: seiIntl.get({key: 'flow_000135', desc: '当前流程状态'}),
         dataIndex: 'flowStatus',
         width: 120,
         render(text, record) {
           if ('INIT' == text) {
-            return '未启动';
+            return seiIntl.get({key: 'flow_000136', desc: '未启动'});
           } else if ('INPROCESS' === text) {
-            return '处理中';
+            return seiIntl.get({key: 'flow_000110', desc: '处理中'});
           } else if ('COMPLETED' === text) {
-            return '流程结束';
+            return seiIntl.get({key: 'flow_000137', desc: '流程结束'});
           }
           return "";
         }
       },
       {
-        title: '单价',
+        title: seiIntl.get({key: 'flow_000138', desc: '单价'}),
         dataIndex: 'unitPrice',
         width: 100
       },
       {
-        title: '数量',
+        title: seiIntl.get({key: 'flow_000139', desc: '数量'}),
         dataIndex: 'count',
         width: 100
       },
       {
-        title: '金额',
+        title: seiIntl.get({key: 'flow_000140', desc: '金额'}),
         dataIndex: 'sum',
         width: 100
       },
       {
-        title: '工作说明',
+        title: seiIntl.get({key: 'flow_000105', desc: '工作说明'}),
         dataIndex: 'workCaption',
         width: 120
       }
@@ -308,7 +309,7 @@ class BusinessModel2View extends Component {
 
     const button = () => {
       return [
-        <Button key="addRule" className={"primaryButton"} type={"primary"} onClick={this.onAddClick}>新增</Button>
+        <Button key="addRule" className={"primaryButton"} type={"primary"} onClick={this.onAddClick}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>
       ]
     };
 
@@ -317,7 +318,7 @@ class BusinessModel2View extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入代码或名称查询"
+          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleTableSearch(value)}
           style={{width: '220px'}}
           allowClear
@@ -334,7 +335,7 @@ class BusinessModel2View extends Component {
           {/*左边的树状控件*/}
           <Col span={8} style={{height: "100%"}}>
             <DetailCard
-              title="组织机构"
+              title={seiIntl.get({key: 'flow_000126', desc: '组织机构'})}
               style={{height: "100%"}}
             >
               <StandardTree

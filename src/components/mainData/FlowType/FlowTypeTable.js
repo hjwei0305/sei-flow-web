@@ -15,7 +15,9 @@ import {businessModelConfig} from "../../../configs/CommonComponentsConfig";
 import SearchTable from "../../../commons/components/SearchTable";
 import FlowTypeModal from "./FlowTypeModal";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
+import { seiLocale } from 'sei-utils';
 
+const { seiIntl } = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -84,12 +86,12 @@ class FlowTypeTable extends Component {
                 this.setState({confirmLoading: true});
                 save(params).then(result => {
                     if (result.status === "SUCCESS") {
-                        message.success(result.message ? result.message : "请求成功");
+                        message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
                         //刷新本地数据
                         this.getDataSource();
                       this.setState({confirmLoading: false, modalVisible: false});
                     } else {
-                        message.error(result.message ? result.message : "请求失败");
+                        message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
                       this.setState({confirmLoading: false});
                     }
                 }).catch(e => {
@@ -100,7 +102,7 @@ class FlowTypeTable extends Component {
     };
     judgeSelected = () => {
         if (this.state.selectedRows.length === 0) {
-            message.error("请选择一行数据！");
+            message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
             return false
         }
         return true
@@ -117,19 +119,19 @@ class FlowTypeTable extends Component {
     deleteClick = (record) => {
         let thiz = this;
         confirm({
-          title: "温馨提示",
-          content: "删除后不可恢复，是否确定删除？",
+          title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+          content: seiIntl.get({key: 'flow_000029', desc: '删除后不可恢复，是否确定删除？'}),
             onOk() {
                 let params = {};
                 params = record.id;
                 thiz.props.show();
                 deleteCorp(params).then(result => {
                     if (result.status === "SUCCESS") {
-                        message.success(result.message ? result.message : "请求成功");
+                        message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
                         //刷新本地数据
                         thiz.getDataSource({quickSearchValue: thiz.state.searchValue, pageInfo: thiz.state.pageInfo});
                     } else {
-                        message.error(result.message ? result.message : "请求失败");
+                        message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
                     }
                 }).catch(e => {
                 }).finally(() => {
@@ -165,7 +167,7 @@ class FlowTypeTable extends Component {
     render() {
         const columns = [
             {
-                title: "操作",
+                title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
                 width: 120,
                 dataIndex: "operator",
                 render: (text, record, index) => {
@@ -173,29 +175,29 @@ class FlowTypeTable extends Component {
                         <div className={'row-operator'} onClick={(e) => {
                             e.stopPropagation()
                         }}>
-                            <a className={'row-operator-item'} onClick={() => this.editClick(record)}>编辑</a>
-                            <a className={'row-operator-item'} onClick={() => this.deleteClick(record)}>删除</a>
+                            <a className={'row-operator-item'} onClick={() => this.editClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>
+                            <a className={'row-operator-item'} onClick={() => this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>
                         </div>
                     )
                 }
             },
             {
-                title: '代码',
+                title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
                 dataIndex: 'code',
                 width: 240
             },
             {
-                title: '名称',
+                title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
                 dataIndex: 'name',
                 width: 240
             },
             {
-                title: '描述',
+                title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
                 dataIndex: 'depict',
                 width: 300,
             },
             {
-                title: '所属业务实体模型',
+                title: seiIntl.get({key: 'flow_000092', desc: '所属业务实体模型'}),
                 dataIndex: 'businessModel.depict',
                 width: 300
             }
@@ -203,14 +205,14 @@ class FlowTypeTable extends Component {
 
         const title = () => {
             return [
-                <span key={"select"} className={"primaryButton"}>业务实体：
+                <span key={"select"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
                 <SearchTable
                     key="searchTable"
                     initValue={false}
                     isNotFormItem={true} config={businessModelConfig}
                     style={{width: 220}}
                     selectChange={this.selectChange}/></span>,
-                <Button key="edit" onClick={this.addClick} type={"primary"}>新增</Button>
+                <Button key="edit" onClick={this.addClick} type={"primary"}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>
             ]
         };
 
@@ -219,7 +221,7 @@ class FlowTypeTable extends Component {
             return [
                 <Search
                     key="search"
-                    placeholder="输入代码或名称查询"
+                    placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
                     onSearch={value => this.handleSearch(value)}
                     style={{width: 220}}
                     allowClear

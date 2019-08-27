@@ -2,7 +2,8 @@ import {searchListByKey} from "../commons/utils/CommonUtils";
 import {getAllList,findAllAppModuleByAuth} from "../components/mainData/AppModule/AppModuleService";
 import {findAllByAuth} from "../components/mainData/FlowType/FlowTypeService";
 import {findBusinessModelByAppModuleId,findFlowTypeByBusinessModelId} from "../components/mainData/FlowInstance/FlowInstanceService";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 
 /**
  * SearchTable
@@ -11,12 +12,12 @@ import {findBusinessModelByAppModuleId,findFlowTypeByBusinessModelId} from "../c
 //应用模块
 export const appModuleConfig = {
     columns: [{
-        title: '代码',
+        title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: 'code',
         width: 140
     },
         {
-            title: '名称',
+            title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
             dataIndex: 'name',
         }],
     dataService: getAllList,
@@ -27,12 +28,12 @@ export const appModuleConfig = {
 //应用模块(auth)
 export const appModuleAuthConfig = {
     columns: [{
-        title: '代码',
+        title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: 'code',
         width: 140
     },
         {
-            title: '名称',
+            title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
             dataIndex: 'name',
         }],
     dataService: findAllAppModuleByAuth,
@@ -45,11 +46,11 @@ export const appModuleAuthConfig = {
 export const businessModelConfig = {
     columns: [
         {
-            title: '名称',
+            title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
             dataIndex: 'name',
         },
         {
-            title: '所属应用模块',
+            title: seiIntl.get({key: 'flow_000023', desc: '所属应用模块'}),
             dataIndex: 'appModule.name',
         }],
     dataService: findAllByAuth,
@@ -62,11 +63,11 @@ export const businessModelConfig = {
 export const businessModelByAppModelConfig = {
   columns: [
     {
-      title: '名称',
+      title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
       dataIndex: 'name',
     },
     {
-      title: '所属应用模块',
+      title: seiIntl.get({key: 'flow_000023', desc: '所属应用模块'}),
       dataIndex: 'appModule.name',
     }],
   dataService: findBusinessModelByAppModuleId,
@@ -79,10 +80,10 @@ export const businessModelByAppModelConfig = {
 export const flowTypeByBusinessModelConfig = {
   columns: [
     {
-      title: '代码',
+      title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
       dataIndex: 'code',
     }, {
-      title: '名称',
+      title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
       dataIndex: 'name',
     }],
   dataService: findFlowTypeByBusinessModelId,

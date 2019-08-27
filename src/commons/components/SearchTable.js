@@ -11,7 +11,8 @@ import {convertSearchFilter, isEmpty} from "../utils/CommonUtils";
 import './SearchTable.css'
 import SimpleTable from "./SimpleTable";
 import PropTypes from 'prop-types';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 
 class SearchTable extends Component {
   params = null
@@ -314,7 +315,7 @@ class SearchTable extends Component {
       <Row style={{background: '#F3F8FC', padding: 1}}>
         <Col span={24} style={{textAlign: 'right'}}>{this.search()}</Col>
         {this.props.multiple ? <Col span={6} style={{textAlign: 'right'}}>
-          <Button key="sure" icon="plus" onClick={this.handleSure}>确认</Button>
+          <Button key="sure" icon="plus" onClick={this.handleSure}>{seiIntl.get({key: 'flow_000261', desc: '确认'})}</Button>
         </Col> : null}
       </Row>
       <SimpleTable
@@ -337,7 +338,7 @@ class SearchTable extends Component {
   search = () => {
     return (<Input.Search
       key="TableSearchI"
-      placeholder="请输入查询关键字"
+      placeholder={seiIntl.get({key: 'flow_000262', desc: '请输入查询关键字'})}
       value={this.state.searchValue}
       onChange={this.searchChange}
       onSearch={value => this.handleSearch(value)}

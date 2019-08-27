@@ -7,7 +7,8 @@ import React, {Component} from 'react'
 import {Form,Row,Col} from 'antd';
 import queryString from "query-string";
 import {findById} from "./BusinessModel2Service";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const Formitem = Form.Item;
 
 class BusinessModel2Detail extends Component {
@@ -18,7 +19,7 @@ class BusinessModel2Detail extends Component {
       id = queryString.parse(window.location.search).id;
     }
     this.state = {
-      tabTitle: "采购订单",
+      tabTitle: seiIntl.get({key: 'flow_000148', desc: '采购订单'}),
       id: id,
       showData:{}
     }
@@ -59,32 +60,32 @@ class BusinessModel2Detail extends Component {
       <div>
         <Form  style={{padding: '10px'}}>
           <Row>
-            <Col span={8}><Formitem label={'组织机构'} {...formItemLayout}>
+            <Col span={8}><Formitem label={seiIntl.get({key: 'flow_000126', desc: '组织机构'})} {...formItemLayout}>
               <span>{showData.orgName||''}</span>
             </Formitem></Col>
           </Row>
           <Row>
-            <Col span={8}><Formitem label={'业务名称'} {...formItemLayout}>
+            <Col span={8}><Formitem label={seiIntl.get({key: 'flow_000133', desc: '业务名称'})} {...formItemLayout}>
               <span>{showData.name||''}</span>
             </Formitem></Col>
           </Row>
           <Row>
-            <Col span={8}><Formitem label={'申请说明'} {...formItemLayout}>
+            <Col span={8}><Formitem label={seiIntl.get({key: 'flow_000134', desc: '申请说明'})} {...formItemLayout}>
               <span>{showData.applyCaption||''}</span>
             </Formitem></Col>
           </Row>
           <Row>
-            <Col span={8}><Formitem label={'单价'} {...formItemLayout}>
+            <Col span={8}><Formitem label={seiIntl.get({key: 'flow_000138', desc: '单价'})} {...formItemLayout}>
               <span>{showData.unitPrice||''}</span>
             </Formitem></Col>
           </Row>
           <Row>
-            <Col span={8}><Formitem label={'数量'} {...formItemLayout}>
+            <Col span={8}><Formitem label={seiIntl.get({key: 'flow_000139', desc: '数量'})} {...formItemLayout}>
               <span>{showData.count||''}</span>
             </Formitem></Col>
           </Row>
           <Row>
-            <Col span={8}><Formitem label={'备注说明'} {...formItemLayout}>
+            <Col span={8}><Formitem label={seiIntl.get({key: 'flow_000147', desc: '备注说明'})} {...formItemLayout}>
               <span>{showData.workCaption||''}</span>
             </Formitem></Col>
           </Row>

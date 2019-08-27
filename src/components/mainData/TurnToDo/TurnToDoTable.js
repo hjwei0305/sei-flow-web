@@ -16,7 +16,8 @@ import SearchTable from "../../../commons/components/SearchTable";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
 import StandardDropdown from "../../../commons/components/StandardDropdown";
 import TurnToDoSelected from './TurnToDoSelected';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const Search = Input.Search;
 
 class TurnToDoTable extends Component {
@@ -74,7 +75,7 @@ class TurnToDoTable extends Component {
     taskTurnToDo(this.currentRecord.id,this.selectedOne.toString()).then(res=>{
       if(res.status==='SUCCESS'){
         this.currentRecord=null;
-        message.success('流程转办成功');
+        message.success(seiIntl.get({key: 'flow_000045', desc: '流程转办成功'}));
         thiz.getDataSource();
       }else{
         message.error(res.message)
@@ -155,14 +156,14 @@ class TurnToDoTable extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width: 100,
         dataIndex: "operator",
         render: (text, record, index) => {
           let ops = [
             <a className={'row-operator-item'} key="delegate" onClick={()=>{
               this.currentRecord=record;
-              this.setState({selectUserModal:true});}}>转办</a>
+              this.setState({selectUserModal:true});}}>{seiIntl.get({key: 'flow_000046', desc: '转办'})}</a>
             ]
           return (
             <div className={'row-operator'} key={"operator" + index} onClick={(e) => {
@@ -174,37 +175,37 @@ class TurnToDoTable extends Component {
         }
       },
       {
-        title: '流程名称',
+        title: seiIntl.get({key: 'flow_000047', desc: '流程名称'}),
         dataIndex: 'flowName',
         width: 200
       },
       {
-        title: '任务名称',
+        title: seiIntl.get({key: 'flow_000048', desc: '任务名称'}),
         dataIndex: 'taskName',
         width: 150
       },
       {
-        title: '业务编码',
+        title: seiIntl.get({key: 'flow_000049', desc: '业务编码'}),
         dataIndex: 'flowInstance.businessCode',
         width: 150
       },
       {
-        title: '执行人名称',
+        title: seiIntl.get({key: 'flow_000050', desc: '执行人名称'}),
         dataIndex: 'executorName',
         width: 150
       },
       {
-        title: '执行人账号',
+        title: seiIntl.get({key: 'flow_000051', desc: '执行人账号'}),
         dataIndex: 'executorAccount',
         width: 150
       },
       {
-        title: '描述',
+        title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
         dataIndex: 'depict',
         width: 300
       },
       {
-        title: '创建时间',
+        title: seiIntl.get({key: 'flow_000052', desc: '创建时间'}),
         dataIndex: 'createdDate',
         width: 180
       }
@@ -212,25 +213,25 @@ class TurnToDoTable extends Component {
 
     const title = () => {
       return [
-        <span key={"selectAppModel"} className={"primaryButton"} >应用模块：
+        <span key={"selectAppModel"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000038', desc: '应用模块：'})}
                   <SearchTable
-                    title={"应用模块"}
+                    title={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}
                     key="searchAppModelTable"
                     initValue={true}
                     isNotFormItem={true} config={appModuleAuthConfig}
                     style={{width: 180}}
                     selectChange={this.selectChangeAppModel}/></span>,
-        <span key={"selectBusinessModel"} className={"primaryButton"} >业务实体：
+        <span key={"selectBusinessModel"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
                   <SearchTable
-                    title={"业务实体"}
+                    title={seiIntl.get({key: 'flow_000054', desc: '业务实体'})}
                     key="searchBusinessModelTable"
                     initValue={false}
                     isNotFormItem={true} params = {{"appModuleId":this.state.appModuleId}} config={businessModelByAppModelConfig}
                     style={{width: 180}}
                     selectChange={this.selectChangeBusinessModel}/></span>,
-        <span key={"selectFlowType"} className={"primaryButton"} >流程类型：
+        <span key={"selectFlowType"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000055', desc: '流程类型：'})}
                   <SearchTable
-                    title={"流程类型"}
+                    title={seiIntl.get({key: 'flow_000056', desc: '流程类型'})}
                     key="searchFlowType"
                     initValue={false}
                     isNotFormItem={true} params = {{"businessModelId":this.state.businessModelId}} config={flowTypeByBusinessModelConfig}
@@ -244,7 +245,7 @@ class TurnToDoTable extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入代码或名称查询"
+          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleSearch(value)}
           style={{width: 220}}
           allowClear
@@ -267,7 +268,7 @@ class TurnToDoTable extends Component {
             pageChange={this.pageChange}
           />
           <Modal
-            title={`指定转办人`}
+            title={`{seiIntl.get({key: 'flow_000058', desc: '指定转办人'})}`}
             bodyStyle={{maxHeight:"720px",overflow:"auto"}}
             width={window.innerWidth*0.8}
             visible={this.state.selectUserModal}

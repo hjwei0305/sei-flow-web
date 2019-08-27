@@ -7,7 +7,9 @@ import React, {Component} from 'react'
 import {Form, Input, Modal, Checkbox} from 'antd';
 import SearchTable from "../../../commons/components/SearchTable";
 import {appModuleConfig} from "../../../configs/CommonComponentsConfig";
+import { seiLocale } from 'sei-utils';
 
+const { seiIntl } = seiLocale;
 const FormItem = Form.Item;
 
 class WorkPageModal extends Component {
@@ -39,10 +41,10 @@ class WorkPageModal extends Component {
 
         const {confirmLoading, modalVisible, handleOk, handleCancel, defaultValue, isAdd,appModule} = this.props;
         const {getFieldDecorator} = this.props.form;
-        let title = "编辑";
+        let title =seiIntl.get({key: 'flow_000031', desc: '编辑'});
         let FormValue = defaultValue;
         if (isAdd) {
-            title = "新增";
+            title =seiIntl.get({key: 'flow_000039', desc: '新增'});
             FormValue = {}
         }
         return (
@@ -67,7 +69,7 @@ class WorkPageModal extends Component {
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="应用模块">
+                        label={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}>
                         {getFieldDecorator('appModuleId', {
                             initialValue: appModule ? appModule.id : "",
                         })(
@@ -76,10 +78,10 @@ class WorkPageModal extends Component {
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="名称">
+                        label={seiIntl.get({key: 'flow_000022', desc: '名称'})}>
                         {getFieldDecorator('name', {
                             initialValue: FormValue.name ? FormValue.name : "",
-                            rules: [{required: true, message: '请填写名称!',whitespace:true}]
+                            rules: [{required: true, message: seiIntl.get({key: 'flow_000042', desc: '请填写名称!'}),whitespace:true}]
                         })(
                             <Input/>
                         )}
@@ -87,7 +89,7 @@ class WorkPageModal extends Component {
 
                     <FormItem
                         {...formItemLayout}
-                        label="必须提交">
+                        label={seiIntl.get({key: 'flow_000034', desc: '必须提交'})}>
                         {getFieldDecorator('mustCommit', {
                             initialValue: FormValue.mustCommit,
                             valuePropName: "checked"
@@ -98,20 +100,20 @@ class WorkPageModal extends Component {
 
                     <FormItem
                         {...formItemLayout}
-                        label="URL地址">
+                        label={seiIntl.get({key: 'flow_000033', desc: 'URL地址'})}>
                         {getFieldDecorator('url', {
                             initialValue: FormValue.url ? FormValue.url : "",
-                          rules: [{required: true, message: '请填写URL地址!',whitespace:true}]
+                          rules: [{required: true, message: seiIntl.get({key: 'flow_000043', desc: '请填写URL地址!'}),whitespace:true}]
                         })(
                             <Input/>
                         )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="描述">
+                        label={seiIntl.get({key: 'flow_000037', desc: '描述'})}>
                         {getFieldDecorator('depict', {
                             initialValue: FormValue.depict ? FormValue.depict : "",
-                          rules: [{required: true, message: '请填写描述!',whitespace:true}]
+                          rules: [{required: true, message: seiIntl.get({key: 'flow_000044', desc: '请填写描述!'}),whitespace:true}]
                         })(
                             <Input/>
                         )}

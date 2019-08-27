@@ -9,6 +9,8 @@ import {
     getPropertiesForConditionPojo,
 } from "../BusinessModelService";
 import SimpleTable from "../../../../commons/components/SimpleTable";
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 
 class PropertiesForConditionPojoModal extends Component {
     constructor(props) {
@@ -45,12 +47,12 @@ class PropertiesForConditionPojoModal extends Component {
     render() {
         const columns = [
             {
-                title: '属性',
+                title: seiIntl.get({key: 'flow_000151', desc: '属性'}),
                 dataIndex: 'code',
                 width:200
             },
             {
-                title: '名称',
+                title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
                 dataIndex: 'name',
                 width:200
             },
@@ -60,7 +62,7 @@ class PropertiesForConditionPojoModal extends Component {
 
         const {modalVisible,handleCancel} = this.props;
         return (
-            <Modal title={"查看条件属性"}
+            <Modal title={seiIntl.get({key: 'flow_000152', desc: '查看条件属性'})}
                    visible={modalVisible}
                    width={500}
                    maskClosable={false}

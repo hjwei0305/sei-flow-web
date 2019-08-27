@@ -18,7 +18,9 @@ import {
 } from "../../../configs/CommonComponentsConfig";
 import SearchTable from "../../../commons/components/SearchTable";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
+import { seiLocale } from 'sei-utils';
 
+const { seiIntl } = seiLocale;
 const confirm = Modal.confirm
 const Search = Input.Search;
 
@@ -90,13 +92,13 @@ class FlowInstanceTable extends Component {
   pushAgain = (record) => {
     let thiz = this;
     confirm({
-      title: '温馨提示',
-      content: `您确定要重新推送当前任务吗？`,
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: `{seiIntl.get({key: 'flow_000073', desc: '您确定要重新推送当前任务吗？'})}`,
       onOk: () => {
         thiz.props.show();
         pushAgainByControlId(record.id).then(res => {
           if (res.status === 'SUCCESS') {
-            message.success('推送成功');
+            message.success(seiIntl.get({key: 'flow_000074', desc: '推送成功'}));
             thiz.getDataSource();
           } else {
             message.error(res.message);
@@ -270,7 +272,7 @@ class FlowInstanceTable extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width: 120,
         dataIndex: "operator",
         render: (text, record, index) => {
@@ -278,33 +280,33 @@ class FlowInstanceTable extends Component {
             <div className={'row-operator'} key={"operator" + index} onClick={(e) => {
               e.stopPropagation()
             }}>
-              <a className={'row-operator-item'} key={"end" + index} onClick={() => this.pushAgain(record)}>重新推送</a>
+              <a className={'row-operator-item'} key={"end" + index} onClick={() => this.pushAgain(record)}>{seiIntl.get({key: 'flow_000075', desc: '重新推送'})}</a>
             </div>
           )
         }
       },
       {
-        title: '流程名称',
+        title: seiIntl.get({key: 'flow_000047', desc: '流程名称'}),
         dataIndex: 'flowInstanceName',
         width: 200
       },
       {
-        title: '任务名称',
+        title: seiIntl.get({key: 'flow_000048', desc: '任务名称'}),
         dataIndex: 'flowTaskName',
         width: 200
       },
       {
-        title: '业务编号',
+        title: seiIntl.get({key: 'flow_000076', desc: '业务编号'}),
         dataIndex: 'businessCode',
         width: 150
       },
       {
-        title: '推送类型',
+        title: seiIntl.get({key: 'flow_000077', desc: '推送类型'}),
         dataIndex: 'pushType',
         width: 120,
         render: (text, record) => {
           if (record.pushType == "business") {   //推送到业务实体
-            return "业务模块"
+            return seiIntl.get({key: 'flow_000078', desc: '业务模块'})
           } else if (record.pushType == "basic") {  //推送到basic
             return "BASIC"
           } else {
@@ -313,51 +315,51 @@ class FlowInstanceTable extends Component {
         }
       },
       {
-        title: '推送状态',
+        title: seiIntl.get({key: 'flow_000079', desc: '推送状态'}),
         dataIndex: 'pushStatus',
         width: 120,
         render: (text, record) => {
           if (record.pushStatus == "init") {   //推送业务模块状态
-            return "待办"
+            return seiIntl.get({key: 'flow_000080', desc: '待办'})
           } else if (record.pushStatus == "completed") {  //推送业务模块状态
-            return "已办"
+            return seiIntl.get({key: 'flow_000081', desc: '已办'})
           } else if (record.pushStatus == "new") {  //推送basic状态
-            return "新增待办"
+            return seiIntl.get({key: 'flow_000082', desc: '新增待办'})
           } else if (record.pushStatus == "old") {  //推送basic状态
-            return "待办转已办"
+            return seiIntl.get({key: 'flow_000083', desc: '待办转已办'})
           } else if (record.pushStatus == "del") {  //推送basic状态
-            return "删除待办"
+            return seiIntl.get({key: 'flow_000084', desc: '删除待办'})
           } else if (record.pushStatus == "end") {  //推送basic状态
-            return "归档（终止）"
+            return seiIntl.get({key: 'flow_000085', desc: '归档（终止）'})
           } else {
             return "";
           }
         }
       },
       {
-        title: '执行人名称',
+        title: seiIntl.get({key: 'flow_000050', desc: '执行人名称'}),
         dataIndex: 'executorNameList',
         width: 360
       },
       {
-        title: '推送总次数',
+        title: seiIntl.get({key: 'flow_000086', desc: '推送总次数'}),
         dataIndex: 'pushNumber',
         width: 100
       },
       {
-        title: '成功次数',
+        title: seiIntl.get({key: 'flow_000087', desc: '成功次数'}),
         dataIndex: 'pushSuccess',
         width: 100
       }, {
-        title: '失败次数',
+        title: seiIntl.get({key: 'flow_000088', desc: '失败次数'}),
         dataIndex: 'pushFalse',
         width: 100
       }, {
-        title: '第一次推送时间',
+        title: seiIntl.get({key: 'flow_000089', desc: '第一次推送时间'}),
         dataIndex: 'pushStartDate',
         width: 180
       }, {
-        title: '最后推送时间',
+        title: seiIntl.get({key: 'flow_000090', desc: '最后推送时间'}),
         dataIndex: 'pushEndDate',
         width: 180
       }
@@ -365,33 +367,33 @@ class FlowInstanceTable extends Component {
 
     const title = () => {
       return [
-        <span key={"selectAppModel"} className={"primaryButton"}>应用模块：
+        <span key={"selectAppModel"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000038', desc: '应用模块：'})}
                   <SearchTable
-                    title={"应用模块"}
+                    title={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}
                     key="searchAppModelTable"
                     initValue={true}
                     isNotFormItem={true} config={appModuleAuthConfig}
                     style={{width: 160}}
                     selectChange={this.selectChangeAppModel}/></span>,
-        <span key={"selectBusinessModel"} className={"primaryButton"}>业务实体：
+        <span key={"selectBusinessModel"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
                   <SearchTable
-                    title={"业务实体"}
+                    title={seiIntl.get({key: 'flow_000054', desc: '业务实体'})}
                     key="searchBusinessModelTable"
                     initValue={false}
                     isNotFormItem={true} params={{"appModuleId": this.state.appModuleId}}
                     config={businessModelByAppModelConfig}
                     style={{width: 160}}
                     selectChange={this.selectChangeBusinessModel}/></span>,
-        <span key={"selectFlowType"} className={"primaryButton"}>流程类型：
+        <span key={"selectFlowType"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000055', desc: '流程类型：'})}
                   <SearchTable
-                    title={"流程类型"}
+                    title={seiIntl.get({key: 'flow_000056', desc: '流程类型'})}
                     key="searchFlowType"
                     initValue={false}
                     isNotFormItem={true} params={{"businessModelId": this.state.businessModelId}}
                     config={flowTypeByBusinessModelConfig}
                     style={{width: 160}}
                     selectChange={this.selectChangeFlowType}/></span>,
-        <span key={"checkInBasic"} className={"primaryButton"}> BASIC/业务模块：
+        <span key={"checkInBasic"} className={"primaryButton"}> BASIC/{seiIntl.get({key: 'flow_000091', desc: '业务模块：'})}
                    <Checkbox defaultChecked={true} onChange={this.checkChangeInBasic}/></span>
       ]
     };
@@ -401,7 +403,7 @@ class FlowInstanceTable extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入代码或名称查询"
+          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleSearch(value)}
           style={{width: 220}}
           allowClear

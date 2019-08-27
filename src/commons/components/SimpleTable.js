@@ -14,7 +14,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import styles from './StandardTable.module.less';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 //用户可以拖动列宽
 const ResizeableTitle = (props) => {
   const {onResize, width, ...restProps} = props;
@@ -182,7 +183,7 @@ class SimpleTable extends PureComponent {
     const {showOrderTitle = true} = this.props;
     if (!this.props.noSequence) {
       let sequence = {
-        title: showOrderTitle ? "序号" : null,
+        title: showOrderTitle ? seiIntl.get({key: 'flow_000260', desc: '序号'}) : null,
         key: 'sequence',
         width: 80,
         align: "center",

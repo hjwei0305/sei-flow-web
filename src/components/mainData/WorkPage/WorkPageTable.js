@@ -15,7 +15,9 @@ import {appModuleConfig} from "../../../configs/CommonComponentsConfig";
 import SearchTable from "../../../commons/components/SearchTable";
 import WorkPageModal from "./WorkPageModal";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
+import { seiLocale } from 'sei-utils';
 
+const { seiIntl } = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -61,7 +63,7 @@ class WorkPageTable extends Component {
     if (appModule && appModule.id) {
       this.handleModalVisible(true, true)
     } else {
-      message.error("请选择应用模块！")
+      message.error(seiIntl.get({key: 'flow_000024', desc: '请选择应用模块！'}))
     }
 
   };
@@ -79,7 +81,7 @@ class WorkPageTable extends Component {
         this.setState({confirmLoading: true});
         save(params).then(result => {
           if (result.status === "SUCCESS") {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             this.getDataSource({
               quickSearchValue: this.state.searchValue,
@@ -93,7 +95,7 @@ class WorkPageTable extends Component {
             });
             this.setState({confirmLoading: false, modalVisible: false});
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
             this.setState({confirmLoading: false});
           }
         }).catch(e => {
@@ -104,7 +106,7 @@ class WorkPageTable extends Component {
   };
   judgeSelected = () => {
     if (this.state.selectedRows.length === 0) {
-      message.error("请选择一行数据！");
+      message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
       return false
     }
     return true
@@ -131,15 +133,15 @@ class WorkPageTable extends Component {
   deleteClick = (record) => {
     let thiz = this;
     confirm({
-      title: "温馨提示",
-      content: "删除后不可恢复，是否确定删除？",
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: seiIntl.get({key: 'flow_000029', desc: '删除后不可恢复，是否确定删除？'}),
       onOk() {
         let params = {};
         params = record.id;
         thiz.props.show();
         deleteCorp(params).then(result => {
           if (result.status === "SUCCESS") {
-            message.success(result.message ? result.message : "请求成功");
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             thiz.getDataSource({
               quickSearchValue: thiz.state.searchValue, pageInfo: thiz.state.pageInfo, filters: [{
@@ -150,7 +152,7 @@ class WorkPageTable extends Component {
               }]
             });
           } else {
-            message.error(result.message ? result.message : "请求失败");
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
           }
         }).catch(e => {
         }).finally(() => {
@@ -191,7 +193,7 @@ class WorkPageTable extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width: 120,
         dataIndex: "operator",
         render: (text, record, index) => {
@@ -199,36 +201,36 @@ class WorkPageTable extends Component {
             <div className={'row-operator'} onClick={(e) => {
               e.stopPropagation()
             }}>
-              <a className={'row-operator-item'} key={"edit" + index} onClick={() => this.editClick(record)}>编辑</a>
-              <a className={'row-operator-item'} key={"delete" + index} onClick={() => this.deleteClick(record)}>删除</a>
+              <a className={'row-operator-item'} key={"edit" + index} onClick={() => this.editClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>
+              <a className={'row-operator-item'} key={"delete" + index} onClick={() => this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>
             </div>
           )
         }
       },
       {
-        title: '名称',
+        title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
         width: 300
       },
       {
-        title: 'URL地址',
+        title: seiIntl.get({key: 'flow_000033', desc: 'URL地址'}),
         dataIndex: 'url',
         width: 400
       },
       {
-        title: '必须提交',
+        title: seiIntl.get({key: 'flow_000034', desc: '必须提交'}),
         dataIndex: 'mustCommit',
         width: 100,
         render: (text, record) => {
           if (record.mustCommit) {
-            return "是"
+            return seiIntl.get({key: 'flow_000035', desc: '是'})
           } else {
-            return "否"
+            return seiIntl.get({key: 'flow_000036', desc: '否'})
           }
         }
       },
       {
-        title: '描述',
+        title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
         dataIndex: 'depict',
         width: 400,
       },
@@ -236,7 +238,7 @@ class WorkPageTable extends Component {
 
     const title = () => {
       return [
-        <span key={"select"} className={"primaryButton"}>应用模块：
+        <span key={"select"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000038', desc: '应用模块：'})}
                     <SearchTable
                       key="searchTable"
                       initValue={true}
@@ -244,7 +246,7 @@ class WorkPageTable extends Component {
                       style={{width: 220}}
                       selectChange={this.selectChange}/>
                 </span>,
-        <Button key={"add"} className={"primaryButton"} onClick={this.addClick} type={"primary"}>新增</Button>,
+        <Button key={"add"} className={"primaryButton"} onClick={this.addClick} type={"primary"}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
       ]
     };
 
@@ -253,7 +255,7 @@ class WorkPageTable extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入关键字搜索"
+          placeholder={seiIntl.get({key: 'flow_000040', desc: '输入关键字搜索'})}
           onSearch={value => this.handleSearch(value)}
           style={{width: 220}}
           allowClear

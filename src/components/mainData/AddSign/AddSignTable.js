@@ -14,7 +14,8 @@ import {getAllAddSignList, setAddSignExecutorList} from "./AddSignService";
 import {searchListByKeyWithTag} from "../../../commons/utils/CommonUtils";
 import HeadBreadcrumb from "../../../commons/components/breadcrumb/HeadBreadcrumb";
 import AssSignSelected from './AddSignSelected';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const Search = Input.Search;
 
 class AddSignTable extends Component {
@@ -57,7 +58,7 @@ class AddSignTable extends Component {
     let thiz = this;
     let params = {};
     if (this.selectedOne === null || this.selectedOne === []) {
-      message.warn('没有实际加签的人！');
+      message.warn(seiIntl.get({key: 'flow_000185', desc: '没有实际加签的人！'}));
     }
     Object.assign(params, {
       actInstanceId: this.state.currentActInstanceId,
@@ -92,7 +93,7 @@ class AddSignTable extends Component {
   render() {
     const columns = [
       {
-        title: "操作",
+        title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
         width: 120,
         dataIndex: "operator",
         render: (text, record, index) => {
@@ -107,43 +108,43 @@ class AddSignTable extends Component {
                   currentActInstanceId: record.actInstanceId,
                   currentTaskActKey: record.nodeKey
                 });
-              }}>加签</a>
+              }}>{seiIntl.get({key: 'flow_000186', desc: '加签'})}</a>
             </div>
           )
         }
       },
       {
-        title: '流程定义key',
+        title: seiIntl.get({key: 'flow_000063', desc: '流程定义key'}),
         dataIndex: 'flowDefKey',
         width: 200
       },
       {
-        title: '流程名称',
+        title: seiIntl.get({key: 'flow_000047', desc: '流程名称'}),
         dataIndex: 'flowName',
         width: 200
       },
       {
-        title: '流程节点key',
+        title: seiIntl.get({key: 'flow_000064', desc: '流程节点key'}),
         dataIndex: 'nodeKey',
         width: 200
       },
       {
-        title: '流程节点名称',
+        title: seiIntl.get({key: 'flow_000065', desc: '流程节点名称'}),
         dataIndex: 'nodeName',
         width: 200
       },
       {
-        title: '业务单据编号',
+        title: seiIntl.get({key: 'flow_000066', desc: '业务单据编号'}),
         dataIndex: 'businessCode',
         width: 200,
       },
       {
-        title: '业务单据名称',
+        title: seiIntl.get({key: 'flow_000067', desc: '业务单据名称'}),
         dataIndex: 'businessName',
         width: 200,
       },
       {
-        title: '业务摘要',
+        title: seiIntl.get({key: 'flow_000068', desc: '业务摘要'}),
         dataIndex: 'businessModelRemark',
         width: 200,
       }
@@ -154,7 +155,7 @@ class AddSignTable extends Component {
       return [
         <Search
           key="search"
-          placeholder="输入名称或代码进行查询"
+          placeholder={seiIntl.get({key: 'flow_000069', desc: '输入名称或代码进行查询'})}
           onSearch={value => this.handleSearch(value)}
           style={{width: 220}}
           allowClear
@@ -177,7 +178,7 @@ class AddSignTable extends Component {
             columns={columns}
           />
           <Modal
-            title={`会签加签`}
+            title={`{seiIntl.get({key: 'flow_000187', desc: '会签加签'})}`}
             bodyStyle={{maxHeight: "720px", overflow: "auto"}}
             width={window.innerWidth * 0.8}
             visible={this.state.selectUserModal}

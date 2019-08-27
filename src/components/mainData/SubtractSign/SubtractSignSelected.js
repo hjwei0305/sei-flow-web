@@ -7,6 +7,8 @@ import React, {Component} from 'react'
 import {message} from 'antd';
 import TransferTable from "../../../commons/components/TransferTable";
 import {getSubtractSignExecutorList} from './SubtractSignService';
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 
 class AnyOneSelected extends Component {
   selectedNew = [];
@@ -108,10 +110,10 @@ class AnyOneSelected extends Component {
   render() {
     const columns = [
       {
-        title: "代码",
+        title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: "code",
       }, {
-        title: "名称",
+        title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: "userName",
       }
     ];
@@ -128,8 +130,8 @@ class AnyOneSelected extends Component {
         rightColumns={columns}
         searchLeftKey={['code', 'userName']}
         heightY={250}
-        leftTitle={"会签执行人"}
-        rightTitle={"减签人员"}
+        leftTitle={seiIntl.get({key: 'flow_000071', desc: '会签执行人'})}
+        rightTitle={seiIntl.get({key: 'flow_000072', desc: '减签人员'})}
       />
     );
   }

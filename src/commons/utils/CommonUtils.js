@@ -1,5 +1,6 @@
 import moment from 'moment';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 /**
  * 列表本地搜索,返回数据源，数据源每个子项上加搜索结果的 tag
  * @param {源数据} data
@@ -271,7 +272,7 @@ export const cache = {
 export const checkNumber = (rule, value, callback) => {
     let reg = /^\d+(\.\d+)?$/;
     if (!reg.test(value) || value === 0) {
-        callback({message: "请输入大于0的数字"});
+        callback({message: seiIntl.get({key: 'flow_000206', desc: '请输入大于0的数字'})});
         return false;
     }
     callback();
@@ -296,16 +297,16 @@ export function isInclude(array, obj) {
 
 export function transToChiness(n) {
     if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n))
-        return "数据非法";
-    var unit = "千百拾亿千百拾万千百拾元角分", str = "";
+        return seiIntl.get({key: 'flow_000207', desc: '数据非法'});
+    var unit =seiIntl.get({key: 'flow_000208', desc: '千百拾亿千百拾万千百拾元角分'}), str = "";
     n += "00";
     var p = n.indexOf('.');
     if (p >= 0)
         n = n.substring(0, p) + n.substr(p + 1, 2);
     unit = unit.substr(unit.length - n.length);
     for (var i = 0; i < n.length; i++)
-        str += '零壹贰叁肆伍陆柒捌玖'.charAt(n.charAt(i)) + unit.charAt(i);
-    return str.replace(/零(千|百|拾|角)/g, "零").replace(/(零)+/g, "零").replace(/零(万|亿|元)/g, "$1").replace(/(亿)万|壹(拾)/g, "$1$2").replace(/^元零?|零分/g, "").replace(/元$/g, "元整");
+        str +=seiIntl.get({key: 'flow_000209', desc: '零壹贰叁肆伍陆柒捌玖'}).charAt(n.charAt(i)) + unit.charAt(i);
+    return str.replace(/{seiIntl.get({key: 'flow_000210', desc: '零(千'})}|{seiIntl.get({key: 'flow_000211', desc: '百'})}|{seiIntl.get({key: 'flow_000212', desc: '拾'})}|{seiIntl.get({key: 'flow_000213', desc: '角)'})}/g, seiIntl.get({key: 'flow_000214', desc: seiIntl.get({key: 'flow_000214', desc: '零'})})).replace(/{seiIntl.get({key: 'flow_000215', desc: '(零)'})}+/g, seiIntl.get({key: 'flow_000214', desc: seiIntl.get({key: 'flow_000214', desc: '零'})})).replace(/{seiIntl.get({key: 'flow_000216', desc: '零(万'})}|{seiIntl.get({key: 'flow_000217', desc: '亿'})}|{seiIntl.get({key: 'flow_000218', desc: '{seiIntl.get({key: 'flow_000221', desc: '{seiIntl.get({key: 'flow_000223', desc: '元'})}零?'})})'})}/g, "$1").replace(/({seiIntl.get({key: 'flow_000217', desc: '亿'})})万|壹({seiIntl.get({key: 'flow_000212', desc: '拾'})})/g, "$1$2").replace(/^{seiIntl.get({key: 'flow_000221', desc: '{seiIntl.get({key: 'flow_000223', desc: '元'})}零?'})}?|{seiIntl.get({key: 'flow_000222', desc: '零分'})}/g, "").replace(/{seiIntl.get({key: 'flow_000221', desc: '{seiIntl.get({key: 'flow_000223', desc: '元'})}零?'})}$/g, "{seiIntl.get({key: 'flow_000221', desc: '{seiIntl.get({key: 'flow_000223', desc: '元'})}零?'})}整");
 }
 
 export function objectIsEqual(obj1, obj2) {
@@ -358,12 +359,12 @@ export const countDate = (startTime) => {
     startTime = new Date(startTime).getTime();
     const time = endTime - startTime;
     if (time <= 60000) {//如果结束时间小于开始时间
-        return "刚刚";
+        return seiIntl.get({key: 'flow_000225', desc: '刚刚'});
     } else {
         //计算出相差天数
         const days = Math.floor(time / (24 * 3600 * 1000));
         if (days > 0) {
-            return days + '天前';
+            return days + seiIntl.get({key: 'flow_000226', desc: '天前'});
         }
         //计算出小时数
         const leave1 = time % (24 * 3600 * 1000);   //计算天数后剩余的毫秒数
@@ -372,13 +373,13 @@ export const countDate = (startTime) => {
         } else {
             const hours = Math.floor(leave1 / (3600 * 1000));
             if (hours > 0) {
-                return hours + '小时前';
+                return hours + seiIntl.get({key: 'flow_000227', desc: '小时前'});
             }
         }
         //计算相差分钟数
         const leave2 = leave1 % (3600 * 1000);        //计算小时数后剩余的毫秒数
         const minutes = Math.floor(leave2 / (60 * 1000));
-        return minutes + '分钟前';
+        return minutes + seiIntl.get({key: 'flow_000228', desc: '分钟前'});
     }
 }
 //分页查询参数转换
@@ -542,7 +543,7 @@ export const checkInputCode = () => {
 export const checkCode = (rule, value, callback) => {
   const reg = /[^\x00-\xff]/g;
   if (value&&reg.test(value)) {
-    callback("不能输入中文字符");
+    callback(seiIntl.get({key: 'flow_000229', desc: '不能输入中文字符'}));
     return false;
   }
   callback();

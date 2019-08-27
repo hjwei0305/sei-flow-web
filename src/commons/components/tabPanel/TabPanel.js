@@ -6,7 +6,8 @@
 import React, {Component} from 'react';
 import {Dropdown, Menu, Tabs} from "antd";
 import {getUserInfo, isLocalhost} from "../../utils/CommonUtils";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const TabPane = Tabs.TabPane;
 
 class TabPanel extends Component {
@@ -135,22 +136,22 @@ class TabPanel extends Component {
     operateMenu = (pane) => {
         let menus = [
             <Menu.Item key="0" onClick={()=>this.refreshTab(pane.id)}>
-                <span>刷新</span>
+                <span>{seiIntl.get({key: 'flow_000252', desc: '刷新'})}</span>
             </Menu.Item>,
             <Menu.Divider key="split"/>
         ];
         if(pane && pane.closable){
             menus.push(
                 <Menu.Item key="1" onClick={()=>this.closeTab("current",pane)}>
-                    <a href="#">关闭</a>
+                    <a href="#">{seiIntl.get({key: 'flow_000253', desc: '关闭'})}</a>
                 </Menu.Item>
             );
         }
         return (
             <Menu>
                 {menus}
-                <Menu.Item key="2" onClick={()=>this.closeTab("other",pane)}>关闭其他</Menu.Item>
-                <Menu.Item key="3" onClick={()=>this.closeTab("all")}>关闭所有</Menu.Item>
+                <Menu.Item key="2" onClick={()=>this.closeTab("other",pane)}>{seiIntl.get({key: 'flow_000254', desc: '关闭其他'})}</Menu.Item>
+                <Menu.Item key="3" onClick={()=>this.closeTab("all")}>{seiIntl.get({key: 'flow_000255', desc: '关闭所有'})}</Menu.Item>
             </Menu>
         );
     }

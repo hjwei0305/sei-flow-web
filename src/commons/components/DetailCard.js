@@ -7,7 +7,8 @@
 import React from 'react';
 import { Card,Icon } from 'antd';
 import PropTypes from 'prop-types';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 
 class DetailCard extends React.Component {
 

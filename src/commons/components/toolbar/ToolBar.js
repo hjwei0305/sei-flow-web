@@ -10,7 +10,8 @@ import UploadFile from "../UploadFile";
 import AdvanceSearchModal from "./AdvanceSearchModal";
 import "./index.css"
 import {formItemLayout, getComponent, getDecoratorProps} from "./formConfigUtil";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 class ToolBar extends Component {
     state = {
         visible: false
@@ -62,7 +63,7 @@ class ToolBar extends Component {
                                                 this.getColItem(item)
                                             ))
                                         }
-                                        <Button type="primary" onClick={()=> this.handleSearch(item)}>查询</Button>
+                                        <Button type="primary" onClick={()=> this.handleSearch(item)}>{seiIntl.get({key: 'flow_000250', desc: '查询'})}</Button>
                                     </Form>);
                             default:
                                 return (<Button key={i} {...item.propsCfg}>{item.title}</Button>);

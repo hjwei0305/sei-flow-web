@@ -10,7 +10,8 @@ import {cache} from "../commons/utils/CommonUtils";
 import {_loginUrl} from "./DefaultConfig";
 import queryString from "query-string";
 import {Spin} from 'antd';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 
 class PrivateRoute extends Component {
     constructor(props){
@@ -62,7 +63,7 @@ class PrivateRoute extends Component {
                 render={props =>
                     this.state.hasToken?
                         <Component {...props} /> :
-                        <Spin tip="加载中..." wrapperClassName={"spin"}/>
+                        <Spin tip="{seiIntl.get({key: 'flow_000000', desc: '加载中'})}..." wrapperClassName={"spin"}/>
                 }
             />
         )

@@ -8,7 +8,8 @@ import {hide, show} from "../../configs/SharedReducer";
 import connect from "react-redux/es/connect/connect";
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const DirectoryTree = Tree.DirectoryTree;
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -208,13 +209,13 @@ class StandardTree extends Component {
     const data = [...this.state.dadaSource];
     let dragNode = getNodeByKey(data, dragKey);
     if (!dragNode.parentId) {
-      message.error("无法移动根节点！");
+      message.error(seiIntl.get({key: 'flow_000230', desc: '无法移动根节点！'}));
       return;
     }
     let node = getNodeByKey(data, dropKey);
     if (info.dropToGap) {
       if (!node.parentId) {
-        message.error("无法将节点设置为根节点！");
+        message.error(seiIntl.get({key: 'flow_000231', desc: '无法将节点设置为根节点！'}));
         return;
       } else {
         params = {nodeId: dragKey, targetParentId: node.parentId};
@@ -226,13 +227,13 @@ class StandardTree extends Component {
     if (this.props.moveService) {
       this.props.moveService(params).then((result) => {
         if (result.status === "SUCCESS") {
-          message.success(result.message ? result.message : "移动成功");
+          message.success(result.message ? result.message : seiIntl.get({key: 'flow_000232', desc: '移动成功'}));
           // 更新本地树,有时后台获取的数据格式不一样，交给外层处理
           if (this.props.initService) {
             this.props.initService()
           }
         } else {
-          message.error(result.message ? result.message : "移动失败")
+          message.error(result.message ? result.message : seiIntl.get({key: 'flow_000233', desc: '移动失败'}))
         }
       }).catch(err => {
       }).finally(() => {
@@ -251,7 +252,7 @@ class StandardTree extends Component {
           <div className={'tbar-search-box'}>
             <Search
               key="search"
-              placeholder="输入名称查询"
+              placeholder={seiIntl.get({key: 'flow_000234', desc: '输入名称查询'})}
               onSearch={e => this.handleSearch(e)}
               style={{width: 220}}
               allowClear

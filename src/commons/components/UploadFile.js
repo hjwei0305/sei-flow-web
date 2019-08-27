@@ -5,7 +5,8 @@ import httpUtils from "../utils/FeatchUtils";
 import PropTypes from 'prop-types';
 import './upload.css'
 import * as fileIcon from "./fileIcon";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 class UploadFile extends React.Component {
 
     entityId = null;
@@ -121,7 +122,7 @@ class UploadFile extends React.Component {
             this.setState({fileList, completeUploadFile});
         }else{
             this.handleRemove(file)
-            message.warn("最大可以传 50M 文件")
+            message.warn("{seiIntl.get({key: 'flow_000235', desc: '最大可以传'})} 50M {seiIntl.get({key: 'flow_000236', desc: '文件'})}")
         }
     }
 
@@ -189,13 +190,13 @@ class UploadFile extends React.Component {
             ||item.name.toLocaleLowerCase().includes("docx")||item.name.toLocaleLowerCase().includes("jpg")
             ||item.name.toLocaleLowerCase().includes("png"));
         if(flag){
-            actions.push(<a target="_blank" href={item.thumbUrl}>预览</a>)
+            actions.push(<a target="_blank" href={item.thumbUrl}>{seiIntl.get({key: 'flow_000237', desc: '预览'})}</a>)
         }
         if(this.props.download !== false){
-            actions.push(<a target="_blank" href={item.url}>下载</a>)
+            actions.push(<a target="_blank" href={item.url}>{seiIntl.get({key: 'flow_000238', desc: '下载'})}</a>)
         }
         if(this.props.type !== 'show'&& !this.props.disabled){
-            actions.push(<a target="_blank" onClick={() => this.handleRemove(item)}>删除</a>)
+            actions.push(<a target="_blank" onClick={() => this.handleRemove(item)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>)
         }
         return actions;
     }
@@ -210,7 +211,7 @@ class UploadFile extends React.Component {
                         {item.status === 'done'?<List.Item.Meta
                             avatar={<Avatar src={this.getIcon(item.name,item.response[0])}/>}
                             title={item.name}
-                            description={item.uploadedTime?`上传时间：${item.uploadedTime}`:null}
+                            description={item.uploadedTime?`{seiIntl.get({key: 'flow_000239', desc: '上传时间：'})}${item.uploadedTime}`:null}
                         />:null}
                     </Skeleton>
                     </List.Item>
@@ -229,19 +230,19 @@ class UploadFile extends React.Component {
                     }
                 })
                 if(!flag){
-                    message.warn(`只能上传:${this.props.accessType}`)
+                    message.warn(`{seiIntl.get({key: 'flow_000240', desc: '只能上传'})}:${this.props.accessType}`)
                     reject(file,fileList)
                 }
             }
             if(file.size===0){
-                message.warn("不能上传空文件")
+                message.warn(seiIntl.get({key: 'flow_000241', desc: '不能上传空文件'}))
                 reject(file,fileList)
             }else{
                 let maxSize =  this.props.maxSize||10
                 if(maxSize > file.size/1024/1024){
                     resolve(file,fileList)
                 }else{
-                    message.warn("最大上传文件大小为:"+maxSize+"MB")
+                    message.warn("{seiIntl.get({key: 'flow_000242', desc: '最大上传文件大小为'})}:"+maxSize+"MB")
                     reject(file,fileList)
                 }
             }
@@ -251,7 +252,7 @@ class UploadFile extends React.Component {
 
     render() {
         const uploadButton = (
-            this.props.type !== 'show' ? <Button type='dashed'><Icon type="plus"/>选择文件</Button> : null
+            this.props.type !== 'show' ? <Button type='dashed'><Icon type="plus"/>{seiIntl.get({key: 'flow_000243', desc: '选择文件'})}</Button> : null
         );
 
         return (
@@ -264,7 +265,7 @@ class UploadFile extends React.Component {
                 <Icon type="paper-clip" onClick={() => this.handleModalVisible(true)}/>
                 <span>{this.state.fileList.length}</span>
                 <Modal
-                    title={this.props.type !== 'show' ? '附件上传' : '附件列表'}
+                    title={this.props.type !== 'show' ? seiIntl.get({key: 'flow_000244', desc: '附件上传'}) : seiIntl.get({key: 'flow_000245', desc: '附件列表'})}
                     visible={this.state.modalVisible}
                     onPreview={this.onPreview}
                     onOk={() => this.handleOk(false)}

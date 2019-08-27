@@ -6,7 +6,8 @@
 import React, {Component} from "react"
 import {Col, Form, Modal, Row} from "antd"
 import {formItemLayout, getComponent, getDecoratorProps, getFormItems} from "./formConfigUtil";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const FormItem = Form.Item;
 class AdvanceSearchModal extends Component {
     handleSearch = () => {
@@ -25,7 +26,7 @@ class AdvanceSearchModal extends Component {
         return (
             <Modal
                 className={"advanceSearchModal"}
-                title={modalTitle||"高级查询"}
+                title={modalTitle||seiIntl.get({key: 'flow_000251', desc: '高级查询'})}
                 width={modalWidth||600}
                 maskClosable={false}
                 visible={visible}

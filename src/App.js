@@ -1,26 +1,35 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {connect} from 'react-redux'
 import Router from './configs/Router'
-import { Spin } from 'antd';
+import {Spin, LocaleProvider} from 'antd';
+import {seiLocale} from 'sei-utils';
 
-
+const {seiIntl} = seiLocale;
 
 class App extends Component {
-    render() {
-        return (
-            <Spin tip="加载中..." spinning={this.props.loadings} wrapperClassName={"spin"}>
-                <Router/>
-            </Spin>
-        );
-    }
+  render() {
+    const { antdLocale, loadings } = this.props;
+    return (
+      <LocaleProvider locale={antdLocale}>
+        <Spin
+          tip={seiIntl.get({key: 'loading', desc: '加载中...'})}
+          spinning={loadings}
+          wrapperClassName={"spin"}
+        >
+          <Router/>
+        </Spin>
+      </LocaleProvider>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        loadings: state.SharedReducer.loadings
-    }
+  return {
+    loadings: state.SharedReducer.loadings,
+    antdLocale: state.SharedReducer.antdLocale
+  }
 }
 
 export default connect(
-    mapStateToProps
+  mapStateToProps
 )(App)

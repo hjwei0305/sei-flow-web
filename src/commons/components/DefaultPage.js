@@ -8,7 +8,8 @@ import React from 'react';
 import { Pagination } from 'antd';
 import { defaultPageSize,defaultPageSizeOptions }from '../../configs/DefaultConfig';
 import PropTypes from 'prop-types';
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 class DefaultPage extends React.Component {
     constructor(props) {
         super(props);
@@ -50,7 +51,7 @@ class DefaultPage extends React.Component {
                     total={this.props.total}
                     defaultCurrent={1}
                     current={this.state.currentPage}
-                    showTotal={() => `共 ${this.props.total} 条`}/>
+                    showTotal={() => seiIntl.get({key: 'flow_000269', desc: '共{0}条'}, [this.props.total])}/>
             </div>
         )
     }

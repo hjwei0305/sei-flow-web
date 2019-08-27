@@ -6,7 +6,8 @@
 import React, {Component} from 'react'
 import {Form, Input, Modal, InputNumber} from 'antd';
 import {checkCode} from "../../../commons/utils/CommonUtils";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const FormItem = Form.Item;
 const {TextArea} = Input;
 
@@ -39,10 +40,10 @@ class EditBusinessModel2 extends Component {
 
     const {confirmLoading, modalVisible, handleOk, handleCancel, defaultValue, isAdd , orgInfo} = this.props;
     const {getFieldDecorator} = this.props.form;
-    let title = "编辑";
+    let title =seiIntl.get({key: 'flow_000031', desc: '编辑'});
     let FormValue = defaultValue;
     if (isAdd) {
-      title = "新增";
+      title =seiIntl.get({key: 'flow_000039', desc: '新增'});
       FormValue = {}
     }
     return (
@@ -67,7 +68,7 @@ class EditBusinessModel2 extends Component {
           </FormItem>
           <FormItem
             style={{display: "none"}}
-            label="组织机构ID">
+            label={seiIntl.get({key: 'flow_000141', desc: '组织机构ID'})}>
             {getFieldDecorator('orgId', {
               initialValue: FormValue.orgId ? FormValue.orgId : orgInfo.id,
             })(
@@ -76,7 +77,7 @@ class EditBusinessModel2 extends Component {
           </FormItem>
           <FormItem
             style={{display: "none"}}
-            label="组织机构code">
+            label={seiIntl.get({key: 'flow_000142', desc: '组织机构code'})}>
             {getFieldDecorator('orgCode', {
               initialValue: FormValue.orgCode ? FormValue.orgCode : orgInfo.code,
             })(
@@ -85,7 +86,7 @@ class EditBusinessModel2 extends Component {
           </FormItem>
           <FormItem
             style={{display: "none"}}
-            label="组织机构租户代码">
+            label={seiIntl.get({key: 'flow_000143', desc: '组织机构租户代码'})}>
             {getFieldDecorator('tenantCode', {
               initialValue: FormValue.tenantCode ? FormValue.tenantCode : orgInfo.tenantCode,
             })(
@@ -94,7 +95,7 @@ class EditBusinessModel2 extends Component {
           </FormItem>
           <FormItem
             style={{display: "none"}}
-            label="组织机构codePath">
+            label={seiIntl.get({key: 'flow_000144', desc: '组织机构codePath'})}>
             {getFieldDecorator('orgPath', {
               initialValue: FormValue.orgPath ? FormValue.orgPath : orgInfo.codePath,
             })(
@@ -103,10 +104,10 @@ class EditBusinessModel2 extends Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="组织机构">
+            label={seiIntl.get({key: 'flow_000126', desc: '组织机构'})}>
             {getFieldDecorator('orgName', {
               initialValue: FormValue.orgName ? FormValue.orgName : orgInfo.name,
-              rules: [{required: false, message: '请输入代码!',whitespace:true},{max:20,message:'不超过20个字符！'}]
+              rules: [{required: false, message: seiIntl.get({key: 'flow_000094', desc: '请输入代码!'}),whitespace:true},{max:20,message:seiIntl.get({key: 'flow_000145', desc: '不超过20个字符！'})}]
             })(
               <Input disabled={true}/>
             )}
@@ -114,27 +115,27 @@ class EditBusinessModel2 extends Component {
 
           <FormItem
             {...formItemLayout}
-            label="业务名称">
+            label={seiIntl.get({key: 'flow_000133', desc: '业务名称'})}>
             {getFieldDecorator('name', {
               initialValue: FormValue.name ? FormValue.name : "",
-              rules: [{required: true, message: '请填写名称!',whitespace:true}]
+              rules: [{required: true, message: seiIntl.get({key: 'flow_000042', desc: '请填写名称!'}),whitespace:true}]
             })(
               <Input/>
             )}
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="申请说明">
+            label={seiIntl.get({key: 'flow_000134', desc: '申请说明'})}>
             {getFieldDecorator('applyCaption', {
               initialValue: FormValue.applyCaption ? FormValue.applyCaption : "",
-              rules: [{required: true, message: '请填写申请说明!',whitespace:true}]
+              rules: [{required: true, message: seiIntl.get({key: 'flow_000146', desc: '请填写申请说明!'}),whitespace:true}]
             })(
               <Input/>
             )}
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="单价">
+            label={seiIntl.get({key: 'flow_000138', desc: '单价'})}>
             {getFieldDecorator('unitPrice', {
               initialValue: FormValue.unitPrice ? FormValue.unitPrice : "",
               rules: [{validator:checkCode}]
@@ -144,7 +145,7 @@ class EditBusinessModel2 extends Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="数量">
+            label={seiIntl.get({key: 'flow_000139', desc: '数量'})}>
             {getFieldDecorator('count', {
               initialValue: FormValue.count ? FormValue.count : "",
               rules: [{validator:checkCode}]
@@ -153,7 +154,7 @@ class EditBusinessModel2 extends Component {
             )}
           </FormItem>
           <FormItem
-            label="备注说明"
+            label={seiIntl.get({key: 'flow_000147', desc: '备注说明'})}
             labelCol={{span: 7}}
             wrapperCol={{span: 14}}>
             {getFieldDecorator('workCaption', {

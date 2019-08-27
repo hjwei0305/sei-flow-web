@@ -8,7 +8,8 @@ import {Form, Input, Modal,Row} from 'antd';
 import SearchTable from "../../../commons/components/SearchTable";
 import {businessModelConfig} from "../../../configs/CommonComponentsConfig";
 import {checkCode} from "../../../commons/utils/CommonUtils";
-
+import { seiLocale } from 'sei-utils';
+const { seiIntl } = seiLocale;
 const FormItem = Form.Item;
 const {TextArea} = Input;
 
@@ -41,10 +42,10 @@ class FlowTypeModal extends Component {
 
         const {confirmLoading, modalVisible, handleOk, handleCancel, defaultValue, isAdd} = this.props;
         const {getFieldDecorator} = this.props.form;
-        let title = "编辑";
+        let title =seiIntl.get({key: 'flow_000031', desc: '编辑'});
         let FormValue = defaultValue;
         if (isAdd) {
-            title = "新增";
+            title =seiIntl.get({key: 'flow_000039', desc: '新增'});
             FormValue = {}
         }
         return (
@@ -69,37 +70,37 @@ class FlowTypeModal extends Component {
                   </FormItem></Row>
                   <Row><FormItem
                     {...formItemLayout}
-                    label="业务实体">
+                    label={seiIntl.get({key: 'flow_000054', desc: '业务实体'})}>
                     {getFieldDecorator('businessModel.id', {
                       initialValue: FormValue.businessModel ? FormValue.businessModel.id : "",
-                      rules: [{required: true, message: '请选择业务实体!'}]
+                      rules: [{required: true, message: seiIntl.get({key: 'flow_000093', desc: '请选择业务实体!'})}]
                     })(
                       <SearchTable config={businessModelConfig} initValue={false}/>
                     )}
                   </FormItem></Row>
                   <Row><FormItem
                     {...formItemLayout}
-                    label="代码">
+                    label={seiIntl.get({key: 'flow_000021', desc: '代码'})}>
                     {getFieldDecorator('code', {
                       initialValue: FormValue.code ? FormValue.code : "",
-                      rules: [{required: true, message: '请输入代码!',whitespace:true},{validator:checkCode}]
+                      rules: [{required: true, message: seiIntl.get({key: 'flow_000094', desc: '请输入代码!'}),whitespace:true},{validator:checkCode}]
                     })(
                       <Input/>
                     )}
                   </FormItem></Row>
                   <Row><FormItem
                     {...formItemLayout}
-                    label="名称">
+                    label={seiIntl.get({key: 'flow_000022', desc: '名称'})}>
                     {getFieldDecorator('name', {
                       initialValue: FormValue.name ? FormValue.name : "",
-                      rules: [{required: true, message: '请填写名称!',whitespace:true}]
+                      rules: [{required: true, message: seiIntl.get({key: 'flow_000042', desc: '请填写名称!'}),whitespace:true}]
                     })(
                       <Input/>
                     )}
                   </FormItem></Row>
                   <Row><FormItem
                     {...formItemLayout}
-                    label="提交任务地址">
+                    label={seiIntl.get({key: 'flow_000095', desc: '提交任务地址'})}>
                     {getFieldDecorator('completeTaskServiceUrl', {
                       initialValue: FormValue.completeTaskServiceUrl ? FormValue.completeTaskServiceUrl : "",
                     })(
@@ -108,7 +109,7 @@ class FlowTypeModal extends Component {
                   </FormItem></Row>
                   <Row><FormItem
                     {...formItemLayout}
-                    label="表单明细URL">
+                    label={seiIntl.get({key: 'flow_000096', desc: '表单明细URL'})}>
                     {getFieldDecorator('businessDetailServiceUrl', {
                       initialValue: FormValue.businessDetailServiceUrl ? FormValue.businessDetailServiceUrl : "",
                     })(
@@ -117,7 +118,7 @@ class FlowTypeModal extends Component {
                   </FormItem></Row>
                   <Row><FormItem
                     {...formItemLayout}
-                    label="表单URL">
+                    label={seiIntl.get({key: 'flow_000097', desc: '表单URL'})}>
                     {getFieldDecorator('lookUrl', {
                       initialValue: FormValue.lookUrl ? FormValue.lookUrl : "",
                     })(
@@ -126,10 +127,10 @@ class FlowTypeModal extends Component {
                   </FormItem></Row>
                   <Row><FormItem
                     {...formItemLayout}
-                    label="描述">
+                    label={seiIntl.get({key: 'flow_000037', desc: '描述'})}>
                     {getFieldDecorator('depict', {
                       initialValue: FormValue.depict ? FormValue.depict : "",
-                      rules: [{required: true, message: '请填写描述!'}]
+                      rules: [{required: true, message: seiIntl.get({key: 'flow_000044', desc: '请填写描述!'})}]
                     })(
                       <TextArea rows={4} autosize={false}/>
                     )}
