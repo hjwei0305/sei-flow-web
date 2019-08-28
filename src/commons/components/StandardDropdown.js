@@ -57,11 +57,11 @@ class StandardDropdown extends Component {
     //render之后所有外层的type都不是CheckAuth了，这里过滤掉没有权限的小白块
       let menuRender=[];
       {menuData.map((item, i) => {
-          if(item.type&&item.type.name!=='CheckAuth'){
+          // if(item.type&&item.type.name!=='CheckAuth'){
               menuRender.push(<Menu.Item key={"menu" + i}>
                   {item}
               </Menu.Item>)
-          }
+          // }
       })}
       // console.log('menuRender--',menuRender);
     return menuRender.length? <Menu>{menuRender}</Menu>:null
