@@ -16,15 +16,16 @@ class StandardDropdown extends Component {
     super(props);
     this.state = {};
   }
+
   getVisibleOperaters = () => {
     let visibleOperaters = [];
     const {operator} = this.props;
     if (operator){
       operator.map(item=>{
-        if (item.props.operateCode&&item.props.children){
-          visibleOperaters.push(item)
-        }else if(!item.operateCode){
-          visibleOperaters.push(item)
+        if (item.props.operateCode&&item.type&&item.type.name==='CheckAuth'&&item.props.children){
+            visibleOperaters.push(item)
+        }else if(!item.props.operateCode){
+            visibleOperaters.push(item)
         }
       });
     }
@@ -51,22 +52,27 @@ class StandardDropdown extends Component {
     } else {
       menuData = visibleOperaters.slice(2, visibleOperaters.length);
     }
-    return <Menu>
+      console.log('menuData--',menuData);
+    //render之后所有外层的type都不是CheckAuth了，这里过滤掉没有权限的小白块
+      let menuRender=[];
       {menuData.map((item, i) => {
-        return <Menu.Item key={"menu" + i}>
-          {item}
-        </Menu.Item>
+          if(item.type&&item.type.name!=='CheckAuth'){
+              menuRender.push(<Menu.Item key={"menu" + i}>
+                  {item}
+              </Menu.Item>)
+          }
       })}
-    </Menu>
+      // console.log('menuRender--',menuRender);
+    return menuRender.length? <Menu>{menuRender}</Menu>:null
   };
 
   render() {
     const {operator, overlay} = this.props;
     let visibleOperaters=this.getVisibleOperaters();
     return (
-      <div style={{textAlign: "center"}}>
+      <div style={{textAlign: "left"}}>
         {this.getOverFlow()}
-        {(!overlay && visibleOperaters.length > 2) || (overlay && visibleOperaters.length > overlay) ?
+        {this.getMenu() ?
           <Dropdown overlay={this.getMenu()}>
             <a className="ant-dropdown-link">
               ...
