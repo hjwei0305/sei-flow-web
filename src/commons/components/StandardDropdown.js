@@ -22,11 +22,11 @@ class StandardDropdown extends Component {
     const {operator} = this.props;
     if (operator){
       operator.map(item=>{
-        if (item.props.operateCode&&item.type&&item.type.name==='CheckAuth'&&item.props.children){
-            visibleOperaters.push(item)
-        }else if(!item.props.operateCode){
-            visibleOperaters.push(item)
-        }
+          if (item.props.operateCode&&item.props.children){
+              visibleOperaters.push(item)
+          }else if(!item.operateCode){
+              visibleOperaters.push(item)
+          }
       });
     }
      return visibleOperaters
@@ -40,6 +40,7 @@ class StandardDropdown extends Component {
     } else if (!overlay && visibleOperaters.length > 2) {
       overData = visibleOperaters.slice(0, 2);//没配置overlay时默认展开两个item
     }
+      // console.log('overData--',overData);
     return overData
   };
 
@@ -52,7 +53,7 @@ class StandardDropdown extends Component {
     } else {
       menuData = visibleOperaters.slice(2, visibleOperaters.length);
     }
-      console.log('menuData--',menuData);
+      // console.log('menuData--',menuData);
     //render之后所有外层的type都不是CheckAuth了，这里过滤掉没有权限的小白块
       let menuRender=[];
       {menuData.map((item, i) => {
