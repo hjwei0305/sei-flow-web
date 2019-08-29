@@ -7,7 +7,7 @@
 
 import React, {Component} from 'react';
 import {Menu, Dropdown} from "antd";
-
+import propTypes from 'prop-types';
 
 const SubMenu = Menu.SubMenu;
 
@@ -16,16 +16,16 @@ class StandardDropdown extends Component {
     super(props);
     this.state = {};
   }
+
   getVisibleOperaters = () => {
     let visibleOperaters = [];
     const {operator} = this.props;
     if (operator){
       operator.map(item=>{
-        if (item.props.operateCode&&item.props.children){
-          visibleOperaters.push(item)
-        }else if(!item.operateCode){
-          visibleOperaters.push(item)
-        }
+          //只显示配置了权限和不需要权限的按钮
+          if((item.props.operateCode&&this.checkAuth(item.props.operateCode))||!item.props.operateCode){
+              visibleOperaters.push(item)
+          }
       });
     }
      return visibleOperaters
@@ -51,22 +51,27 @@ class StandardDropdown extends Component {
     } else {
       menuData = visibleOperaters.slice(2, visibleOperaters.length);
     }
-    return <Menu>
-      {menuData.map((item, i) => {
-        return <Menu.Item key={"menu" + i}>
-          {item}
-        </Menu.Item>
-      })}
-    </Menu>
-  };
 
+    return menuData.length? <Menu>{menuData.map((item, i) => {
+        return <Menu.Item key={"menu" + i}>
+            {item}
+        </Menu.Item>
+    })}</Menu>:null
+  };
+    checkAuth = (operateCode) => {
+        const {operateAuthority} = this.context;
+
+        if (operateAuthority === 'admin' || (Array.isArray(operateAuthority) && operateAuthority.includes(operateCode))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
   render() {
-    const {operator, overlay} = this.props;
-    let visibleOperaters=this.getVisibleOperaters();
     return (
-      <div style={{textAlign: "center"}}>
+      <div style={{textAlign: "left"}}>
         {this.getOverFlow()}
-        {(!overlay && visibleOperaters.length > 2) || (overlay && visibleOperaters.length > overlay) ?
+        {this.getMenu() ?
           <Dropdown overlay={this.getMenu()}>
             <a className="ant-dropdown-link">
               ...
@@ -77,5 +82,7 @@ class StandardDropdown extends Component {
   }
 }
 
-
+StandardDropdown.contextTypes = {
+    operateAuthority: propTypes.any
+};
 export default StandardDropdown

@@ -29,7 +29,7 @@ class AnyOneSelected extends Component {
     //原有执行人不能移除
     for (let data of this.state.oldExecutorData) {
       if (rows.findIndex(item => item.id === data.id) > -1) {
-        message.warn(seiIntl.get({key: 'flow_000188', desc: '不能移除原有执行人！【'}) + data.userName + '】');
+        message.warn(seiIntl.get({key: 'flow_000188', desc: '不能移除原有执行人！【{0}】'}, [data.userName]));
         return;
       }
       continue;

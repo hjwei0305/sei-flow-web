@@ -115,7 +115,7 @@ class FlowInstanceTable extends Component {
     let thiz = this;
     confirm({
       title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
-      content: `{seiIntl.get({key: 'flow_000099', desc: '您确定要强制终止【'})}${record.businessCode}{seiIntl.get({key: 'flow_000100', desc: '】吗？'})}`,
+      content: seiIntl.get({key: 'flow_000099', desc: '您确定要强制终止【{0}】吗？'}, [record.businessCode]),
       onOk: () => {
         thiz.props.show();
         endForce(record.id).then(res=>{

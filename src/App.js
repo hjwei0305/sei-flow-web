@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <LocaleProvider locale={antdLocale}>
         <Spin
-          tip={seiIntl.get({key: 'loading', desc: '加载中...'})}
+          tip={seiIntl.get({key: 'flow_000000', desc: '加载中...'})}
           spinning={loadings}
           wrapperClassName={"spin"}
         >
