@@ -1,4 +1,5 @@
 export  default {
+  "organizationName": '部门',
   "flow_000000":"加载中",
   "flow_000001":"组件测试Demo",
   "flow_000002":"登陆",

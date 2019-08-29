@@ -94,7 +94,10 @@ class AnyOneSelected extends Component {
             }, {
                 title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
                 dataIndex: "userName",
-            }
+            }, {
+                title: seiIntl.get({key: 'organizationName', desc: '部门'}),
+                dataIndex: "organization.name",
+          }
         ];
         return (
             <TransferTable
