@@ -7,7 +7,7 @@
 
 import React, {Component} from 'react';
 import {Menu, Dropdown} from "antd";
-
+import propTypes from 'prop-types';
 
 const SubMenu = Menu.SubMenu;
 
@@ -22,9 +22,8 @@ class StandardDropdown extends Component {
     const {operator} = this.props;
     if (operator){
       operator.map(item=>{
-          if (item.props.operateCode&&item.props.children){
-              visibleOperaters.push(item)
-          }else if(!item.operateCode){
+          //只显示配置了权限和不需要权限的按钮
+          if((item.props.operateCode&&this.checkAuth(item.props.operateCode))||!item.props.operateCode){
               visibleOperaters.push(item)
           }
       });
@@ -40,7 +39,6 @@ class StandardDropdown extends Component {
     } else if (!overlay && visibleOperaters.length > 2) {
       overData = visibleOperaters.slice(0, 2);//没配置overlay时默认展开两个item
     }
-      // console.log('overData--',overData);
     return overData
   };
 
@@ -53,23 +51,23 @@ class StandardDropdown extends Component {
     } else {
       menuData = visibleOperaters.slice(2, visibleOperaters.length);
     }
-      // console.log('menuData--',menuData);
-    //render之后所有外层的type都不是CheckAuth了，这里过滤掉没有权限的小白块
-      let menuRender=[];
-      {menuData.map((item, i) => {
-          // if(item.type&&item.type.name!=='CheckAuth'){
-              menuRender.push(<Menu.Item key={"menu" + i}>
-                  {item}
-              </Menu.Item>)
-          // }
-      })}
-      // console.log('menuRender--',menuRender);
-    return menuRender.length? <Menu>{menuRender}</Menu>:null
-  };
 
+    return menuData.length? <Menu>{menuData.map((item, i) => {
+        return <Menu.Item key={"menu" + i}>
+            {item}
+        </Menu.Item>
+    })}</Menu>:null
+  };
+    checkAuth = (operateCode) => {
+        const {operateAuthority} = this.context;
+
+        if (operateAuthority === 'admin' || (Array.isArray(operateAuthority) && operateAuthority.includes(operateCode))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
   render() {
-    const {operator, overlay} = this.props;
-    let visibleOperaters=this.getVisibleOperaters();
     return (
       <div style={{textAlign: "left"}}>
         {this.getOverFlow()}
@@ -84,5 +82,7 @@ class StandardDropdown extends Component {
   }
 }
 
-
+StandardDropdown.contextTypes = {
+    operateAuthority: propTypes.any
+};
 export default StandardDropdown
