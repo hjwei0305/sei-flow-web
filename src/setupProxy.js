@@ -8,5 +8,6 @@ const proxy = require('http-proxy-middleware');
 module.exports = function (app) {
     app.use(proxy('/basic-service/', {target: 'http://dsei.changhong.com/api-gateway', changeOrigin: true}));
     app.use(proxy('/flow-service/', {target: 'http://dsei.changhong.com/api-gateway', changeOrigin: true}));
-    app.use(proxy('/auth-service/', {target: 'http://dsei.changhong.com', changeOrigin: true}))
+    app.use(proxy('/auth-service/', {target: 'http://dsei.changhong.com', changeOrigin: true}));
+    app.use(proxy('/flow-web/', {target: 'http://dsei.changhong.com', changeOrigin: true}));
 }

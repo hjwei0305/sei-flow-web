@@ -10,6 +10,7 @@ export const baseUrl ="/flow-service";
 export const basicAuthor = "/auth-service";
 export const uploadUrl = "";
 export const flowDefUrl=host+"/flow-web/design";
+export const flowDefUrlNew="/react-flow-web";
 
 export const defaultPageSize = 15;
 export const rowGutter = 20;
