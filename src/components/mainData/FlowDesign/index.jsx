@@ -37,10 +37,13 @@ export default class index extends React.Component {
   }
 
   render() {
+    const style = {
+        fontSize: '14px',
+    }
     return (
       <React.Fragment>
-        <div id="content"></div>
-        <div id="moreinfo"></div>
+        <div id="content" style={style}></div>
+        <div id="moreinfo" style={style}></div>
       </React.Fragment>
     );
   }

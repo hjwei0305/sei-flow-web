@@ -20,6 +20,7 @@ const FlowDefinationViewNew = lazy(() => import('../components/mainData/FlowDefi
 const DefinaionPage = lazy(() => import('../components/mainData/FlowDefination/DefinaionPage'));
 const FlowDesign = lazy(() => import('../components/mainData/FlowDesign'));
 const FlowLook = lazy(() => import('../components/mainData/FlowLook'));
+const ConfigUser = lazy(() => import('../components/mainData/ConfigUser'));
 const FlowInstanceTable = lazy(() => import('../components/mainData/FlowInstance/FlowInstanceTable'));
 const TurnToDoTable = lazy(() => import('../components/mainData/TurnToDo/TurnToDoTable'));
 const AddSignTable = lazy(() => import('../components/mainData/AddSign/AddSignTable'));
@@ -51,6 +52,7 @@ export default class Routers extends Component {
             <Route path='/DefinaionPage' component={DefinaionPage}/>
             <Route path='/show' component={FlowDesign}/>
             <Route path='/showLook' component={FlowLook}/>
+            <Route path='/configUser' component={ConfigUser}/>
             {/*流程监管*/}
             <Route path='/FlowInstanceTable' component={FlowInstanceTable}/>
             <Route path='/PushFlowTaskTable' component={PushFlowTaskTable}/>
