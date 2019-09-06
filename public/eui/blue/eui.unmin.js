@@ -609,10 +609,9 @@ EUI.apply(EUI.data.Store.prototype, {
         this.transParams(g);
         let tempUrl = g.url;
         /** 拼接参数到url地址 */
-        if (g.isUrlParam && g.params) {
+        if (g.isUrlParam && g.params && g.postType !== 'json' ) {
           tempUrl = g.url+'?' + Object.toFormValue(g.params, true);
         }
-
         $.ajax({
             url: tempUrl,
             type: g.type,

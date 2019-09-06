@@ -77,12 +77,14 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
             msg: "正在获取数据，请稍候..."
         });
         EUI.Store({
-            url:  _ctxPath + "/flowClient/getExecutorsByExecutorsVos",
+            url:  _ctxPath + "/flowTask/getExecutorsByExecutorsVos",
             params: {
                 requestExecutorsVos: JSON.stringify(requestExecutorsVos),
                 businessModelCode: this.businessModelCode,
                 businessId: this.businessId
             },
+            postType: 'json',
+            isUrlParam: false,
             success: function (status) {
                 mask.remove();
                 if (status.success) {

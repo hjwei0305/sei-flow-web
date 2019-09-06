@@ -424,7 +424,9 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
             msg: "正在处理中,请稍候..."
         });
         EUI.Store({
-            url: _ctxPath + "/flowClient/saveSolidifyInfoByExecutorVos",
+            url: _ctxPath + "/flowSolidifyExecutor/saveSolidifyInfoByExecutorVos",
+            postType: 'json',
+            isUrlParam: false,
             params: {
                 businessModelCode: g.businessModelCode,
                 businessId: g.businessId,
@@ -441,48 +443,63 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
         });
     },
     startFlow: function(){
-        //parentThis跳转配置页面之前的页面实例
-        var g = this,parentThis = this.parentThis;;
+        var g = this;
         var mask = EUI.LoadMask({
             msg: "正在启动，请稍候..."
         });
-        var taskList="",task = [];
-        var data = parentThis.data.nodeInfoList;
-        for(var i=0;i<data.length;i++){
-            var item = data[i];
-             task.push({
-                 nodeId: item.id,
-                 userVarName: item.userVarName,
-                 flowTaskType: item.flowTaskType,
-                 callActivityPath: item.callActivityPath,
-                 solidifyFlow: true
-                 // instancyStatus: null,
-                 // userIds: null
-             });
-        }
-        taskList =JSON.stringify(task);
-        var typeId =  parentThis.typeId || parentThis.data.selectedType.id;
-        var flowDefKey = parentThis.flowDefKey || parentThis.data.selectedType.flowDefKey;
         EUI.Store({
-            url: "/flow-web/design/startFlow",
+            url: _ctxPath + "/defaultFlowBase/startFlowNew",
+            postType: 'json',
+            isUrlParam: false,
             params: {
                 businessKey: this.businessId,
                 businessModelCode: this.businessModelCode,
-                typeId: typeId,
-                flowDefKey: flowDefKey,
-                opinion: this.remark,//附加说明
-                taskList: this.ifPoolTask==="true" ? "anonymous" : taskList,
-                anonymousNodeId: this.ifPoolTask==="true" ? data.id : ""
+                typeId: this.typeId,
             },
-            success: function (res) {
-                mask.hide();
-                var status = {
-                    msg: "启动成功",
-                    success: true
-                };
-                EUI.ProcessStatus(status);
+            success: function (res1) {
+                var taskList="",task = [];
+                var data = res1.data.nodeInfoList;
+                var flowDefKey = res1.data.flowTypeList[0].flowDefKey;
+                for(var i=0;i<data.length;i++){
+                    var item = data[i];
+                     task.push({
+                         nodeId: item.id,
+                         userVarName: item.userVarName,
+                         flowTaskType: item.flowTaskType,
+                         callActivityPath: item.callActivityPath,
+                         solidifyFlow: true
+                     });
+                }
+                taskList =JSON.stringify(task);
+                EUI.Store({
+                    url: _ctxPath + "/defaultFlowBase/startFlowNew",
+                    postType: 'json',
+                    isUrlParam: false,
+                    params: {
+                        businessKey: g.businessId,
+                        businessModelCode: g.businessModelCode,
+                        typeId: g.typeId,
+                        flowDefKey: flowDefKey,
+                        opinion: g.remark,//附加说明
+                        taskList: g.ifPoolTask==="true" ? "anonymous" : taskList,
+                        anonymousNodeId: g.ifPoolTask==="true" ? data[0].id : ""
+                    },
+                    success: function (res2) {
+                        mask.hide();
+                        var status = {
+                            msg: "启动成功",
+                            success: true
+                        };
+                        EUI.ProcessStatus(status);
+                    },
+                    failure: function (response) {
+                        mask.hide();
+                        EUI.ProcessStatus(response);
+                    }
+                })
+
                // parentThis.afterSubmit && parentThis.afterSubmit(res);
-                g.refreshPage();
+                // g.refreshPage();
             },
             failure: function (response) {
                 mask.hide();
