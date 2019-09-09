@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Router from './configs/Router'
-import {Spin, LocaleProvider} from 'antd';
+import {Spin} from 'antd';
+import {LocaleProvider} from 'seid';
 import {seiLocale} from 'sei-utils';
 
 const {seiIntl} = seiLocale;
 
 class App extends Component {
   render() {
-    const { antdLocale, loadings } = this.props;
+    const { seidLocale, loadings } = this.props;
     return (
-      <LocaleProvider locale={antdLocale}>
+      <LocaleProvider locale={seidLocale}>
         <Spin
           tip={seiIntl.get({key: 'flow_000000', desc: '加载中...'})}
           spinning={loadings}
@@ -26,7 +27,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     loadings: state.SharedReducer.loadings,
-    antdLocale: state.SharedReducer.antdLocale
+    seidLocale: state.SharedReducer.seidLocale
   }
 }
 

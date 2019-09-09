@@ -25,10 +25,11 @@ function initLocalLocals() {
   return {
     antdLocale: locales.antd,
     momentLocale: locales.momentLocale,
+    seidLocale: locales.locale,
   };
 }
 
-const { antdLocale, momentLocale } = initLocalLocals();
+const { antdLocale, momentLocale, seidLocale } = initLocalLocals();
 
 const SHOW = 'SHOW';
 const HIDE = 'HIDE';
@@ -37,6 +38,7 @@ const defaultState = {
   loadings:false,
   antdLocale,
   momentLocale,
+  seidLocale,
 }
 export default function (state, action) {
   if (!state) {
