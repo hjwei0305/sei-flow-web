@@ -268,7 +268,7 @@ class TurnToDoTable extends Component {
             pageChange={this.pageChange}
           />
           <Modal
-            title={`{seiIntl.get({key: 'flow_000058', desc: '指定转办人'})}`}
+            title={seiIntl.get({key: 'flow_000058', desc: '指定转办人'})}
             bodyStyle={{maxHeight:"720px",overflow:"auto"}}
             width={window.innerWidth*0.8}
             visible={this.state.selectUserModal}
