@@ -309,3 +309,8 @@ div,span{
   white-space: nowrap;
   width: 180px;
 }
+
+.ant-form-item-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
