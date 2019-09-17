@@ -332,6 +332,15 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 name: "allowChooseInstancy"
             }]);
         }
+
+      if (this.type != 'CallActivity' ) {
+        items = items.concat([{
+          xtype: "CheckBox",
+          title: "单人单任务不选执行人",
+          name: "SinglePersonSingleTask"
+        }]);
+      }
+
         return {
             title: "常规",
             xtype: "FormPanel",
