@@ -447,8 +447,8 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       if (this.type != 'CallActivity' ) {
         items = items.concat([{
           xtype: "CheckBox",
-          title: "单人单任务不选执行人",
-          name: "SinglePersonSingleTask"
+          title: "单任务不选择执行人",
+          name: "singleTaskNoChoose"
         }]);
       }
 
