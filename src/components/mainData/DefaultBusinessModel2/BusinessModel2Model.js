@@ -1,5 +1,5 @@
 /**
- * @description 采购订单编辑弹窗
+ * @description 业务订单编辑弹窗
  * @author 何灿坤
  */
 

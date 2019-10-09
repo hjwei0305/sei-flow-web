@@ -1,5 +1,5 @@
 /**
- * @description 采购订单编辑弹窗
+ * @description 业务订单编辑弹窗
  * @author 何灿坤
  */
 
@@ -19,7 +19,7 @@ class BusinessModel2Detail extends Component {
       id = queryString.parse(window.location.search).id;
     }
     this.state = {
-      tabTitle: seiIntl.get({key: 'flow_000148', desc: '采购订单'}),
+      tabTitle: seiIntl.get({key: 'flow_000148', desc: '业务订单'}),
       id: id,
       showData:{}
     }

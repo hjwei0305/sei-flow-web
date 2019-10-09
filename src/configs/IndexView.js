@@ -27,10 +27,10 @@ export default class IndexView extends Component {
             <li><Link to='/TurnToDoTable'>{seiIntl.get({key: 'flow_000014', desc: '任意转办'})}</Link></li>
             <li><Link to='/AddSignTable'>{seiIntl.get({key: 'flow_000015', desc: '加签管理'})}</Link></li>
             <li><Link to='/SubtractTable'>{seiIntl.get({key: 'flow_000016', desc: '减签管理'})}</Link></li>
-            <h4>{seiIntl.get({key: 'flow_000017', desc: '通用单据（自测使用）：'})}</h4>
-            <li><Link to='/BusinessModel2View'>{seiIntl.get({key: 'flow_000018', desc: '采购单据'})}</Link></li>
-            <h4>{seiIntl.get({key: 'flow_000019', desc: '审批页面（自测使用）：'})}</h4>
-            <li><Link to='/defaultBusinessModel2/look'>{seiIntl.get({key: 'flow_000020', desc: '采购审批'})}</Link></li>
+            <h4>{seiIntl.get({key: 'flow_000017', desc: '通用单据（自测）：'})}</h4>
+            <li><Link to='/BusinessModel2View'>{seiIntl.get({key: 'flow_000018', desc: '业务单据'})}</Link></li>
+            <h4>{seiIntl.get({key: 'flow_000019', desc: '审批页面（自测）：'})}</h4>
+            <li><Link to='/defaultBusinessModel2/look'>{seiIntl.get({key: 'flow_000020', desc: '业务单据审批'})}</Link></li>
           </ul>
         </nav>
       </header>

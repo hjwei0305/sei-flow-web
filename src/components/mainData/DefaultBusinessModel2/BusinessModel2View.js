@@ -1,5 +1,5 @@
 /**
- * @description 采购单据
+ * @description 业务单据
  * @author 何灿坤
  */
 import {Component} from "react";
@@ -37,7 +37,7 @@ class BusinessModel2View extends Component {
       modalVisible: false,
       isAdd: false,
       operator: "add",
-      pathName: seiIntl.get({key: 'flow_000129', desc: '采购订单管理'}),
+      pathName: seiIntl.get({key: 'flow_000129', desc: '业务订单管理'}),
       historyKey:""
     }
   }
@@ -76,12 +76,12 @@ class BusinessModel2View extends Component {
       };
       this.listModel2(params);
       this.setState({
-        pathName: selectedNodes[0].name ? selectedNodes[0].name : seiIntl.get({key: 'flow_000129', desc: '采购订单管理'})
+        pathName: selectedNodes[0].name ? selectedNodes[0].name : seiIntl.get({key: 'flow_000129', desc: '业务订单管理'})
       });
     }
   };
 
-  //请求采购订单table
+  //请求业务订单table
   listModel2 = (param) => {
     this.setState({loading: true});
     listBusinessModel2(param).then((result) => {
