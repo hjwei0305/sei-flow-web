@@ -839,6 +839,9 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             }, {
                 title: "APP",
                 name: "APP"
+            }, {
+              title: "钉钉",
+              name: "DINGDING"
             }]
         }, {
             xtype: "Button",
