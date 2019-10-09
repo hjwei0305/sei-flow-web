@@ -834,15 +834,17 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 title: "邮件",
                 name: "EMAIL"
             }, {
-                title: "短信",
-                name: "SMS"
-            }, {
-                title: "APP",
-                name: "APP"
-            }, {
               title: "钉钉",
               name: "DINGDING"
-            }]
+            }
+            // , {
+            //     title: "短信",
+            //     name: "SMS"
+            // }, {
+            //     title: "APP",
+            //     name: "APP"
+            // }
+            ]
         }, {
             xtype: "Button",
             id: notifyType + "ChoosePositionBtn",
@@ -899,12 +901,17 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
                 title: "邮件",
                 name: "EMAIL"
             }, {
-                title: "短信",
-                name: "SMS"
-            }, {
-                title: "APP",
-                name: "APP"
-            }]
+              title: "钉钉",
+              name: "DINGDING"
+            }
+            // , {
+            //     title: "短信",
+            //     name: "SMS"
+            // }, {
+            //     title: "APP",
+            //     name: "APP"
+            // }
+            ]
         }, {
             xtype: "TextArea",
             width: 320,
