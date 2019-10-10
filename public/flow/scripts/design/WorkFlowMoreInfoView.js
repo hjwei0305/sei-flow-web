@@ -117,6 +117,11 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
                         name: "name",
                         field: ["id"]
                     }
+                }, {
+                    xtype: "CheckBox",
+                    title: "异步调用",
+                    labelFirst: false,
+                    name: "beforeStartServiceAync"
                 }]
             }, {
                 items: [{
@@ -164,6 +169,11 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
                         name: "name",
                         field: ["id"]
                     }
+                }, {
+                    xtype: "CheckBox",
+                    title: "异步调用",
+                    labelFirst: false,
+                    name: "beforeEndServiceAync"
                 }]
             }, {
                 items: [{
@@ -185,6 +195,11 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
                         name: "name",
                         field: ["id"]
                     }
+                }, {
+                    xtype: "CheckBox",
+                    title: "异步调用",
+                    labelFirst: false,
+                    name: "afterEndServiceAync"
                 }]
             }, {
                 items: [{
