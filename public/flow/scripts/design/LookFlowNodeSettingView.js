@@ -848,7 +848,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         }, {
             xtype: "Button",
             id: notifyType + "ChoosePositionBtn",
-            width: 85,
+            // width: 85,
             height: 25,
             title: "已选岗位(" + '<a class=' + notifyType + 'notifyChoosePositionNum>' + choosePositionNum + '</a>)',
             style: {
