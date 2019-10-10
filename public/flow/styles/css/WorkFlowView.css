@@ -718,7 +718,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .notify-user {
-    height: 40px;
+    /*height: 40px;*/
+    overflow: hidden;
     padding: 12px 12px 0;
 }
 
