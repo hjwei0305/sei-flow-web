@@ -62,7 +62,7 @@ export default class Routers extends Component {
             {/*通用单据（自测使用）*/}
             <Route path='/BusinessModel2View' component={BusinessModel2View}/>
             {/*审批页面（自测使用）*/}
-            <Route path='/defaultBusinessModel2/look' component={ApproveBusinessModel2}/>
+            <Route path='/builtInApprove/look' component={ApproveBusinessModel2}/>
           </Switch>
         </Suspense>
 
