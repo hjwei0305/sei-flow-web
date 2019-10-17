@@ -7,8 +7,9 @@ import SearchTable from "./SearchTable";
 import {searchListByKeyWithTag} from "../utils/CommonUtils";
 import StandardTree from "./StandardTree";
 import DetailCard from "./DetailCard";
-import { seiLocale } from 'sei-utils';
-const { seiIntl } = seiLocale;
+import {seiLocale} from 'sei-utils';
+
+const {seiIntl} = seiLocale;
 const FormItem = Form.Item;
 
 class TransferTable extends PureComponent {
@@ -74,7 +75,7 @@ class TransferTable extends PureComponent {
         searchListByKeyWithTag(res, {keyword: this.state.leftSearchValue}, searchLeftKey).then(data => {
           this.setState({leftData: data})
         })
-      }else {
+      } else {
         this.setState({leftData: res instanceof Array || res.rows ? res : []})
       }
     }).catch(err => {
@@ -213,6 +214,23 @@ class TransferTable extends PureComponent {
     })
   }
 
+  handleLeftDataDoubleClick = (record, index) => {
+    let params = {};
+    params.selectedKey = record.id;
+    let rows = [];
+    rows.push(record);
+    let rightDatas = this.state.rightData == null ? [] : this.state.rightData;
+    this.props.handleRightClick(rows, rightDatas).then(() => {
+      if (this.props.updateLeftByJointQueryService) {
+        this.doJointQueryService(this.state.selectedKey)
+        this.loadRightData(params);
+      } else {
+        this.loadLeftData(params);
+        this.loadRightData(params);
+      }
+    })
+  }
+
   handleLeftClick = () => {
     if (this.props.handleLeftClick) {
       let params = {};
@@ -223,6 +241,28 @@ class TransferTable extends PureComponent {
         params.includeSubNode = this.state.includeSubNode
       }
       this.props.handleLeftClick(this.state.rightRowsSelected, this.state.rightData).then(() => {
+        if (this.state.leftData.rows) {
+          params.quickSearchValue = this.state.leftSearchValue
+        }
+        if (this.props.updateLeftByJointQueryService) {
+          this.doJointQueryService(this.state.selectedKey)
+          this.loadRightData(params);
+        } else {
+          this.loadLeftData(params);
+          this.loadRightData(params);
+        }
+      })
+    }
+  }
+
+  handleRightDataDoubleClick = (record, index) => {
+    if (this.props.handleLeftClick) {
+      let params = {};
+      params.selectedKey = record.id;
+      let rows = [];
+      rows.push(record);
+      let rightDatas = this.state.rightData == null ? [] : this.state.rightData;
+      this.props.handleLeftClick(rows, rightDatas).then(() => {
         if (this.state.leftData.rows) {
           params.quickSearchValue = this.state.leftSearchValue
         }
@@ -365,7 +405,7 @@ class TransferTable extends PureComponent {
               <div className={'tbar-search-box'}>{leftSearch()}</div>
             </div>}
             {!this.state.beTree && <SimpleTable
-              onDoubleClick={this.props.leftDoubleClick}
+              onDoubleClick={this.handleLeftDataDoubleClick}
               checkBox={!this.props.radio}
               data={leftData.rows ? leftData : this.state.leftSearchValue ? leftData.filter(item => item.tag) : leftData}
               loading={this.state.leftLoading}
@@ -378,7 +418,7 @@ class TransferTable extends PureComponent {
             />}
             {this.state.beTree && <StandardTree
               key={"StandardTree1"}
-              selectedKeys={this.state.leftRowsSelected?this.state.leftRowsSelected.map(item=>item.id):[]}
+              selectedKeys={this.state.leftRowsSelected ? this.state.leftRowsSelected.map(item => item.id) : []}
               checkStrictly={true}
               checkable
               dadaSource={leftData}
@@ -414,7 +454,7 @@ class TransferTable extends PureComponent {
               <div className={'tbar-search-box'}>{rightSearch()}</div>
             </div>}
             {!this.state.beTree && <SimpleTable
-              onDoubleClick={this.props.rightDoubleClick}
+              onDoubleClick={this.handleRightDataDoubleClick}
               checkBox={!this.props.radio}
               heightY={this.props.heightY}
               style={{overflow: 'auto'}}
@@ -427,7 +467,7 @@ class TransferTable extends PureComponent {
             />}
             {this.state.beTree && <StandardTree
               key={"StandardTree2"}
-              selectedKeys={this.state.rightRowsSelected?this.state.rightRowsSelected.map(item=>item.id):[]}
+              selectedKeys={this.state.rightRowsSelected ? this.state.rightRowsSelected.map(item => item.id) : []}
               checkStrictly={true}
               checkable
               dadaSource={rightData}
