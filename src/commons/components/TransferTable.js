@@ -365,6 +365,7 @@ class TransferTable extends PureComponent {
               <div className={'tbar-search-box'}>{leftSearch()}</div>
             </div>}
             {!this.state.beTree && <SimpleTable
+              onDoubleClick={this.props.leftDoubleClick}
               checkBox={!this.props.radio}
               data={leftData.rows ? leftData : this.state.leftSearchValue ? leftData.filter(item => item.tag) : leftData}
               loading={this.state.leftLoading}
@@ -413,6 +414,7 @@ class TransferTable extends PureComponent {
               <div className={'tbar-search-box'}>{rightSearch()}</div>
             </div>}
             {!this.state.beTree && <SimpleTable
+              onDoubleClick={this.props.rightDoubleClick}
               checkBox={!this.props.radio}
               heightY={this.props.heightY}
               style={{overflow: 'auto'}}

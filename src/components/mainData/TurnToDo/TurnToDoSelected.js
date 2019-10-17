@@ -9,6 +9,20 @@ import { listAllOrgs, listAllUserByOrgId } from './TurnToDoService';
 import { seiLocale } from 'sei-utils';
 const { seiIntl } = seiLocale;
 class AnyOneSelected extends Component {
+  //删除分配,设置左右表格的值
+  handleLeftClick = async (rows, rightData) => {
+    let right = [];
+    //获取已分配的数组
+    for (let data of rightData) {
+      if (rows.findIndex(item => item.id === data.id) > -1) {
+        continue;
+      }
+      right.push(data);
+    }
+    this.setState({ rightData: right })
+
+  }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -16,20 +30,6 @@ class AnyOneSelected extends Component {
             rightData: null,
             orgId: null
         };
-    }
-
-    //删除分配,设置左右表格的值
-    handleLeftClick = async (rows, rightData) => {
-        let right = [];
-        //获取已分配的数组
-        for (let data of rightData) {
-            if (rows.findIndex(item => item.id === data.id) > -1) {
-                continue;
-            }
-            right.push(data);
-        }
-        this.setState({ rightData: right })
-
     }
 
     //插入分配,设置左右表格的值
@@ -104,6 +104,8 @@ class AnyOneSelected extends Component {
                 radio={this.props.type !== 'checkbox'}
                 onRef={ref => this.tranfer = ref}
                 style={{ background: "#fff" }}
+                leftDoubleClick={(record) => {this.handleRightClick(record,this.state.rightData)}}
+                rightDoubleClick={(record) => {this.handleLeftClick(record,this.state.rightData)}}
                 handleLeftClick={this.handleLeftClick.bind(this)}
                 handleRightClick={this.handleRightClick.bind(this)}
                 rightService={this.rightService.bind(this)}

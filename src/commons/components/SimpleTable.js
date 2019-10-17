@@ -388,9 +388,15 @@ class SimpleTable extends PureComponent {
           scroll={this.props.pagination === false ? {x: scrollX} : {y: scrollY ? scrollY : null, x: scrollX}}
           onRow={onRow || ((record, index) => {
             return {
-              onClick: () => {
+              onClick: () => {// 点击行
                 this.rowClick(record, index)
-              },       // 点击行
+              },
+              onDoubleClick: () => {   //双击行
+                const { onDoubleClick } = this.props;
+                if(onDoubleClick) {
+                  onDoubleClick(record, index)
+                }
+              }
             };
           })
           }
