@@ -1324,15 +1324,15 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       } else if (executorLength > 1) {
         var userTypeCmp = EUI.getCmp("userType");
         var userType = "";
-        if (this.data.executor[0].userType == "SelfDefinition") {
+        if (nodeConfig.executor[0].userType == "SelfDefinition") {
           userType = "PositionAndOrgAndSelfDefinition";
-        } else if (this.data.executor[0].userType == "PositionType") {
+        } else if (nodeConfig.executor[0].userType == "PositionType") {
           userType = "PositionTypeAndOrg";
         } else {
           userType = "PositionAndOrg";
         }
         userTypeCmp.setValue(userType);
-        this.showChooseUserGrid(userType, this.data.executor);
+        this.showChooseUserGrid(userType, nodeConfig.executor);
       }
       // else if (executorLength == 2) {
       //     var userTypeCmp = EUI.getCmp("userType");
