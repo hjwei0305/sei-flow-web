@@ -354,7 +354,22 @@ class SimpleTable extends PureComponent {
     const rowSelection = checkBox ? {
       selectedRowKeys,
       columnWidth: 62,
-      onChange: this.handleRowSelectChange,
+      onChange: (selectedRowKeys, selectedRows) => {
+        const {rowKey} = this.props;
+        let keys = this.state.selectedRowKeys;
+        let rows = this.state.selectedRows;
+        //因为反选不好处理，所以先清除掉之前对这一页选过的痕迹
+        this.state.filterData.map(record => {
+          if (keys.includes(record[rowKey || 'id'])) {
+            keys.splice(keys.indexOf(record[rowKey || 'id']), 1);
+            rows.splice(rows.indexOf(record[rowKey || 'id']), 1)
+          }
+        });
+        //重新加入这一页选过的数据
+        keys = keys.concat(selectedRowKeys);
+        rows = rows.concat(selectedRows)
+        this.handleRowSelectChange(keys, rows)
+      },
       getCheckboxProps: this.checkboxProps
     } : null;
 
