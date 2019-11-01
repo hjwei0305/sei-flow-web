@@ -360,12 +360,16 @@ class SimpleTable extends PureComponent {
         let rows = this.state.selectedRows;
         //因为反选不好处理，所以先清除掉之前对这一页选过的痕迹
         this.state.filterData.map(record => {
-          if (keys.includes(record[rowKey || 'id'])) {
-            keys.splice(keys.indexOf(record[rowKey || 'id']), 1);
-            rows.splice(rows.indexOf(record[rowKey || 'id']), 1)
+          let keyIndex=keys.findIndex(r=>r===record[rowKey || 'id']);
+          if(keyIndex>-1){
+            keys.splice(keyIndex, 1);
+          }
+          let rowsIndex=rows.findIndex(r=>r[rowKey || 'id']===record[rowKey || 'id']);
+          if(rowsIndex>-1){
+            rows.splice(rowsIndex, 1);
           }
         });
-        //重新加入这一页选过的数据
+        //重新加入这一页被选数据
         keys = keys.concat(selectedRowKeys);
         rows = rows.concat(selectedRows)
         this.handleRowSelectChange(keys, rows)
