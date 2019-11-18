@@ -99,7 +99,7 @@ export  default {
   "flow_000097":"Form URL",
   "flow_000098":"View The Form",
   "flow_000099":"Are you sure you want to force termination of {0}?？",
-
+  "flow_000100":"Task make over power",
   "flow_000101":"Terminate process successfully",
   "flow_000102":"View",
   "flow_000103":"History",
@@ -206,6 +206,15 @@ export  default {
   "flow_000204":"Forget The Password?",
   "flow_000205":"Sign In",
   "flow_000206":"Please enter a number greater than 0",
+  "flow_000207":"Start using",
+  "flow_000208":"Forbid using",
+  "flow_000209":"Are you sure you want to disable it ？",
+  "flow_000210":"Are you sure you want it？",
+  "flow_000211":"Please select a proxy user !",
+  "flow_000212":"Please select the start date !",
+  "flow_000213":"Please select the end date !",
+  "flow_000214":"Select agent user",
+
 
   "flow_000225":"Just Recently",
   "flow_000226":"Days Ago",
@@ -252,6 +261,7 @@ export  default {
   "flow_000267":"Interface Test",
   "flow_000268":"Interface Test2",
   "flow_000269":"About {0} Result(s)",
+  "flow_000270":"Open status",
   "flow_000271":"At",
   "flow_000272":"Start",
   "flow_000273":"No corresponding process history was found",
@@ -271,5 +281,8 @@ export  default {
   "flow_000287":"Process Start",
   "flow_000288":"Processor:",
   "flow_000289":"Time-Consuming:",
-  "flow_000290":"Processing Summary:"
+  "flow_000290":"Processing Summary:",
+  "flow_000291":"Current User",
+  "flow_000292":"Agency User",
+
 }

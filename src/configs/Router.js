@@ -28,6 +28,7 @@ const SubtractTable = lazy(() => import('../components/mainData/SubtractSign/Sub
 const PushFlowTaskTable = lazy(() => import('../components/mainData/PushFlowTask/PushFlowTaskTable'));
 const BusinessModel2View = lazy(() => import('../components/mainData/DefaultBusinessModel2/BusinessModel2View'));
 const ApproveBusinessModel2 = lazy(() => import('../components/mainData/Approve/DetailBusinessModel2'));
+const TaskMakeOverPowerTable = lazy(() => import('../components/mainData/TaskMakeOverPower/TaskMakeOverPowerTable'));
 
 export default class Routers extends Component {
   render() {
@@ -53,6 +54,7 @@ export default class Routers extends Component {
             <Route path='/show' component={FlowDesign}/>
             <Route path='/showLook' component={FlowLook}/>
             <Route path='/configUser' component={ConfigUser}/>
+            <Route path='/taskMakeOverPower' component={TaskMakeOverPowerTable}/>
             {/*流程监管*/}
             <Route path='/FlowInstanceTable' component={FlowInstanceTable}/>
             <Route path='/PushFlowTaskTable' component={PushFlowTaskTable}/>

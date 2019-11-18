@@ -27,6 +27,7 @@ export default class IndexView extends Component {
             <li><Link to='/TurnToDoTable'>{seiIntl.get({key: 'flow_000014', desc: '任意转办'})}</Link></li>
             <li><Link to='/AddSignTable'>{seiIntl.get({key: 'flow_000015', desc: '加签管理'})}</Link></li>
             <li><Link to='/SubtractTable'>{seiIntl.get({key: 'flow_000016', desc: '减签管理'})}</Link></li>
+            <li><Link to='/taskMakeOverPower'>{seiIntl.get({key: 'flow_000100', desc: '待办转授权'})}</Link></li>
             <h4>{seiIntl.get({key: 'flow_000017', desc: '通用单据（自测）：'})}</h4>
             <li><Link to='/BusinessModel2View'>{seiIntl.get({key: 'flow_000018', desc: '业务单据'})}</Link></li>
             <h4>{seiIntl.get({key: 'flow_000019', desc: '审批页面（自测）：'})}</h4>
