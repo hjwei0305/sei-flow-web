@@ -89,7 +89,7 @@ class TaskMakeOverPowerTable extends Component {
   };
 
   handleSearch = (value) => {
-    searchListByKeyWithTag(this.state.data, {keyword: value}, ["code", "name"]).then(data => {
+    searchListByKeyWithTag(this.state.data, {keyword: value}, ["userName", "powerUserName"]).then(data => {
       this.setState({data, searchValue: value})
     })
   };
