@@ -992,12 +992,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       index: "id",
       hidden: true
     }, {
-      label: this.lang.codeText,
+      label: "组织机构代码",
       name: "code",
       index: "code",
       width: 100
     }, {
-      label: this.lang.nameText,
+      label: "组织机构名称",
       name: "name",
       index: "name",
       width: 150
@@ -1073,12 +1073,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   },
   organizationOfSelGridColModel: function () {
     return [{
-      label: this.lang.codeText,
+      label: "组织维度代码",
       name: "id",
       index: "id",
       width: 100
     }, {
-      label: this.lang.nameText,
+      label: "组织维度名称",
       name: "name",
       index: "name",
       width: 150
@@ -1105,18 +1105,18 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       index: "id",
       hidden: true
     }, {
-      label: this.lang.codeText,
+      label: "岗位代码",
       name: "code",
       index: "code",
       width: 100
     }, {
-      label: this.lang.nameText,
+      label: "岗位名称",
       name: "name",
       index: "name",
       width: 150
 
     }, {
-      label: this.lang.organizationText,
+      label: "岗位组织机构",
       name: "organization.name",
       index: "organization.name",
       width: 150
@@ -1213,12 +1213,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       index: "id",
       hidden: true
     }, {
-      label: this.lang.codeText,
+      label: "岗位类别代码",
       name: "code",
       index: "code",
       width: 100
     }, {
-      label: this.lang.nameText,
+      label: "岗位类别名称",
       name: "name",
       index: "name",
       width: 150
