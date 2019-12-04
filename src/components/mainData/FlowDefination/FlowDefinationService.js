@@ -3,7 +3,7 @@ import {baseUrl} from "../../../configs/DefaultConfig"
 import {convertSearchFilter} from "../../../commons/utils/CommonUtils";
 
 export async function listAllOrgs(params={}){
-    return httpUtils.post(baseUrl+"/flowDefination/listAllOrgs",params);
+    return httpUtils.post(baseUrl+"/flowDefination/listAllOrgByPower",params);
 }
 
 export async function listFlowDefination(params={}){
