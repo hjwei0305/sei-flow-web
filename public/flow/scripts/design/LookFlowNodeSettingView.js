@@ -285,6 +285,10 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           title: "串行",
           name: "true"
         }]
+      },{
+        xtype: "CheckBox",
+        title: "允许流程发起人终止",
+        name: "allowTerminate"
       }, {
         xtype: "CheckBox",
         title: "允许加签",
