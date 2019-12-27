@@ -323,6 +323,8 @@ class FlowInstanceTable extends Component {
             return seiIntl.get({key: 'flow_000080', desc: '待办'})
           } else if (record.pushStatus == "completed") {  //推送业务模块状态
             return seiIntl.get({key: 'flow_000081', desc: '已办'})
+          } else if (record.pushStatus == "delete"){ //推送业务模块状态
+            return seiIntl.get({key: 'flow_000084', desc: '删除待办'})
           } else if (record.pushStatus == "new") {  //推送basic状态
             return seiIntl.get({key: 'flow_000082', desc: '新增待办'})
           } else if (record.pushStatus == "old") {  //推送basic状态
