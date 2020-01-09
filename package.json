@@ -31,7 +31,7 @@
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "sei-utils": "^1.0.77",
-    "seid": "^1.0.301",
+    "seid": "^1.0.302",
     "styled-components": "^4.1.1",
     "yarn": "^1.12.3"
   },
