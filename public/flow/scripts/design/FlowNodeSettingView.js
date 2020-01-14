@@ -1736,7 +1736,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       store: {
         url: _ctxPath + "/flowExecutorConfig/listCombo",
         params: {
-          "Q_EQ_businessModel.id": this.businessModelId
+          "businessModelId": this.businessModelId
         }
       }
     };
@@ -1759,7 +1759,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       store: {
         url: _ctxPath + "/flowExecutorConfig/listCombo",
         params: {
-          "Q_EQ_businessModel.id": this.businessModelId
+          "businessModelId": this.businessModelId
         }
       }
     };
