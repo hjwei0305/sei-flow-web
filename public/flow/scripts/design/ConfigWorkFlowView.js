@@ -425,7 +425,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       msg: "正在处理中,请稍候..."
     });
     EUI.Store({
-      url: _ctxPath + "/flowSolidifyExecutor/saveSolidifyInfoByExecutorVos",
+      url: _ctxPath +  "/flowSolidifyExecutor/saveSolidifyInfoByExecutorVos",
       postType: 'json',
       isUrlParam: false,
       params: {
@@ -449,7 +449,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       msg: "正在启动，请稍候..."
     });
     EUI.Store({
-      url: _ctxPath + "/defaultFlowBase/startFlowNew",
+      url: _ctxPath +  "/defaultFlowBase/startFlowNew",
       postType: 'json',
       isUrlParam: false,
       params: {
@@ -473,7 +473,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
         }
         taskList = JSON.stringify(task);
         EUI.Store({
-          url: _ctxPath + "/defaultFlowBase/startFlowNew",
+          url: _ctxPath +  "/defaultFlowBase/startFlowNew",
           postType: 'json',
           isUrlParam: false,
           params: {
