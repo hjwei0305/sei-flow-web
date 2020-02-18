@@ -77,7 +77,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       msg: "正在获取数据，请稍候..."
     });
     EUI.Store({
-      url:  _ctxPath + "/flowClient/getExecutorsByExecutorsVos",
+      url:  _ctxPath + "/flowTask/getExecutorsByExecutorsVos",
       params: {
         requestExecutorsVos: JSON.stringify(requestExecutorsVos),
         businessModelCode: this.businessModelCode,
@@ -406,7 +406,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       onSelect: function (node) {
         g.selectedOrgId = node.id;
         var chooseUserGridPanel = EUI.getCmp("chooseUserGridPanel").setGridParams({
-          url: _ctxPath + "/customExecutor/listUserByOrg",
+          url: _ctxPath + "/flowDefination/listUserByOrg",
           loadonce: false,
           datatype: "json",
           postData: {
@@ -455,7 +455,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
           displayText: g.searchDisplayText,
           onSearch: function (value) {
             var chooseUserGridPanel = EUI.getCmp("chooseUserGridPanel").setGridParams({
-              url: _ctxPath + "/customExecutor/listUserByOrg",
+              url: _ctxPath + "/flowDefination/listUserByOrg",
               loadonce: false,
               datatype: "json",
               postData: {
