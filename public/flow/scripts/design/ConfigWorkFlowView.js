@@ -88,6 +88,13 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       handler: function () {
         g.submit();
       }
+    }, {
+      xtype: "Button",
+      title: "返回",
+      selected: false,
+      handler: function () {
+        g.returnPage();
+      }
     }];
   },
 
@@ -410,6 +417,11 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       return false;
     }
     return true;
+  },
+  //返回单据启动页面
+  returnPage: function (){
+    var g = this;
+    g.refreshPage();
   },
   //提交流程-先保存执行人、再调用流程启动方法
   submit: function () {
