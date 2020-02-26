@@ -22,8 +22,9 @@ import StandardDropdown from "../../../commons/components/StandardDropdown";
 import DefinaionModal from "./DefinaionModal";
 import {mainTabAction} from 'sei-utils'
 import {getUserInfo} from "../../../commons/utils/CommonUtils";
-import { seiLocale } from 'sei-utils';
-const { seiIntl } = seiLocale;
+import {seiLocale} from 'sei-utils';
+
+const {seiIntl} = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -93,13 +94,17 @@ class FlowDefinationView extends Component {
   };
 
   handleTableSearch = (quickValue) => {
-    //刷新本地数据
-    let params = {
-      Q_EQ_orgId: this.state.selectedNode.id,
-      quickValue,
-      pageInfo: this.state.pageInfo
-    };
-    this.setState({tableSearchValue:quickValue},()=>this.listFlowDefination(params));
+    if (this.state.selectedNode && JSON.stringify(this.state.selectedNode) !== "{}") {
+      //刷新本地数据
+      let params = {
+        Q_EQ_orgId: this.state.selectedNode.id,
+        quickValue,
+        pageInfo: this.state.pageInfo
+      };
+      this.setState({tableSearchValue: quickValue}, () => this.listFlowDefination(params));
+    } else {
+      message.error(seiIntl.get({key: 'flow_000113', desc: '请选择组织机构'}))
+    }
   };
   onAddClick = () => {
     if (this.state.selectedNode && JSON.stringify(this.state.selectedNode) !== "{}") {
@@ -111,7 +116,7 @@ class FlowDefinationView extends Component {
       let src = flowDefUrl;
       src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
       let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
-      let title =seiIntl.get({key: 'flow_000039', desc: '新增'});
+      let title = seiIntl.get({key: 'flow_000039', desc: '新增'});
       mainTabAction.tabOpen({id: 'add', name: title, featureUrl: src})
     } else {
       message.error(seiIntl.get({key: 'flow_000113', desc: '请选择组织机构'}))
@@ -121,13 +126,13 @@ class FlowDefinationView extends Component {
   onRefAddClick = () => {
     if (!this.judgeSelected()) return;
     // this.handleModalVisible(false, false, true);
-    const {selectedNode = {},tableSelectRow} = this.state;
+    const {selectedNode = {}, tableSelectRow} = this.state;
     this.setState({operator: "refAdd", editData: tableSelectRow})
     let auth = getUserInfo();
     let src = flowDefUrl;
     src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
     let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
-    let title =seiIntl.get({key: 'flow_000114', desc: '参考创建'});
+    let title = seiIntl.get({key: 'flow_000114', desc: '参考创建'});
     src = src + `&orgName=${orgName}&businessModelId=${tableSelectRow[0].flowType.businessModel.id}&businessModelCode=${tableSelectRow[0].flowType.businessModel.className}&id=${tableSelectRow[0].id}&isFromVersion=${false}&isCopy=${true}`
     mainTabAction.tabOpen({id: tableSelectRow[0].id + 'refAdd', name: title, featureUrl: src})
   };
@@ -138,7 +143,7 @@ class FlowDefinationView extends Component {
     let auth = getUserInfo();
     let src = flowDefUrl;
     src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
-    let title =seiIntl.get({key: 'flow_000031', desc: '编辑'});
+    let title = seiIntl.get({key: 'flow_000031', desc: '编辑'});
     src = src + `&businessModelId=${record.flowType.businessModel.id}&businessModelCode=${record.flowType.businessModel.className}&id=${record.id}`
     mainTabAction.tabOpen({id: record.id + 'edit', name: title, featureUrl: src})
   };
@@ -180,10 +185,10 @@ class FlowDefinationView extends Component {
     if (record.flowDefinationStatus !== "INIT") {
       if (record.flowDefinationStatus === 'Activate') {
         status = 'Freeze';
-        title =seiIntl.get({key: 'flow_000116', desc: '您确定要冻结吗？'})
+        title = seiIntl.get({key: 'flow_000116', desc: '您确定要冻结吗？'})
       } else if (record.flowDefinationStatus === 'Freeze') {
         status = 'Activate';
-        title =seiIntl.get({key: 'flow_000117', desc: '您确定要激活吗？'})
+        title = seiIntl.get({key: 'flow_000117', desc: '您确定要激活吗？'})
       }
     }
     let thiz = this;
@@ -302,13 +307,16 @@ class FlowDefinationView extends Component {
             ops.push(<a className={'row-operator-item'} key={"deleteDef" + index}
                         onClick={() => this.onDeleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>);
             ops.push(<a className={'row-operator-item'} key={"versionDef" + index}
-                        onClick={() => this.onVersionClick(record)}>{seiIntl.get({key: 'flow_000118', desc: '流程定义版本管理'})}</a>);
+                        onClick={() => this.onVersionClick(record)}>{seiIntl.get({
+              key: 'flow_000118',
+              desc: '流程定义版本管理'
+            })}</a>);
             let statusText = '';
             if (record && record.flowDefinationStatus !== "INIT") {
               if (record.flowDefinationStatus === 'Activate') {
-                statusText =seiIntl.get({key: 'flow_000119', desc: '冻结'});
+                statusText = seiIntl.get({key: 'flow_000119', desc: '冻结'});
               } else if (record.flowDefinationStatus === 'Freeze') {
-                statusText =seiIntl.get({key: 'flow_000120', desc: '激活'});
+                statusText = seiIntl.get({key: 'flow_000120', desc: '激活'});
               }
               ops.push(<a className={'row-operator-item'} key={"configWorkPage" + index}
                           onClick={() => this.onActivateOrFreezeFlowDefClick(record)}>{statusText}</a>);
@@ -385,7 +393,11 @@ class FlowDefinationView extends Component {
           key="search"
           placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleTableSearch(value)}
-          onChange={(e)=>{if(e.target.value){this.handleTableSearch(e.target.value)}}}
+          onChange={(e) => {
+            if (e.target.value) {
+              this.handleTableSearch(e.target.value)
+            }
+          }}
           style={{width: '220px'}}
           allowClear
         />
