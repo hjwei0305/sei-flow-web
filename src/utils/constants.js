@@ -43,11 +43,6 @@ const AUTH_POLICY = {
 
 export const baseUrl = "/flow-service";
 export const authApiUrl = "/sei-auth";
-// export const host = REACT_APP_HOST || '';
-// export const gatewayHost = host+"/api-gateway";
-
-// export const basicAuthor = "/auth-service";
-// export const uploadUrl = "";
 export const flowDefUrl= "/sei-flow-web/design";
 export const flowDefUrlNew="/sei-flow-web";
 
