@@ -1,5 +1,6 @@
-import { request, constants } from "../../utils";
-console.log(constants, request);
+import * as util from "../../utils";
+const { request, constants } = util || {};
+console.log(constants, request, util);
 // const { baseUrl } = constants;
 export async function getAllList(params = {}) {
     // return request.get(baseUrl + "/appModule/findAll", params);
