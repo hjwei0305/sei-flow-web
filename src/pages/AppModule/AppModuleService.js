@@ -1,4 +1,4 @@
-import { request, constants } from "@/utils";
+import { request, constants } from "@/utils/index";
 console.log(constants, request);
 // const { baseUrl } = constants;
 export async function getAllList(params = {}) {
