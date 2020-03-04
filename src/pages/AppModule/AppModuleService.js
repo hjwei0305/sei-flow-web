@@ -1,5 +1,5 @@
-import { request, constants, } from "@/utils";
-console.log(constants);
+import { request, constants } from "@/utils";
+console.log(constants, request);
 // const { baseUrl } = constants;
 export async function getAllList(params = {}) {
     // return request.get(baseUrl + "/appModule/findAll", params);
