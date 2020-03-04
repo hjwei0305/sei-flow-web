@@ -15,6 +15,9 @@ export default [
     routes: [
       { path: '/', redirect: '/dashboard' },
       { title: 'dashboard', path: '/dashboard', component: './Dashboard' },
+      { title: '应用模块', path: '/AppModuleTable', component: './AppModule/AppModuleTable' },
+      { title: '工作界面配置', path: '/WorkPageTable', component: './WorkPage/WorkPageTable' },
+      { title: '业务实体管理', path: '/BusinessModelTable', component: './businessModel/BusinessModelTable' },
     ],
   },
 ];
