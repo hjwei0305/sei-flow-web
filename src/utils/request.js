@@ -2,14 +2,13 @@
 * @Author: zp
 * @Date:   2020-02-19 11:21:57
 * @Last Modified by:   zp
-* @Last Modified time: 2020-03-04 13:38:37
+* @Last Modified time: 2020-03-04 23:40:54
 */
 import { SERVER_PATH, defaultPageSize } from './constants';
 import { FetchHelper } from 'sei-utils';
 
 const interceptors = {
     request: [[(config) => {
-      console.log(config)
         if(config.url.indexOf('ByPage')!==-1) {
             if (config.params !== undefined) {
                 config.params = {
