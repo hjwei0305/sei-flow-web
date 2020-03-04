@@ -1,4 +1,13 @@
-export  default {
+import pwa from './en-US/pwa';
+import login from './en-US/login';
+
+export default {
+  "app.request.error": "Interface request exception",
+  "app.request.401": "Session exception",
+  "app.request.401。message": "The current session timed out or failed, Please log in again",
+  "app.loading": 'loading',
+  ...pwa,
+  ...login,
   "flow_000000":"Loading...",
   "flow_000001":"Component Test Demo",
   "flow_000002":"Login",
@@ -284,5 +293,4 @@ export  default {
   "flow_000290":"Processing Summary:",
   "flow_000291":"Current User",
   "flow_000292":"Agency User",
-
-}
+};

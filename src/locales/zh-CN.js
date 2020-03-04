@@ -1,4 +1,13 @@
-export  default {
+import pwa from './zh-CN/pwa';
+import login from './zh-CN/login';
+
+export default {
+  "app.request.error":"接口请求异常",
+  "app.request.401": "会话异常",
+  "app.request.401.message": "当前会话超时或失效，请重新登录",
+  "app.loading": '加载中...',
+  ...pwa,
+  ...login,
   "flow_000000":"加载中...",
   "organizationName": '部门',
   "flow_000000":"加载中",
@@ -286,4 +295,4 @@ export  default {
   "flow_000290":"处理摘要：",
   "flow_000291":"当前用户",
   "flow_000292":"代理用户",
-}
+};
