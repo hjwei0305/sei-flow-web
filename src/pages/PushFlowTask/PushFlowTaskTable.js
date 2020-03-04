@@ -13,13 +13,12 @@ import {getPushTaskControl, pushAgainByControlId} from "./PushFlowTaskService";
 import SearchTable from "@/components/SearchTable";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import { seiLocale } from 'sei-utils';
-import { CommonComponentsConfig, } from '@/utils';
-
-const {
+import {
   appModuleAuthConfig,
   businessModelByAppModelConfig,
   flowTypeByBusinessModelConfig
-} = CommonComponentsConfig;
+ } from '@/utils/CommonComponentsConfig';
+
 
 const { seiIntl } = seiLocale;
 const confirm = Modal.confirm

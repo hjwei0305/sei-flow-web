@@ -14,9 +14,8 @@ import SearchTable from "@/components/SearchTable";
 import WorkPageModal from "./WorkPageModal";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import { seiLocale } from 'sei-utils';
-import { CommonComponentsConfig, } from '@/utils';
+import { appModuleConfig, } from '@/utils/CommonComponentsConfig';
 
-const {appModuleConfig} = CommonComponentsConfig;
 const { seiIntl } = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;

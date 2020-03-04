@@ -7,9 +7,9 @@ import React, {Component} from 'react'
 import {Form, Input, Modal,Row} from 'antd';
 import SearchTable from "@/components/SearchTable";
 import { seiLocale } from 'sei-utils';
-import { CommonComponentsConfig, commonUtils,  } from '@/utils';
+import { commonUtils,  } from '@/utils';
+import { businessModelConfig,  } from '@/utils/CommonComponentsConfig';
 
-const { businessModelConfig } = CommonComponentsConfig
 const { checkCode } = commonUtils;
 const { seiIntl } = seiLocale;
 const FormItem = Form.Item;

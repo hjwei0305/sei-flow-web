@@ -9,9 +9,8 @@ import {Modal} from 'antd';
 import TransferTable from "@/components/TransferTable";
 import {listAllNotSelectEdByAppModuleId, listAllSelectEdByAppModuleId, saveSetWorkPage} from "../BusinessModelService";
 import { seiLocale } from 'sei-utils';
-import { CommonComponentsConfig, } from '@/utils';
+import { appModuleConfig, } from '@/utils/CommonComponentsConfig';
 
-const {appModuleConfig} = CommonComponentsConfig;
 const { seiIntl } = seiLocale;
 class ConfigWorkPageModal extends Component {
 

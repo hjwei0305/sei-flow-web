@@ -7,9 +7,8 @@ import React, {Component} from 'react'
 import {Form, Input, Modal, Checkbox} from 'antd';
 import SearchTable from "@/components/SearchTable";
 import { seiLocale } from 'sei-utils';
-import { CommonComponentsConfig } from '@/utils';
+import { appModuleConfig } from '@/utils/CommonComponentsConfig';
 
-const  {appModuleConfig} = CommonComponentsConfig;
 const { seiIntl } = seiLocale;
 const FormItem = Form.Item;
 

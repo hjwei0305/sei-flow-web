@@ -8,9 +8,9 @@ import {Form, Input, Modal, Checkbox} from 'antd';
 import SearchTable from "@/components/SearchTable";
 import queryString from "query-string";
 import { seiLocale } from 'sei-utils';
-import { userUtils, constants, CommonComponentsConfig,  } from '@/utils';
+import { userUtils, constants,  } from '@/utils';
+import { appModuleConfig  } from '@/utils/CommonComponentsConfig';
 
-const { appModuleConfig,  } = CommonComponentsConfig;
 const { flowDefUrlNew, } = constants;
 const { getSessionId, } = userUtils;
 

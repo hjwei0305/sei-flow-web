@@ -1,19 +1,16 @@
-import * as util from "../../utils";
-const { request, constants } = util || {};
-console.log(constants, request, util);
-// const { baseUrl } = constants;
+import { request as httpUtils, constants, } from "@/utils";
+import {findAllByAuth} from "../FlowType/FlowTypeService";
+
+const { baseUrl } = constants;
 export async function getAllList(params = {}) {
-    // return request.get(baseUrl + "/appModule/findAll", params);
-    return request.get("/appModule/findAll", params);
+    return httpUtils.get(baseUrl + "/appModule/findAll", params);
 }
 
 export async function findAllAppModuleByAuth(params = {}) {
-    // return request.get(baseUrl + "/appModule/findAllByAuth", params);
-    return request.get("/appModule/findAllByAuth", params);
+    return httpUtils.get(baseUrl + "/appModule/findAllByAuth", params);
 }
 export async function save(params = {}) {
-    // return request.postJson(baseUrl + "/appModule/save",JSON.stringify(params));
-    return request.postJson("/appModule/save",JSON.stringify(params));
+    return httpUtils.postJson(baseUrl + "/appModule/save",JSON.stringify(params));
 }
 
 /**
@@ -22,7 +19,6 @@ export async function save(params = {}) {
  * return 操作结果
  */
 export async function deleteCorp(param=''){
-    return request.delete("/appModule/delete",param);
-    // return request.delete(baseUrl+"/appModule/delete",param);
+    return httpUtils.delete(baseUrl+"/appModule/delete",param);
 }
 

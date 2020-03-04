@@ -15,9 +15,8 @@ import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import StandardDropdown from "@/components/StandardDropdown";
 import TurnToDoSelected from './TurnToDoSelected';
 import { seiLocale } from 'sei-utils';
-import { CommonComponentsConfig, } from '@/utils';
+import { appModuleAuthConfig,businessModelByAppModelConfig,flowTypeByBusinessModelConfig, } from '@/utils/CommonComponentsConfig';
 
-const {appModuleAuthConfig,businessModelByAppModelConfig,flowTypeByBusinessModelConfig} = CommonComponentsConfig;
 const { seiIntl } = seiLocale;
 const Search = Input.Search;
 

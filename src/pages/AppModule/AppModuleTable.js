@@ -12,8 +12,8 @@ import SimpleTable from "@/components/SimpleTable";
 import {deleteCorp, getAllList, save} from "./AppModuleService";
 import EditAppModuleModal from "./EditAppModuleModal";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
-// import {getWorkPage} from "../WorkPage/WorkPageService";
-// import {getBusinessModel} from "../businessModel/BusinessModelService";
+import {getWorkPage} from "../WorkPage/WorkPageService";
+import {getBusinessModel} from "../businessModel/BusinessModelService";
 import { seiLocale } from 'sei-utils';
 import { commonUtils } from '@/utils';
 

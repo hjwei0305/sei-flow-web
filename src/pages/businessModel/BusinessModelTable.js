@@ -18,9 +18,8 @@ import ConfigExUserModal from "./exUser/ConfigExUserModal";
 import PropertiesForConditionPojoModal from "./propertiesForConditionPojo/PropertiesForConditionPojoModal";
 import StandardDropdown from "@/components/StandardDropdown";
 import { seiLocale } from 'sei-utils';
-import { CommonComponentsConfig, } from '@/utils';
+import { appModuleAuthConfig, } from '@/utils/CommonComponentsConfig';
 
-const { appModuleAuthConfig } = CommonComponentsConfig;
 const { seiIntl } = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;

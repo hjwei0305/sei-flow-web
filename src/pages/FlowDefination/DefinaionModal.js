@@ -7,12 +7,12 @@ import React, {Component} from 'react'
 import {Form, Input, Modal, Checkbox} from 'antd';
 import SearchTable from "@/components/SearchTable";
 import queryString from "query-string";
-import { commonUtils, userUtils, constants, CommonComponentsConfig,  } from '@/utils';
+import { commonUtils, userUtils, constants,  } from '@/utils';
+import { appModuleConfig, } from '@/utils/CommonComponentsConfig';
 import { seiLocale, } from 'sei-utils';
 
 const { flowDefUrl, } = constants;
 const { getUserInfo,  } = commonUtils;
-const { appModuleConfig,  } = CommonComponentsConfig;
 const { getSessionId, } = userUtils;
 const { seiIntl } = seiLocale;
 const FormItem = Form.Item;
