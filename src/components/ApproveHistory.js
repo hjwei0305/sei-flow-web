@@ -100,7 +100,7 @@ class ApproveHistory extends Component {
     })
   };
   gotoFlowMap = () => {
-    window.open("/flow-web/design/showLook?id=" + this.state.historyKey +
+    window.open("/sei-flow-web/#/sei-flow-web/design/showLook?id=" + this.state.historyKey +
       "&instanceId=" + this.state.data.flowInstance.id);
   };
 

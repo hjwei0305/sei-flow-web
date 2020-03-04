@@ -1,5 +1,5 @@
 {
-  "name": "flow-web",
-  "entry": "/flow-web",
-  "base": "/flow-web"
+  "name": "sei-flow-web",
+  "entry": "/sei-flow-web",
+  "base": "/sei-flow-web"
 }

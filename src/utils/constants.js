@@ -48,8 +48,8 @@ export const authApiUrl = "/sei-auth";
 export const baseUrl ="/flow-service";
 // export const basicAuthor = "/auth-service";
 // export const uploadUrl = "";
-export const flowDefUrl= "/flow-web/design";
-export const flowDefUrlNew="/flow-web";
+export const flowDefUrl= "/sei-flow-web/design";
+export const flowDefUrlNew="/sei-flow-web";
 
 export const defaultPageSize = 15;
 export const rowGutter = 20;
