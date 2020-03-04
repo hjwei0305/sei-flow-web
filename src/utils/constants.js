@@ -41,11 +41,11 @@ const AUTH_POLICY = {
 
 /** 升级的常量放到这里 */
 
+export const baseUrl = "/flow-service";
 export const authApiUrl = "/sei-auth";
 // export const host = REACT_APP_HOST || '';
 // export const gatewayHost = host+"/api-gateway";
 
-export const baseUrl ="/flow-service";
 // export const basicAuthor = "/auth-service";
 // export const uploadUrl = "";
 export const flowDefUrl= "/sei-flow-web/design";
