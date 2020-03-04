@@ -57,6 +57,9 @@ export default {
   routes: pageRoutes,
   proxy,
   theme: themeConfig(),
+  alias: {
+    '@': resolve(__dirname, './src'),
+  },
   extraBabelPlugins: [
     [
       'import',
