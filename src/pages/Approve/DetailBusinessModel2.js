@@ -28,6 +28,7 @@ class DetailBusinessModel2 extends Component {
         businessId={this.state.id}
         instanceId={this.state.instanceId}
         taskId={this.state.taskId}>
+        version="6"
         <BusinessModel2Detail id={this.state.id}  {...this.props}/>
       </Approve>
     );

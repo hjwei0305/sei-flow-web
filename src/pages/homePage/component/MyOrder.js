@@ -235,7 +235,7 @@ class MyOrder extends Component {
           defaultPageSize={50}
           pageSizeOptions={['50', '100', '200']}
         />}
-        <ApproveHistory historyKey={this.state.historyKey} instanceKey ={this.state.instanceKey} setHistoryKey={this.setHistoryKey} />
+        <ApproveHistory version="6" historyKey={this.state.historyKey} instanceKey ={this.state.instanceKey} setHistoryKey={this.setHistoryKey} />
       </>
     );
   }

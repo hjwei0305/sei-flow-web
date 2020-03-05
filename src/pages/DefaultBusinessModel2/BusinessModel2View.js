@@ -385,7 +385,7 @@ class BusinessModel2View extends Component {
             onRef={this.onRef}
             defaultValue={editData ? editData : {}}/>
         </Row>
-        <ApproveHistory historyKey={this.state.historyKey} setHistoryKey={this.setHistoryKey}/>
+        <ApproveHistory version="6" historyKey={this.state.historyKey} setHistoryKey={this.setHistoryKey}/>
       </HeadBreadcrumb>
     )
   }

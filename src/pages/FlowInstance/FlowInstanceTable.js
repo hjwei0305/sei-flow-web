@@ -448,7 +448,7 @@ class FlowInstanceTable extends Component {
             pageChange={this.pageChange}
           />
         </div>
-        <ApproveHistory historyKey={this.state.historyKey} setHistoryKey={this.setHistoryKey}/>
+        <ApproveHistory version="6" historyKey={this.state.historyKey} setHistoryKey={this.setHistoryKey}/>
       </HeadBreadcrumb>
 
     )

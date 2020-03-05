@@ -365,7 +365,7 @@ class TodoTask extends Component {
             >
           <TextArea value={this.state.opinion} onChange={(e)=>this.setState({opinion:e.target.value})}/>
         </Modal>
-        <ApproveHistory historyKey={this.state.historyKey} setHistoryKey={this.setHistoryKey}/>
+        <ApproveHistory version="6" historyKey={this.state.historyKey} setHistoryKey={this.setHistoryKey}/>
       </>
     );
   }
