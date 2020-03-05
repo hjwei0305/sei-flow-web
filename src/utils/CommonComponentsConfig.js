@@ -127,11 +127,11 @@ export const flowTypeByBusinessModelConfig = {
    text: 'businessModelName'
  };
 
- // //应用模块
- // export const appModuleAuthConfig = {
- //   service: findAllAppModuleByAuth,
- //   key: 'code',
- //   text: 'name'
- // };
+ //应用模块
+ export const appModuleAuthConfigBasic = {
+   service: findAllAppModuleByAuth,
+   key: 'code',
+   text: 'name'
+ };
 
 

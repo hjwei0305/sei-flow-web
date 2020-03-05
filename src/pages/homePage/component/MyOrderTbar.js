@@ -6,7 +6,7 @@
 import React, {Component} from 'react';
 import {Input, Select} from "antd";
 import SelectWithService from "@/components/SelectWithService";
-import {flowMyBillsAppConfig, appModuleAuthConfig} from "@/utils/CommonComponentsConfig";
+import {flowMyBillsAppConfig, appModuleAuthConfigBasic} from "@/utils/CommonComponentsConfig";
 import {seiLocale} from 'sei-utils';
 
 const {seiIntl} = seiLocale;
@@ -66,7 +66,7 @@ class MyOrderTbar extends Component {
           style={{width: 200, marginLeft: 8}}
           value={appModelCode}
           params={{"orderType": orderType}}
-          config={appModuleAuthConfig}
+          config={appModuleAuthConfigBasic}
           placeholder={seiIntl.get({key: 'common_000319', desc: '选择应用模块'})}
           onChange={this.handleChangeAppModule}
         />
