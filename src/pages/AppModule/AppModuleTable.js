@@ -119,45 +119,45 @@ class AppModuleTable extends Component {
         params = record.id;
         thiz.toggoleGlobalLoading(true);
         /*校验下面是否有业务实体和工作界面配置:建议改为后端校验*/
-        // getBusinessModel({filters: [{
-        //     fieldName: "appModule.id",//筛选字段
-        //     operator: "EQ",//操作类型
-        //     value: params,//筛选值
-        //     fieldType: "String"//筛选类型
-        //   }]}).then(data=>{
-        //   if(data.records > 0){
-        //     message.warn(seiIntl.get({key: 'flow_000181', desc: '该应用模块下面配置有业务实体，不能删除！'}))
-        //     thiz.toggoleGlobalLoading(false);
-        //     return;
-        //   }
-        //   getWorkPage({
-        //     filters: [{
-        //       fieldName: "appModuleId",//筛选字段
-        //       operator: "EQ",//操作类型
-        //       value: params,//筛选值
-        //       fieldType: "String"//筛选类型
-        //     }]
-        //   }).then(data => {
-        //     if(data.records > 0){
-        //       message.warn(seiIntl.get({key: 'flow_000182', desc: '该应用模块下面配置有工作界面，不能删除！'}))
-        //       thiz.toggoleGlobalLoading(false);
-        //       return;
-        //     }
-        //     /*删除*/
-        //     deleteCorp(params).then(result => {
-        //       if (result.status === "SUCCESS") {
-        //         message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
-        //         //刷新本地数据
-        //         thiz.getDataSource();
-        //       } else {
-        //         message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
-        //       }
-        //     }).catch(e => {
-        //     }).finally(() => {
-        //       thiz.toggoleGlobalLoading(false);
-        //     })
-        //   });
-        // });
+        getBusinessModel({filters: [{
+            fieldName: "appModule.id",//筛选字段
+            operator: "EQ",//操作类型
+            value: params,//筛选值
+            fieldType: "String"//筛选类型
+          }]}).then(data=>{
+          if(data.records > 0){
+            message.warn(seiIntl.get({key: 'flow_000181', desc: '该应用模块下面配置有业务实体，不能删除！'}))
+            thiz.toggoleGlobalLoading(false);
+            return;
+          }
+          getWorkPage({
+            filters: [{
+              fieldName: "appModuleId",//筛选字段
+              operator: "EQ",//操作类型
+              value: params,//筛选值
+              fieldType: "String"//筛选类型
+            }]
+          }).then(data => {
+            if(data.records > 0){
+              message.warn(seiIntl.get({key: 'flow_000182', desc: '该应用模块下面配置有工作界面，不能删除！'}))
+              thiz.toggoleGlobalLoading(false);
+              return;
+            }
+            /*删除*/
+            deleteCorp(params).then(result => {
+              if (result.status === "SUCCESS") {
+                message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
+                //刷新本地数据
+                thiz.getDataSource();
+              } else {
+                message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
+              }
+            }).catch(e => {
+            }).finally(() => {
+              thiz.toggoleGlobalLoading(false);
+            })
+          });
+        });
       }
     });
   };
