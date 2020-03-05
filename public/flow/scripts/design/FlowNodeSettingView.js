@@ -2722,7 +2722,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             hasPager: false,
             sortname: 'code',
             loadonce: true,
-            url: _ctxPath + "/design/listPosType",
+            url: _ctxPath + "/design/listPositonType",
             colModel: this.positionTypeOfSelGridColModel(),
             ondblClickRow: function (rowid) {
               var selectRow = EUI.getCmp("allPositionTypeOfSelGrid").grid.jqGrid('getRowData', rowid);
@@ -2818,7 +2818,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             hasPager: false,
             sortname: 'code',
             loadonce: true,
-            url: _ctxPath + "/design/listPosType",
+            url: _ctxPath + "/design/listPositonType",
             colModel: this.positionTypeAndOrgGridColModel(),
             ondblClickRow: function (rowid) {
               var selectRow = EUI.getCmp("allPositionTypeAndOrgGrid").grid.jqGrid('getRowData', rowid);
@@ -2914,7 +2914,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             hasPager: false,
             sortname: 'code',
             loadonce: true,
-            url: _ctxPath + "/design/listPosType",
+            url: _ctxPath + "/design/listPositonType",
             colModel: this.positionTypeGridColModel(),
             ondblClickRow: function (rowid) {
               var selectRow = EUI.getCmp("allPositionTypeGrid").grid.jqGrid('getRowData', rowid);
