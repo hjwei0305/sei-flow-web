@@ -273,6 +273,7 @@ if (EUI.FlowDefinationView) {
 if (EUI.WorkFlowView) {
     EUI.apply(EUI.WorkFlowView.prototype.lang, {
         organizationText: "组织机构",
+        organizationAllText: "组织机构中文路径",
         eventTitleText: "事件",
         taskTitleText: "任务",
         gatewayTitleText: "网关",
