@@ -322,7 +322,7 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
       versionCode: this.versionCode
     };
     if (this.viewFlowDefByVersionId) {
-      url = _ctxPath + "/design/getEntityByVersionId";
+      url = _ctxPath + "/design/getById";
       postData = {
         flowDefVersionId: this.id
       }
