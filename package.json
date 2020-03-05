@@ -30,7 +30,7 @@
     "react-fast-compare": "^2.0.4",
     "react-image-gallery": "^1.0.6",
     "sei-utils": "^1.0.84",
-    "seid": "^1.0.329"
+    "seid": "^1.0.330"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
