@@ -20,6 +20,17 @@ window.EUI = {
     managers: {},
     managerCount: 0,
     zindex: 100,
+    getSessionId: function () {
+      const kv = window[storageType].getItem('x-sid');
+      if (kv) {
+        try {
+          return JSON.parse(window.decodeURIComponent(window.atob(kv)));
+        } catch (e) {
+          return JSON.parse(kv);
+        }
+      }
+      return null;
+    },
     isDefined: function (v) {
         return typeof v !== 'undefined';
     },
@@ -616,7 +627,7 @@ EUI.apply(EUI.data.Store.prototype, {
             url: tempUrl,
             type: g.type,
             dataType: g.dataType,
-            headers: { Authorization: JSON.parse(sessionStorage.getItem('Authorization')).accessToken },
+            headers: { 'x-sid': g.getSessionId(), },
             timeout: g.timeout,
             async: g.async,
             contentType: g.isUrlParam ? undefined : g.contentType,
@@ -2164,7 +2175,7 @@ EUI.grid.GridPanel = EUI.extend(EUI.container.Container, {
                 mtype: "post",
                 pagerpos: "left",
                 recordpos: "right",
-                headers:{ Authorization: JSON.parse(sessionStorage.getItem('Authorization')).accessToken, "content-type": g.isJson ? 'application/json': undefined,},
+                headers:{ 'x-sid': g.getSessionId(), "content-type": g.isJson ? 'application/json': undefined,},
                 altRows: true,
                 hidegrid: false,
                 isJson: true,
