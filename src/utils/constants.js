@@ -43,8 +43,8 @@ const AUTH_POLICY = {
 
 export const baseUrl = "/flow-service";
 export const authApiUrl = "/sei-auth";
-export const flowDefUrl= "/sei-flow-web/design";
-export const flowDefUrlNew="/sei-flow-web";
+export const flowDefUrl= "/sei-flow-web/#/sei-flow-web/design";
+export const flowDefUrlNew="/sei-flow-web/#/sei-flow-web/design";
 
 export const defaultPageSize = 15;
 export const rowGutter = 20;
