@@ -174,7 +174,6 @@ class HomePage extends Component {
     const {selectedRows, taskType, todoDataSource,selectOrderType, completeDataSource, orderDataSource,batchApproveShow} = this.state;
     return (
       <HeadBreadcrumb
-        extra={(<span className={"head-title"}>{seiIntl.get({key: 'common_000006', desc: '您好！{0}，祝您工作愉快！'}, [user ? user.userName : ""])}</span>)}
         className={"todo-page"}
       >
         {batchApproveShow?<BatchApprove aprroveHead={this.state.aprroveHead} handleBatchApproce={this.handleBatchApproce}/>:
