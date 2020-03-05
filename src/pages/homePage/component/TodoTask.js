@@ -206,7 +206,7 @@ class TodoTask extends Component {
             onClick: () => this.handleHistory(record),
           });
 
-          return (<OptGroup optList={optList} />)
+          // return (<OptGroup optList={optList} />)
 
           if(entrustHtml){
             buttons.push(<a className={'row-operator-item'} key="turn" onClick={()=>{
