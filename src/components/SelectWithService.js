@@ -4,7 +4,9 @@
 
 import React, {Component} from 'react';
 import {Select} from 'antd';
-import {isEmpty} from "../utils/CommonUtils";
+import { commonUtils, } from '@/utils';
+
+const {isEmpty} = commonUtils;
 
 const Option = Select.Option;
 

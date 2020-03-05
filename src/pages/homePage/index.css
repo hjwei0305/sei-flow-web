@@ -1,0 +1,28 @@
+/**
+ * @Author: CHEHSHUANG
+ * @Date: 2019/3/12
+ */
+.bread-extra .head-title{
+  padding: 0 16px;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 20px;
+  font-family: Roboto;
+}
+.page-breadcrumb .page-box.todo-page{
+  background: #F0F2F5;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.tbar-right{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 480px;
+}
+.order-type:hover{
+  cursor: pointer;
+  color: #1890FF;
+}
+.order-type.selected{
+  color: #1890FF;
+}

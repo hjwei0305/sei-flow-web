@@ -50,7 +50,7 @@ export const defaultPageSize = 15;
 export const rowGutter = 20;
 export const defaultPageSizeOptions = ['15', '50', '100'];
 
-
+export const TASK_TYPE = {TODO: "todo", COMPLETE: "complete", ORDER: "order"};
 /** 升级的常量放到这里 */
 
 export {

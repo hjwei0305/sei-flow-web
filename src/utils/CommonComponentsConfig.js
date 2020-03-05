@@ -2,6 +2,11 @@ import {searchListByKey} from "./common";
 import {getAllList,findAllAppModuleByAuth} from "@/pages/AppModule/AppModuleService";
 import {findAllByAuth} from "@/pages/FlowType/FlowTypeService";
 import {findBusinessModelByAppModuleId,findFlowTypeByBusinessModelId} from "@/pages/FlowInstance/FlowInstanceService";
+import {
+  listFlowTaskApp,
+  listFlowHistoryApp,
+  listMyBillsApp,
+} from "@/pages/homePage/service";
 import { seiLocale } from 'sei-utils';
 const { seiIntl } = seiLocale;
 
@@ -96,5 +101,37 @@ export const flowTypeByBusinessModelConfig = {
  * TreeSelected
  */
 
+ // export const userTypeConfig = {
+ //   service: listAllUserType,
+ //   key: 'anEnum',
+ //   text: 'remark'
+ // };
+ //流程待办业务类型（汇总）
+ export const flowTaskAppConfig = {
+   service: listFlowTaskApp,
+   key: 'businessModeId',
+   text: 'businessModelName'
+ };
+
+ //流程历史业务类型（汇总）
+ export const flowHistoryAppConfig = {
+   service: listFlowHistoryApp,
+   key: 'businessModeId',
+   text: 'businessModelName'
+ };
+
+ //流程我的单据类型（汇总）
+ export const flowMyBillsAppConfig = {
+   service: listMyBillsApp,
+   key: 'businessModeId',
+   text: 'businessModelName'
+ };
+
+ // //应用模块
+ // export const appModuleAuthConfig = {
+ //   service: findAllAppModuleByAuth,
+ //   key: 'code',
+ //   text: 'name'
+ // };
 
 
