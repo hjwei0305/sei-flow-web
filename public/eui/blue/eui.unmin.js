@@ -21,7 +21,7 @@ window.EUI = {
     managerCount: 0,
     zindex: 100,
     getSessionId: function () {
-      const kv = window[storageType].getItem('x-sid');
+      const kv = window.sessionStorage.getItem('x-sid');
       if (kv) {
         try {
           return JSON.parse(window.decodeURIComponent(window.atob(kv)));
