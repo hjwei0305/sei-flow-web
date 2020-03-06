@@ -245,7 +245,7 @@ class BusinessModel2View extends Component {
             if ("INIT" == record.flowStatus) {
               ops.push(<a className={'row-operator-item'} key={"edit" + index} onClick={() => this.onEditClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>);
               ops.push(<a className={'row-operator-item'} key={"delete" + index} onClick={() => this.onDeleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>);
-              ops.push(<StartFlow businessKey={record.id} linkStyle style={{marginRight: 8}} name={seiIntl.get({key: 'flow_000130', desc: '提交审批'})} callBack={this.getPageData}
+              ops.push(<StartFlow version="6" businessKey={record.id} linkStyle style={{marginRight: 8}} name={seiIntl.get({key: 'flow_000130', desc: '提交审批'})} callBack={this.getPageData}
                                   businessModelCode={'com.ecmp.flow.entity.DefaultBusinessModel'}/>);
             }
             if ("INPROCESS" == record.flowStatus || "COMPLETED" == record.flowStatus) {
