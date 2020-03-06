@@ -26,7 +26,7 @@ export default [
       { title: '定义页面', path: '/DefinaionPage', component: './FlowDefination/DefinaionPage' },
       { title: '展示页面', path: '/design/show', component: './FlowDesign' },
       { title: '流程查看', path: '/design/showLook', component: './FlowLook' },
-      { title: '用户配置', path: '/configUser', component: './ConfigUser' },
+      { title: '用户配置', path: '/design/configUser', component: './ConfigUser' },
       { title: '任务创建', path: '/taskMakeOverPower', component: './TaskMakeOverPower/TaskMakeOverPowerTable' },
 
       /*流程监管*/
