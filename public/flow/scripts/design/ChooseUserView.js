@@ -78,7 +78,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
     });
     EUI.Store({
       url:  _ctxPath + "/flowTask/getExecutorsByExecutorsVos",
-      data: {
+      postParam: {
         requestExecutorsVos: JSON.stringify(requestExecutorsVos),
         businessModelCode: this.businessModelCode,
         businessId: this.businessId
