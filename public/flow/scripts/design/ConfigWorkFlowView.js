@@ -262,9 +262,9 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       for (var actTaskDefKey in defData.solidifyExecutorOfOnly) {
         this.executorInfo[actTaskDefKey] = defData.solidifyExecutorOfOnly[actTaskDefKey];
       }
-      //默认设置一个执行人，其他标红（添加：单签任务默认全部选择）
-      this.checkStartUserValid();
     }
+    //默认设置一个执行人，其他标红（添加：单签任务默认全部选择）
+    this.checkStartUserValid();
   },
 
   loadHead: function (data) {
