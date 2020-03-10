@@ -7,6 +7,7 @@
     "analyze": "cross-env ANALYZE=1 umi build",
     "start": "umi dev",
     "start:mock": "cross-env MOCK=true umi dev",
+    "start:local": "cross-env LOCAL_SERVER=true umi dev",
     "build": "umi build",
     "test": "umi test",
     "lint-staged": "lint-staged",

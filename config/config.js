@@ -56,6 +56,9 @@ export default {
   ],
   routes: pageRoutes,
   proxy,
+  define: {
+    "process.env.LOCAL_SERVER": process.env.LOCAL_SERVER
+  },
   theme: themeConfig(),
   alias: {
     '@': resolve(__dirname, './src'),
