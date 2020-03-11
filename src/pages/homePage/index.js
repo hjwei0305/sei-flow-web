@@ -39,7 +39,13 @@ class HomePage extends Component {
 
   componentDidMount() {
     this.getDataSource();
-    window.parent.frames.addEventListener('message',this.clickRfresh,false)
+    window.parent.frames.addEventListener('message',this.clickRfresh,false);
+    const __portal__ = window.parent.__portal__;
+    if (__portal__ && __portal__.eventBus) {
+      __portal__.eventBus.on(`${window.frameElement.id}_refresh`, () => {
+        this.refresh();
+      });
+    }
   }
 
   componentWillUnmount(){
