@@ -41,6 +41,7 @@ class HomePage extends Component {
     this.getDataSource();
     window.parent.frames.addEventListener('message',this.clickRfresh,false);
     const __portal__ = window.parent.__portal__;
+    console.log(window.parent.__portal__, window.frameElement.id);
     if (__portal__ && __portal__.eventBus) {
       __portal__.eventBus.on(`${window.frameElement.id}_refresh`, () => {
         this.refresh();
