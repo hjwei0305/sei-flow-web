@@ -10,6 +10,7 @@ export default {
    "back": '返回',
   ...pwa,
   ...login,
+  "basic_0011146": '流程发起人',
   "flow_000000":"加载中...",
   "organizationName": '部门',
   "flow_000000":"加载中",

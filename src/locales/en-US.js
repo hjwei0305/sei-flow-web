@@ -10,6 +10,7 @@ export default {
   "back": 'back',
   ...pwa,
   ...login,
+  "basic_0011146": 'Process Initiator',
   "flow_000000":"Loading...",
   "flow_000001":"Component Test Demo",
   "flow_000002":"Login",
