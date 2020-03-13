@@ -504,6 +504,8 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
               success: true
             };
             EUI.ProcessStatus(status);
+            // parentThis.afterSubmit && parentThis.afterSubmit(res);
+            g.refreshPage();
           },
           failure: function (response) {
             mask.hide();
@@ -511,8 +513,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
           }
         })
 
-        // parentThis.afterSubmit && parentThis.afterSubmit(res);
-        // g.refreshPage();
+
       },
       failure: function (response) {
         mask.hide();
