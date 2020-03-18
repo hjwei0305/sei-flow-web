@@ -10,7 +10,17 @@ import {seiLocale} from 'sei-utils';
 
 const {seiIntl} = seiLocale;
 
-class AnyOneSelected extends Component {
+class TurnToDoSelected extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      leftData: null,
+      rightData: null,
+      orgId: null,
+      leftSearchValue: ''
+    };
+  }
+
   //删除分配,设置左右表格的值
   handleLeftClick = async (rows, rightData) => {
     let right = [];
@@ -22,17 +32,6 @@ class AnyOneSelected extends Component {
       right.push(data);
     }
     this.setState({rightData: right})
-
-  }
-
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      leftData: null,
-      rightData: null,
-      orgId: null
-    };
   }
 
   //插入分配,设置左右表格的值
@@ -61,7 +60,7 @@ class AnyOneSelected extends Component {
   leftService = async (params) => {
     let result = null;
     if (this.state.orgId) {
-      await listAllUserByOrgId(this.state.orgId).then((res) => {
+      await listAllUserByOrgId(this.state.orgId, params.quickSearchValue, params.pageInfo).then((res) => {
         result = res.data;
       });
     }
@@ -80,9 +79,9 @@ class AnyOneSelected extends Component {
   }
 
   //左边table的selec选择触发的
-  async JointQueryService(key, param2, record) {
+  async JointQueryService(key, param2, record, searchValue) {
     let result = null;
-    await listAllUserByOrgId(key).then((res) => {
+    await listAllUserByOrgId(key, searchValue).then((res) => {
       this.setState({orgId: key})
       result = res.data
     });
@@ -126,6 +125,6 @@ class AnyOneSelected extends Component {
 
 }
 
-export default AnyOneSelected
+export default TurnToDoSelected
 
 
