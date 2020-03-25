@@ -294,6 +294,8 @@ export default {
   "flow_000290":"Processing Summary:",
   "flow_000291":"Current User",
   "flow_000292":"Agency User",
+  "flow_000293": "The authorization documents",
+  "flow_000294":"Upload authorization file",
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
   common_000002: 'Save succeed',

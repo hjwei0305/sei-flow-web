@@ -172,17 +172,17 @@ class TaskMakeOverPowerTable extends Component {
       {
         title: seiIntl.get({key: 'flow_000291', desc: '当前用户'}),
         dataIndex: 'userName',
-        width: 250
+        width: 220
       },
       {
         title: seiIntl.get({key: 'flow_000292', desc: '代理用户'}),
         dataIndex: 'powerUserName',
-        width: 250
+        width: 220
       },
       {
         title: seiIntl.get({key: 'flow_000263', desc: '开始日期'}),
         dataIndex: 'powerStartDate',
-        width: 200,
+        width: 180,
         render: (text, record) => {
           if (record.powerStartDate) {
             return moment(record.powerStartDate).format("YYYY-MM-DD");
@@ -194,7 +194,7 @@ class TaskMakeOverPowerTable extends Component {
       {
         title: seiIntl.get({key: 'flow_000264', desc: '结束日期'}),
         dataIndex: 'powerEndDate',
-        width: 220,
+        width: 180,
         render: (text, record) => {
           if (record.powerEndDate) {
             return moment(record.powerEndDate).format("YYYY-MM-DD");
@@ -204,9 +204,17 @@ class TaskMakeOverPowerTable extends Component {
         }
       },
       {
+        title: seiIntl.get({key: 'flow_000293', desc: '授权文件'}),
+        dataIndex: 'authorizationFile',
+        width: 180,
+        render: (text, record) => {
+          return "无";
+        }
+      },
+      {
         title: seiIntl.get({key: 'flow_000270', desc: '启动状态'}),
         dataIndex: 'openStatus',
-        width: 220,
+        width: 180,
         render: (text, record) => {
           if (record.openStatus == true) {
             return "启用"

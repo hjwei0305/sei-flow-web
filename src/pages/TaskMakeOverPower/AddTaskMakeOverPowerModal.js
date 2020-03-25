@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, Input, Modal, DatePicker, Button, Col, Row} from 'antd';
+import {Form, Input, Modal, DatePicker, Button, Col, Row, Divider} from 'antd';
 import {seiLocale} from 'sei-utils';
 import AnyOneSelected from './TaskMakeOverPowerSelected';
 import moment from 'moment';
@@ -102,6 +102,19 @@ class AddTaskMakeOverPowerModal extends Component {
       FormValue = {}
     }
     const dateFormat = 'YYYY-MM-DD';
+    const uploadProps = {
+      action: 'http://dsei.changhong.com:80/edm-service/upload',
+      previewUrl:'http://dsei.changhong.com:80/edm-service/preview',
+      downloadUrl:'http://dsei.changhong.com:80/edm-service/download?docId=',
+      defaultFileList: [],
+      disabled:!isAdd,
+      onChange: (status) => {
+        console.log(status);
+      },
+      onRemove: (file) => {
+        console.log(file);
+      }
+    };
     return (
       <div>
         <Modal title={title}
@@ -200,6 +213,8 @@ class AddTaskMakeOverPowerModal extends Component {
                 style={{width: "100%"}}/>
             )}
           </FormItem>
+          <Divider> {seiIntl.get({key: 'flow_000293', desc: '授权文件'})}</Divider>
+          <FileUpload   {...uploadProps} />
         </Modal>
         <Modal
           title={`指定代理人`}
