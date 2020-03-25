@@ -3,6 +3,8 @@ import {Form, Input, Modal, DatePicker, Button, Col, Row, Divider} from 'antd';
 import {seiLocale} from 'sei-utils';
 import { FileUpload } from 'seid';
 import AnyOneSelected from './TaskMakeOverPowerSelected';
+import {  constants } from "@/utils";
+const { baseUrl } = constants;
 import moment from 'moment';
 
 const {seiIntl} = seiLocale;
@@ -104,9 +106,10 @@ class AddTaskMakeOverPowerModal extends Component {
     }
     const dateFormat = 'YYYY-MM-DD';
     const uploadProps = {
-      action: 'http://dsei.changhong.com:80/edm-service/upload',
-      previewUrl:'http://dsei.changhong.com:80/edm-service/preview',
-      downloadUrl:'http://dsei.changhong.com:80/edm-service/download?docId=',
+      domain: baseUrl,
+      // action: 'http://dsei.changhong.com:80/edm-service/upload',
+      // previewUrl:'http://dsei.changhong.com:80/edm-service/preview',
+      // downloadUrl:'http://dsei.changhong.com:80/edm-service/download?docId=',
       defaultFileList: [],
       disabled:!isAdd,
       onChange: (status) => {
