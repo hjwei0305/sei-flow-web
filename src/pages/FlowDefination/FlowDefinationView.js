@@ -292,12 +292,12 @@ class FlowDefinationView extends Component {
     this.listFlowDefination(params);
   };
   pageChange = (pageInfo) => {
-    const {quickValue} = this.state;
+    const {tableSearchValue} = this.state;
     this.setState({pageInfo});
     //刷新本地数据
     let params = {
       Q_EQ_orgId: this.state.selectedNode.id,
-      quickValue,
+      quickSearchValue:tableSearchValue,
       pageInfo
     };
     this.listFlowDefination(params);
@@ -403,11 +403,11 @@ class FlowDefinationView extends Component {
           key="search"
           placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleTableSearch(value)}
-          onChange={(e) => {
-            if (e.target.value) {
-              this.handleTableSearch(e.target.value)
-            }
-          }}
+          // onChange={(e) => {
+          //   if (e.target.value) {
+          //     this.handleTableSearch(e.target.value)
+          //   }
+          // }}
           style={{width: '220px'}}
           allowClear
         />
