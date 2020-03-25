@@ -1,13 +1,13 @@
-import React, {Component} from 'react'
+import { constants } from "@/utils";
+import React, {Component} from 'react';
 import {Form, Input, Modal, DatePicker, Button, Col, Row, Divider} from 'antd';
 import {seiLocale} from 'sei-utils';
 import { FileUpload } from 'seid';
 import AnyOneSelected from './TaskMakeOverPowerSelected';
-import {  constants } from "@/utils";
-const { baseUrl } = constants;
 import moment from 'moment';
 
 const {seiIntl} = seiLocale;
+const {baseUrl} = constants;
 
 const FormItem = Form.Item;
 
