@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Form, Input, Modal, DatePicker, Button, Col, Row, Divider} from 'antd';
 import {seiLocale} from 'sei-utils';
+import { FileUpload } from 'seid';
 import AnyOneSelected from './TaskMakeOverPowerSelected';
 import moment from 'moment';
 
