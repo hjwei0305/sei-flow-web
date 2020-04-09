@@ -45,7 +45,7 @@ class TodoTbar extends Component {
     const { modelId } = this.state;
     const { visible = false } = this.props;
     return (
-      visible && <div className={"tbar-right"}>
+      <div className={"tbar-right"} style={{ display: visible ? 'flex' : 'none'}}>
         <SelectWithService
           value={modelId}
           config={flowTaskAppConfig}

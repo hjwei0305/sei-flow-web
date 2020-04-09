@@ -17,7 +17,6 @@ import "./index.css";
 
 const { TASK_TYPE, } = constants;
 const  { getCurrentUser, } = userUtils;
-const { seiIntl } = seiLocale;
 
 class HomePage extends Component {
   constructor(props) {
@@ -34,7 +33,12 @@ class HomePage extends Component {
       selectOrderType:"all",
       aprroveHead:[]
     }
+    this.cacheParams = {
+      [TASK_TYPE.TODO]: {},
+      [TASK_TYPE.COMPLETE]: {},
+      [TASK_TYPE.ORDER]: {},
 
+    }
   }
 
   componentDidMount() {
@@ -70,11 +74,12 @@ class HomePage extends Component {
   }
 
   refresh=()=>{
-    this.getDataSource({...this.state.searchValue});
+    const { taskType, } = this.state;
+    this.getDataSource({...this.state.searchValue, ...this.cacheParams[taskType]});
   }
 
   getTaskType = (taskType) => {
-    this.setState({taskType}, () => this.getDataSource())
+    this.setState({taskType}, () => this.getDataSource(this.cacheParams[taskType]))
   }
   getDataSource = (params = {}) => {
     params = {pageInfo:{page: 1, rows: 50},...params};
@@ -126,6 +131,7 @@ class HomePage extends Component {
 
   getService = (params) => {
     const {taskType} = this.state;
+    this.cacheParams[taskType] = params;
     switch (taskType) {
       case TASK_TYPE.TODO:
         return listFlowTaskWithAllCount(params);

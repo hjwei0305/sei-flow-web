@@ -12,6 +12,11 @@ const proxy = {
     secure: false,
     pathRewrite: { '^/service.api': '' },
   },
+  '/api-gateway': {
+    target: 'http://10.4.208.86:8100',
+    changeOrigin: true,
+    secure: false,
+  },
 };
 /** 代理到本地服务 */
 if (LOCAL_SERVER === 'true') {

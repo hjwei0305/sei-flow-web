@@ -44,7 +44,7 @@ class CompleteTbar extends Component {
     const { modelId,dataType } = this.state;
     const {visible=false} = this.props;
     return (
-      visible && <div className={"tbar-right"} style={{width: 860}} >
+      <div className={"tbar-right"} style={{ display: visible ? 'flex' : 'none', width: 860, }} >
         <Select  defaultValue ="all"  placeholder={seiIntl.get({key: 'common_001097', desc: '选择数据类型'})}
                  onChange={this.handleChangeDataType} style={{ width: "24%" }} allowClear={true}  >
           <Select.Option key='all' value='all'>{seiIntl.get({key: 'common_001092', desc: '全部'})}</Select.Option>
