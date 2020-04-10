@@ -52,7 +52,7 @@ export default class SelectWithService extends Component {
         }
         if (!tempVaule && tempVaule!==0 && textValue) {
             if(!labelInValue){
-                this.setState({selectValue: null})
+                this.setState({selectValue: undefined})
             }else{
                 this.setState({selectValue: {key: "",text: ""}})
             }
