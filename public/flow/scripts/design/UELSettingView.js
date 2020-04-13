@@ -247,7 +247,7 @@ EUI.UELSettingView = EUI.extend(EUI.CustomUI, {
       g.logicUelCmp.setValue(value);
     });
     $(".property-item").live({
-      "onclick": function () {
+      "click": function () {
         if (g.isDefault) {
           return;
         }
