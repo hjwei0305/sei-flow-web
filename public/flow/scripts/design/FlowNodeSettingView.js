@@ -406,7 +406,8 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }, {
         xtype: "CheckBox",
         title: "允许流程发起人终止",
-        name: "allowTerminate"
+        name: "allowTerminate",
+        checked: true
       }, {
         xtype: "CheckBox",
         title: "允许加签",
@@ -421,15 +422,18 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       items = items.concat([{
         xtype: "CheckBox",
         title: "允许流程发起人终止",
-        name: "allowTerminate"
+        name: "allowTerminate",
+        checked: true
       }, {
         xtype: "CheckBox",
         title: "允许撤回",
-        name: "allowPreUndo"
+        name: "allowPreUndo",
+        checked: true
       }, {
         xtype: "CheckBox",
         title: "允许驳回",
-        name: "allowReject"
+        name: "allowReject",
+        checked: true
       }]);
     }
     //会签添加转办功能
@@ -437,13 +441,15 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       items = items.concat([{
         xtype: "CheckBox",
         title: "允许转办",
-        name: "allowTransfer"
+        name: "allowTransfer",
+        checked: true
       }]);
       if (this.nodeType == "Approve") {
         items = items.concat([{
           xtype: "CheckBox",
           title: "允许委托",
-          name: "allowEntrust"
+          name: "allowEntrust",
+          checked: true
         }]);
       }
     }
