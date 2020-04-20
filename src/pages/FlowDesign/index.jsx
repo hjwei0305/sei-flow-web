@@ -1,9 +1,11 @@
 import React from 'react';
+import {gatewayHost} from "../../../configs/DefaultConfig";
 
 export default class index extends React.Component {
 
   constructor(props) {
     super(props);
+    window._ctxPath = gatewayHost + "/flow-service";
   }
 
   componentDidMount() {
