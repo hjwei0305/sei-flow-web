@@ -92,10 +92,10 @@ class AnyOneSelected extends Component {
   render() {
     const columns = [
       {
-        title: seiIntl.get({key: 'code', desc: '代码'}),
+        title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: "code",
       }, {
-        title: seiIntl.get({key: 'name', desc: '名称'}),
+        title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: "userName",
       }, {
         title: seiIntl.get({key: 'organizationName', desc: '部门'}),

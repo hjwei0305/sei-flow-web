@@ -1,11 +1,13 @@
 import React from 'react';
-import {gatewayHost} from "../../../configs/DefaultConfig";
+import { constants } from '@/utils';
+
+const { SERVER_PATH, } = constants;
 
 export default class index extends React.Component {
 
   constructor(props) {
     super(props);
-    window._ctxPath = gatewayHost + "/flow-service";
+    window._ctxPath = SERVER_PATH + "/flow-service";
   }
 
   componentDidMount() {
