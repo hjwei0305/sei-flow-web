@@ -78,7 +78,11 @@ class AddTaskMakeOverPowerModal extends Component {
     this.props.form.setFieldsValue({
       'powerUserId': this.selectedOne.id,
       'powerUserAccount': this.selectedOne.code,
-      'powerUserName': this.selectedOne.userName
+      'powerUserName': this.selectedOne.userName,
+      'powerUserOrgId': this.selectedOne.organization.id,
+      'powerUserOrgCode': this.selectedOne.organization.code,
+      'powerUserOrgName': this.selectedOne.organization.name
+
     });
     this.setState({
       selectUserModal: false
@@ -153,6 +157,33 @@ class AddTaskMakeOverPowerModal extends Component {
             label="powerUserAccount">
             {getFieldDecorator('powerUserAccount', {
               initialValue: FormValue.powerUserAccount ? FormValue.powerUserAccount : "",
+            })(
+              <Input/>
+            )}
+          </FormItem>
+          <FormItem
+            style={{display: "none"}}
+            label="powerUserOrgId">
+            {getFieldDecorator('powerUserOrgId', {
+              initialValue: FormValue.powerUserOrgId ? FormValue.powerUserOrgId : "",
+            })(
+              <Input/>
+            )}
+          </FormItem>
+          <FormItem
+            style={{display: "none"}}
+            label="powerUserOrgCode">
+            {getFieldDecorator('powerUserOrgCode', {
+              initialValue: FormValue.powerUserOrgCode ? FormValue.powerUserOrgCode : "",
+            })(
+              <Input/>
+            )}
+          </FormItem>
+          <FormItem
+            style={{display: "none"}}
+            label="powerUserOrgName">
+            {getFieldDecorator('powerUserOrgName', {
+              initialValue: FormValue.powerUserOrgName ? FormValue.powerUserOrgName : "",
             })(
               <Input/>
             )}
