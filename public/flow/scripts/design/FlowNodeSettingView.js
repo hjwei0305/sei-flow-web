@@ -3136,6 +3136,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       data.rowdata = rowdata;
       dataArray.push(data);
 
+      var dataOrg = {};
       rowdata = EUI.getCmp("orgGrid").getGridData();
       dataOrg.userType = "Org";
       dataOrg.ids = this.getSelectIds(rowdata);
