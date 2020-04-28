@@ -7,9 +7,9 @@ import AddTaskMakeOverPowerModal from "./AddTaskMakeOverPowerModal";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import {seiLocale} from 'sei-utils';
 import moment from 'moment';
-import { commonUtils, } from '@/utils';
+import {commonUtils,} from '@/utils';
 
-const { searchListByKeyWithTag, } = commonUtils;
+const {searchListByKeyWithTag,} = commonUtils;
 const {seiIntl} = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
@@ -31,7 +31,7 @@ class TaskMakeOverPowerTable extends Component {
   }
 
   toggoleGlobalLoading = (loading) => {
-    const { dispatch, } = this.props;
+    const {dispatch,} = this.props;
     dispatch({
       type: 'global/updateState',
       payload: {
@@ -170,19 +170,69 @@ class TaskMakeOverPowerTable extends Component {
         }
       },
       {
+        title: seiIntl.get({key: 'flow_000295', desc: '授权类型'}),
+        dataIndex: 'makeOverPowerType',
+        width: 110,
+        render: (text, record) => {
+          if (record.makeOverPowerType == "sameToSee") {
+            return "协办模式";
+          } else if (record.makeOverPowerType == "turnToDo") {
+            return "转办模式";
+          } else {
+            return "";
+          }
+        }
+      },
+      {
         title: seiIntl.get({key: 'flow_000291', desc: '当前用户'}),
         dataIndex: 'userName',
-        width: 220
+        width: 110
       },
       {
         title: seiIntl.get({key: 'flow_000292', desc: '代理用户'}),
         dataIndex: 'powerUserName',
-        width: 220
+        width: 110
+      },
+      {
+        title: seiIntl.get({key: 'flow_000041', desc: '应用模块'}),
+        dataIndex: 'appModuleName',
+        width: 130,
+        render: (text, record) => {
+          if (record.appModuleName) {
+            return record.appModuleName;
+          } else {
+            return "--";
+          }
+        }
+      },
+      {
+        title: seiIntl.get({key: 'flow_000053', desc: '业务实体'}),
+        dataIndex: 'appModuleName',
+        width: 130,
+        render: (text, record) => {
+          if (record.businessModelName) {
+            return record.businessModelName;
+          } else {
+            return "--";
+          }
+        }
+      },
+      {
+        title: seiIntl.get({key: 'flow_000055', desc: '流程类型'}),
+        dataIndex: 'flowTypeName',
+        width: 130,
+        render: (text, record) => {
+          if (record.flowTypeName) {
+            return record.flowTypeName;
+          } else {
+            return "--";
+          }
+        }
       },
       {
         title: seiIntl.get({key: 'flow_000263', desc: '开始日期'}),
         dataIndex: 'powerStartDate',
-        width: 180,
+        width: 130,
         render: (text, record) => {
           if (record.powerStartDate) {
             return moment(record.powerStartDate).format("YYYY-MM-DD");
@@ -194,7 +244,7 @@ class TaskMakeOverPowerTable extends Component {
       {
         title: seiIntl.get({key: 'flow_000264', desc: '结束日期'}),
         dataIndex: 'powerEndDate',
-        width: 180,
+        width: 130,
         render: (text, record) => {
           if (record.powerEndDate) {
             return moment(record.powerEndDate).format("YYYY-MM-DD");
@@ -203,21 +253,21 @@ class TaskMakeOverPowerTable extends Component {
           }
         }
       },
-      {
-        title: seiIntl.get({key: 'flow_000293', desc: '授权文件'}),
-        dataIndex: 'authorizationFile',
-        width: 180,
-        render: (text, record) => {
-          return "无";
-        }
-      },
+      // {
+      //   title: seiIntl.get({key: 'flow_000293', desc: '授权文件'}),
+      //   dataIndex: 'authorizationFile',
+      //   width: 180,
+      //   render: (text, record) => {
+      //     return "无";
+      //   }
+      // },
       {
         title: seiIntl.get({key: 'flow_000270', desc: '启动状态'}),
         dataIndex: 'openStatus',
-        width: 180,
+        width: 100,
         render: (text, record) => {
           if (record.openStatus == true) {
-            return "启用"
+            return "启用";
           } else {
             return "禁用";
           }

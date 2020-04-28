@@ -1,9 +1,15 @@
-import { constants } from "@/utils";
+import {constants} from "@/utils";
 import React, {Component} from 'react';
-import {Form, Input, Modal, DatePicker, Button, Col, Row, Divider} from 'antd';
+import {Form, Input, Modal, DatePicker, Button, Col, Row, Divider, Select} from 'antd';
 import {seiLocale} from 'sei-utils';
-import { FileUpload } from 'seid';
+import {FileUpload} from 'seid';
 import AnyOneSelected from './TaskMakeOverPowerSelected';
+import SearchTable from "@/components/SearchTable";
+import {
+  appModuleAuthConfig,
+  businessModelByAppModelConfig,
+  flowTypeByBusinessModelConfig
+} from '@/utils/CommonComponentsConfig';
 import moment from 'moment';
 
 const {seiIntl} = seiLocale;
@@ -25,7 +31,13 @@ class AddTaskMakeOverPowerModal extends Component {
       selectUserModal: false,
       selectedOneId: "",
       selectedOneCode: "",
-      selectedOneName: ""
+      selectedOneName: "",
+      appModuleId: "",
+      appModuleName: "",
+      businessModelId: "",
+      businessModelName: "",
+      flowTypeId: "",
+      flowTypeName: ""
     }
   }
 
@@ -73,15 +85,53 @@ class AddTaskMakeOverPowerModal extends Component {
     this.onChange('endValue', value)
   }
 
+  selectChangeAppModel = (record) => {
+    if (record && record.id) {
+      this.setState({
+        appModuleId: record.id,
+        appModuleName: record.name,
+        businessModelId: "",
+        businessModelName: "",
+        flowTypeId: "",
+        flowTypeName: ""
+      });
+    } else {
+      this.setState({
+        appModuleId: "",
+        appModuleName: "",
+        businessModelId: "",
+        businessModelName: "",
+        flowTypeId: "",
+        flowTypeName: ""
+      });
+    }
+  };
+
+  selectChangeBusinessModel = (record) => {
+    if (record && record.id) {
+      this.setState({businessModelId: record.id, businessModelName: record.name, flowTypeId: "", flowTypeName: ""});
+    } else {
+      this.setState({businessModelId: "", businessModelName: "", flowTypeId: "", flowTypeName: ""});
+    }
+  };
+
+  selectChangeFlowType = (record) => {
+    if (record && record.id) {
+      this.setState({flowTypeId: record.id, flowTypeName: record.name});
+    } else {
+      this.setState({flowTypeId: "", flowTypeName: ""});
+    }
+  };
+
 
   okHandle = () => {
     this.props.form.setFieldsValue({
       'powerUserId': this.selectedOne.id,
       'powerUserAccount': this.selectedOne.code,
       'powerUserName': this.selectedOne.userName,
-      'powerUserOrgId': this.selectedOne.organization.id,
-      'powerUserOrgCode': this.selectedOne.organization.code,
-      'powerUserOrgName': this.selectedOne.organization.name
+      'powerUserOrgId': this.selectedOne.organizationId,
+      'powerUserOrgCode': this.selectedOne.organizationCode,
+      'powerUserOrgName': this.selectedOne.organizationName
 
     });
     this.setState({
@@ -115,7 +165,7 @@ class AddTaskMakeOverPowerModal extends Component {
       // previewUrl:'http://dsei.changhong.com:80/edm-service/preview',
       // downloadUrl:'http://dsei.changhong.com:80/edm-service/download?docId=',
       defaultFileList: [],
-      disabled:!isAdd,
+      disabled: !isAdd,
       onChange: (status) => {
         console.log(status);
       },
@@ -198,6 +248,33 @@ class AddTaskMakeOverPowerModal extends Component {
             )}
           </FormItem>
           <FormItem
+            style={{display: "none"}}
+            label="appModuleId">
+            {getFieldDecorator('appModuleName', {
+              initialValue: FormValue.appModuleName ? FormValue.appModuleName : this.state.appModuleName,
+            })(
+              <Input/>
+            )}
+          </FormItem>
+          <FormItem
+            style={{display: "none"}}
+            label="businessModelId">
+            {getFieldDecorator('businessModelName', {
+              initialValue: FormValue.businessModelName ? FormValue.businessModelName : this.state.businessModelName,
+            })(
+              <Input/>
+            )}
+          </FormItem>
+          <FormItem
+            style={{display: "none"}}
+            label="flowTypeId">
+            {getFieldDecorator('flowTypeName', {
+              initialValue: FormValue.flowTypeName ? FormValue.flowTypeName : this.state.flowTypeName,
+            })(
+              <Input/>
+            )}
+          </FormItem>
+          <FormItem
             {...formItemLayout}
             label={seiIntl.get({key: 'flow_000292', desc: '代理用户'})}>
             <Row gutter={10}>
@@ -217,6 +294,81 @@ class AddTaskMakeOverPowerModal extends Component {
               </Col>
             </Row>
           </FormItem>
+
+          <FormItem
+            {...formItemLayout}
+            label={seiIntl.get({key: 'flow_000295', desc: '授权类型'})}>
+            {getFieldDecorator('makeOverPowerType', {
+              initialValue: FormValue.makeOverPowerType ? FormValue.makeOverPowerType : "sameToSee",
+              rules: [{required: true, message: seiIntl.get({key: 'flow_000296', desc: '请选择授权类型'})}
+              ]
+            })(
+              <Select style={{width: "100%"}} allowClear={false}>
+                <Select.Option key='sameToSee' value='sameToSee'>{seiIntl.get({
+                  key: 'flow_000297',
+                  desc: '协办模式'
+                })}</Select.Option>
+                <Select.Option key='turnToDo' value='turnToDo'>{seiIntl.get({
+                  key: 'flow_000298',
+                  desc: '转办模式'
+                })}</Select.Option>
+              </Select>
+            )}
+          </FormItem>
+
+
+          <FormItem
+            {...formItemLayout}
+            label={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}>
+            {getFieldDecorator('appModuleId', {
+              initialValue: FormValue.appModuleId ? FormValue.appModuleId : this.state.appModuleId,
+              rules: [{required: false}
+              ]
+            })(
+              <SearchTable
+                key="searchAppModelTable"
+                initValue={false}
+                isNotFormItem={true} config={appModuleAuthConfig}
+                selectChange={this.selectChangeAppModel}/>
+            )}
+          </FormItem>
+
+          <FormItem
+            {...formItemLayout}
+            label={seiIntl.get({key: 'flow_000053', desc: '业务实体'})}>
+            {getFieldDecorator('businessModelId', {
+              initialValue: FormValue.businessModelId ? FormValue.businessModelId : this.state.businessModelId,
+              rules: [{required: false}
+              ]
+            })(
+              <SearchTable
+                key={ FormValue.businessModelId || this.state.businessModelId }
+                initValue={false}
+                isNotFormItem={true}
+                params={{"appModuleId": this.state.appModuleId}}
+                config={businessModelByAppModelConfig}
+                selectChange={this.selectChangeBusinessModel}/>
+            )}
+          </FormItem>
+
+          <FormItem
+            {...formItemLayout}
+            label={seiIntl.get({key: 'flow_000055', desc: '流程类型'})}>
+            {getFieldDecorator('flowTypeId', {
+              initialValue: FormValue.flowTypeId ? FormValue.flowTypeId : this.state.flowTypeId,
+              rules: [{required: false}
+              ]
+            })(
+              <SearchTable
+                key={FormValue.flowTypeId || this.state.flowTypeId}
+                initValue={false}
+                isNotFormItem={true}
+                params={{"businessModelId": this.state.businessModelId}}
+                config={flowTypeByBusinessModelConfig}
+                selectChange={this.selectChangeFlowType}/>
+            )}
+          </FormItem>
+
 
           <FormItem
             {...formItemLayout}
@@ -248,8 +400,8 @@ class AddTaskMakeOverPowerModal extends Component {
                 style={{width: "100%"}}/>
             )}
           </FormItem>
-          <Divider> {seiIntl.get({key: 'flow_000293', desc: '授权文件'})}</Divider>
-          <FileUpload   {...uploadProps} />
+          {/*<Divider> {seiIntl.get({key: 'flow_000293', desc: '授权文件'})}</Divider>*/}
+          {/*<FileUpload   {...uploadProps} />*/}
         </Modal>
         <Modal
           title={`指定代理人`}
