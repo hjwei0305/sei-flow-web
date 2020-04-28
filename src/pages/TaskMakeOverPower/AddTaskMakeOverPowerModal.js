@@ -85,6 +85,17 @@ class AddTaskMakeOverPowerModal extends Component {
     this.onChange('endValue', value)
   }
 
+  setStateNull = () =>{
+    this.setState({
+      appModuleId: "",
+      appModuleName: "",
+      businessModelId: "",
+      businessModelName: "",
+      flowTypeId: "",
+      flowTypeName: ""
+    });
+  }
+
   selectChangeAppModel = (record) => {
     if (record && record.id) {
       this.setState({
@@ -176,6 +187,7 @@ class AddTaskMakeOverPowerModal extends Component {
     return (
       <div>
         <Modal title={title}
+               destroyOnClose={true}
                visible={modalVisible}
                onOk={handleOk}
                onCancel={handleCancel}
@@ -249,7 +261,7 @@ class AddTaskMakeOverPowerModal extends Component {
           </FormItem>
           <FormItem
             style={{display: "none"}}
-            label="appModuleId">
+            label="appModuleName">
             {getFieldDecorator('appModuleName', {
               initialValue: FormValue.appModuleName ? FormValue.appModuleName : this.state.appModuleName,
             })(
@@ -258,7 +270,7 @@ class AddTaskMakeOverPowerModal extends Component {
           </FormItem>
           <FormItem
             style={{display: "none"}}
-            label="businessModelId">
+            label="businessModelName">
             {getFieldDecorator('businessModelName', {
               initialValue: FormValue.businessModelName ? FormValue.businessModelName : this.state.businessModelName,
             })(
@@ -267,7 +279,7 @@ class AddTaskMakeOverPowerModal extends Component {
           </FormItem>
           <FormItem
             style={{display: "none"}}
-            label="flowTypeId">
+            label="flowTypeName">
             {getFieldDecorator('flowTypeName', {
               initialValue: FormValue.flowTypeName ? FormValue.flowTypeName : this.state.flowTypeName,
             })(
@@ -328,7 +340,8 @@ class AddTaskMakeOverPowerModal extends Component {
               <SearchTable
                 key="searchAppModelTable"
                 initValue={false}
-                isNotFormItem={true} config={appModuleAuthConfig}
+                isNotFormItem={true}
+                config={appModuleAuthConfig}
                 selectChange={this.selectChangeAppModel}/>
             )}
           </FormItem>
@@ -342,7 +355,7 @@ class AddTaskMakeOverPowerModal extends Component {
               ]
             })(
               <SearchTable
-                key={ FormValue.businessModelId || this.state.businessModelId }
+                key="searchBusinessModelTable"
                 initValue={false}
                 isNotFormItem={true}
                 params={{"appModuleId": this.state.appModuleId}}
@@ -360,7 +373,7 @@ class AddTaskMakeOverPowerModal extends Component {
               ]
             })(
               <SearchTable
-                key={FormValue.flowTypeId || this.state.flowTypeId}
+                key="searchFlowType"
                 initValue={false}
                 isNotFormItem={true}
                 params={{"businessModelId": this.state.businessModelId}}

@@ -82,6 +82,8 @@ class TaskMakeOverPowerTable extends Component {
             message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             this.getDataSource();
+            //清空model数据
+            this.ref.setStateNull();
             this.setState({confirmLoading: false, modalVisible: false});
           } else {
             message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
@@ -95,6 +97,8 @@ class TaskMakeOverPowerTable extends Component {
   };
 
   handleModalCancel = () => {
+    //清空model数据
+    this.ref.setStateNull();
     this.handleModalVisible(false)
   };
 
@@ -207,7 +211,7 @@ class TaskMakeOverPowerTable extends Component {
       },
       {
         title: seiIntl.get({key: 'flow_000053', desc: '业务实体'}),
-        dataIndex: 'appModuleName',
+        dataIndex: 'businessModelName',
         width: 130,
         render: (text, record) => {
           if (record.businessModelName) {
