@@ -65,7 +65,7 @@ export default {
   "flow_000051":"Executor Account",
   "flow_000052":"Creation Time",
   "flow_000053":"Business Entities:",
-  "flow_000054":"Business Entities:",
+  "flow_000054":"Business Entities",
   "flow_000055":"Process Type:",
   "flow_000056":"Process Type",
   "flow_000057":"Enter code or name to query",

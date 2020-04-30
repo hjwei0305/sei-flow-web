@@ -210,7 +210,7 @@ class TaskMakeOverPowerTable extends Component {
         }
       },
       {
-        title: seiIntl.get({key: 'flow_000053', desc: '业务实体'}),
+        title: seiIntl.get({key: 'flow_000054', desc: '业务实体'}),
         dataIndex: 'businessModelName',
         width: 130,
         render: (text, record) => {
@@ -222,7 +222,7 @@ class TaskMakeOverPowerTable extends Component {
         }
       },
       {
-        title: seiIntl.get({key: 'flow_000055', desc: '流程类型'}),
+        title: seiIntl.get({key: 'flow_000056', desc: '流程类型'}),
         dataIndex: 'flowTypeName',
         width: 130,
         render: (text, record) => {
