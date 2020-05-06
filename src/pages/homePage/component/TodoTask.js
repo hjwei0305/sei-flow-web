@@ -303,12 +303,12 @@ class TodoTask extends Component {
         }
       },
       {
-        title: seiIntl.get({key: 'common_000221', desc: '任务发起人'}),
+        title: seiIntl.get({key: 'basic_0011146', desc: '流程发起人'}),
         dataIndex: 'creatorName',
         width: 200,
         render: (text, record, index) => {
           if (record) {
-            const res = `${record.creatorName }【${record.creatorAccount}】`;
+            const res = `${record.flowInstance.creatorName }【${record.flowInstance.creatorAccount}】`;
             return <span title={res}>{res}</span>;
           }
           return null;

@@ -31,7 +31,7 @@ export const listMyBillsApp = (params) => {
 export const listFlowTaskWithAllCount = (params = {}) => {
   params["S_priority"] = params["S_priority"] || "DESC";
   params["S_createdDate"] = params["S_priority"] || "DESC";
-  const quickSearchProperties = ["flowName", "taskName", "flowInstance.businessCode", "flowInstance.businessModelRemark", "creatorName", "creatorAccount"];
+  const quickSearchProperties = ["flowName", "taskName", "flowInstance.businessCode", "flowInstance.businessModelRemark", "flowInstance.creatorName", "flowInstance.creatorAccount"];
   const searchFilter = convertSearchFilter({quickSearchProperties, ...params});
   const modelId = params.modelId ? params.modelId : "";
   return httpUtils.postJson(flowAPI + "/flowTask/listFlowTaskWithAllCount?modelId=" + modelId, JSON.stringify(searchFilter))
