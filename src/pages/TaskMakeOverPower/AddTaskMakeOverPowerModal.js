@@ -315,7 +315,7 @@ class AddTaskMakeOverPowerModal extends Component {
               rules: [{required: true, message: seiIntl.get({key: 'flow_000296', desc: '请选择授权类型'})}
               ]
             })(
-              <Select style={{width: "100%"}} allowClear={false}>
+              <Select disabled={!isAdd} style={{width: "100%"}} allowClear={false}>
                 <Select.Option key='sameToSee' value='sameToSee'>{seiIntl.get({
                   key: 'flow_000297',
                   desc: '协办模式'
