@@ -24,7 +24,7 @@ export default class index extends React.Component {
     if (isCopy && !isFromVersion) {
         orgName = decodeURIComponent(EUI.util.getUrlParam("orgName"));
     }
-    EUI.onReady(function () {
+    // EUI.onReady(function () {
         flowView = new EUI.WorkFlowView({
             id: id,
             orgId: orgId,
@@ -37,7 +37,7 @@ export default class index extends React.Component {
             isFromVersion: isFromVersion,
             renderTo: "content"
         });
-    });
+    // });
   }
 
   render() {
