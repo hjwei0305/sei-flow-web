@@ -194,15 +194,31 @@ class BusinessModelModal extends Component {
             </Col>
           </Row>
           <Row>
+            {/*<Col span={12}>*/}
+            {/*  <FormItem*/}
+            {/*    {...formItemLayout}*/}
+            {/*    label={seiIntl.get({key: 'flow_000095', desc: '提交任务地址'})}>*/}
+            {/*    {getFieldDecorator('completeTaskServiceUrl', {*/}
+            {/*      initialValue: FormValue.completeTaskServiceUrl ? FormValue.completeTaskServiceUrl : "",*/}
+            {/*      rules: [{*/}
+            {/*        required: true,*/}
+            {/*        message: seiIntl.get({key: 'flow_000175', desc: '请填写提交任务地址!'}),*/}
+            {/*        whitespace: true*/}
+            {/*      }]*/}
+            {/*    })(*/}
+            {/*      <Input/>*/}
+            {/*    )}*/}
+            {/*  </FormItem>*/}
+            {/*</Col>*/}
             <Col span={12}>
               <FormItem
                 {...formItemLayout}
-                label={seiIntl.get({key: 'flow_000095', desc: '提交任务地址'})}>
-                {getFieldDecorator('completeTaskServiceUrl', {
-                  initialValue: FormValue.completeTaskServiceUrl ? FormValue.completeTaskServiceUrl : "",
+                label={seiIntl.get({key: 'flow_000097', desc: '表单URL'})}>
+                {getFieldDecorator('lookUrl', {
+                  initialValue: FormValue.lookUrl ? FormValue.lookUrl : "",
                   rules: [{
                     required: true,
-                    message: seiIntl.get({key: 'flow_000175', desc: '请填写提交任务地址!'}),
+                    message: seiIntl.get({key: 'flow_000169', desc: '请填写条件属性值服务地址!'}),
                     whitespace: true
                   }]
                 })(
@@ -219,24 +235,6 @@ class BusinessModelModal extends Component {
                   rules: [{
                     required: true,
                     message: seiIntl.get({key: 'flow_000176', desc: '请填写表单明细URL!'}),
-                    whitespace: true
-                  }]
-                })(
-                  <Input/>
-                )}
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <FormItem
-                {...formItemLayout}
-                label={seiIntl.get({key: 'flow_000097', desc: '表单URL'})}>
-                {getFieldDecorator('lookUrl', {
-                  initialValue: FormValue.lookUrl ? FormValue.lookUrl : "",
-                  rules: [{
-                    required: true,
-                    message: seiIntl.get({key: 'flow_000169', desc: '请填写条件属性值服务地址!'}),
                     whitespace: true
                   }]
                 })(
