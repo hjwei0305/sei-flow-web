@@ -7,6 +7,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   nodeType: null,
   afterConfirm: null,
   businessModelId: null,
+  instanceId: null,
   flowTypeId: null,
   id: null,
   notifyBeforePositionData: null,
@@ -302,8 +303,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         title: "允许减签",
         name: "allowSubtractSign"
       }]);
-    }
-    else if (this.nodeType != "CounterSign" && this.nodeType != "ParallelTask" && this.nodeType != "SerialTask" && this.type != "ServiceTask" && this.type != "ReceiveTask" && this.nodeType != "CallActivity") {
+    } else if (this.nodeType != "CounterSign" && this.nodeType != "ParallelTask" && this.nodeType != "SerialTask" && this.type != "ServiceTask" && this.type != "ReceiveTask" && this.nodeType != "CallActivity") {
       items = items.concat([{
         xtype: "CheckBox",
         title: "允许流程发起人终止",
@@ -496,6 +496,23 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         },
         items: [this.getSelfDef(),
           this.getSelfDefOfOrgAndSel(),
+          {
+            xtype: "ToolBar",
+            region: "north",
+            height: 40,
+            padding: 0,
+            border: false,
+            hidden: g.instanceId == null ? true : false,
+            items: [{
+              xtype: "Button",
+              title: "查看候选人",
+              iconCss: "ecmp-common-choose",
+              id: "lookCandidateBtn",
+              handler: function () {
+                g.getCandidateInfo(g.data);
+              }
+            }]
+          },
           this.getPositionGrid(),
           this.getPositionOfOrgGrid(),
           this.getPositionOfOrgAndSelGrid(),
@@ -508,6 +525,115 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           this.getOrganizationOfSelGrid()]
       }]
     };
+  },
+  getCandidateInfo: function (nodeData) {
+    var g = this;
+    var requestExecutorsVos = [];
+    if (nodeData && !Object.isEmpty(nodeData)) {
+      var nodeConfig = nodeData.nodeConfig;
+      if (!nodeConfig || !nodeConfig.executor || nodeConfig.executor.length === 0) {
+        return;
+      }
+      for (var i in nodeConfig.executor) {
+        var newObj = {}, obj = nodeConfig.executor[i];
+        newObj.userType = obj.userType;
+        if (obj.userType === "SelfDefinition") {
+          newObj.ids = obj.selfDefId || obj.selfDefOfOrgAndSelId || null;
+        } else {
+          newObj.ids = obj.ids || null;
+        }
+        requestExecutorsVos.push(newObj);
+      }
+    }
+    var mask = EUI.LoadMask({
+      msg: "正在获取数据，请稍候..."
+    });
+    EUI.Store({
+      url: _ctxPath + "/flowTask/getExecutorsByVoAndInstanceIdVo",
+      postType: 'json',
+      isUrlParam: false,
+      params: {
+        requestExecutorsVos: JSON.stringify(requestExecutorsVos),
+        instanceId: g.instanceId
+      },
+      success: function (result) {
+        mask.remove();
+        if (result.success) {
+          g.showCandidateWin(result.data);
+        } else {
+          EUI.ProcessStatus(result);
+        }
+      },
+      failure: function (response) {
+        mask.remove();
+        EUI.ProcessStatus(response);
+      }
+    });
+  },
+  showCandidateWin: function (executorList) {
+    var g = this;
+    g.win = EUI.Window({
+      title: "候选人名单",
+      padding: 15,
+      width: 580,
+      height: 400,
+      buttons: [{
+        title: "关闭",
+        selected: true,
+        handler: function () {
+          g.win.close();
+        }
+      }],
+      items: [{
+        xtype: "Container",
+        layout: "center",
+        border: false,
+        padding: 0,
+        itemspace: 0,
+        items: [this.initCandidateWind(executorList)]
+      }]
+    });
+  },
+  initCandidateWind: function (executorList) {
+    return {
+      xtype: "GridPanel",
+      border: true,
+      width: 560,
+      id: "selUserGridGrid",
+      region: "east",
+      gridCfg: {
+        datatype: "local",
+        hasPager: false,
+        rowNum: 150,
+        loadonce: true,
+        multiselect: false,
+        sortname: 'code',
+        colModel: this.executorGridColModel(),
+        data: executorList
+      }
+    }
+  },
+  executorGridColModel: function () {
+    return [{
+      name: "id",
+      index: "id",
+      hidden: true
+    }, {
+      label: "姓名",
+      name: "name",
+      index: "name",
+      width: 150
+    }, {
+      label: "账号",
+      name: "code",
+      index: "code",
+      width: 150
+    }, {
+      label: "组织机构",
+      name: "organizationName",
+      index: "organizationName",
+      width: 250
+    }];
   },
   initUserTypeGroup: function () {
     var g = this;
@@ -555,10 +681,10 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     if (userType == "StartUser") {
       var grid = EUI.getCmp("gridBox");
       grid && grid.hide();
-    }
-    else if (userType == "Position") {
+    } else if (userType == "Position") {
       EUI.getCmp("gridBox").show();
       EUI.getCmp("positionGrid").show();
+      EUI.getCmp("lookCandidateBtn").show();
       EUI.getCmp("positionTypeGrid").hide();
       EUI.getCmp("positionOfOrgGrid").hide();
       EUI.getCmp("positionOfOrgAndSelGrid").hide();
@@ -573,10 +699,10 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       if (data && data.rowdata) {
         EUI.getCmp("positionGrid").setDataInGrid(data.rowdata);
       }
-    }
-    else if (userType == "PositionType") {
+    } else if (userType == "PositionType") {
       EUI.getCmp("gridBox").show();
       EUI.getCmp("positionTypeGrid").show();
+      EUI.getCmp("lookCandidateBtn").show();
       EUI.getCmp("positionGrid").hide();
       EUI.getCmp("positionOfOrgGrid").hide();
       EUI.getCmp("positionOfOrgAndSelGrid").hide();
@@ -594,6 +720,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     } else if (userType == "SelfDefinition") {
       EUI.getCmp("gridBox").show();
       EUI.getCmp("selfDef").show();
+      EUI.getCmp("lookCandidateBtn").show();
       EUI.getCmp("positionGrid").hide();
       EUI.getCmp("positionTypeGrid").hide();
       EUI.getCmp("positionOfOrgGrid").hide();
@@ -612,6 +739,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       EUI.getCmp("gridBox").show();
       EUI.getCmp("positionOfOrgGrid").show();
       EUI.getCmp("organizationGrid").show();
+      EUI.getCmp("lookCandidateBtn").show();
       EUI.getCmp("positionGrid").hide();
       EUI.getCmp("positionTypeGrid").hide();
       EUI.getCmp("positionOfOrgAndSelGrid").hide();
@@ -629,6 +757,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     } else if (userType == "PositionAndOrgAndSelfDefinition") {
       EUI.getCmp("selfDefOfOrgAndSel").show();
       EUI.getCmp("gridBox").show();
+      EUI.getCmp("lookCandidateBtn").show();
       EUI.getCmp("positionOfOrgAndSelGrid").show();
       EUI.getCmp("organizationOfSelGrid").show();
       EUI.getCmp("orgOfSelGrid").show();
@@ -659,6 +788,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       EUI.getCmp("gridBox").show();
       EUI.getCmp("positionTypeAndOrgGrid").show();
       EUI.getCmp("orgGrid").show();
+      EUI.getCmp("lookCandidateBtn").show();
       EUI.getCmp("positionTypeGrid").hide();
       EUI.getCmp("positionGrid").hide();
       EUI.getCmp("positionOfOrgGrid").hide();

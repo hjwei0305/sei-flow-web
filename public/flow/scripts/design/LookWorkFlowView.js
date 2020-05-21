@@ -126,6 +126,7 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
             businessModelId: g.businessModelId,
             data: dom.data(),
             id: g.id,
+            instanceId: g.instanceId,
             nodeType: dom.attr("nodeType")
           });
         }
@@ -141,7 +142,7 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
   },
   showExecutorWindow: function (currentNodeId) {
     var solidifyExecutorsInfo = this.solidifyExecutorsInfo
-    for (var i  in  this.solidifyExecutorsInfo) {
+    for (var i in this.solidifyExecutorsInfo) {
       var info = solidifyExecutorsInfo[i];
       if (currentNodeId == info.flowNode.id) {
         var nodeName = info.flowNode.name;
