@@ -207,7 +207,7 @@ class FlowTypeTable extends Component {
             },
             {
                 title: seiIntl.get({key: 'flow_000092', desc: '所属业务实体模型'}),
-                dataIndex: 'businessModel.depict',
+                dataIndex: 'businessModel.name',
                 width: 300
             }
         ];
@@ -217,7 +217,7 @@ class FlowTypeTable extends Component {
                 <span key={"select"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
                 <SearchTable
                     key="searchTable"
-                    initValue={false}
+                    initValue={true}
                     isNotFormItem={true} config={businessModelConfig}
                     style={{width: 220}}
                     selectChange={this.selectChange}/></span>,
