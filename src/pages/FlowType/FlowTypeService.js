@@ -3,7 +3,7 @@ import { request as httpUtils, constants, } from "@/utils";
 const { baseUrl } = constants;
 
 export async function getFlowType(params = {}) {
-    Object.assign(params,{sortOrders:[{property:'lastEditedDate',direction:'DESC'}],quickSearchProperties:["name","code","depict","businessModel.depict"],});
+    Object.assign(params,{sortOrders:[{property:'lastEditedDate',direction:'DESC'}],quickSearchProperties:["name","code","depict","businessModel.name"],});
     return httpUtils.postJson(baseUrl + "/flowType/findByPage", params);
 }
 
