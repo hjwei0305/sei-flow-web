@@ -241,7 +241,7 @@ class FlowTypeTable extends Component {
         />
       ]
     };
-    const {editData, searchValue, data, selectedRows, isAdd, modalVisible, confirmLoading} = this.state;
+    const {editData, data, selectedRows, isAdd, modalVisible, confirmLoading, businessMode} = this.state;
     return (
       <HeadBreadcrumb>
         <div className={"tbar-table"}>
@@ -263,7 +263,8 @@ class FlowTypeTable extends Component {
             handleOk={this.handleSave}
             handleCancel={this.handleModalCancel}
             onRef={this.onRef}
-            defaultValue={editData ? editData : {}}/>}
+            defaultValue={editData ? editData : {}}
+            businessMode={businessMode}/>}
         </div>
       </HeadBreadcrumb>
     )

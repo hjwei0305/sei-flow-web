@@ -42,7 +42,7 @@ class FlowTypeModal extends Component {
             },
         };
 
-        const {confirmLoading, modalVisible, handleOk, handleCancel, defaultValue, isAdd} = this.props;
+        const {confirmLoading, modalVisible, handleOk, handleCancel, defaultValue, isAdd ,businessMode} = this.props;
         const {getFieldDecorator} = this.props.form;
         let title =seiIntl.get({key: 'flow_000031', desc: '编辑'});
         let FormValue = defaultValue;
@@ -74,10 +74,10 @@ class FlowTypeModal extends Component {
                     {...formItemLayout}
                     label={seiIntl.get({key: 'flow_000054', desc: '业务实体'})}>
                     {getFieldDecorator('businessModel.id', {
-                      initialValue: FormValue.businessModel ? FormValue.businessModel.id : "",
+                      initialValue: businessMode ? businessMode.id : "",
                       rules: [{required: true, message: seiIntl.get({key: 'flow_000093', desc: '请选择业务实体!'})}]
                     })(
-                      <SearchTable config={businessModelConfig} initValue={false}/>
+                      <SearchTable config={businessModelConfig} initValue={false} disabled={true}/>
                     )}
                   </FormItem></Row>
                   <Row><FormItem
