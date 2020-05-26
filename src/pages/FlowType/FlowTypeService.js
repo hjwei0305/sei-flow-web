@@ -1,14 +1,17 @@
+import {request as httpUtils, constants,} from "@/utils";
 
-import { request as httpUtils, constants, } from "@/utils";
-const { baseUrl } = constants;
+const {baseUrl} = constants;
 
 export async function getFlowType(params = {}) {
-    Object.assign(params,{sortOrders:[{property:'lastEditedDate',direction:'DESC'}],quickSearchProperties:["name","code","depict","businessModel.name"],});
-    return httpUtils.postJson(baseUrl + "/flowType/findByPage", params);
+  Object.assign(params, {
+    sortOrders: [{property: 'version', direction: 'DESC'}],
+    quickSearchProperties: ["name", "code", "depict"],
+  });
+  return httpUtils.postJson(baseUrl + "/flowType/findByPage", params);
 }
 
 export async function save(params = {}) {
-    return httpUtils.postJson(baseUrl + "/flowType/save",JSON.stringify(params));
+  return httpUtils.postJson(baseUrl + "/flowType/save", JSON.stringify(params));
 }
 
 /**
@@ -16,11 +19,11 @@ export async function save(params = {}) {
  * param id
  * return 操作结果
  */
-export async function deleteCorp(param=''){
-    return httpUtils.delete(baseUrl+"/flowType/deleteById",param);
+export async function deleteCorp(param = '') {
+  return httpUtils.delete(baseUrl + "/flowType/deleteById", param);
 }
 
 
 export async function findAllByAuth(params = {}) {
-    return httpUtils.get(baseUrl + "/businessModel/findAllByAuth", params);
+  return httpUtils.get(baseUrl + "/businessModel/findAllByAuth", params);
 }

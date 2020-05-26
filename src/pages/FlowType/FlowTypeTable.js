@@ -194,12 +194,12 @@ class FlowTypeTable extends Component {
       {
         title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: 'code',
-        width: 150
+        width: 240
       },
       {
         title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
-        width: 200
+        width: 240
       },
       {
         title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
@@ -207,9 +207,9 @@ class FlowTypeTable extends Component {
         width: 300,
       },
       {
-        title: seiIntl.get({key: 'flow_000092', desc: '所属业务实体模型'}),
-        dataIndex: 'businessModel.name',
-        width: 200
+        title: seiIntl.get({key: 'flow_000177', desc: '排序'}),
+        dataIndex: 'version',
+        width: 80
       }
     ];
 
