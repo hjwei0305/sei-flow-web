@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Form, Input, Modal, Row} from 'antd';
+import {Form, Input, Modal, Row ,InputNumber} from 'antd';
 import SearchTable from "@/components/SearchTable";
 import {seiLocale} from 'sei-utils';
 import {commonUtils,} from '@/utils';
