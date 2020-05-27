@@ -226,6 +226,9 @@ export default {
   "flow_000212":"Please select the start date !",
   "flow_000213":"Please select the end date !",
   "flow_000214":"Select agent user",
+  "flow_000215":"Create user",
+
+
   "flow_000225":"Just Recently",
   "flow_000226":"Days Ago",
   "flow_000227":"Hour Ago",

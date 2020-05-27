@@ -243,11 +243,21 @@ class DefinationVersionModal extends Component {
           return "";
         }
       },
+      // {
+      //   title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
+      //   dataIndex: 'depict',
+      //   width: 120
+      // },
       {
-        title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
-        dataIndex: 'depict',
+        title: seiIntl.get({key: 'flow_000215', desc: '创建人'}),
+        dataIndex: 'creatorName',
         width: 120
       },
+      {
+        title: seiIntl.get({key: 'flow_000052', desc: '创建时间'}),
+        dataIndex: 'createdDate',
+        width: 180
+      }
     ];
     const title = () => {
       return [
@@ -273,10 +283,10 @@ class DefinationVersionModal extends Component {
     return (
       <Modal title={seiIntl.get({key: 'flow_000118', desc: '流程定义版本管理'})}
              visible={modalVisible}
-             width={700}
+             width={1000}
              maskClosable={false}
              onCancel={handleCancel}
-             bodyStyle={{height: 500}}
+             bodyStyle={{height: 550}}
              footer={false}
       >
         <div className={'tbar-box'}>
@@ -284,7 +294,7 @@ class DefinationVersionModal extends Component {
           <div className={'tbar-search-box'}>{search()}</div>
         </div>
         <SimpleTable
-          heightY={300}
+          heightY={350}
           rowsSelected={selectedRows}
           onSelectRow={this.handleRowSelectChange}
           data={data}
