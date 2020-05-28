@@ -18,6 +18,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
     businessModelCode: null,//业务实体Code
     gDeleteConnectionId: null,//删除节点提示的标记，预防事件重发
     moreShow: false,
+    isSolidifyFlow:false,
     initComponent: function () {
         var g = this;
         EUI.Container({
@@ -672,6 +673,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
                         data: dom.data(),
                         nodeType: nodeType,
                         type: type,
+                        isSolidifyFlow: g.isSolidifyFlow,
                         afterConfirm: function (data) {
                             input.text(data.normal.name);
                             input.attr("title", data.normal.name);

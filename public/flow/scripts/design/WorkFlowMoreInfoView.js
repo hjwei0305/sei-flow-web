@@ -91,8 +91,10 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
                  } */
                 subProcessCmp.hide();
               }
+              g.parent.isSolidifyFlow = true;
             } else {
               subProcessCmp.show();
+              g.parent.isSolidifyFlow = false;
             }
           }
         }]
