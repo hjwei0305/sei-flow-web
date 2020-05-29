@@ -1256,6 +1256,9 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
             var type = item.attr("type");
             var name = item.find(".node-title").text();
             var nodeConfig = item.data();
+            if(this.isSolidifyFlow==true && nodeConfig.normal && nodeConfig.normal.singleTaskNoChoose){
+               nodeConfig.normal.singleTaskNoChoose = false;
+            }
             var node = {
                     type: type,
                     x: item.position().left - parentPos.left + 1,
