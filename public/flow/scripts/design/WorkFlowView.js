@@ -1356,6 +1356,9 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
                 orgCode: this.orgCode,
             });
         }
+      if(data.solidifyFlow){
+        this.isSolidifyFlow = data.solidifyFlow;
+      }
         var html = "";
         for (var id in data.process.nodes) {
             var node = data.process.nodes[id];
