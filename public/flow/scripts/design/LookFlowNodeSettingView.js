@@ -12,6 +12,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   id: null,
   notifyBeforePositionData: null,
   notifyAfterPositionData: null,
+  isSolidifyFlow: null,
   initComponent: function () {
     var g = this;
     if (g.nodeType == "CallActivity") {
@@ -340,7 +341,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "allowChooseInstancy"
       }]);
     }
-    if (this.type != 'CallActivity') {
+    if (this.type != 'CallActivity'  && g.isSolidifyFlow == false) {
       items = items.concat([{
         xtype: "CheckBox",
         title: "单任务不选择执行人",

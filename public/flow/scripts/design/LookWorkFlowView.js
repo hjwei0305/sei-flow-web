@@ -15,6 +15,7 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
   viewFlowDefByVersionId: false,//根据流程定义版本id查看流程定义
   solidifyExecutorsInfo: [], //固化流程配置执行人信息
   moreShow: false,
+  isSolidifyFlow:false,
   initComponent: function () {
     var g = this;
     EUI.Container({
@@ -127,7 +128,8 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
             data: dom.data(),
             id: g.id,
             instanceId: g.instanceId,
-            nodeType: dom.attr("nodeType")
+            nodeType: dom.attr("nodeType"),
+            isSolidifyFlow: g.isSolidifyFlow
           });
         }
       }
@@ -366,6 +368,9 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
     this.businessModelId = data.businessModelId;
     data.flowTypeName = this.viewFlowDefByVersionId ? defData.flowDefination.flowType.name : defData.def.flowDefination.flowType.name;
     this.loadHead(data);
+    if(data.solidifyFlow){
+      this.isSolidifyFlow = data.solidifyFlow;
+    }
     var html = "";
     for (var id in data.process.nodes) {
       var node = data.process.nodes[id];
