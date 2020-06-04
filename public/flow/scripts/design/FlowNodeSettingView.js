@@ -1530,8 +1530,9 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       width: 150
 
     }, {
-      name: "organization.namePath",
-      index: "organization.namePath",
+      label: this.lang.organizationAllText,
+      name: "organizationNamePath",
+      index: "organizationNamePath",
       width: 150,
       hidden: true
     }];
@@ -1559,8 +1560,9 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       width: 150
 
     }, {
-      name: "organization.namePath",
-      index: "organization.namePath",
+      label: this.lang.organizationAllText,
+      name: "organizationNamePath",
+      index: "organizationNamePath",
       width: 150,
       hidden: true
     }];
