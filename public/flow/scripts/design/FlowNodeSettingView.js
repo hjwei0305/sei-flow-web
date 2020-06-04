@@ -1529,6 +1529,11 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       index: "organizationName",
       width: 150
 
+    }, {
+      name: "organization.namePath",
+      index: "organization.namePath",
+      width: 150,
+      hidden: true
     }];
   },
   positionOfOrgGridColModel: function () {
@@ -1553,6 +1558,11 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       index: "organizationName",
       width: 150
 
+    }, {
+      name: "organization.namePath",
+      index: "organization.namePath",
+      width: 150,
+      hidden: true
     }];
   },
   positionGridColModel: function () {
@@ -2581,6 +2591,20 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }
       cmp.addRowData(selectRow, true);
     });
+
+
+    $("#allPositionOfOrgAndSelGrid [role=gridcell]").live("mouseenter", function () {
+      var dom = $(this);
+      g.initTextBox();
+      var addTop = 1;
+      var text = $(this).nextAll()[$(this).nextAll().length - 1].innerHTML;
+      g.showTextBox(dom, "<span>" + text + "</span>", addTop);
+    }).live("mouseleave", function () {
+      var $tipbox = $("div.textbox");
+      $tipbox.hide();
+    });
+
+
     $("#position-right").bind("click", function (e) {
       var cmp = EUI.getCmp("selPositionOfOrgAndSelGrid");
       var row = cmp.getSelectRow();
@@ -2602,6 +2626,18 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }
       cmp.addRowData(selectRow, true);
     });
+
+    $("#allPositionOfOrgGrid [role=gridcell]").live("mouseenter", function () {
+      var dom = $(this);
+      g.initTextBox();
+      var addTop = 1;
+      var text = $(this).nextAll()[$(this).nextAll().length - 1].innerHTML;
+      g.showTextBox(dom, "<span>" + text + "</span>", addTop);
+    }).live("mouseleave", function () {
+      var $tipbox = $("div.textbox");
+      $tipbox.hide();
+    });
+
     $("#position-right").bind("click", function (e) {
       var cmp = EUI.getCmp("selPositionOfOrgGrid");
       var row = cmp.getSelectRow();
