@@ -189,7 +189,7 @@ class SubtractSignTable extends Component {
             columns={columns}
           />
           <Modal
-            title={`{seiIntl.get({key: 'flow_000070', desc: '会签减签'})}`}
+            title={seiIntl.get({key: 'flow_000070', desc: '会签减签'})}
             bodyStyle={{maxHeight: "720px", overflow: "auto"}}
             width={window.innerWidth * 0.8}
             visible={this.state.selectUserModal}

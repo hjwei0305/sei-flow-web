@@ -189,7 +189,7 @@ class AddSignTable extends Component {
             columns={columns}
           />
           <Modal
-            title={`{seiIntl.get({key: 'flow_000187', desc: '会签加签'})}`}
+            title={seiIntl.get({key: 'flow_000187', desc: '会签加签'})}
             bodyStyle={{maxHeight: "720px", overflow: "auto"}}
             width={window.innerWidth * 0.8}
             visible={this.state.selectUserModal}
