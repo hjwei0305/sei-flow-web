@@ -82,7 +82,7 @@ class AnyOneSelected extends Component {
   leftService = async (params) => {
     let result = null;
     if (this.state.orgId) {
-      await listAllUserByOrgId(this.state.orgId).then((res) => {
+      await listAllUserByOrgId(this.state.orgId, params.quickSearchValue, params.pageInfo).then((res) => {
         result = res.data;
       });
     }
@@ -113,9 +113,9 @@ class AnyOneSelected extends Component {
   }
 
   //左边table的selec选择触发的
-  async JointQueryService(key, param2, record) {
+  async JointQueryService(key, param2, record, searchValue) {
     let result = null;
-    await listAllUserByOrgId(key).then((res) => {
+    await listAllUserByOrgId(key, searchValue).then((res) => {
       this.setState({orgId: key})
       result = res.data
     });
