@@ -10,7 +10,7 @@ import {getSubtractSignExecutorList} from './SubtractSignService';
 import { seiLocale } from 'sei-utils';
 const { seiIntl } = seiLocale;
 
-class AnyOneSelected extends Component {
+class SubtractSignSelected extends Component {
   selectedNew = [];
 
   constructor(props) {
@@ -139,6 +139,6 @@ class AnyOneSelected extends Component {
 
 }
 
-export default AnyOneSelected
+export default SubtractSignSelected
 
 

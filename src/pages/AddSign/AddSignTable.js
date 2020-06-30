@@ -11,7 +11,7 @@ import {message, Input, Modal} from 'antd';
 import SimpleTable from "@/components/SimpleTable";
 import {getAllAddSignList, setAddSignExecutorList} from "./AddSignService";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
-import AssSignSelected from './AddSignSelected';
+import AddSignSelected from './AddSignSelected';
 import { seiLocale } from 'sei-utils';
 import { commonUtils, } from '@/utils';
 
@@ -201,7 +201,7 @@ class AddSignTable extends Component {
             destroyOnClose={true}
             maskClosable={false}
           >
-            <AssSignSelected type='checkbox' actInstanceId={this.state.currentActInstanceId}
+            <AddSignSelected type='checkbox' actInstanceId={this.state.currentActInstanceId}
                              taskActKey={this.state.currentTaskActKey}
                              selectChange={(ids) => this.selectedOne = ids}/>
           </Modal>

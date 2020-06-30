@@ -9,7 +9,7 @@ import TransferTable from "@/components/TransferTable";
 import {listAllOrgs, listAllUserByOrgId, getAddSignExecutorList} from './AddSignService';
 import { seiLocale } from 'sei-utils';
 const { seiIntl } = seiLocale;
-class AnyOneSelected extends Component {
+class AddSignSelected extends Component {
   selectedNew = [];
 
   constructor(props) {
@@ -156,6 +156,6 @@ class AnyOneSelected extends Component {
 
 }
 
-export default AnyOneSelected
+export default AddSignSelected
 
 

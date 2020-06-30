@@ -11,7 +11,7 @@ import {message, Input, Modal} from 'antd';
 import SimpleTable from "@/components/SimpleTable";
 import {getAllCanDelSignList, setSubtractSignExecutorList} from "./SubtractSignService";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
-import AssSignSelected from './SubtractSignSelected';
+import SubtractSignSelected from './SubtractSignSelected';
 import { commonUtils, } from '@/utils';
 import { seiLocale } from 'sei-utils';
 
@@ -201,7 +201,7 @@ class SubtractSignTable extends Component {
             destroyOnClose={true}
             maskClosable={false}
           >
-            <AssSignSelected type='checkbox' actInstanceId={this.state.currentActInstanceId}
+            <SubtractSignSelected type='checkbox' actInstanceId={this.state.currentActInstanceId}
                              taskActKey={this.state.currentTaskActKey}
                              selectChange={(ids) => this.selectedOne = ids}/>
           </Modal>
