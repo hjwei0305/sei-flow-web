@@ -1110,7 +1110,7 @@ body,body * {
 .ux-list {
     border: 1px solid #B5B8C8;
     border-top:none;
-    overflow: auto;
+    overflow: auto !important;
     position: absolute;
     background: white;
     display: none;
