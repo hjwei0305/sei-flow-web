@@ -12,7 +12,7 @@ import { message } from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {getAllAddSignList, setAddSignExecutorList} from "./AddSignService";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
-import AssSignSelected from './AddSignSelected';
+import AddSignSelected from './AddSignSelected';
 import { seiLocale } from 'sei-utils';
 import { commonUtils, } from '@/utils';
 
@@ -190,7 +190,7 @@ class AddSignTable extends Component {
             columns={columns}
           />
           <Modal
-            title={`{seiIntl.get({key: 'flow_000187', desc: '会签加签'})}`}
+            title={seiIntl.get({key: 'flow_000187', desc: '会签加签'})}
             bodyStyle={{maxHeight: "720px", overflow: "auto"}}
             width={window.innerWidth * 0.8}
             visible={this.state.selectUserModal}
@@ -202,7 +202,7 @@ class AddSignTable extends Component {
             destroyOnClose={true}
             maskClosable={false}
           >
-            <AssSignSelected type='checkbox' actInstanceId={this.state.currentActInstanceId}
+            <AddSignSelected type='checkbox' actInstanceId={this.state.currentActInstanceId}
                              taskActKey={this.state.currentTaskActKey}
                              selectChange={(ids) => this.selectedOne = ids}/>
           </Modal>

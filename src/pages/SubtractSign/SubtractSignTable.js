@@ -12,7 +12,7 @@ import { message } from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {getAllCanDelSignList, setSubtractSignExecutorList} from "./SubtractSignService";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
-import AssSignSelected from './SubtractSignSelected';
+import SubtractSignSelected from './SubtractSignSelected';
 import { commonUtils, } from '@/utils';
 import { seiLocale } from 'sei-utils';
 
@@ -190,7 +190,7 @@ class SubtractSignTable extends Component {
             columns={columns}
           />
           <Modal
-            title={`{seiIntl.get({key: 'flow_000070', desc: '会签减签'})}`}
+            title={seiIntl.get({key: 'flow_000070', desc: '会签减签'})}
             bodyStyle={{maxHeight: "720px", overflow: "auto"}}
             width={window.innerWidth * 0.8}
             visible={this.state.selectUserModal}
@@ -202,7 +202,7 @@ class SubtractSignTable extends Component {
             destroyOnClose={true}
             maskClosable={false}
           >
-            <AssSignSelected type='checkbox' actInstanceId={this.state.currentActInstanceId}
+            <SubtractSignSelected type='checkbox' actInstanceId={this.state.currentActInstanceId}
                              taskActKey={this.state.currentTaskActKey}
                              selectChange={(ids) => this.selectedOne = ids}/>
           </Modal>

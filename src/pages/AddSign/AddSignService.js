@@ -21,7 +21,12 @@ export async function listAllOrgs() {
   return httpUtils.postJson(baseUrl + "/flowDefination/listAllOrgs");
 }
 
-//获取组织机构下员工
-export async function listAllUserByOrgId(orgId) {
-  return httpUtils.get(baseUrl + "/flowDefination/listAllUser", {organizationId: orgId});
+//获取组织机构下员工（包含下级组织机构）
+export async function listAllUserByOrgId(orgId, searchValue, pageInfo) {
+  return httpUtils.postJson(baseUrl + "/flowDefination/listUserByOrg", {
+    organizationId: orgId,
+    includeSubNode: true,
+    quickSearchValue: searchValue,
+    pageInfo: pageInfo
+  })
 }

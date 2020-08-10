@@ -28,6 +28,7 @@ EUI.LookUELSettingView = EUI.extend(EUI.CustomUI, {
             height: 120,
             id: "logicUel",
             readonly: true,
+            checkHtmlStr: false,//不验证特殊字符
             style: {
                 "margin-left": "10px"
             },
@@ -37,6 +38,7 @@ EUI.LookUELSettingView = EUI.extend(EUI.CustomUI, {
             width: 489,
             height: 120,
             name: "groovyUel",
+            checkHtmlStr: false,//不验证特殊字符
             style: {
                 "margin-left": "10px"
             },
