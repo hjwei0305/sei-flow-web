@@ -1,5 +1,6 @@
 import React from 'react';
-import {Avatar, Button, Icon, List, message, Modal, Skeleton, Upload} from 'antd';
+import {Avatar, Button, Icon, List, Modal, Skeleton, Upload} from 'antd';
+import { message } from 'suid';
 import {gatewayHost, uploadUrl} from "../../configs/DefaultConfig";
 import httpUtils from "../utils/FeatchUtils";
 import PropTypes from 'prop-types';

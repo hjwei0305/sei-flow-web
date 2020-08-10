@@ -5,10 +5,10 @@
  */
 import React, {Component} from 'react';
 // import SimpleTable from "../../../commons/components/SimpleTable";
-import StandardDropdown from "@/components/StandardDropdown";
 import {ApproveHistory, OptGroup, SimpleTable, } from 'seid';
 import {rollBackTo} from '../service';
-import {Modal,Input,message} from 'antd';
+import {Modal,Input} from 'antd';
+import { message } from 'suid';
 import {mainTabAction} from 'sei-utils';
 import { seiLocale } from 'sei-utils';
 

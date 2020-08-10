@@ -4,7 +4,8 @@
  */
 import {Component} from "react";
 import React from "react";
-import {Button, Col, Row, Modal, message} from "antd";
+import {Button, Col, Row, Modal} from "antd";
+import { message } from 'suid';
 import {Input} from "antd/lib/index";
 import SimpleTable from "@/components/SimpleTable";
 import {connect} from "dva";

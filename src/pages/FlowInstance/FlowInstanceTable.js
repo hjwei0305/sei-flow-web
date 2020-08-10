@@ -7,7 +7,8 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Modal, message, Input, Checkbox} from 'antd';
+import {Modal, Input, Checkbox} from 'antd';
+import { message } from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {getFlowInstance,endForce} from "./FlowInstanceService";
 import {ApproveHistory} from 'seid';

@@ -2,7 +2,8 @@
  * Created by liusonglin on 2018/7/13.
  */
 import React, { PureComponent } from 'react';
-import { Form,Button, Col,Row, message, Input } from 'antd';
+import { Form, Button, Col, Row, Input } from 'antd';
+import { message } from 'suid';
 import { CreateForm } from './ModalForm';
 import './StandardTable.css'
 import SimpleTable from "./SimpleTable";
@@ -14,12 +15,12 @@ class StandardTable extends PureComponent {
         super(props);
         this.state = {
             selectedRows: [],
-            pageInfo:{},
-            keyword:null,
-            modalVisible:false,
-            modalType:'add',
-            buttonEditDisable:false,
-            buttonFreezeDisable:false,
+            pageInfo: {},
+            keyword: null,
+            modalVisible: false,
+            modalType: 'add',
+            buttonEditDisable: false,
+            buttonFreezeDisable: false,
         };
     }
 
@@ -35,30 +36,30 @@ class StandardTable extends PureComponent {
         if (onSelectRow) {
             onSelectRow(selectedRows);
         }
-        if (selectedRows.length>0){
+        if (selectedRows.length > 0) {
             this.setState({
                 selectedRows,
-                buttonEditDisable:!(this.props.addConfig && selectedRows.length === 1 &&selectedRows[0] && !selectedRows[0].frozen),
-                buttonFreezeDisable:!(this.props.addConfig && selectedRows.length === 1)
+                buttonEditDisable: !(this.props.addConfig && selectedRows.length === 1 && selectedRows[0] && !selectedRows[0].frozen),
+                buttonFreezeDisable: !(this.props.addConfig && selectedRows.length === 1)
             });
-        }else {
+        } else {
             this.setState({
                 selectedRows,
-                buttonEditDisable:false,
-                buttonFreezeDisable:false
+                buttonEditDisable: false,
+                buttonFreezeDisable: false
             });
         }
 
 
     };
 
-    editModal = flag =>{
-        if(this.state.selectedRows.length===0) {
-            message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
+    editModal = flag => {
+        if (this.state.selectedRows.length === 0) {
+            message.error(seiIntl.get({ key: 'flow_000027', desc: '请选择一行数据！' }));
             return;
         }
-        if(this.state.selectedRows.length>1) {
-            message.error(seiIntl.get({key: 'flow_000256', desc: '只能选择一行数据！'}));
+        if (this.state.selectedRows.length > 1) {
+            message.error(seiIntl.get({ key: 'flow_000256', desc: '只能选择一行数据！' }));
             return;
         }
         this.handleModalVisible(flag);
@@ -66,20 +67,20 @@ class StandardTable extends PureComponent {
 
     handleTableChange = (pageInfo) => {
         const { handleSearch } = this.props;
-        this.setState({pageInfo:pageInfo});
-        handleSearch({Quick_value:this.state.keyword,...pageInfo});
+        this.setState({ pageInfo: pageInfo });
+        handleSearch({ Quick_value: this.state.keyword, ...pageInfo });
     };
 
     handleFrozen = () => {
-        if(this.state.selectedRows.length===0) {
-            message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
+        if (this.state.selectedRows.length === 0) {
+            message.error(seiIntl.get({ key: 'flow_000027', desc: '请选择一行数据！' }));
             return;
         }
-        if(this.state.selectedRows.length>1) {
-            message.error(seiIntl.get({key: 'flow_000256', desc: '只能选择一行数据！'}));
+        if (this.state.selectedRows.length > 1) {
+            message.error(seiIntl.get({ key: 'flow_000256', desc: '只能选择一行数据！' }));
             return;
         }
-        if(this.props.handleFrozen){
+        if (this.props.handleFrozen) {
             this.props.handleFrozen(this.state.selectedRows[0]);
         }
         this.cleanSelectedKeys();
@@ -87,7 +88,7 @@ class StandardTable extends PureComponent {
 
     handleEdit = (fieldsValue) => {
         const { handleAdd } = this.props;
-        if(handleAdd){
+        if (handleAdd) {
             handleAdd(fieldsValue);
         }
         this.cleanSelectedKeys();
@@ -99,8 +100,8 @@ class StandardTable extends PureComponent {
 
     handleSearch = (value) => {
         const { handleSearch } = this.props;
-        handleSearch({Quick_value:value,...this.state.pageInfo,page:1});
-        this.setState({keyword:value})
+        handleSearch({ Quick_value: value, ...this.state.pageInfo, page: 1 });
+        this.setState({ keyword: value })
     };
 
     render() {
@@ -116,51 +117,53 @@ class StandardTable extends PureComponent {
 
         const parentProps = {
             handleAdd: this.handleEdit,
-            doubleLine:this.props.doubleLine,
-            trebleLine:this.props.trebleLine,
+            doubleLine: this.props.doubleLine,
+            trebleLine: this.props.trebleLine,
             handleModalVisible: this.handleModalVisible,
-            addConfig:addConfig,
-            checkValue:checkValue,
-            modalType:this.state.modalType,
-            editData:this.state.selectedRows[0]
+            addConfig: addConfig,
+            checkValue: checkValue,
+            modalType: this.state.modalType,
+            editData: this.state.selectedRows[0]
         };
 
-        const search = ()=> {
-            return (this.props.showSearch===false?null:<Input.Search
-                placeholder={this.props.searchPlaceholder?this.props.searchPlaceholder:seiIntl.get({key: 'flow_000257', desc: '请输入代码或名称查询'})}
+        const search = () => {
+            return (this.props.showSearch === false ? null : <Input.Search
+                placeholder={this.props.searchPlaceholder ? this.props.searchPlaceholder : seiIntl.get({ key: 'flow_000257', desc: '请输入代码或名称查询' })}
                 onSearch={value => this.handleSearch(value)}
-                style={{marginRight:30,width:230}}
+                style={{ marginRight: 30, width: 230 }}
                 enterButton
             />)
         };
 
-        const title = () =>{
-            let rightControl=this.props.authCodes||[]
+        const title = () => {
+            let rightControl = this.props.authCodes || []
             return addConfig && [
-                checkRight(rightControl[0])&&<Button key="add" type="primary" style={{marginRight:'8px'}} onClick={() => {
-                    this.setState({modalType:'add'});
-                    this.handleModalVisible(true)}
-                }>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
-                checkRight(rightControl[1])&&
-                <Button key="edit" style={{marginRight:'8px'}} disabled={this.state.buttonEditDisable}
-                onClick={() => {
-                    this.setState({modalType:'edit'});
-                    this.editModal(true)}}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</Button>,
-                checkRight(rightControl[2])&&<Button key="freeze" style={{marginRight:'8px'}} onClick={this.handleFrozen}
-                  disabled={this.state.buttonFreezeDisable}>
-                    {this.state.selectedRows[0]?this.state.selectedRows[0].frozen?'解冻':'冻结':'冻结'}</Button>
+                checkRight(rightControl[0]) && <Button key="add" type="primary" style={{ marginRight: '8px' }} onClick={() => {
+                    this.setState({ modalType: 'add' });
+                    this.handleModalVisible(true)
+                }
+                }>{seiIntl.get({ key: 'flow_000039', desc: '新增' })}</Button>,
+                checkRight(rightControl[1]) &&
+                <Button key="edit" style={{ marginRight: '8px' }} disabled={this.state.buttonEditDisable}
+                    onClick={() => {
+                        this.setState({ modalType: 'edit' });
+                        this.editModal(true)
+                    }}>{seiIntl.get({ key: 'flow_000031', desc: '编辑' })}</Button>,
+                checkRight(rightControl[2]) && <Button key="freeze" style={{ marginRight: '8px' }} onClick={this.handleFrozen}
+                    disabled={this.state.buttonFreezeDisable}>
+                    {this.state.selectedRows[0] ? this.state.selectedRows[0].frozen ? '解冻' : '冻结' : '冻结'}</Button>
             ]
         }
         const titleShow = this.props.title ? "block" : "none";
         return (
             <div className={'table-box'}>
-                <div style={{margin: '10px 14px 10px',display: titleShow}}>
+                <div style={{ margin: '10px 14px 10px', display: titleShow }}>
                     <div className={"header-span"}>{this.props.title}</div>
                 </div>
-                <div style={{width:this.props.width?this.props.width:'100%'}}>
-                    <Row style={{background:'#F3F8FC',padding: 5,paddingBottom:5,border: '1px solid #e8e8e8',borderBottom: 'none'}}>
+                <div style={{ width: this.props.width ? this.props.width : '100%' }}>
+                    <Row style={{ background: '#F3F8FC', padding: 5, paddingBottom: 5, border: '1px solid #e8e8e8', borderBottom: 'none' }}>
                         <Col span={12}>{title()}</Col>
-                        <Col span={12} style={{textAlign:'right'}}>{search()}</Col>
+                        <Col span={12} style={{ textAlign: 'right' }}>{search()}</Col>
                     </Row>
                     <SimpleTable
                         checkBox={checkBox}

@@ -71,6 +71,15 @@ export default {
         libraryDirectory: 'es',
         style: true,
       },
+    ],
+    [
+      'import',
+      {
+        libraryName: 'suid',
+        libraryDirectory: 'es',
+        style: 'css',
+      },
+      'suid',
     ]
   ],
   lessLoaderOptions: {

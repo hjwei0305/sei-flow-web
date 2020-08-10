@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {message} from 'antd';
+import { message } from 'suid';
 import TransferTable from "@/components/TransferTable";
 import {listAllOrgs, listAllUserByOrgId, getAddSignExecutorList} from './AddSignService';
 import { seiLocale } from 'sei-utils';

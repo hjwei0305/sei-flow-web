@@ -1,6 +1,6 @@
 import router from "umi/router";
 import { stringify } from "qs";
-import { message } from "antd";
+import { message } from 'suid';
 import { userUtils, storage, constants } from '@/utils';
 import { login, getAuthorizedFeatures, } from "@/services/api";
 

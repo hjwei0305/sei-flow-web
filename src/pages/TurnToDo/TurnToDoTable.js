@@ -7,7 +7,8 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Modal, message, Input} from 'antd';
+import {Modal, Input} from 'antd';
+import { message } from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {getAllTaskByTenant,taskTurnToDo} from "./TurnToDoService";
 import SearchTable from "@/components/SearchTable";

@@ -5,11 +5,12 @@
  */
 import React, {Component} from 'react';
 import StandardDropdown from "@/components/StandardDropdown";
-import {Modal,Input,message} from 'antd';
+import {Modal,Input} from 'antd';
+import { message } from 'suid';
 import {mainTabAction} from 'sei-utils';
 import AnyOneSelected from './AnyOneSelected';
 import {taskTurnToDo,taskTrustToDo,reject,endTask} from '../service';
-import { ApproveHistory, OptGroup, SimpleTable, } from 'seid';
+import { ApproveHistory, SimpleTable, } from 'seid';
 import { seiLocale } from 'sei-utils';
 import { commonUtils, } from '@/utils';
 

@@ -2,7 +2,8 @@
  * Created by pengxu on 2018/12/3.
  */
 import React, {Component} from 'react';
-import {Button, Col, Icon, Modal, Row, Tabs, Form, List, Timeline, Divider, Select, message} from "antd";
+import {Button, Col, Icon, Modal, Row, Tabs, Form, List, Timeline, Divider, Select} from "antd";
+import {message} from 'suid';
 import httpUtils from "../utils/FeatchUtils";
 import {isEmpty} from 'lodash';
 import { seiLocale } from 'sei-utils';

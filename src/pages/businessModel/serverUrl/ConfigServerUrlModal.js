@@ -4,7 +4,8 @@
  */
 
 import React, {Component} from 'react'
-import {Button, message, Modal} from 'antd';
+import {Button, Modal} from 'antd';
+import { message } from 'suid';
 import {
   deleteServiceUrl,
   listServiceUrl, saveServiceUrl,
@@ -12,7 +13,6 @@ import {
 import SimpleTable from "@/components/SimpleTable";
 import {Input} from "antd/lib/index";
 import EditServerUrlModal from "./EditServerUrlModal";
-import {deleteCorp} from "../../AppModule/AppModuleService";
 import {connect} from "dva";
 import { seiLocale } from 'sei-utils';
 const { seiIntl } = seiLocale;

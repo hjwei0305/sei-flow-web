@@ -4,7 +4,8 @@
  */
 
 import React, {Component} from 'react'
-import {Button, Col, Row, message,Modal} from 'antd';
+import {Button, Modal} from 'antd';
+import { message } from 'suid';
 import {
     deleteExUser,
     listExUser, saveExUser

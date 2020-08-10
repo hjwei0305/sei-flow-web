@@ -5,11 +5,11 @@
 
 import React, {Component} from 'react'
 import {connect} from "dva";
-import {Button, Col, Row, message, Modal} from 'antd';
+import {Button, Modal} from 'antd';
+import { message } from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {Input} from "antd/lib/index";
-import {activateOrFreezeFlowDef, activateOrFreezeFlowVer, listFlowDefinationHistory} from "./FlowDefinationService";
-import DefinaionModal from "./DefinaionModal";
+import {activateOrFreezeFlowVer, listFlowDefinationHistory} from "./FlowDefinationService";
 import StandardDropdown from "@/components/StandardDropdown";
 import {mainTabAction} from "sei-utils";
 import { seiLocale } from 'sei-utils';

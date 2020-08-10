@@ -7,7 +7,8 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva';
-import {Button, message, Input, Modal} from 'antd';
+import {Button, Input, Modal} from 'antd';
+import { message } from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {deleteCorp, getFlowType, save} from "./FlowTypeService";
 import {businessModelConfig} from "@/utils/CommonComponentsConfig";

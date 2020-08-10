@@ -7,7 +7,8 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {message, Input, Modal} from 'antd';
+import {Input, Modal} from 'antd';
+import { message } from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {getAllCanDelSignList, setSubtractSignExecutorList} from "./SubtractSignService";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
