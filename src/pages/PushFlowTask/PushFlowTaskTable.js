@@ -61,29 +61,41 @@ class FlowInstanceTable extends Component {
   getDataSource = (params = {}) => {
     this.toggoleGlobalLoading(true);
     if (!params.filters) {
-      Object.assign(params, {
-        filters: [{
+      let filter = [] ;
+      //筛选字段(应用模块)
+      if(this.state.appModuleId){
+        filter.push({
           fieldName: "appModuleId",//筛选字段(应用模块)
           operator: "EQ",//操作类型
           value: this.state.appModuleId,//筛选值
           fieldType: "String"//筛选类型
-        }, {
+        });
+      }
+      //筛选字段（业务实体）
+      if(this.state.businessModelId){
+        filter.push({
           fieldName: "businessModelId",//筛选字段（业务实体）
           operator: "EQ",//操作类型
           value: this.state.businessModelId,//筛选值
           fieldType: "String"//筛选类型
-        }, {
+        });
+      }
+      //筛选字段（流程类型）
+      if(this.state.flowTypeId){
+        filter.push({
           fieldName: "flowTypeId",//筛选字段（流程类型）
           operator: "EQ",//操作类型
           value: this.state.flowTypeId,//筛选值
           fieldType: "String"//筛选类型
-        }, {
-          fieldName: "pushType",
-          operator: "EQ",//操作类型
-          value: this.state.checkInBasic ? "basic" : "business",//筛选值
-          fieldType: "String"//筛选类型
-        }]
-      })
+        });
+      }
+      filter.push({
+        fieldName: "pushType",
+        operator: "EQ",//操作类型
+        value: this.state.checkInBasic ? "basic" : "business",//筛选值
+        fieldType: "String"//筛选类型
+      });
+      Object.assign(params, {filters : filter });
     }
     getPushTaskControl(params).then(data => {
       this.setState({data, selectedRows: [], searchValue: this.state.searchValue});
@@ -124,19 +136,6 @@ class FlowInstanceTable extends Component {
   selectChangeAppModel = (record) => {
     if (record && record.id) {
       this.setState({appModule: record, appModuleId: record.id, businessModel: null, businessModelId: ""});
-      this.getDataSource({
-        filters: [{
-          fieldName: "appModuleId",//筛选字段(应用模块)
-          operator: "EQ",//操作类型
-          value: `${record.id}`,//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "pushType",
-          operator: "EQ",//操作类型
-          value: this.state.checkInBasic ? "basic" : "business",//筛选值
-          fieldType: "String"//筛选类型
-        }], quickSearchValue: this.state.searchValue
-      });
     } else {
       this.setState({
         appModule: null,
@@ -146,132 +145,28 @@ class FlowInstanceTable extends Component {
         flowType: null,
         flowTypeId: ""
       });
-      this.getDataSource({
-        filters: [{
-          fieldName: "appModuleId",//筛选字段(应用模块)
-          operator: "EQ",//操作类型
-          value: "",//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "pushType",
-          operator: "EQ",//操作类型
-          value: this.state.checkInBasic ? "basic" : "business",//筛选值
-          fieldType: "String"//筛选类型
-        }], quickSearchValue: this.state.searchValue
-      });
     }
+    this.getDataSource();
   };
   selectChangeBusinessModel = (record) => {
     if (record && record.id) {
       this.setState({businessModel: record, businessModelId: record.id});
-      this.getDataSource({
-        filters: [{
-          fieldName: "appModuleId",//筛选字段(应用模块)
-          operator: "EQ",//操作类型
-          value: this.state.appModuleId,//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "businessModelId",//筛选字段（业务实体）
-          operator: "EQ",//操作类型
-          value: `${record.id}`,//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "pushType",
-          operator: "EQ",//操作类型
-          value: this.state.checkInBasic ? "basic" : "business",//筛选值
-          fieldType: "String"//筛选类型
-        }], quickSearchValue: this.state.searchValue
-      });
     } else {
       this.setState({businessModel: null, businessModelId: "", flowType: null, flowTypeId: ""});
-      this.getDataSource({
-        filters: [{
-          fieldName: "appModuleId",//筛选字段(应用模块)
-          operator: "EQ",//操作类型
-          value: this.state.appModuleId,//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "pushType",
-          operator: "EQ",//操作类型
-          value: this.state.checkInBasic ? "basic" : "business",//筛选值
-          fieldType: "String"//筛选类型
-        }], quickSearchValue: this.state.searchValue
-      });
     }
+    this.getDataSource();
   };
   selectChangeFlowType = (record) => {
     if (record && record.id) {
       this.setState({flowType: record, flowTypeId: record.id});
-      this.getDataSource({
-        filters: [{
-          fieldName: "appModuleId",//筛选字段(应用模块)
-          operator: "EQ",//操作类型
-          value: this.state.appModuleId,//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "businessModelId",//筛选字段（业务实体）
-          operator: "EQ",//操作类型
-          value: this.state.businessModelId,//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "flowTypeId",//筛选字段（流程类型）
-          operator: "EQ",//操作类型
-          value: `${record.id}`,//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "pushType",
-          operator: "EQ",//操作类型
-          value: this.state.checkInBasic ? "basic" : "business",//筛选值
-          fieldType: "String"//筛选类型
-        }], quickSearchValue: this.state.searchValue
-      });
     } else {
       this.setState({flowType: null, flowTypeId: ""});
-      this.getDataSource({
-        filters: [{
-          fieldName: "appModuleId",//筛选字段(应用模块)
-          operator: "EQ",//操作类型
-          value: this.state.appModuleId,//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "businessModelId",//筛选字段（业务实体）
-          operator: "EQ",//操作类型
-          value: this.state.businessModelId,//筛选值
-          fieldType: "String"//筛选类型
-        }, {
-          fieldName: "pushType",
-          operator: "EQ",//操作类型
-          value: this.state.checkInBasic ? "basic" : "business",//筛选值
-          fieldType: "String"//筛选类型
-        }], quickSearchValue: this.state.searchValue
-      });
     }
+    this.getDataSource();
   };
   checkChangeInBasic = (checkInfo) => {
     this.setState({checkInBasic: checkInfo.target.checked});
-    this.getDataSource({
-      filters: [{
-        fieldName: "appModuleId",//筛选字段(应用模块)
-        operator: "EQ",//操作类型
-        value: this.state.appModuleId,//筛选值
-        fieldType: "String"//筛选类型
-      }, {
-        fieldName: "businessModelId",//筛选字段（业务实体）
-        operator: "EQ",//操作类型
-        value: this.state.businessModelId,//筛选值
-        fieldType: "String"//筛选类型
-      }, {
-        fieldName: "flowTypeId",//筛选字段（流程类型）
-        operator: "EQ",//操作类型
-        value: this.state.flowTypeId,//筛选值
-        fieldType: "String"//筛选类型
-      }, {
-        fieldName: "pushType",
-        operator: "EQ",//操作类型
-        value: checkInfo.target.checked ? "basic" : "business",//筛选值
-        fieldType: "String"//筛选类型
-      }], quickSearchValue: this.state.searchValue
-    });
+    this.getDataSource();
   };
   pageChange = (pageInfo) => {
     this.setState({
@@ -284,7 +179,7 @@ class FlowInstanceTable extends Component {
     const columns = [
       {
         title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
-        width: 120,
+        width: 100,
         dataIndex: "operator",
         render: (text, record, index) => {
           return (
@@ -297,33 +192,14 @@ class FlowInstanceTable extends Component {
         }
       },
       {
-        title: seiIntl.get({key: 'flow_000047', desc: '流程名称'}),
-        dataIndex: 'flowInstanceName',
-        width: 200
-      },
-      {
         title: seiIntl.get({key: 'flow_000048', desc: '任务名称'}),
         dataIndex: 'flowTaskName',
-        width: 200
+        width: 180
       },
       {
         title: seiIntl.get({key: 'flow_000076', desc: '业务编号'}),
         dataIndex: 'businessCode',
-        width: 150
-      },
-      {
-        title: seiIntl.get({key: 'flow_000077', desc: '推送类型'}),
-        dataIndex: 'pushType',
-        width: 120,
-        render: (text, record) => {
-          if (record.pushType == "business") {   //推送到业务实体
-            return seiIntl.get({key: 'flow_000078', desc: '业务模块'})
-          } else if (record.pushType == "basic") {  //推送到basic
-            return "BASIC"
-          } else {
-            return "";
-          }
-        }
+        width: 120
       },
       {
         title: seiIntl.get({key: 'flow_000079', desc: '推送状态'}),
@@ -352,22 +228,40 @@ class FlowInstanceTable extends Component {
       {
         title: seiIntl.get({key: 'flow_000050', desc: '执行人名称'}),
         dataIndex: 'executorNameList',
-        width: 360
+        width: 220
       },
       {
         title: seiIntl.get({key: 'flow_000086', desc: '推送总次数'}),
         dataIndex: 'pushNumber',
-        width: 100
+        width: 80
       },
       {
         title: seiIntl.get({key: 'flow_000087', desc: '成功次数'}),
         dataIndex: 'pushSuccess',
-        width: 100
+        width: 80
       }, {
         title: seiIntl.get({key: 'flow_000088', desc: '失败次数'}),
         dataIndex: 'pushFalse',
-        width: 100
+        width: 80
+      },
+      {
+        title: seiIntl.get({key: 'flow_000077', desc: '推送类型'}),
+        dataIndex: 'pushType',
+        width: 80,
+        render: (text, record) => {
+          if (record.pushType == "business") {   //推送到业务实体
+            return seiIntl.get({key: 'flow_000078', desc: '业务模块'})
+          } else if (record.pushType == "basic") {  //推送到basic
+            return "BASIC"
+          } else {
+            return "";
+          }
+        }
       }, {
+        title: seiIntl.get({key: 'flow_000047', desc: '流程名称'}),
+        dataIndex: 'flowInstanceName',
+        width: 180
+      },{
         title: seiIntl.get({key: 'flow_000089', desc: '第一次推送时间'}),
         dataIndex: 'pushStartDate',
         width: 180
