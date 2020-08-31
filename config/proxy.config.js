@@ -7,13 +7,13 @@ const proxy = {
     pathRewrite: { '^/mocker.api': '' },
   },
   '/service.api': {
-    target: 'http://10.4.208.86:8100/api-gateway',
+    target: 'http://dsei.changhong.com/api-gateway',
     changeOrigin: true,
     secure: false,
     pathRewrite: { '^/service.api': '' },
   },
   '/api-gateway': {
-    target: 'http://10.4.208.86:8100',
+    target: 'http://dsei.changhong.com/',
     changeOrigin: true,
     secure: false,
   },

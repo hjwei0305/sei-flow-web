@@ -5,6 +5,7 @@ const { authApiUrl, } = constants;
 /** 登录*/
 export async function login(data) {
   const url = `${authApiUrl}/auth/login`;
+  data.reqId = "123456";
   return request.postJson(url, data);
 }
 
