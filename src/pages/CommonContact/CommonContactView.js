@@ -219,7 +219,6 @@ class CommonContactView extends Component {
   };
 
   onDeleteRightClick = (record) => {
-    if (!this.judgeLeftSelected()) return;
     let param = record.id;
     let thiz = this;
     confirm({
