@@ -21,7 +21,7 @@ export default [
       { title: '业务实体管理', path: '/BusinessModelTable', component: './businessModel/BusinessModelTable' },
 
       { title: '流程类型', path: '/FlowTypeTable', component: './FlowType/FlowTypeTable' },
-      { title: '常用联系人', path: '/CommonContactView', component: './CommonContact/CommonContactView' },
+      // { title: '常用联系人', path: '/CommonContactView', component: './CommonContact/CommonContactView' },
       { title: '流程定义', path: '/FlowDefinationView', component: './FlowDefination/FlowDefinationView' },
       { title: '流程定义新', path: '/FlowDefinationViewNew', component: './FlowDefinationNew/FlowDefinationView' },
       { title: '定义页面', path: '/DefinaionPage', component: './FlowDefination/DefinaionPage' },
