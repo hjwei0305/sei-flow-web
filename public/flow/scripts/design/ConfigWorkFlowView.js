@@ -94,6 +94,8 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       selected: false,
       handler: function () {
         g.returnPage();
+        //兼容suid关闭窗口
+        window.parent.postMessage({'solidifyFlow': false },'*');
       }
     }];
   },
@@ -506,6 +508,8 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
             EUI.ProcessStatus(status);
             // parentThis.afterSubmit && parentThis.afterSubmit(res);
             g.refreshPage();
+            //兼容suid关闭窗口
+            window.parent.postMessage({'solidifyFlow': true },'*');
           },
           failure: function (response) {
             mask.hide();
