@@ -1024,7 +1024,7 @@ body,body * {
 }
 
 .ux-body {
-    height: 22px;
+    /*height: 22px;*/
     line-height: 22px;
     overflow: hidden;
     padding: 3px 0 6px 0;
