@@ -408,7 +408,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       onSelect: function (node) {
         g.selectedOrgId = node.id;
         var chooseUserGridPanel = EUI.getCmp("chooseUserGridPanel").setGridParams({
-          url: _ctxPath + "/flowDefination/listUserByOrg",
+          url: _ctxPath + "/flowDefination/listUserByOrgByWeb",
           loadonce: false,
           datatype: "json",
           postData: {
@@ -457,7 +457,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
           displayText: g.searchDisplayText,
           onSearch: function (value) {
             var chooseUserGridPanel = EUI.getCmp("chooseUserGridPanel").setGridParams({
-              url: _ctxPath + "/flowDefination/listUserByOrg",
+              url: _ctxPath + "/flowDefination/listUserByOrgByWeb",
               loadonce: false,
               datatype: "json",
               postData: {
@@ -502,8 +502,8 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
             width: 200
           }, {
             label: "组织机构",
-            name: "organization.name",
-            index: "organization.name",
+            name: "organizationName",
+            index: "organizationName",
             width: 150,
             align: "center"
             // , hidden: true
@@ -515,7 +515,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
             html += '<div class="flow-anyOneUser-item select" type="' + currentChooseTaskType + '" id="' + rowData.id + '">' +
               '<div class="choose-icon ecmp-flow-delete" title="删除"></div>' +
               '<div class="excutor-item-title">姓名：' + rowData["userName"] +
-              '，组织机构：' + rowData["organization.name"] + '，编号：' + rowData.code + '</div>' +
+              '，组织机构：' + rowData["organizationName"] + '，编号：' + rowData.code + '</div>' +
               '</div>';
             $("div[index=" + currentChooseDivIndex + "]").find(".flow-excutor-content2").html(html);
             g.chooseAnyOneWind.close();
@@ -539,7 +539,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
         html += '<div class="flow-anyOneUser-item select" type="' + currentChooseTaskType + '" id="' + item.id + '">' +
           '<div class="choose-icon ecmp-flow-delete" title="删除"></div>' +
           '<div class="excutor-item-title">姓名：' + item["userName"] +
-          '，组织机构：' + item["organization.name"] + '，编号：' + item.code + '</div>' +
+          '，组织机构：' + item["organizationName"] + '，编号：' + item.code + '</div>' +
           '</div>';
       }
     }
