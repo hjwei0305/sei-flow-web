@@ -114,15 +114,15 @@ class FlowTypeModal extends Component {
               <InputNumber precision={0} min={0} style={{width: "100%"}}/>
             )}
           </FormItem></Row>
-          <Row><FormItem
-            {...formItemLayout}
-            label={seiIntl.get({key: 'flow_000095', desc: '提交任务地址'})}>
-            {getFieldDecorator('completeTaskServiceUrl', {
-              initialValue: FormValue.completeTaskServiceUrl ? FormValue.completeTaskServiceUrl : "",
-            })(
-              <Input/>
-            )}
-          </FormItem></Row>
+          {/*<Row><FormItem*/}
+          {/*  {...formItemLayout}*/}
+          {/*  label={seiIntl.get({key: 'flow_000095', desc: '提交任务地址'})}>*/}
+          {/*  {getFieldDecorator('completeTaskServiceUrl', {*/}
+          {/*    initialValue: FormValue.completeTaskServiceUrl ? FormValue.completeTaskServiceUrl : "",*/}
+          {/*  })(*/}
+          {/*    <Input/>*/}
+          {/*  )}*/}
+          {/*</FormItem></Row>*/}
           <Row><FormItem
             {...formItemLayout}
             label={seiIntl.get({key: 'flow_000096', desc: '表单明细URL'})}>
