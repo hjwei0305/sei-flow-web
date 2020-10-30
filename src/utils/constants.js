@@ -30,6 +30,7 @@ const CONST_GLOBAL = {
   CURRENT_LOCALE: 'sei_locale',
   CURRENT_USER: 'CURRENT_USER',
   FEATURE_KEY: 'FEATURE_KEY',
+  AUTHORIZATION: 'Authorization',
 };
 
 const AUTH_POLICY = {

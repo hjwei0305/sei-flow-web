@@ -9,11 +9,12 @@ import storage from './storage';
 import { CONST_GLOBAL } from './constants.js';
 const { sessionStorage, localStorage } = storage;
 
-const { CURRENT_USER, TOKEN_KEY, CURRENT_LOCALE, AUTH, POLICY, } = CONST_GLOBAL;
+const { CURRENT_USER, TOKEN_KEY, CURRENT_LOCALE, AUTH, POLICY, AUTHORIZATION } = CONST_GLOBAL;
 
 /** 用户信息保存到session */
 export const setCurrentUser = user => {
   sessionStorage.set(CURRENT_USER, user);
+  localStorage.setNative(AUTHORIZATION, user);
 };
 
 /** 获取当前用户信息 */
