@@ -120,7 +120,7 @@ class ConfigWorkPageModal extends Component {
     return (
       <Modal title={seiIntl.get({key: 'flow_000005', desc: '工作界面配置'})}
              visible={modalVisible}
-             width={1200}
+             width={1100}
              maskClosable={false}
              onCancel={handleCancel}
              bodyStyle={{minHeight: 500}}
@@ -128,7 +128,7 @@ class ConfigWorkPageModal extends Component {
              centered={true}
       >
         <TransferTable
-          width={1100}
+          width={1000}
           style={{background: "#fff"}}
           handleLeftClick={this.handleLeftClick.bind(this)}
           handleRightClick={this.handleRightClick.bind(this)}
