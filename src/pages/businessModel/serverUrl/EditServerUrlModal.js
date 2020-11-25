@@ -103,8 +103,8 @@ class EditServerUrlModal extends Component {
                   <Row><FormItem
                     {...formItemLayout}
                     label={seiIntl.get({key: 'flow_000037', desc: '描述'})}>
-                    {getFieldDecorator('remark', {
-                      initialValue: FormValue.remark ? FormValue.remark : "",
+                    {getFieldDecorator('depict', {
+                      initialValue: FormValue.depict ? FormValue.depict : "",
                     })(
                       <Input/>
                     )}
