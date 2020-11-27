@@ -89,7 +89,7 @@ class FlowTypeModal extends Component {
                 required: true,
                 message: seiIntl.get({key: 'flow_000094', desc: '请输入代码!'}),
                 whitespace: true
-              }, {validator: checkCode}]
+              },{max: 60, message: seiIntl.get({key: 'flow_000218', desc: '代码最大长度为60'})}, {validator: checkCode}]
             })(
               <Input/>
             )}
@@ -99,7 +99,7 @@ class FlowTypeModal extends Component {
             label={seiIntl.get({key: 'flow_000022', desc: '名称'})}>
             {getFieldDecorator('name', {
               initialValue: FormValue.name ? FormValue.name : "",
-              rules: [{required: true, message: seiIntl.get({key: 'flow_000042', desc: '请填写名称!'}), whitespace: true}]
+              rules: [{required: true, message: seiIntl.get({key: 'flow_000042', desc: '请填写名称!'}), whitespace: true} , {max: 80, message: seiIntl.get({key: 'flow_000219', desc: '名称最大长度为80'})}]
             })(
               <Input/>
             )}
@@ -146,7 +146,7 @@ class FlowTypeModal extends Component {
             label={seiIntl.get({key: 'flow_000037', desc: '描述'})}>
             {getFieldDecorator('depict', {
               initialValue: FormValue.depict ? FormValue.depict : "",
-              rules: [{required: true, message: seiIntl.get({key: 'flow_000044', desc: '请填写描述!'})}]
+              rules: [{required: true, message: seiIntl.get({key: 'flow_000044', desc: '请填写描述!'})}, {max: 255, message: seiIntl.get({key: 'flow_000220', desc: '描述最大长度为255'})}]
             })(
               <TextArea rows={4} autosize={false}/>
             )}
