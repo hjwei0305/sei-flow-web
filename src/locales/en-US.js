@@ -227,6 +227,13 @@ export default {
   "flow_000213":"Please select the end date !",
   "flow_000214":"Select agent user",
   "flow_000215":"Create user",
+  "flow_000216":"Disagree reason",
+  "flow_000217":"Please select flow type",
+  "flow_000218":"The maximum length of the code is 60",
+  "flow_000219":"The maximum length of the code is 80",
+  "flow_000220":"The maximum length of the code is 255",
+  "flow_000221":"The editor disagreed",
+  "flow_000222":"Add reason for disagreement",
 
 
   "flow_000225":"Just Recently",

@@ -7,6 +7,7 @@ import {
   listFlowHistoryApp,
   listMyBillsApp,
 } from "@/pages/homePage/service";
+import {findReasonOfDisagree} from "@/pages/ReasonOfDisagree/ReasonOfDisagreeService";
 import { seiLocale } from 'sei-utils';
 const { seiIntl } = seiLocale;
 
@@ -96,6 +97,22 @@ export const flowTypeByBusinessModelConfig = {
   key: 'id',
   text: 'name'
 }
+
+//全部流程类型
+export const flowTypeAllConfig = {
+  columns: [
+    {
+      title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
+      dataIndex: 'code',
+    }, {
+      title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
+      dataIndex: 'name',
+    }],
+  dataService: findReasonOfDisagree,
+  searchService: searchListByKey,
+  key: 'id',
+  text: 'name'
+};
 
 /**
  * TreeSelected

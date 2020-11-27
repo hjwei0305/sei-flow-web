@@ -267,7 +267,7 @@ class TaskMakeOverPowerTable extends Component {
       //   }
       // },
       {
-        title: seiIntl.get({key: 'flow_000270', desc: '启动状态'}),
+        title: seiIntl.get({key: 'flow_000270', desc: '启用状态'}),
         dataIndex: 'openStatus',
         width: 100,
         render: (text, record) => {
