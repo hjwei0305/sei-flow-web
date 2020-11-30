@@ -194,7 +194,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           });
           return;
         }
-        if ((g.type != 'ServiceTask' && g.type != 'ReceiveTask' && g.type != 'PoolTask' && g.type != 'CallActivity' ) && !g.checkExcutor()) {
+        if ((g.type != 'ServiceTask' && g.type != 'ReceiveTask' && g.type != 'PoolTask' && g.type != 'CallActivity') && !g.checkExcutor()) {
           EUI.ProcessStatus({
             success: false,
             msg: "请将执行人项配置完整"
@@ -418,8 +418,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         title: "允许减签",
         name: "allowSubtractSign"
       }]);
-    }
-    else if (this.nodeType != "ParallelTask" && this.nodeType != "SerialTask" && this.type != "ServiceTask" && this.type != "ReceiveTask" && this.type != "PoolTask" && this.type != 'CallActivity') {
+    } else if (this.nodeType != "ParallelTask" && this.nodeType != "SerialTask" && this.type != "ServiceTask" && this.type != "ReceiveTask" && this.type != "PoolTask" && this.type != 'CallActivity') {
       items = items.concat([{
         xtype: "CheckBox",
         title: "允许流程发起人终止",
@@ -451,6 +450,11 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           title: "允许委托",
           name: "allowEntrust",
           checked: true
+        }, {
+          xtype: "CheckBox",
+          title: "需要选择不同意原因",
+          name: "chooseDisagreeReason",
+          checked: false
         }]);
       }
     }
@@ -462,7 +466,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "allowChooseInstancy"
       }]);
     }
-    if (this.type != 'CallActivity'  && g.isSolidifyFlow == false ) {
+    if (this.type != 'CallActivity' && g.isSolidifyFlow == false) {
       items = items.concat([{
         xtype: "CheckBox",
         title: "单任务不选择执行人",
@@ -787,8 +791,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     if (userType == "StartUser") {
       var grid = EUI.getCmp("gridBox");
       grid && grid.hide();
-    }
-    else if (userType == "Position") {
+    } else if (userType == "Position") {
       EUI.getCmp("gridBox").show();
       EUI.getCmp("chooseBtn").show();
       EUI.getCmp("positionGrid").show();
@@ -810,8 +813,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       if (data && data.rowdata) {
         EUI.getCmp("positionGrid").setDataInGrid(data.rowdata);
       }
-    }
-    else if (userType == "PositionType") {
+    } else if (userType == "PositionType") {
       EUI.getCmp("gridBox").show();
       EUI.getCmp("choosetTypeBtn").show();
       EUI.getCmp("positionTypeGrid").show();
@@ -2997,7 +2999,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         border: false,
         isOverFlow: false,
         html: "<div class='ecmp-common-moveright arrow-right' id=" + id + "-right></div>" +
-        "<div class='ecmp-common-leftmove arrow-left' id=" + id + "-left></div>"
+          "<div class='ecmp-common-leftmove arrow-left' id=" + id + "-left></div>"
       }
     }
   },

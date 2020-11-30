@@ -330,6 +330,10 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           xtype: "CheckBox",
           title: "允许委托",
           name: "allowEntrust"
+        }, {
+          xtype: "CheckBox",
+          title: "需要选择不同意原因",
+          name: "chooseDisagreeReason"
         }]);
       }
     }
