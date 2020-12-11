@@ -469,9 +469,9 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       postType: 'json',
       isUrlParam: false,
       params: {
-        businessKey: this.businessId,
-        businessModelCode: this.businessModelCode,
-        typeId: this.typeId,
+        businessKey: g.businessId,
+        businessModelCode: g.businessModelCode,
+        typeId: g.flowTypeId,
       },
       success: function (res1) {
         var taskList = "", task = [];
@@ -495,7 +495,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
           params: {
             businessKey: g.businessId,
             businessModelCode: g.businessModelCode,
-            typeId: g.typeId,
+            typeId: g.flowTypeId,
             flowDefKey: flowDefKey,
             opinion: g.remark,//附加说明
             taskList: g.ifPoolTask === "true" ? "anonymous" : taskList,
