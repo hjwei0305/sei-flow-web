@@ -33,7 +33,7 @@ export default class index extends React.Component {
     var parentThis = JSON.parse(localStorage.getItem("flowStart")) || window.top.flowStart  || window.flowStart;
     var businessId = EUI.util.getUrlParam("businessId");
     var businessModelCode = EUI.util.getUrlParam("businessModelCode");
-    var typeId = EUI.util.getUrlParam("typeId");
+    // var typeId = EUI.util.getUrlParam("typeId");
     if(!businessId) {
         businessId = parentThis.businessId;
     }
@@ -53,7 +53,7 @@ export default class index extends React.Component {
             originStartTab: JSON.parse(originStartTab),
             parentThis:parentThis,
             remark: remark,
-            typeId: typeId,
+            // typeId: typeId,
             renderTo: "content"
         });
     });

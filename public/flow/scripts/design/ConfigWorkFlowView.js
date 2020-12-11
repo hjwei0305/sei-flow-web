@@ -12,6 +12,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
   businessModelId: null,//业务实体ID
   businessModelCode: null,
   businessId: null,
+  flowTypeId: null,  //流程类型ID
   executorInfo: {},
   anyOneSelectHtml: {},//用于编辑回显
   defData: null,
@@ -221,6 +222,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
     this.defData = data;
     this.businessModelId = data.businessModelId;
     data.flowTypeName = defData.flowDefination.flowType.name;
+    this.flowTypeId = defData.flowDefination.flowType.id;
     this.loadHead(data);
     var html = "";
     for (var id in data.process.nodes) {
