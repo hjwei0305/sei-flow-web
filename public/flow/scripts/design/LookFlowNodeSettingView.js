@@ -176,17 +176,20 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           xtype: "NumberField",
           name: "executeDay",
           value: 0,
-          unit: "天"
+          unit: "天",
+          readonly: true
         }, {
           xtype: "NumberField",
           name: "executeHour",
           value: 0,
-          unit: "时"
+          unit: "时",
+          readonly: true
         }, {
           xtype: "NumberField",
           name: "executeMinute",
           value: 0,
-          unit: "分"
+          unit: "分",
+          readonly: true
         }]
       },
       {
