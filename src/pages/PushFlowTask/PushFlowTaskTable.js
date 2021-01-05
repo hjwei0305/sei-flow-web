@@ -7,10 +7,10 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Modal, Input, Checkbox, Button} from 'antd';
+import {Modal, Input, Checkbox} from 'antd';
 import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
-import {getPushTaskControl, pushAgainByControlId, pushTheUnpushedTaskToBasicAgain} from "./PushFlowTaskService";
+import {getPushTaskControl, pushAgainByControlId} from "./PushFlowTaskService";
 import SearchTable from "@/components/SearchTable";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import {seiLocale} from 'sei-utils';
@@ -133,29 +133,6 @@ class FlowInstanceTable extends Component {
       }
     });
   };
-
-  pushAgainAll = () => {
-    let thiz = this;
-    confirm({
-      title: "温馨提示",
-      content: "您确定要检测并推送未推送过的待办任务吗？",
-      onOk: () => {
-        thiz.toggoleGlobalLoading(true);
-        pushTheUnpushedTaskToBasicAgain().then(res => {
-          if (res.status === 'SUCCESS') {
-            message.success(seiIntl.get({key: 'flow_000074', desc: '推送成功'}));
-            thiz.getDataSource();
-          } else {
-            message.error(res.message);
-          }
-        }).catch(e => {
-        }).finally(() => {
-          thiz.toggoleGlobalLoading(false);
-        });
-      }
-    });
-  };
-
 
   selectChangeAppModel = (record) => {
     if (record && record.id) {
@@ -306,7 +283,7 @@ class FlowInstanceTable extends Component {
             key="searchAppModelTable"
             initValue={true}
             isNotFormItem={true} config={appModuleAuthConfig}
-            style={{width: 140}}
+            style={{width: 160}}
             selectChange={this.selectChangeAppModel}/></span>,
         <span key={"selectBusinessModel"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
           <SearchTable
@@ -315,7 +292,7 @@ class FlowInstanceTable extends Component {
             initValue={false}
             isNotFormItem={true} params={{"appModuleId": this.state.appModuleId}}
             config={businessModelByAppModelConfig}
-            style={{width: 140}}
+            style={{width: 160}}
             selectChange={this.selectChangeBusinessModel}/></span>,
         <span key={"selectFlowType"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000055', desc: '流程类型：'})}
           <SearchTable
@@ -324,7 +301,7 @@ class FlowInstanceTable extends Component {
             initValue={false}
             isNotFormItem={true} params={{"businessModelId": this.state.businessModelId}}
             config={flowTypeByBusinessModelConfig}
-            style={{width: 140}}
+            style={{width: 160}}
             selectChange={this.selectChangeFlowType}/></span>,
         <span key={"checkInBasic"} className={"primaryButton"}> BASIC/{seiIntl.get({key: 'flow_000091', desc: '业务模块：'})}
           <Checkbox defaultChecked={true} onChange={this.checkChangeInBasic}/></span>
@@ -338,11 +315,9 @@ class FlowInstanceTable extends Component {
           key="search"
           placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleSearch(value)}
-          style={{width: 160}}
+          style={{width: 220}}
           allowClear
-        />,
-        <Button type={"primary"} style={{"margin-left": "10px"}} className={"primaryButton"} key="query"
-                onClick={this.pushAgainAll}>{"推送全部"}</Button>
+        />
       ]
     };
     const {data, selectedRows} = this.state;

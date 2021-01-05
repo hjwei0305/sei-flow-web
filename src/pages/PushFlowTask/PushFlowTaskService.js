@@ -1,6 +1,6 @@
-import { request as httpUtils, constants, } from "@/utils";
+import {request as httpUtils, constants} from "@/utils";
 
-const { baseUrl } = constants;
+const {baseUrl} = constants;
 
 export async function getPushTaskControl(params = {}) {
   Object.assign(params, {
@@ -15,10 +15,6 @@ export async function pushAgainByControlId(controlId) {
   return httpUtils.get(baseUrl + "/flowTaskPushControl/pushAgainByControlId", {pushControlId: controlId});
 }
 
-//重新推送全部
-export async function pushTheUnpushedTaskToBasicAgain() {
-  return httpUtils.get(baseUrl + "/flowTask/pushTheUnpushedTaskToBasicAgain");
-}
 
 
 
