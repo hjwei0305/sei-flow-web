@@ -38,8 +38,8 @@ export default [
       { title: '加签管理', path: '/AddSignTable', component: './AddSign/AddSignTable' },
       { title: '减签管理', path: '/SubtractTable', component: './SubtractSign/SubtractSignTable' },
       /*通用单据（自测使用）*/
-      { title: '通用单据', path: '/BusinessModel2View', component: './DefaultBusinessModel2/BusinessModel2View' },
-
+      { title: '通用单据(seid)', path: '/BusinessModel2View', component: './DefaultBusinessModel2/BusinessModel2View' },
+      { title: '通用单据(suid)', path: '/BusinessModel2ViewSuid', component: './DefaultBusinessModel2/BusinessModel2ViewSuid' },
       /*审批页面（自测使用）*/
       { title: '通用单据', path: '/builtInApprove/look', component: './Approve/DetailBusinessModel2' },
     ],
