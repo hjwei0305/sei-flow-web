@@ -41,7 +41,8 @@ export default [
       { title: '通用单据(seid)', path: '/BusinessModel2View', component: './DefaultBusinessModel2/BusinessModel2View' },
       { title: '通用单据(suid)', path: '/BusinessModel2ViewSuid', component: './DefaultBusinessModel2/BusinessModel2ViewSuid' },
       /*审批页面（自测使用）*/
-      { title: '通用单据', path: '/builtInApprove/look', component: './Approve/DetailBusinessModel2' },
+      { title: '通用单据(seid)', path: '/builtInApprove/look', component: './Approve/DetailBusinessModel2' },
+      { title: '通用单据(suid)', path: '/builtInApprove/lookSuid', component: './Approve/DetailBusinessModel2Suid' },
     ],
   },
 ];
