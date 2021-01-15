@@ -39,8 +39,8 @@ class FlowInstanceTable extends Component {
       businessModel: null,
       businessModelId: "",
       flowType: null,
-      flowTypeId: "",
-      checkInBasic: true
+      flowTypeId: ""
+      // , checkInBasic: true
     };
   }
 
@@ -89,12 +89,12 @@ class FlowInstanceTable extends Component {
           fieldType: "String"//筛选类型
         });
       }
-      filter.push({
-        fieldName: "pushType",
-        operator: "EQ",//操作类型
-        value: this.state.checkInBasic ? "basic" : "business",//筛选值
-        fieldType: "String"//筛选类型
-      });
+      // filter.push({
+      //   fieldName: "pushType",
+      //   operator: "EQ",//操作类型
+      //   value: this.state.checkInBasic ? "basic" : "business",//筛选值
+      //   fieldType: "String"//筛选类型
+      // });
       Object.assign(params, {filters: filter});
     }
     getPushTaskControl(params).then(data => {
@@ -165,10 +165,10 @@ class FlowInstanceTable extends Component {
     }
     this.getDataSource();
   };
-  checkChangeInBasic = (checkInfo) => {
-    this.setState({checkInBasic: checkInfo.target.checked});
-    this.getDataSource();
-  };
+  // checkChangeInBasic = (checkInfo) => {
+  //   this.setState({checkInBasic: checkInfo.target.checked});
+  //   this.getDataSource();
+  // };
   pageChange = (pageInfo) => {
     this.setState({
       pageInfo: pageInfo,
@@ -247,20 +247,21 @@ class FlowInstanceTable extends Component {
         dataIndex: 'pushFalse',
         width: 80
       },
+      // {
+      //   title: seiIntl.get({key: 'flow_000077', desc: '推送类型'}),
+      //   dataIndex: 'pushType',
+      //   width: 80,
+      //   render: (text, record) => {
+      //     if (record.pushType == "business") {   //推送到业务实体
+      //       return seiIntl.get({key: 'flow_000078', desc: '业务模块'})
+      //     } else if (record.pushType == "basic") {  //推送到basic
+      //       return "BASIC"
+      //     } else {
+      //       return "";
+      //     }
+      //   }
+      // },
       {
-        title: seiIntl.get({key: 'flow_000077', desc: '推送类型'}),
-        dataIndex: 'pushType',
-        width: 80,
-        render: (text, record) => {
-          if (record.pushType == "business") {   //推送到业务实体
-            return seiIntl.get({key: 'flow_000078', desc: '业务模块'})
-          } else if (record.pushType == "basic") {  //推送到basic
-            return "BASIC"
-          } else {
-            return "";
-          }
-        }
-      }, {
         title: seiIntl.get({key: 'flow_000047', desc: '流程名称'}),
         dataIndex: 'flowInstanceName',
         width: 180
@@ -303,8 +304,8 @@ class FlowInstanceTable extends Component {
             config={flowTypeByBusinessModelConfig}
             style={{width: 160}}
             selectChange={this.selectChangeFlowType}/></span>,
-        <span key={"checkInBasic"} className={"primaryButton"}> BASIC/{seiIntl.get({key: 'flow_000091', desc: '业务模块：'})}
-          <Checkbox defaultChecked={true} onChange={this.checkChangeInBasic}/></span>
+        // <span key={"checkInBasic"} className={"primaryButton"}> BASIC/{seiIntl.get({key: 'flow_000091', desc: '业务模块：'})}
+        //   <Checkbox defaultChecked={true} onChange={this.checkChangeInBasic}/></span>
       ]
     };
 
