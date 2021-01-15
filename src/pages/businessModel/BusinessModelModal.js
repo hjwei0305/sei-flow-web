@@ -181,12 +181,28 @@ class BusinessModelModal extends Component {
                 )}
               </FormItem>
             </Col>
+            {/*<Col span={12}>*/}
+            {/*  <FormItem*/}
+            {/*    {...formItemLayout}*/}
+            {/*    label={seiIntl.get({key: 'flow_000174', desc: '推送待办服务地址'})}>*/}
+            {/*    {getFieldDecorator('pushMsgUrl', {*/}
+            {/*      initialValue: FormValue.pushMsgUrl ? FormValue.pushMsgUrl : "",*/}
+            {/*    })(*/}
+            {/*      <Input/>*/}
+            {/*    )}*/}
+            {/*  </FormItem>*/}
+            {/*</Col>*/}
             <Col span={12}>
               <FormItem
                 {...formItemLayout}
-                label={seiIntl.get({key: 'flow_000174', desc: '推送待办服务地址'})}>
-                {getFieldDecorator('pushMsgUrl', {
-                  initialValue: FormValue.pushMsgUrl ? FormValue.pushMsgUrl : "",
+                label={seiIntl.get({key: 'flow_000097', desc: '表单URL'})}>
+                {getFieldDecorator('lookUrl', {
+                  initialValue: FormValue.lookUrl ? FormValue.lookUrl : "",
+                  rules: [{
+                    required: true,
+                    message: seiIntl.get({key: 'flow_000169', desc: '请填写条件属性值服务地址!'}),
+                    whitespace: true
+                  }]
                 })(
                   <Input/>
                 )}
@@ -210,22 +226,6 @@ class BusinessModelModal extends Component {
             {/*    )}*/}
             {/*  </FormItem>*/}
             {/*</Col>*/}
-            <Col span={12}>
-              <FormItem
-                {...formItemLayout}
-                label={seiIntl.get({key: 'flow_000097', desc: '表单URL'})}>
-                {getFieldDecorator('lookUrl', {
-                  initialValue: FormValue.lookUrl ? FormValue.lookUrl : "",
-                  rules: [{
-                    required: true,
-                    message: seiIntl.get({key: 'flow_000169', desc: '请填写条件属性值服务地址!'}),
-                    whitespace: true
-                  }]
-                })(
-                  <Input/>
-                )}
-              </FormItem>
-            </Col>
             <Col span={12}>
               <FormItem
                 {...formItemLayout}

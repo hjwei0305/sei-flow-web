@@ -271,13 +271,13 @@ class BusinessModelTable extends Component {
         width: 120,
       },
       {
-        title: seiIntl.get({key: 'flow_000096', desc: '表单明细URL'}),
-        dataIndex: 'businessDetailServiceUrl',
+        title: seiIntl.get({key: 'flow_000097', desc: '表单URL'}),
+        dataIndex: 'lookUrl',
         width: 400,
       },
       {
-        title: seiIntl.get({key: 'flow_000097', desc: '表单URL'}),
-        dataIndex: 'lookUrl',
+        title: seiIntl.get({key: 'flow_000096', desc: '表单明细URL'}),
+        dataIndex: 'businessDetailServiceUrl',
         width: 400,
       },
     ];
