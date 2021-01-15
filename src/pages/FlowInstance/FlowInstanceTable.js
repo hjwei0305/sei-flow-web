@@ -8,17 +8,21 @@
 import React, {Component} from 'react'
 import {connect} from 'dva'
 import {Modal, Input, Checkbox} from 'antd';
-import { message } from 'suid';
+import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
-import {getFlowInstance,endForce} from "./FlowInstanceService";
-import {ApproveHistory} from 'seid';
+import {getFlowInstance, endForce, taskFailTheCompensation} from "./FlowInstanceService";
+import {ApproveHistory, OptGroup} from 'seid';
 import SearchTable from "@/components/SearchTable";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
-import { mainTabAction } from 'sei-utils';
-import { seiLocale } from 'sei-utils';
-import { appModuleAuthConfig,businessModelByAppModelConfig,flowTypeByBusinessModelConfig, } from '@/utils/CommonComponentsConfig';
+import {mainTabAction} from 'sei-utils';
+import {seiLocale} from 'sei-utils';
+import {
+  appModuleAuthConfig,
+  businessModelByAppModelConfig,
+  flowTypeByBusinessModelConfig,
+} from '@/utils/CommonComponentsConfig';
 
-const { seiIntl } = seiLocale;
+const {seiIntl} = seiLocale;
 const confirm = Modal.confirm
 const Search = Input.Search;
 
@@ -28,25 +32,24 @@ class FlowInstanceTable extends Component {
     this.state = {
       data: [],
       selectedRows: [],
-      historyKey:"",
+      historyKey: "",
       pageInfo: null,
-      searchValue: "",
+      quickSearchValue: "",
       appModule: null,
-      appModuleId:"",
+      appModuleId: "",
       businessModel: null,
-      businessModelId:"",
+      businessModelId: "",
       flowType: null,
-      flowTypeId:"",
-      checkInFlow:false
+      flowTypeId: "",
+      checkInFlow: false
     };
   }
 
   componentWillMount() {
-    // this.getDataSource()
   }
 
   toggoleGlobalLoading = (loading) => {
-    const { dispatch, } = this.props;
+    const {dispatch} = this.props;
     dispatch({
       type: 'global/updateState',
       payload: {
@@ -57,38 +60,54 @@ class FlowInstanceTable extends Component {
 
   getDataSource = (params = {}) => {
     this.toggoleGlobalLoading(true);
+    const {appModuleId, businessModelId, flowTypeId, checkInFlow, pageInfo, quickSearchValue} = this.state
     if (!params.filters) {
-      Object.assign(params, {
-        filters: [{
-          fieldName: "flowDefVersion.flowDefination.flowType.businessModel.appModule.id",//筛选字段(应用模块)
-          operator: "EQ",//操作类型
-          value: this.state.appModuleId,//筛选值
-          fieldType: "String"//筛选类型
-        },{
-          fieldName: "flowDefVersion.flowDefination.flowType.businessModel.id",//筛选字段（业务实体）
-          operator: "EQ",//操作类型
-          value: this.state.businessModelId,//筛选值
-          fieldType: "String"//筛选类型
-        },{
-          fieldName: "flowDefVersion.flowDefination.flowType.id",//筛选字段（流程类型）
-          operator: "EQ",//操作类型
-          value: this.state.flowTypeId,//筛选值
-          fieldType: "String"//筛选类型
-        },{
-          fieldName: "manuallyEnd",
-          operator: "EQ",//操作类型
-          value: this.state.checkInFlow==false?false:"",//筛选值
-          fieldType: "Boolean"//筛选类型
-        },{
+      let filterList = [];
+      //应用模块
+      if (appModuleId) {
+        filterList.push({
+          fieldName: "flowDefVersion.flowDefination.flowType.businessModel.appModule.id",
+          operator: "EQ",
+          value: appModuleId,
+          fieldType: "String"
+        });
+      }
+      //业务实体
+      if (businessModelId) {
+        filterList.push({
+          fieldName: "flowDefVersion.flowDefination.flowType.businessModel.id",
+          operator: "EQ",
+          value: businessModelId,
+          fieldType: "String"
+        });
+      }
+      //流程类型
+      if (flowTypeId) {
+        filterList.push({
+          fieldName: "flowDefVersion.flowDefination.flowType.id",
+          operator: "EQ",
+          value: flowTypeId,
+          fieldType: "String"
+        });
+      }
+      //是否流程中
+      if (!checkInFlow) {
+        filterList.push({
           fieldName: "ended",
-          operator: "EQ",//操作类型
-          value: this.state.checkInFlow==false?false:"",//筛选值
-          fieldType: "Boolean"//筛选类型
-        }]
-      })
+          operator: "EQ",
+          value: false,
+          fieldType: "Boolean"
+        });
+      }
+
+      Object.assign(params, {
+        filters: filterList
+      });
     }
+
+    params = {pageInfo, quickSearchValue, ...params};
     getFlowInstance(params).then(data => {
-      this.setState({data, selectedRows: [], searchValue: this.state.searchValue});
+      this.setState({data, selectedRows: []});
     }).catch(e => {
     }).finally(() => {
       this.toggoleGlobalLoading(false);
@@ -103,37 +122,36 @@ class FlowInstanceTable extends Component {
     if (!uri) {
       uri = data.flowDefVersion.flowDefination.flowType.businessModel.lookUrl;
     }
-    let url = data.webBaseAddressAbsolute.replace(/\/$/g,'')+'/'+uri.replace(/^\//g,'');
-    if(url.indexOf('?') === -1){
-      url=`${url}?id=${data.businessId}`
+    let url = data.webBaseAddressAbsolute.replace(/\/$/g, '') + '/' + uri.replace(/^\//g, '');
+    if (url.indexOf('?') === -1) {
+      url = `${url}?id=${data.businessId}`
     } else {
-      url=`${url}&id=${data.businessId}`
+      url = `${url}&id=${data.businessId}`
     }
-    mainTabAction.tabOpen({id:data.businessId,name:seiIntl.get({key: 'flow_000098', desc: '查看表单'}),featureUrl:url})
+    mainTabAction.tabOpen({id: data.businessId, name: seiIntl.get({key: 'flow_000098', desc: '查看表单'}), featureUrl: url})
   };
   handleSearch = (value) => {
-    this.setState({searchValue: value});
-    this.getDataSource({quickSearchValue: value});
+    this.setState({quickSearchValue: value}, () => this.getDataSource());
   };
 
   handleHistory = (data) => {
-    this.setState({historyKey:data.businessId});
+    this.setState({historyKey: data.businessId});
   };
-  setHistoryKey=(id)=>{
-    this.setState({historyKey:id})
+  setHistoryKey = (id) => {
+    this.setState({historyKey: id})
   };
-  handleEnd = (record) =>{
+  handleEnd = (record) => {
     let thiz = this;
     confirm({
       title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
       content: seiIntl.get({key: 'flow_000099', desc: '您确定要强制终止【{0}】吗？'}, [record.businessCode]),
       onOk: () => {
         thiz.toggoleGlobalLoading(true);
-        endForce(record.id).then(res=>{
-          if(res.status==='SUCCESS'){
+        endForce(record.id).then(res => {
+          if (res.status === 'SUCCESS') {
             message.success(seiIntl.get({key: 'flow_000101', desc: '流程终止成功'}));
             thiz.getDataSource();
-          }else{
+          } else {
             message.error(res.message);
           }
         }).catch(e => {
@@ -143,210 +161,98 @@ class FlowInstanceTable extends Component {
       }
     });
   };
-  selectChangeAppModel  = (record) =>{
-    if (record && record.id) {
-        this.setState({appModule: record,appModuleId:record.id,businessModel: null,businessModelId:""});
-        this.getDataSource({
-          filters: [{
-            fieldName: "flowDefVersion.flowDefination.flowType.businessModel.appModule.id",//筛选字段(应用模块)
-            operator: "EQ",//操作类型
-            value: `${record.id}`,//筛选值
-            fieldType: "String"//筛选类型
-          },{
-            fieldName: "manuallyEnd",
-            operator: "EQ",//操作类型
-            value: this.state.checkInFlow==false?false:"",//筛选值
-            fieldType: "Boolean"//筛选类型
-          },{
-            fieldName: "ended",
-            operator: "EQ",//操作类型
-            value: this.state.checkInFlow==false?false:"",//筛选值
-            fieldType: "Boolean"//筛选类型
-          }], quickSearchValue: this.state.searchValue
+  handleNewTask = (record) => {
+    let thiz = this;
+    confirm({
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: seiIntl.get({key: 'flow_000313', desc: '待办补偿是一种待办生成失败后的补偿方式，你确定要执行吗？'}),
+      onOk: () => {
+        thiz.props.show();
+        taskFailTheCompensation(record.id).then(res => {
+          if (res.success === true) {
+            message.success(seiIntl.get({key: 'flow_000314', desc: '补偿成功！'}));
+          } else {
+            message.error(res.message);
+          }
+        }).catch(e => {
+        }).finally(() => {
+          thiz.props.hide();
         });
+      }
+    });
+  };
+  selectChangeAppModel = (record) => {
+    if (record && record.id) {
+      this.setState({
+        appModule: record,
+        appModuleId: record.id,
+        businessModel: null,
+        businessModelId: ""
+      }, () => this.getDataSource());
     } else {
-      this.setState({appModule: null,appModuleId:"",businessModel: null,businessModelId:"",flowType:null,flowTypeId:""});
-      this.getDataSource({
-        filters: [{
-          fieldName: "flowDefVersion.flowDefination.flowType.businessModel.appModule.id",//筛选字段(应用模块)
-          operator: "EQ",//操作类型
-          value: "",//筛选值
-          fieldType: "String"//筛选类型
-        },{
-          fieldName: "manuallyEnd",
-          operator: "EQ",//操作类型
-          value: this.state.checkInFlow==false?false:"",//筛选值
-          fieldType: "Boolean"//筛选类型
-        },{
-          fieldName: "ended",
-          operator: "EQ",//操作类型
-          value: this.state.checkInFlow==false?false:"",//筛选值
-          fieldType: "Boolean"//筛选类型
-        }],quickSearchValue: this.state.searchValue});
+      this.setState({
+        appModule: null,
+        appModuleId: "",
+        businessModel: null,
+        businessModelId: "",
+        flowType: null,
+        flowTypeId: ""
+      }, () => this.getDataSource());
     }
   };
   selectChangeBusinessModel = (record) => {
     if (record && record.id) {
-        this.setState({businessModel: record,businessModelId:record.id});
-        this.getDataSource({
-          filters: [{
-            fieldName: "flowDefVersion.flowDefination.flowType.businessModel.appModule.id",//筛选字段(应用模块)
-            operator: "EQ",//操作类型
-            value: this.state.appModuleId,//筛选值
-            fieldType: "String"//筛选类型
-          },{
-            fieldName: "flowDefVersion.flowDefination.flowType.businessModel.id",//筛选字段（业务实体）
-            operator: "EQ",//操作类型
-            value: `${record.id}`,//筛选值
-            fieldType: "String"//筛选类型
-          },{
-            fieldName: "manuallyEnd",
-            operator: "EQ",//操作类型
-            value: this.state.checkInFlow==false?false:"",//筛选值
-            fieldType: "Boolean"//筛选类型
-          },{
-            fieldName: "ended",
-            operator: "EQ",//操作类型
-            value: this.state.checkInFlow==false?false:"",//筛选值
-            fieldType: "Boolean"//筛选类型
-          }], quickSearchValue: this.state.searchValue
-        });
+      this.setState({businessModel: record, businessModelId: record.id}, () => this.getDataSource());
     } else {
-      this.setState({businessModel: null,businessModelId:"",flowType:null,flowTypeId:""});
-      this.getDataSource({
-        filters: [{
-          fieldName: "flowDefVersion.flowDefination.flowType.businessModel.appModule.id",//筛选字段(应用模块)
-          operator: "EQ",//操作类型
-          value: this.state.appModuleId,//筛选值
-          fieldType: "String"//筛选类型
-        },{
-          fieldName: "manuallyEnd",
-          operator: "EQ",//操作类型
-          value: this.state.checkInFlow==false?false:"",//筛选值
-          fieldType: "Boolean"//筛选类型
-        },{
-          fieldName: "ended",
-          operator: "EQ",//操作类型
-          value: this.state.checkInFlow==false?false:"",//筛选值
-          fieldType: "Boolean"//筛选类型
-        }],quickSearchValue: this.state.searchValue});
+      this.setState({
+        businessModel: null,
+        businessModelId: "",
+        flowType: null,
+        flowTypeId: ""
+      }, () => this.getDataSource());
     }
   };
   selectChangeFlowType = (record) => {
     if (record && record.id) {
-        this.setState({flowType: record,flowTypeId:record.id});
-        this.getDataSource({
-          filters: [{
-            fieldName: "flowDefVersion.flowDefination.flowType.businessModel.appModule.id",//筛选字段(应用模块)
-            operator: "EQ",//操作类型
-            value: this.state.appModuleId,//筛选值
-            fieldType: "String"//筛选类型
-          },{
-            fieldName: "flowDefVersion.flowDefination.flowType.businessModel.id",//筛选字段（业务实体）
-            operator: "EQ",//操作类型
-            value: this.state.businessModelId,//筛选值
-            fieldType: "String"//筛选类型
-          },{
-            fieldName: "flowDefVersion.flowDefination.flowType.id",//筛选字段（流程类型）
-            operator: "EQ",//操作类型
-            value: `${record.id}`,//筛选值
-            fieldType: "String"//筛选类型
-          },{
-            fieldName: "manuallyEnd",
-            operator: "EQ",//操作类型
-            value: this.state.checkInFlow==false?false:"",//筛选值
-            fieldType: "Boolean"//筛选类型
-          },{
-            fieldName: "ended",
-            operator: "EQ",//操作类型
-            value: this.state.checkInFlow==false?false:"",//筛选值
-            fieldType: "Boolean"//筛选类型
-          }], quickSearchValue: this.state.searchValue
-        });
+      this.setState({flowType: record, flowTypeId: record.id}, () => this.getDataSource());
     } else {
-      this.setState({flowType: null,flowTypeId:""});
-      this.getDataSource({
-        filters: [{
-        fieldName: "flowDefVersion.flowDefination.flowType.businessModel.appModule.id",//筛选字段(应用模块)
-        operator: "EQ",//操作类型
-        value: this.state.appModuleId,//筛选值
-        fieldType: "String"//筛选类型
-      },{
-        fieldName: "flowDefVersion.flowDefination.flowType.businessModel.id",//筛选字段（业务实体）
-        operator: "EQ",//操作类型
-        value: this.state.businessModelId,//筛选值
-        fieldType: "String"//筛选类型
-      },{
-          fieldName: "manuallyEnd",
-          operator: "EQ",//操作类型
-          value: this.state.checkInFlow==false?false:"",//筛选值
-          fieldType: "Boolean"//筛选类型
-        },{
-          fieldName: "ended",
-          operator: "EQ",//操作类型
-          value: this.state.checkInFlow==false?false:"",//筛选值
-          fieldType: "Boolean"//筛选类型
-        }], quickSearchValue: this.state.searchValue});
+      this.setState({flowType: null, flowTypeId: ""}, () => this.getDataSource());
     }
   };
   checkChangeInFlow = (checkInfo) => {
-    this.setState({checkInFlow: !checkInfo.target.checked});
-    this.getDataSource({
-      filters: [{
-        fieldName: "flowDefVersion.flowDefination.flowType.businessModel.appModule.id",//筛选字段(应用模块)
-        operator: "EQ",//操作类型
-        value: this.state.appModuleId,//筛选值
-        fieldType: "String"//筛选类型
-      }, {
-        fieldName: "flowDefVersion.flowDefination.flowType.businessModel.id",//筛选字段（业务实体）
-        operator: "EQ",//操作类型
-        value: this.state.businessModelId,//筛选值
-        fieldType: "String"//筛选类型
-      }, {
-        fieldName: "flowDefVersion.flowDefination.flowType.id",//筛选字段（流程类型）
-        operator: "EQ",//操作类型
-        value: this.state.flowTypeId,//筛选值
-        fieldType: "String"//筛选类型
-      }, {
-        fieldName: "manuallyEnd",
-        operator: "EQ",//操作类型
-        value: ((!checkInfo.target.checked)==false)?false:"",//筛选值
-        fieldType: "Boolean"//筛选类型
-      }, {
-        fieldName: "ended",
-        operator: "EQ",//操作类型
-        value: ((!checkInfo.target.checked)==false)?false:"",//筛选值
-        fieldType: "Boolean"//筛选类型
-      }], quickSearchValue: this.state.searchValue
-    });
+    this.setState({checkInFlow: !checkInfo.target.checked}, () => this.getDataSource());
   };
   pageChange = (pageInfo) => {
-    this.setState({
-      pageInfo: pageInfo,
-    });
-    this.getDataSource({quickSearchValue: this.state.searchValue, pageInfo})
+    this.setState({pageInfo: {...pageInfo}}, () => this.getDataSource());
   };
 
   render() {
     const columns = [
       {
         title: seiIntl.get({key: 'flow_000030', desc: '操作'}),
-        width: 200,
+        width: 120,
         dataIndex: "operator",
         render: (text, record, index) => {
-          let ops = () => {
-            let ops = [];
-            ops.push(<a className={'row-operator-item'} key={"detail" + index} onClick={() => this.handleDetail(record)}>{seiIntl.get({key: 'flow_000102', desc: '查看'})}</a>);
-            ops.push(<a className={'row-operator-item'} key={"history" + index} onClick={() => this.handleHistory(record)}>{seiIntl.get({key: 'flow_000103', desc: '历史'})}</a>);
-            if (!record.ended) {
-              ops.push(<a className={'row-operator-item'} key={"end" + index} onClick={() => this.handleEnd(record)}>{seiIntl.get({key: 'flow_000104', desc: '强制终止'})}</a>);
-            }
-            return ops;
-          }
 
-          return (
-            ops()
-          )
+          const optList = [{
+            title: seiIntl.get({key: 'flow_000102', desc: '查看'}),
+            onClick: () => this.handleDetail(record),
+          }, {
+            title: seiIntl.get({key: 'flow_000103', desc: '历史'}),
+            onClick: () => this.handleHistory(record),
+          }];
+
+          if (!record.ended) {
+            optList.push({
+              title: seiIntl.get({key: 'flow_000104', desc: '强制终止'}),
+              onClick: () => this.handleEnd(record),
+            });
+            optList.push({
+              title: seiIntl.get({key: 'flow_000312', desc: '待办补偿'}),
+              onClick: () => this.handleNewTask(record),
+            });
+          }
+          return (<OptGroup optList={optList}/>)
         }
       },
       {
@@ -381,7 +287,7 @@ class FlowInstanceTable extends Component {
         render: (text, record) => {
           if (record.manuallyEnd) {
             return seiIntl.get({key: 'flow_000104', desc: '强制终止'})
-          } else  if(record.ended) {
+          } else if (record.ended) {
             return seiIntl.get({key: 'flow_000109', desc: '结束'})
           } else {
             return seiIntl.get({key: 'flow_000110', desc: '处理中'})
@@ -392,32 +298,33 @@ class FlowInstanceTable extends Component {
 
     const title = () => {
       return [
-          <span key={"selectAppModel"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000038', desc: '应用模块：'})}
-                  <SearchTable
-                    title={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}
-                    key="searchAppModelTable"
-                    initValue={true}
-                    isNotFormItem={true} config={appModuleAuthConfig}
-                    style={{width: 180}}
-                    selectChange={this.selectChangeAppModel}/></span>,
-          <span key={"selectBusinessModel"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
-                  <SearchTable
-                    title={seiIntl.get({key: 'flow_000054', desc: '业务实体'})}
-                    key="searchBusinessModelTable"
-                    initValue={false}
-                    isNotFormItem={true} params = {{"appModuleId":this.state.appModuleId}} config={businessModelByAppModelConfig}
-                    style={{width: 180}}
-                    selectChange={this.selectChangeBusinessModel}/></span>,
-        <span key={"selectFlowType"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000055', desc: '流程类型：'})}
-                  <SearchTable
-                    title={seiIntl.get({key: 'flow_000056', desc: '流程类型'})}
-                    key="searchFlowType"
-                    initValue={false}
-                    isNotFormItem={true} params = {{"businessModelId":this.state.businessModelId}} config={flowTypeByBusinessModelConfig}
-                    style={{width: 180}}
-                    selectChange={this.selectChangeFlowType}/></span>,
-        <span key={"checkInFlow"} className={"primaryButton"} >{seiIntl.get({key: 'flow_000111', desc: '流程中：'})}
-                   <Checkbox  defaultChecked={true} onChange={this.checkChangeInFlow} /></span>
+        <span key={"selectAppModel"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000038', desc: '应用模块：'})}
+          <SearchTable
+            title={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}
+            key="searchAppModelTable"
+            initValue={true}
+            isNotFormItem={true} config={appModuleAuthConfig}
+            style={{width: 180}}
+            selectChange={this.selectChangeAppModel}/></span>,
+        <span key={"selectBusinessModel"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
+          <SearchTable
+            title={seiIntl.get({key: 'flow_000054', desc: '业务实体'})}
+            key="searchBusinessModelTable"
+            initValue={false}
+            isNotFormItem={true} params={{"appModuleId": this.state.appModuleId}} config={businessModelByAppModelConfig}
+            style={{width: 180}}
+            selectChange={this.selectChangeBusinessModel}/></span>,
+        <span key={"selectFlowType"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000055', desc: '流程类型：'})}
+          <SearchTable
+            title={seiIntl.get({key: 'flow_000056', desc: '流程类型'})}
+            key="searchFlowType"
+            initValue={false}
+            isNotFormItem={true} params={{"businessModelId": this.state.businessModelId}}
+            config={flowTypeByBusinessModelConfig}
+            style={{width: 180}}
+            selectChange={this.selectChangeFlowType}/></span>,
+        <span key={"checkInFlow"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000111', desc: '流程中：'})}
+          <Checkbox defaultChecked={true} onChange={this.checkChangeInFlow}/></span>
       ]
     };
 
