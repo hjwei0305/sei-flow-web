@@ -167,7 +167,7 @@ class FlowInstanceTable extends Component {
       title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
       content: seiIntl.get({key: 'flow_000313', desc: '待办补偿是一种待办生成失败后的补偿方式，你确定要执行吗？'}),
       onOk: () => {
-        thiz.props.show();
+        thiz.toggoleGlobalLoading(true);
         taskFailTheCompensation(record.id).then(res => {
           if (res.success === true) {
             message.success(seiIntl.get({key: 'flow_000314', desc: '补偿成功！'}));
@@ -176,7 +176,7 @@ class FlowInstanceTable extends Component {
           }
         }).catch(e => {
         }).finally(() => {
-          thiz.props.hide();
+          thiz.toggoleGlobalLoading(false);
         });
       }
     });
