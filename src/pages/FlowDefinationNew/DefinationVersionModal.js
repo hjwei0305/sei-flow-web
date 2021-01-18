@@ -6,18 +6,18 @@
 import React, {Component} from 'react'
 import {connect} from "dva";
 import {Button, Modal} from 'antd';
-import { message } from 'suid';
+import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {Input} from "antd/lib/index";
 import {activateOrFreezeFlowVer, listFlowDefinationHistory} from "./FlowDefinationService";
 import StandardDropdown from "@/components/StandardDropdown";
 import {mainTabAction} from "sei-utils";
-import { seiLocale } from 'sei-utils';
-import { userUtils, constants, } from '@/utils';
+import {seiLocale} from 'sei-utils';
+import {userUtils, constants,} from '@/utils';
 
-const { getSessionId, } = userUtils;
-const { flowDefUrlNew, } = constants;
-const { seiIntl } = seiLocale;
+const {getSessionId,} = userUtils;
+const {flowDefUrlNew,} = constants;
+const {seiIntl} = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -64,38 +64,38 @@ class DefinationVersionModal extends Component {
 
   refClick = () => {
     if (!this.judgeSelected()) return;
-    const {selectedRows}=this.state;
-    const {selectedNode}=this.props;
-    this.setState({operator: "versionRef", definationModalVisible: true,editData: selectedRows})
-    let auth ={sessionId: getSessionId()};
+    const {selectedRows} = this.state;
+    const {selectedNode} = this.props;
+    this.setState({operator: "versionRef", definationModalVisible: true, editData: selectedRows})
+    let auth = {sessionId: getSessionId()};
     let src = flowDefUrlNew;
-    src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
-    let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
-    let title =seiIntl.get({key: 'flow_000114', desc: '参考创建'});
-    src=src+`&versionCode=${selectedRows[0].versionCode}&businessModelId=${selectedRows[0].flowDefination.flowType.businessModel.id}&businessModelCode=${selectedRows[0].flowDefination.flowType.businessModel.className}&id=${selectedRows[0].flowDefination.id}&isFromVersion=${false}&isCopy=${true}&orgName=${orgName}`
+    src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
+    let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
+    let title = seiIntl.get({key: 'flow_000114', desc: '参考创建'});
+    src = src + `&versionCode=${selectedRows[0].versionCode}&businessModelId=${selectedRows[0].flowDefination.flowType.businessModel.id}&businessModelCode=${selectedRows[0].flowDefination.flowType.businessModel.className}&id=${selectedRows[0].flowDefination.id}&isFromVersion=${false}&isCopy=${true}&orgName=${orgName}`
     mainTabAction.tabOpen({id: selectedRows[0].id + 'versionRef', name: title, featureUrl: src})
   };
   checkClick = (record) => {
-    this.setState({operator: "versionView", definationModalVisible: true,editData: record})
+    this.setState({operator: "versionView", definationModalVisible: true, editData: record})
     // const {selectedRows}=this.state;
-    const {selectedNode}=this.props;
-    let auth ={sessionId: getSessionId()};
+    const {selectedNode} = this.props;
+    let auth = {sessionId: getSessionId()};
     let src = flowDefUrlNew;
-    src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
-    let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
-    let title =seiIntl.get({key: 'flow_000127', desc: '查看流程定义'});
-    src=flowDefUrlNew+`/showLook?id=${record.id}&_s=${auth.sessionId}`
+    src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
+    let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
+    let title = seiIntl.get({key: 'flow_000127', desc: '查看流程定义'});
+    src = flowDefUrlNew + `/showLook?id=${record.id}&_s=${auth.sessionId}`
     mainTabAction.tabOpen({id: record.id + 'versionView', name: title, featureUrl: src})
   };
   editClick = (record) => {
-    this.setState({operator: "versionEdit", definationModalVisible: true,editData: record})
-    const {selectedNode}=this.props;
-    let auth ={sessionId: getSessionId()};
+    this.setState({operator: "versionEdit", definationModalVisible: true, editData: record})
+    const {selectedNode} = this.props;
+    let auth = {sessionId: getSessionId()};
     let src = flowDefUrlNew;
-    src=src+`/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
-    let orgName=encodeURIComponent(encodeURIComponent(selectedNode.name));
-    let title =seiIntl.get({key: 'flow_000031', desc: '编辑'});
-    src=src+`&versionCode=${record.versionCode}&businessModelId=${record.flowDefination.flowType.businessModel.id}&businessModelCode=${record.flowDefination.flowType.businessModel.className}&id=${record.flowDefination.id}&isFromVersion=${true}`
+    src = src + `/show?orgId=${selectedNode.id}&orgCode=${selectedNode.code}&_s=${auth.sessionId}`;
+    let orgName = encodeURIComponent(encodeURIComponent(selectedNode.name));
+    let title = seiIntl.get({key: 'flow_000031', desc: '编辑'});
+    src = src + `&versionCode=${record.versionCode}&businessModelId=${record.flowDefination.flowType.businessModel.id}&businessModelCode=${record.flowDefination.flowType.businessModel.className}&id=${record.flowDefination.id}&isFromVersion=${true}`
     mainTabAction.tabOpen({id: record.id + 'versionView', name: title, featureUrl: src})
   };
   judgeSelected = () => {
@@ -123,10 +123,10 @@ class DefinationVersionModal extends Component {
     if (record.flowDefinationStatus !== "INIT") {
       if (record.flowDefinationStatus === 'Activate') {
         status = 'Freeze';
-        title =seiIntl.get({key: 'flow_000116', desc: '您确定要冻结吗？'})
+        title = seiIntl.get({key: 'flow_000116', desc: '您确定要冻结吗？'})
       } else if (record.flowDefinationStatus === 'Freeze') {
         status = 'Activate';
-        title =seiIntl.get({key: 'flow_000117', desc: '您确定要激活吗？'})
+        title = seiIntl.get({key: 'flow_000117', desc: '您确定要激活吗？'})
       }
     }
     let thiz = this;
@@ -168,13 +168,16 @@ class DefinationVersionModal extends Component {
             ops.push(<a className={'row-operator-item'} key={"edit" + index}
                         onClick={() => this.editClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>);
             ops.push(<a className={'row-operator-item'} key={"checkClick" + index}
-                        onClick={() => this.checkClick(record)}>{seiIntl.get({key: 'flow_000127', desc: '查看流程定义'})}</a>);
+                        onClick={() => this.checkClick(record)}>{seiIntl.get({
+              key: 'flow_000127',
+              desc: '查看流程定义'
+            })}</a>);
             let statusText = '';
             if (record && record.flowDefinationStatus !== "INIT") {
               if (record.flowDefinationStatus === 'Activate') {
-                statusText =seiIntl.get({key: 'flow_000119', desc: '冻结'})
+                statusText = seiIntl.get({key: 'flow_000119', desc: '冻结'})
               } else if (record.flowDefinationStatus === 'Freeze') {
-                statusText =seiIntl.get({key: 'flow_000120', desc: '激活'})
+                statusText = seiIntl.get({key: 'flow_000120', desc: '激活'})
               }
               ops.push(<a className={'row-operator-item'} key={"configWorkPage" + index}
                           onClick={() => this.onActivateOrFreezeFlowDefClick(record)}>{statusText}</a>);
@@ -193,7 +196,14 @@ class DefinationVersionModal extends Component {
       {
         title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
-        width: 200
+        width: 200,
+        render(text, record) {
+          if (record.flowDefinationStatus == 'INIT' || record.flowDefinationStatus == 'Freeze') {
+            return <div style={{color: "red"}}>{text}</div>
+          } else {
+            return text;
+          }
+        }
       },
       {
         title: seiIntl.get({key: 'flow_000121', desc: '定义KEY'}),
@@ -212,8 +222,8 @@ class DefinationVersionModal extends Component {
         title: seiIntl.get({key: 'flow_000124', desc: '优先级'}),
         dataIndex: 'priority',
         width: 60,
-        render(text){
-          return <div style={{textAlign:"right"}}>{text}</div>
+        render(text) {
+          return <div style={{textAlign: "right"}}>{text}</div>
         }
       },
       {
@@ -222,12 +232,11 @@ class DefinationVersionModal extends Component {
         width: 120,
         render(text, record) {
           if ('INIT' === text) {
-            return seiIntl.get({key: 'flow_000123', desc: '未发布'});
+            return <div style={{color: "red"}}>{seiIntl.get({key: 'flow_000123', desc: '未发布'})}</div>;
           } else if ('Activate' === text) {
             return seiIntl.get({key: 'flow_000120', desc: '激活'});
-          }
-          else if ('Freeze' === text) {
-            return seiIntl.get({key: 'flow_000119', desc: '冻结'});
+          } else if ('Freeze' === text) {
+            return <div style={{color: "red"}}>{seiIntl.get({key: 'flow_000119', desc: '冻结'})}</div>;
           }
           return "";
         }
@@ -292,12 +301,12 @@ class DefinationVersionModal extends Component {
           loading={this.state.loading}
         />
         {/*{definationModalVisible&&<DefinaionModal*/}
-          {/*operator={operator}*/}
-          {/*handleCancel={this.handleModalCancel}*/}
-          {/*modalVisible={definationModalVisible}*/}
-          {/*selectedNode={selectedNode ? selectedNode : {}}*/}
-          {/*editData={editData ? editData : {}}*/}
-          {/*flowDefinationId={editData ? editData.id : ""}*/}
+        {/*operator={operator}*/}
+        {/*handleCancel={this.handleModalCancel}*/}
+        {/*modalVisible={definationModalVisible}*/}
+        {/*selectedNode={selectedNode ? selectedNode : {}}*/}
+        {/*editData={editData ? editData : {}}*/}
+        {/*flowDefinationId={editData ? editData.id : ""}*/}
         {/*/>}*/}
       </Modal>
     );
