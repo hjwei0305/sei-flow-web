@@ -1325,7 +1325,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
       orgId: this.orgId,
       orgCode: this.orgCode,
       id: this.id,
-      versionCode: this.versionCode,
+      versionCode: (this.versionCode == null || this.versionCode == "null") ? -1 : this.versionCode,
       priority: moreInfo.priority,
       businessModelId: this.businessModelId,
       subProcess: moreInfo.subProcess,
@@ -1343,7 +1343,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
       url: _ctxPath + "/design/getEntity",
       params: {
         id: this.id,
-        versionCode: this.versionCode
+        versionCode: (this.versionCode == null || this.versionCode == "null") ? -1 : this.versionCode
       },
       success: function (status) {
         mask.hide();
