@@ -5,7 +5,7 @@
 import {Component} from "react";
 import React from "react";
 import {Button, Col, Row, Modal} from "antd";
-import { message } from 'suid';
+import {message} from 'suid';
 import {Input} from "antd/lib/index";
 import SimpleTable from "@/components/SimpleTable";
 import {connect} from "dva";
@@ -20,10 +20,10 @@ import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import StandardDropdown from "@/components/StandardDropdown";
 import {mainTabAction} from 'sei-utils'
 import {seiLocale} from 'sei-utils';
-import { constants, userUtils,  } from '@/utils';
+import {constants, userUtils,} from '@/utils';
 
-const { defaultPageSize, flowDefUrlNew, rowGutter, } = constants;
-const { getSessionId, } = userUtils;
+const {defaultPageSize, flowDefUrlNew, rowGutter,} = constants;
+const {getSessionId,} = userUtils;
 const {seiIntl} = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
@@ -51,7 +51,7 @@ class FlowDefinationView extends Component {
   };
 
   toggoleGlobalLoading = (loading) => {
-    const { dispatch, } = this.props;
+    const {dispatch,} = this.props;
     dispatch({
       type: 'global/updateState',
       payload: {
@@ -297,7 +297,7 @@ class FlowDefinationView extends Component {
     //刷新本地数据
     let params = {
       Q_EQ_orgId: this.state.selectedNode.id,
-      quickSearchValue:tableSearchValue,
+      quickSearchValue: tableSearchValue,
       pageInfo
     };
     this.listFlowDefination(params);
@@ -345,7 +345,14 @@ class FlowDefinationView extends Component {
       {
         title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
-        width: 200
+        width: 200,
+        render(text, record) {
+          if (record.flowDefinationStatus == 'INIT' || record.flowDefinationStatus == 'Freeze') {
+            return <div style={{color: "red"}}>{text}</div>
+          } else {
+            return text;
+          }
+        }
       },
       {
         title: seiIntl.get({key: 'flow_000121', desc: '定义KEY'}),
@@ -363,12 +370,11 @@ class FlowDefinationView extends Component {
         width: 120,
         render(text, record) {
           if ('INIT' === text) {
-            return seiIntl.get({key: 'flow_000123', desc: '未发布'});
+            return <div style={{color: "red"}}>{seiIntl.get({key: 'flow_000123', desc: '未发布'})}</div>;
           } else if ('Activate' === text) {
             return seiIntl.get({key: 'flow_000120', desc: '激活'});
-          }
-          else if ('Freeze' === text) {
-            return seiIntl.get({key: 'flow_000119', desc: '冻结'});
+          } else if ('Freeze' === text) {
+            return <div style={{color: "red"}}>{seiIntl.get({key: 'flow_000119', desc: '冻结'})}</div>;
           }
           return "";
         }
