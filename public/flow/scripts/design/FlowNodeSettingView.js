@@ -526,6 +526,16 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         field: ["id"]
       }
     }];
+
+    if (nodeType == "ReceiveTask") {
+      items.push({
+        xtype: "CheckBox",
+        title: "允许流程发起人终止",
+        name: "allowTerminate",
+        checked: false
+      });
+    }
+
     if (nodeType == "PoolTask") {
       items.push({
           title: "池代码",

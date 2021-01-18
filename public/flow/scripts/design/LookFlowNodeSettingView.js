@@ -348,7 +348,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "allowChooseInstancy"
       }]);
     }
-    if (this.type != 'CallActivity'  && g.isSolidifyFlow == false) {
+    if (this.type != 'CallActivity' && g.isSolidifyFlow == false) {
       items = items.concat([{
         xtype: "CheckBox",
         title: "单任务不选择执行人",
@@ -407,6 +407,16 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         field: ["id"]
       }
     }];
+
+    if (nodeType == "ReceiveTask") {
+      items.push({
+        xtype: "CheckBox",
+        title: "允许流程发起人终止",
+        name: "allowTerminate",
+        readonly: true
+      });
+    }
+
     if (nodeType == "PoolTask") {
       items.push({
         title: "池代码",
