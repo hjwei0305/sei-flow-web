@@ -18,7 +18,7 @@ export async function getFlowDefVersion(id = "") {
 
 export async function listFlowDefinationHistory(params = {}) {
   Object.assign(params, {
-    sortOrders: [{property: 'versionCode', direction: 'ASC'}],
+    sortOrders: [{property: 'createdDate', direction: 'DESC'}],
     quickSearchProperties: ["name", "defKey"],
   });
   return httpUtils.postJson(baseUrl + "/flowDefVersion/findByPage", params);
