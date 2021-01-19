@@ -1429,7 +1429,8 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
     var moreInfo = EUI.apply({
       solidifyFlow: data.solidifyFlow,
       subProcess: data.subProcess,
-      priority: data.priority
+      priority: data.priority,
+      timing: data.timing
     }, data.process);
     this.initMoreInfo(moreInfo);
   },

@@ -333,6 +333,7 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
     EUI.getCmp("afterEnd").store.params.busModelId = businessModelId;
     this.reset();
     this.form.getCmpByName("priority").setValue(0);
+    this.form.getCmpByName("timing").setValue(0);
     this.startUEL = null;
   }
 })
