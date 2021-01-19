@@ -30,25 +30,35 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
         padding: 3
       },
       items: [{
-        itemspace: 15,
+        itemspace: 16,
         items: [{
           xtype: "NumberField",
           title: "优先级",
-          labelWidth: 90,
+          labelWidth: 70,
           allowNegative: false,
           allowBlank: false,
-          width: 133,
+          width: 50,
           value: 0,
           name: "priority"
         }, {
           xtype: "NumberField",
           title: "流程额定工时",
-          labelWidth: 120,
+          labelWidth: 110,
           allowNegative: false,
           allowBlank: false,
-          width: 151,
+          width: 90,
           value: 0,
           name: "timing",
+          unit: "小时"
+        }, {
+          xtype: "NumberField",
+          title: "提前预警时间",
+          labelWidth: 110,
+          allowNegative: false,
+          allowBlank: false,
+          width: 80,
+          value: 0,
+          name: "earlyWarningTime",
           unit: "小时"
         }, {
           xtype: "CheckBox",
@@ -334,6 +344,7 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
     this.reset();
     this.form.getCmpByName("priority").setValue(0);
     this.form.getCmpByName("timing").setValue(0);
+    this.form.getCmpByName("earlyWarningTime").setValue(0);
     this.startUEL = null;
   }
 })

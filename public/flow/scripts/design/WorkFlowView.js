@@ -1273,6 +1273,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
     delete process.solidifyFlow;
     delete process.priority;
     delete process.timing;
+    delete process.earlyWarningTime;
     var parentPos = $(".flow-content").position();
     for (var i = 0; i < nodes.length; i++) {
       var item = $(nodes[i]);
@@ -1331,6 +1332,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
       subProcess: moreInfo.subProcess,
       solidifyFlow: moreInfo.solidifyFlow,
       timing: moreInfo.timing,
+      earlyWarningTime: moreInfo.earlyWarningTime,
       process: process
     };
   }
@@ -1430,7 +1432,8 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
       solidifyFlow: data.solidifyFlow,
       subProcess: data.subProcess,
       priority: data.priority,
-      timing: data.timing
+      timing: data.timing,
+      earlyWarningTime: data.earlyWarningTime
     }, data.process);
     this.initMoreInfo(moreInfo);
   },

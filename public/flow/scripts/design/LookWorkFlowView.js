@@ -422,7 +422,8 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
       subProcess: data.subProcess,
       solidifyFlow: data.solidifyFlow,
       priority: data.priority,
-      timing: data.timing
+      timing: data.timing,
+      earlyWarningTime: data.earlyWarningTime
     }, data.process);
     this.initMoreInfo(moreInfo);
   },

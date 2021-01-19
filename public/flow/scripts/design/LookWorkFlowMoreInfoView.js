@@ -28,23 +28,32 @@ EUI.LookWorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
         padding: 3
       },
       items: [{
-        itemspace: 15,
+        itemspace: 16,
         items: [{
           xtype: "NumberField",
           title: "优先级",
-          labelWidth: 90,
+          labelWidth: 70,
           allowNegative: false,
-          width: 133,
+          width: 50,
           readonly: true,
           name: "priority"
         }, {
           xtype: "NumberField",
           title: "流程额定工时",
-          labelWidth: 120,
+          labelWidth: 110,
           allowNegative: false,
-          width: 151,
+          width: 90,
           readonly: true,
           name: "timing",
+          unit: "小时"
+        }, {
+          xtype: "NumberField",
+          title: "提前预警时间",
+          labelWidth: 110,
+          allowNegative: false,
+          width: 80,
+          readonly: true,
+          name: "earlyWarningTime",
           unit: "小时"
         }, {
           xtype: "CheckBox",
