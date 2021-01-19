@@ -1272,6 +1272,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
     delete process.subProcess;
     delete process.solidifyFlow;
     delete process.priority;
+    delete process.timing;
     var parentPos = $(".flow-content").position();
     for (var i = 0; i < nodes.length; i++) {
       var item = $(nodes[i]);
@@ -1321,7 +1322,6 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
     }
     return {
       flowTypeId: baseInfo.flowTypeId,
-      //flowTypeName: baseInfo.flowTypeName,
       orgId: this.orgId,
       orgCode: this.orgCode,
       id: this.id,
@@ -1330,6 +1330,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
       businessModelId: this.businessModelId,
       subProcess: moreInfo.subProcess,
       solidifyFlow: moreInfo.solidifyFlow,
+      timing: moreInfo.timing,
       process: process
     };
   }
