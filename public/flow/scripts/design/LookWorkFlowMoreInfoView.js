@@ -34,9 +34,18 @@ EUI.LookWorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
           title: "优先级",
           labelWidth: 90,
           allowNegative: false,
-          width: 181,
+          width: 133,
           readonly: true,
           name: "priority"
+        }, {
+          xtype: "NumberField",
+          title: "流程额定工时",
+          labelWidth: 120,
+          allowNegative: false,
+          width: 151,
+          readonly: true,
+          name: "timing",
+          unit: "小时"
         }, {
           xtype: "CheckBox",
           title: "允许为子流程",

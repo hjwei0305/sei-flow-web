@@ -37,9 +37,19 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
           labelWidth: 90,
           allowNegative: false,
           allowBlank: false,
-          width: 181,
+          width: 133,
           value: 0,
           name: "priority"
+        }, {
+          xtype: "NumberField",
+          title: "流程额定工时",
+          labelWidth: 120,
+          allowNegative: false,
+          allowBlank: false,
+          width: 151,
+          value: 0,
+          name: "timing",
+          unit: "小时"
         }, {
           xtype: "CheckBox",
           title: "允许为子流程",
@@ -51,15 +61,6 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
             var solidCmp = EUI.getCmp("solidifyFlow");
             if (value) {
               if (solidCmp) {
-                /*    var solid  = solidCmp.getValue();
-                    if(solid){
-                        EUI.ProcessStatus({
-                            msg: "已允许固化流程，不能进行此操作",
-                            success: false
-                        });
-                        this.reset();
-                        return false;
-                    } */
                 solidCmp.hide();
               }
             } else {
@@ -81,14 +82,6 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
                 return false;
               }
               if (subProcessCmp) {
-                /* var subProcess  = subProcessCmp.getValue();
-                 if(subProcess){
-                     EUI.ProcessStatus({
-                         msg: "已允许为子流程流程，不能进行此操作",
-                         success: false
-                     });
-                     return false;
-                 } */
                 subProcessCmp.hide();
               }
               g.parent.isSolidifyFlow = true;
