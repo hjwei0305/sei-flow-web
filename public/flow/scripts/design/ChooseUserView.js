@@ -330,12 +330,25 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
           g.chooseAnyOneWind.remove();
         }
       }, {
+        title: "选中并继续",
+        hidden: saveBtnIsHidden,
+        handler: function () {
+          var selectRow = EUI.getCmp("chooseUserGridPanel").getSelectRow();
+          if (!selectRow || selectRow.length === 0) {
+            EUI.ProcessStatus({msg: "请选择执行人", success: false});
+            return;
+          }
+          if (!saveBtnIsHidden) {
+            g.addChooseUsersInContainer(selectRow, currentChooseDivIndex, currentChooseTaskType);
+          }
+        }
+      }, {
         title: "确定",
         selected: true,
         hidden: false,
         handler: function () {
           var selectRow = EUI.getCmp("chooseUserGridPanel").getSelectRow();
-          if (!selectRow) {
+          if (!selectRow || selectRow.length === 0) {
             EUI.ProcessStatus({msg: "请选择执行人", success: false});
             return;
           }
