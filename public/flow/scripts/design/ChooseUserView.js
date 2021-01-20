@@ -11,13 +11,13 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
   businessModelCode: null,
   initComponent: function () {
     var g = this;
-    if(this.isAnyOne()){
+    if (this.isAnyOne()) {
       g.showChooseWin();
-    }else{
+    } else {
       this.getData();
     }
   },
-  showChooseWin: function(data){
+  showChooseWin: function (data) {
     var g = this;
     this.winBox = EUI.Window({
       title: "配置执行人",
@@ -45,7 +45,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
           if (!user) {
             return false;
           }
-          $("#"+user.actTaskDefKey).removeClass("not-choose-error");
+          $("#" + user.actTaskDefKey).removeClass("not-choose-error");
           g.setSelectedUser(user);
           g.winBox.remove();
         }
@@ -56,18 +56,18 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
   },
   getData: function () {
     var g = this;
-    var requestExecutorsVos=[];
-    if(this.nodeData&&!Object.isEmpty(this.nodeData)){
+    var requestExecutorsVos = [];
+    if (this.nodeData && !Object.isEmpty(this.nodeData)) {
       var nodeConfig = this.nodeData.nodeConfig;
-      if (!nodeConfig|| !nodeConfig.executor || nodeConfig.executor.length===0) {
+      if (!nodeConfig || !nodeConfig.executor || nodeConfig.executor.length === 0) {
         return;
       }
-      for(var i in nodeConfig.executor){
-        var newObj = {},obj = nodeConfig.executor[i];
+      for (var i in nodeConfig.executor) {
+        var newObj = {}, obj = nodeConfig.executor[i];
         newObj.userType = obj.userType;
-        if(obj.userType==="SelfDefinition"){
+        if (obj.userType === "SelfDefinition") {
           newObj.ids = obj.selfDefId || obj.selfDefOfOrgAndSelId || null;
-        }else{
+        } else {
           newObj.ids = obj.ids || null;
         }
         requestExecutorsVos.push(newObj);
@@ -77,7 +77,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       msg: "正在获取数据，请稍候..."
     });
     EUI.Store({
-      url:  _ctxPath + "/flowTask/getExecutorsByExecutorsVos",
+      url: _ctxPath + "/flowTask/getExecutorsByExecutorsVos",
       postType: 'json',
       isUrlParam: false,
       params: {
@@ -99,10 +99,10 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       }
     });
   },
-  isAnyOne: function(){
+  isAnyOne: function () {
     var executor = this.nodeData.nodeConfig.executor;
-    for(var i = 0; i< executor.length;i++){
-      if(executor[i].userType === "AnyOne"){
+    for (var i = 0; i < executor.length; i++) {
+      if (executor[i].userType === "AnyOne") {
         this.isAnyOneNode = true;
         break;
       }
@@ -111,8 +111,8 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
   },
   showChooseUser: function (data) {
     var g = this;
-    var nodeTypeStr = "",nodeType="",nodeName="";
-    var taskText = this.lang.generalTaskText,iconCss = "choose-radio";
+    var nodeTypeStr = "", nodeType = "", nodeName = "";
+    var taskText = this.lang.generalTaskText, iconCss = "choose-radio";
     if (this.nodeData.nodeType) {
       nodeTypeStr = this.nodeData.nodeType.toLowerCase();
       nodeType = this.nodeData.nodeType;
@@ -143,79 +143,80 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       case "receivetask":
         taskText = this.lang.receiveTaskText;
         break;
-      default: break;
+      default:
+        break;
 
     }
 
-    var itemdom = "",user = data;
+    var itemdom = "", user = data;
     if (this.isAnyOneNode) {
-      var html = g.showAnyContainer(0, taskText,nodeType,nodeName);
+      var html = g.showAnyContainer(0, taskText, nodeType, nodeName);
       $(".flow-operate").before(html);
       return;
     }
     var urgentHtml = "";
-    if(this.nodeData.nodeConfig.normal.allowChooseInstancy){//是否允许加急
+    if (this.nodeData.nodeConfig.normal.allowChooseInstancy) {//是否允许加急
       var userInfo = this.parentThis.executorInfo[this.nodeData.id];
-      if(userInfo&&userInfo.instancyStatus){
-        urgentHtml = '<div class="urgentchoose-icon select-urgentchoose-radio" style="top: 4px;position: relative;"/>'+
+      if (userInfo && userInfo.instancyStatus) {
+        urgentHtml = '<div class="urgentchoose-icon select-urgentchoose-radio" style="top: 4px;position: relative;"/>' +
           '<span class="urgentchoose-span" style="color: red">' + "紧急" + '</span>';
-      }else{
-        urgentHtml = '<div class="urgentchoose-icon urgentchoose-radio" style="top: 4px;position: relative;"/>'+
+      } else {
+        urgentHtml = '<div class="urgentchoose-icon urgentchoose-radio" style="top: 4px;position: relative;"/>' +
           '<span class="urgentchoose-span">' + "紧急" + '</span>';
       }
     }
-    var nodeHtml ="";
-    if(iconCss === "choose-checkbox"){
+    var nodeHtml = "";
+    if (iconCss === "choose-checkbox") {
       nodeHtml = '<div class="flow-node-box" index="' + 0 + '">' +
-        '<div class="flow-excutor-title"><div class="choose-icon choose-checkbox" ></div>' + nodeName + '-[' + taskText +']' +urgentHtml+
+        '<div class="flow-excutor-title"><div class="choose-icon choose-checkbox" ></div>' + nodeName + '-[' + taskText + ']' + urgentHtml +
         '</div>' +
         '<div class="flow-excutor-content">';
-    }else{
+    } else {
       nodeHtml = '<div class="flow-node-box" index="' + 0 + '">' +
-        '<div class="flow-excutor-title">' + nodeName + '-[' + taskText +']' +urgentHtml+
+        '<div class="flow-excutor-title">' + nodeName + '-[' + taskText + ']' + urgentHtml +
         '</div>' +
         '<div class="flow-excutor-content">';
     }
 
 
     if (iconCss === "choose-radio") {
-      itemdom = $(g.showUserItem(user, nodeHtml, iconCss, taskText,nodeType));
+      itemdom = $(g.showUserItem(user, nodeHtml, iconCss, taskText, nodeType));
       $(".flow-operate").before(itemdom);
       if (!this.unNeedSelectExecutor && data && data.length === 1) {
         $(".flow-user-item:first", itemdom).addClass("select");
       }
-    }else if (iconCss === "choose-checkbox") {
-      itemdom = $(g.showUserItem(user, nodeHtml, iconCss, taskText,nodeType));
+    } else if (iconCss === "choose-checkbox") {
+      itemdom = $(g.showUserItem(user, nodeHtml, iconCss, taskText, nodeType));
       $(".flow-operate").before(itemdom);
 
-      if(user.length>0 && user.length == $(".flow-user-item.select").length){
+      if (user.length > 0 && user.length == $(".flow-user-item.select").length) {
         $(".flow-excutor-title").addClass("select");
-      }else{
+      } else {
         $(".flow-excutor-title").removeClass("select");
       }
       //  $(".flow-user-item", itemdom).addClass("select");
     }
   },
-  showAnyContainer: function (i, taskText,nodeType,nodeName) {
+  showAnyContainer: function (i, taskText, nodeType, nodeName) {
     this.unNeedSelectExecutor = false;
     var g = this;
     var urgentHtml = "";
-    if(this.nodeData.nodeConfig.normal.allowChooseInstancy){//是否允许加急
+    if (this.nodeData.nodeConfig.normal.allowChooseInstancy) {//是否允许加急
       var userInfo = this.parentThis.executorInfo[this.nodeData.id];
-      if(userInfo&&userInfo.instancyStatus){
-        urgentHtml = '<div class="urgentchoose-icon select-urgentchoose-radio" style="top: 4px;position: relative;"/>'+
+      if (userInfo && userInfo.instancyStatus) {
+        urgentHtml = '<div class="urgentchoose-icon select-urgentchoose-radio" style="top: 4px;position: relative;"/>' +
           '<span class="urgentchoose-span" style="color: red">' + "紧急" + '</span>';
-      }else{
-        urgentHtml = '<div class="urgentchoose-icon urgentchoose-radio" style="top: 4px;position: relative;"/>'+
+      } else {
+        urgentHtml = '<div class="urgentchoose-icon urgentchoose-radio" style="top: 4px;position: relative;"/>' +
           '<span class="urgentchoose-span">' + "紧急" + '</span>';
       }
     }
-    var html = "",anyOnehtml= this.parentThis.anyOneSelectHtml[this.nodeData.id] || "";
+    var html = "", anyOnehtml = this.parentThis.anyOneSelectHtml[this.nodeData.id] || "";
     var nodeHtml = '<div class="flow-node-box" index="' + i + '">' +
-      '<div class="flow-excutor-title" flowTaskType="' + nodeType + '">' + nodeName + '-[' + taskText + ']' +urgentHtml+
+      '<div class="flow-excutor-title" flowTaskType="' + nodeType + '">' + nodeName + '-[' + taskText + ']' + urgentHtml +
       '</div>' +
       '<div class="flow-excutor-content2-box">' +
-      '<div class="flow-excutor-content2">'+anyOnehtml+'</div>' +
+      '<div class="flow-excutor-content2">' + anyOnehtml + '</div>' +
       '<div class="choose-btn">' +
       '<span class="btn-icon ecmp-common-add"></span>' +
       '<span class="btn-icon choose-btn-text">' + g.lang.chooseText + '</span>' +
@@ -224,11 +225,11 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       '</div>';
     return html += nodeHtml;
   },
-  findId: function(selectedId,id){
+  findId: function (selectedId, id) {
     var flag = false;
-    if(selectedId&&selectedId.length>0){
-      for(var i=0;i<selectedId.length;i++){
-        if(selectedId[i]===id){
+    if (selectedId && selectedId.length > 0) {
+      for (var i = 0; i < selectedId.length; i++) {
+        if (selectedId[i] === id) {
           flag = true;
           break;
         }
@@ -236,30 +237,30 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
     }
     return flag;
   },
-  showUserItem: function (users, nodeHtml, iconCss, taskText,nodeType) {
-    var userInfo = this.parentThis.executorInfo[this.nodeData.id],selectedId = userInfo&&userInfo.executorIds;
-    if(selectedId){
+  showUserItem: function (users, nodeHtml, iconCss, taskText, nodeType) {
+    var userInfo = this.parentThis.executorInfo[this.nodeData.id], selectedId = userInfo && userInfo.executorIds;
+    if (selectedId) {
       selectedId = selectedId.split(",");
     }
-    var html = "", classStr="flow-user-item";
+    var html = "", classStr = "flow-user-item";
     this.unNeedSelectExecutor = false;
     for (var j = 0; j < users.length; j++) {
       var user = users[j];
       // if((iconCss==="choose-checkbox"&&!selectedId) || this.findId(selectedId,user.id)){
-      if(this.findId(selectedId,user.id)){
-        classStr="flow-user-item select";
-      }else{
-        classStr="flow-user-item"
+      if (this.findId(selectedId, user.id)) {
+        classStr = "flow-user-item select";
+      } else {
+        classStr = "flow-user-item"
       }
       if (!user.positionId) {
-        nodeHtml += '<div class="'+classStr+'" type="' + nodeType + '" id="' + user.id + '">' +
+        nodeHtml += '<div class="' + classStr + '" type="' + nodeType + '" id="' + user.id + '">' +
           '<div class="choose-icon ' + iconCss + '" ></div>' +
           '<div class="excutor-item-title">' +
           String.format(this.lang.showUserInfo2Text, user.name, user.organizationName, user.code) +
           '</div>' +
           '</div>';
       } else {
-        nodeHtml += '<div class="'+classStr+'" type="' + nodeType + '" id="' + user.id + '">' +
+        nodeHtml += '<div class="' + classStr + '" type="' + nodeType + '" id="' + user.id + '">' +
           '<div class="choose-icon ' + iconCss + '"></div>' +
           '<div class="excutor-item-title">' +
           String.format(this.lang.showUserInfoText, user.name, user.positionName, user.organizationName, user.code) +
@@ -271,12 +272,12 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
     return html += nodeHtml;
   },
   //设置各个节点的执行人
-  setSelectedUser: function(userInfo){
-    this.parentThis.executorInfo[userInfo.actTaskDefKey]=userInfo;
+  setSelectedUser: function (userInfo) {
+    this.parentThis.executorInfo[userInfo.actTaskDefKey] = userInfo;
   },
   getSelectedUser: function () {
     var nodeDoms = $(".flow-node-box");
-    if(nodeDoms.length>0){
+    if (nodeDoms.length > 0) {
       var nodeDom = $(nodeDoms[0]);
       var itemDoms = $(".select", nodeDom);
       if (itemDoms.length === 0) {
@@ -286,7 +287,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
         });
         return false;
       }
-      if(this.isAnyOneNode){
+      if (this.isAnyOneNode) {
         this.parentThis.anyOneSelectHtml[this.nodeData.id] = $(".flow-excutor-content2").html();//用于编辑回显
       }
       var ids = "";
@@ -296,7 +297,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
         }
         ids += $(itemDoms[j]).attr("id");
       }
-      var user = this.parentThis.executorInfo[this.nodeData.id]||{instancyStatus: false};
+      var user = this.parentThis.executorInfo[this.nodeData.id] || {instancyStatus: false};
       user.executorIds = ids;
       user.actTaskDefKey = this.nodeData.id;
       user.nodeType = this.nodeData.nodeType;
@@ -304,7 +305,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
     }
     return false;
   },
-  showChooseExecutorWind: function (currentChooseDivIndex, currentChooseTaskType,treeData) {
+  showChooseExecutorWind: function (currentChooseDivIndex, currentChooseTaskType, treeData) {
     var g = this;
     var isChooseOneTitle;
     var saveBtnIsHidden;
@@ -328,14 +329,14 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
         handler: function () {
           g.chooseAnyOneWind.remove();
         }
-      },{
+      }, {
         title: "确定",
         selected: true,
         hidden: false,
         handler: function () {
           var selectRow = EUI.getCmp("chooseUserGridPanel").getSelectRow();
           if (!selectRow) {
-            EUI.ProcessStatus({msg: "请选择执行人",success: false});
+            EUI.ProcessStatus({msg: "请选择执行人", success: false});
             return;
           }
           if (saveBtnIsHidden) {
@@ -414,7 +415,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
           postData: {
             organizationId: g.selectedOrgId,
             includeSubNode: true,
-            quickSearchValue:""
+            quickSearchValue: ""
           }
         }, true);
         EUI.getCmp("chooseUserGridPanel").data = null;
@@ -422,7 +423,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       afterItemRender: function (nodeData) {
         if (nodeData.frozen) {
           var nodeDom = $("#" + nodeData.id);
-          if (nodeDom.length===0) {
+          if (nodeDom.length === 0) {
             return;
           }
           var itemCmp = $(nodeDom[0].children[0]);
@@ -463,7 +464,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
               postData: {
                 organizationId: g.selectedOrgId,
                 includeSubNode: true,
-                quickSearchValue:value
+                quickSearchValue: value
               }
             }, true);
             EUI.getCmp("chooseUserGridPanel").data = null;
@@ -506,7 +507,11 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
             index: "organizationName",
             width: 150,
             align: "center"
-            // , hidden: true
+          }, {
+            name: "organizationNamePath",
+            index: "organizationNamePath",
+            width: 150,
+            hidden: true
           }],
           //单选 双击选中
           ondblClickRow: function (rowid) {
@@ -528,7 +533,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
   addChooseUsersInContainer: function (selectRow, currentChooseDivIndex, currentChooseTaskType) {
     var g = this;
     var html = "";
-    var selectedUser = [],$content = $("div[index=" + currentChooseDivIndex + "]").find(".flow-excutor-content2");
+    var selectedUser = [], $content = $("div[index=" + currentChooseDivIndex + "]").find(".flow-excutor-content2");
     $content.children().each(function (index, domEle) {
       selectedUser.push(domEle.id)
     });
@@ -581,18 +586,17 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
     });
 
 
-
     //设置紧急按钮
     $(".urgentchoose-icon").die().live("click", function () {
-      var user = g.parentThis.executorInfo[g.nodeData.id]||{};
-      if(user.instancyStatus){
+      var user = g.parentThis.executorInfo[g.nodeData.id] || {};
+      if (user.instancyStatus) {
         $(this).removeClass("select-urgentchoose-radio").addClass("urgentchoose-radio");
         $(".urgentchoose-span").css("color", "black");
-        user.instancyStatus=false;
+        user.instancyStatus = false;
       } else {
         $(this).removeClass("urgentchoose-radio").addClass("select-urgentchoose-radio");
         $(".urgentchoose-span").css("color", "red");
-        user.instancyStatus=true;
+        user.instancyStatus = true;
       }
       g.parentThis.executorInfo[g.nodeData.id] = user
     });
@@ -622,7 +626,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
     });
     //选择任意执行人
     $(".choose-btn").die().live("click", function () {
-      var $this = $(this),$parent = $this.parents(".flow-node-box");
+      var $this = $(this), $parent = $this.parents(".flow-node-box");
       var mask = EUI.LoadMask({msg: "正在加载，请稍候"});
       EUI.Store({
         url: _ctxPath + "/flowDefination/listAllOrgs",
@@ -630,7 +634,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
           mask.hide();
           var currentChooseDivIndex = $parent.attr("index");
           var currentChooseTaskType = $parent.children().eq(0).attr("flowtasktype");
-          g.showChooseExecutorWind(currentChooseDivIndex, currentChooseTaskType,status.data);
+          g.showChooseExecutorWind(currentChooseDivIndex, currentChooseTaskType, status.data);
           EUI.getCmp("chooseAnyUserTree").setSelect(status.data[0].id);
         },
         failure: function (response) {
@@ -644,5 +648,59 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
     $(".ecmp-flow-delete").die().live("click", function () {
       $(this).parent().remove();
     });
+
+    //鼠标移动上去后展示组织机构全路径
+    $("#chooseUserGridPanel [role=gridcell]").live("mouseenter", function () {
+      var dom = $(this);
+      g.initTextBox();
+      var addTop = 1;
+      var text = $(this).nextAll()[$(this).nextAll().length - 1].innerHTML;
+      g.showTextBox(dom, "<span>" + text + "</span>", addTop);
+    }).live("mouseleave", function () {
+      var $tipbox = $("div.textbox");
+      $tipbox.hide();
+    });
+
+  },
+  initTextBox: function () {
+    if ($(".textbox").length != 0) {
+      return;
+    }
+    var $tipbox = $("<div class='textbox' style='display:none;'></div>");
+    var $c = $('<div class="text_content"></div>');
+    $tipbox.append($c);
+    $tipbox.appendTo('body');
+  },
+  showTextBox: function (thisdom, content, addTop) {
+    var tboxes = $("div.textbox");
+    var $tipbox;
+    for (var i = 0; i < tboxes.length; i++) {
+      if (tboxes[i].id === "") {
+        $tipbox = $(tboxes[i]);
+        break;
+      }
+    }
+    var $c = $tipbox.find("div");
+    $c.html(content);
+    var pos = thisdom.offset();
+    var top = thisdom.height() + addTop;
+    var left = thisdom.width() / 2;
+    var boxtop = pos.top + top;
+    var boxleft = pos.left + left;
+    if (boxtop + $tipbox.height() > $(window).height()) {
+      boxtop = pos.top - $tipbox.height() - $tipbox.find("b").height();
+      $tipbox.find("b").removeClass("tri_t").addClass("tri_b").css({"left": 5, "margin-top": $tipbox.height()});
+    } else {
+      $tipbox.find("b").removeClass("tri_b").addClass("tri_t").css({"left": 5, "margin-top": -7});
+    }
+    $tipbox.css({
+      "top": boxtop,
+      "left": boxleft,
+      "position": "absolute",
+      "max-width": 420,
+      "max-height": 130,
+      "z-index": "9999999"
+    }).show();
   }
+
 });
