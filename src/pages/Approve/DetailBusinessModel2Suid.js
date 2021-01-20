@@ -24,12 +24,18 @@ class DetailBusinessModel2Suid extends Component {
   }
 
 
+  closeWin = (res) => {
+     if(res.success){
+       window.close();
+     }
+  }
 
   render() {
     const appProps = {
       businessId: this.state.id,
       instanceId: this.state.instanceId,
       taskId: this.state.taskId,
+      submitComplete: this.closeWin
     };
 
     return (

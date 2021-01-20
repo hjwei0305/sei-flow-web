@@ -255,9 +255,7 @@ class BusinessModel2ViewSuid extends Component {
               const hisProps = {
                 businessId: record.id
               };
-              ops.push(<FlowHistoryButton   {...hisProps} >
-                <Button>流程历史</Button>
-              </FlowHistoryButton>);
+              ops.push(<FlowHistoryButton   {...hisProps} />);
             }
             return ops;
           }
