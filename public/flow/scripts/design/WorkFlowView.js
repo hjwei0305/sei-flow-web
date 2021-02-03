@@ -1299,6 +1299,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
         node.busType = item.attr("bustype");
       }
       var defaultCount = 0;
+      var outCout = 0;
       for (var key in this.connectInfo) {
         if (key.startsWith(id + ",")) {
           var item = {
@@ -1309,8 +1310,20 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
             && item.uel && item.uel.isDefault) {
             defaultCount++;
           }
+          if ((node.busType == "ExclusiveGateway" || node.busType == "InclusiveGateway")
+            && (item.uel || item.uel.isDefault)) {
+            outCout++;
+          }
           node.target.push(item);
         }
+      }
+      //如果是系统排他网关或者包容网关，出口只有一条的时候
+      if ((node.busType == "ExclusiveGateway" || node.busType == "InclusiveGateway") && outCout == 1) {
+        EUI.ProcessStatus({
+          success: false,
+          msg: node.name + "：只有一条出口路径，请修改配置"
+        });
+        return;
       }
       if (defaultCount > 1) {
         EUI.ProcessStatus({
