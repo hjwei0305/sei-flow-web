@@ -340,6 +340,16 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         }]);
       }
     }
+
+    if (this.nodeType == "ParallelTask") {
+      items = items.concat([{
+        xtype: "CheckBox",
+        title: "抄送（呈报）",
+        name: "carbonCopyOrReport",
+        readonly: true
+      }]);
+    }
+
     if (this.nodeType == "Normal" || this.nodeType == "SingleSign" || this.nodeType == "CounterSign" || this.nodeType == "Approve"
       || this.nodeType == "ParallelTask" || this.nodeType == "SerialTask") {
       items = items.concat([{
