@@ -109,7 +109,7 @@ class FlowDefinationView extends Component {
       let params = {
         Q_EQ_orgId: this.state.selectedNode.id,
         quickValue,
-        pageInfo: this.state.pageInfo
+        pageInfo: {page: 1, rows: defaultPageSize}
       };
       this.setState({tableSearchValue: quickValue}, () => this.listFlowDefination(params));
     } else {
