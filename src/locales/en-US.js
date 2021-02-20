@@ -323,6 +323,7 @@ export default {
   "flow_000312": "Task the compensation",
   "flow_000313": "Task compensation is a way of compensating for failure to generate task. Are you sure you want to implement it?",
   "flow_000314": "Compensation for success ！",
+  "flow_000315": "flowInstanceName、flowTaskName、businessCode、executorName",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
