@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Modal, Input, Checkbox} from 'antd';
+import {Modal, Input, Checkbox, Button} from 'antd';
 import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {getPushTaskControl, pushAgainByControlId} from "./PushFlowTaskService";
@@ -34,6 +34,7 @@ class FlowInstanceTable extends Component {
       historyKey: "",
       pageInfo: null,
       searchValue: "",
+      changeValue: "",
       appModule: null,
       appModuleId: "",
       businessModel: null,
@@ -112,6 +113,9 @@ class FlowInstanceTable extends Component {
     this.setState({searchValue: value});
     this.getDataSource({quickSearchValue: value});
   };
+  changeSearch = (e) => {
+    this.setState({changeValue: e.target.value});
+  };
   pushAgain = (record) => {
     let thiz = this;
     confirm({
@@ -147,7 +151,6 @@ class FlowInstanceTable extends Component {
         flowTypeId: ""
       });
     }
-    this.getDataSource();
   };
   selectChangeBusinessModel = (record) => {
     if (record && record.id) {
@@ -155,7 +158,6 @@ class FlowInstanceTable extends Component {
     } else {
       this.setState({businessModel: null, businessModelId: "", flowType: null, flowTypeId: ""});
     }
-    this.getDataSource();
   };
   selectChangeFlowType = (record) => {
     if (record && record.id) {
@@ -163,7 +165,6 @@ class FlowInstanceTable extends Component {
     } else {
       this.setState({flowType: null, flowTypeId: ""});
     }
-    this.getDataSource();
   };
   // checkChangeInBasic = (checkInfo) => {
   //   this.setState({checkInBasic: checkInfo.target.checked});
@@ -173,7 +174,11 @@ class FlowInstanceTable extends Component {
     this.setState({
       pageInfo: pageInfo,
     });
-    this.getDataSource({quickSearchValue: this.state.searchValue, pageInfo})
+    this.getDataSource({quickSearchValue: this.state.changeValue, pageInfo})
+  };
+
+  queryClick = () => {
+    this.getDataSource({quickSearchValue: this.state.changeValue, pageInfo : this.state.pageInfo});
   };
 
 
@@ -202,7 +207,7 @@ class FlowInstanceTable extends Component {
       {
         title: seiIntl.get({key: 'flow_000076', desc: '业务编号'}),
         dataIndex: 'businessCode',
-        width: 120
+        width: 180
       },
       {
         title: seiIntl.get({key: 'flow_000079', desc: '推送状态'}),
@@ -284,7 +289,7 @@ class FlowInstanceTable extends Component {
             key="searchAppModelTable"
             initValue={true}
             isNotFormItem={true} config={appModuleAuthConfig}
-            style={{width: 160}}
+            style={{width: 150}}
             selectChange={this.selectChangeAppModel}/></span>,
         <span key={"selectBusinessModel"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
           <SearchTable
@@ -293,7 +298,7 @@ class FlowInstanceTable extends Component {
             initValue={false}
             isNotFormItem={true} params={{"appModuleId": this.state.appModuleId}}
             config={businessModelByAppModelConfig}
-            style={{width: 160}}
+            style={{width: 150}}
             selectChange={this.selectChangeBusinessModel}/></span>,
         <span key={"selectFlowType"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000055', desc: '流程类型：'})}
           <SearchTable
@@ -302,7 +307,7 @@ class FlowInstanceTable extends Component {
             initValue={false}
             isNotFormItem={true} params={{"businessModelId": this.state.businessModelId}}
             config={flowTypeByBusinessModelConfig}
-            style={{width: 160}}
+            style={{width: 150}}
             selectChange={this.selectChangeFlowType}/></span>,
         // <span key={"checkInBasic"} className={"primaryButton"}> BASIC/{seiIntl.get({key: 'flow_000091', desc: '业务模块：'})}
         //   <Checkbox defaultChecked={true} onChange={this.checkChangeInBasic}/></span>
@@ -315,10 +320,12 @@ class FlowInstanceTable extends Component {
         <Search
           key="search"
           placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
+          onChange={this.changeSearch}
           onSearch={value => this.handleSearch(value)}
           style={{width: 220}}
           allowClear
-        />
+        />,
+        <Button type={"primary"}  style={{ "margin-left":"10px"}} className={"primaryButton"}  key="query" onClick={this.queryClick}>{seiIntl.get({key: 'flow_000250', desc: '查询'})}</Button>
       ]
     };
     const {data, selectedRows} = this.state;
