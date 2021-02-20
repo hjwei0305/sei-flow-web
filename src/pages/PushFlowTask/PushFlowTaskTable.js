@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Modal, Input, Checkbox, Button} from 'antd';
+import {Modal, Input, Checkbox, Button, Tooltip} from 'antd';
 import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {getPushTaskControl, pushAgainByControlId} from "./PushFlowTaskService";
@@ -178,7 +178,7 @@ class FlowInstanceTable extends Component {
   };
 
   queryClick = () => {
-    this.getDataSource({quickSearchValue: this.state.changeValue, pageInfo : this.state.pageInfo});
+    this.getDataSource({quickSearchValue: this.state.changeValue, pageInfo: this.state.pageInfo});
   };
 
 
@@ -205,7 +205,7 @@ class FlowInstanceTable extends Component {
         width: 180
       },
       {
-        title: seiIntl.get({key: 'flow_000076', desc: '业务编号'}),
+        title: seiIntl.get({key: 'flow_000132', desc: '业务单号'}),
         dataIndex: 'businessCode',
         width: 180
       },
@@ -317,15 +317,18 @@ class FlowInstanceTable extends Component {
     //表头搜索框
     const search = () => {
       return [
-        <Search
-          key="search"
-          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
-          onChange={this.changeSearch}
-          onSearch={value => this.handleSearch(value)}
-          style={{width: 220}}
-          allowClear
-        />,
-        <Button type={"primary"}  style={{ "margin-left":"10px"}} className={"primaryButton"}  key="query" onClick={this.queryClick}>{seiIntl.get({key: 'flow_000250', desc: '查询'})}</Button>
+        <Tooltip title={seiIntl.get({key: 'flow_000315', desc: '流程名称、任务名称、业务单号、执行人名称'})}>
+          <Search
+            key="search"
+            placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
+            onChange={this.changeSearch}
+            onSearch={value => this.handleSearch(value)}
+            style={{width: 220}}
+            allowClear
+          />
+        </Tooltip>,
+        <Button type={"primary"} style={{"margin-left": "10px"}} className={"primaryButton"} key="query"
+                onClick={this.queryClick}>{seiIntl.get({key: 'flow_000250', desc: '查询'})}</Button>
       ]
     };
     const {data, selectedRows} = this.state;
