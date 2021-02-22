@@ -5,7 +5,7 @@ const {baseUrl} = constants;
 export async function getFlowInstance(params = {}) {
   Object.assign(params, {
     sortOrders: [{property: 'lastEditedDate', direction: 'DESC'}],
-    quickSearchProperties: ["flowName", "businessId", "businessCode", "businessModelRemark", "creatorName"],
+    quickSearchProperties: ["flowName", "businessId", "businessCode", "businessModelRemark", "creatorName", "creatorAccount"],
   });
   return httpUtils.postJson(baseUrl + "/flowInstance/findByPage", params);
 }

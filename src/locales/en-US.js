@@ -329,6 +329,8 @@ export default {
   "flow_000318": "code、name、URL、description",
   "flow_000319": "code、name、API、param、description",
   "flow_000320": "code、name、description",
+  "flow_000321": "flowName、businessCode（ID）、remark、creatorName（account）",
+  "flow_000322": "creatorUser",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
