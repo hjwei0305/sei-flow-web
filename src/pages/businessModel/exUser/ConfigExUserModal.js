@@ -221,6 +221,7 @@ class ConfigExUserModal extends Component {
             <div className={'tbar-search-box'}>{search()}</div>
           </div>
           <SimpleTable
+            heightY={400}
             rowsSelected={this.state.selectedRows}
             onSelectRow={this.handleRowSelectChange}
             data={this.state.data}
