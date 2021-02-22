@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Button, Input, Modal} from 'antd';
-import { message } from 'suid';
+import {Button, Input, Modal, Tooltip} from 'antd';
+import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {updateStatusById, getAllList, save} from "./TaskMakeOverPowerService";
 import AddTaskMakeOverPowerModal from "./AddTaskMakeOverPowerModal";
@@ -104,7 +104,7 @@ class TaskMakeOverPowerTable extends Component {
   };
 
   handleSearch = (value) => {
-    searchListByKeyWithTag(this.state.data, {keyword: value}, ["userName", "powerUserName"]).then(data => {
+    searchListByKeyWithTag(this.state.data, {keyword: value}, ["userName", "userAccount", "powerUserName", "powerUserAccount", "depict"]).then(data => {
       this.setState({data, searchValue: value})
     })
   };
@@ -191,12 +191,26 @@ class TaskMakeOverPowerTable extends Component {
       {
         title: seiIntl.get({key: 'flow_000291', desc: '当前用户'}),
         dataIndex: 'userName',
-        width: 110
+        width: 200,
+        render: (text, record, index) => {
+          if (record) {
+            const res = `${record.userName}【${record.userAccount}】`;
+            return <span title={res}>{res}</span>;
+          }
+          return null;
+        }
       },
       {
         title: seiIntl.get({key: 'flow_000292', desc: '代理用户'}),
         dataIndex: 'powerUserName',
-        width: 110
+        width: 200,
+        render: (text, record, index) => {
+          if (record) {
+            const res = `${record.powerUserName}【${record.powerUserAccount}】`;
+            return <span title={res}>{res}</span>;
+          }
+          return null;
+        }
       },
       {
         title: seiIntl.get({key: 'flow_000041', desc: '应用模块'}),
@@ -290,13 +304,15 @@ class TaskMakeOverPowerTable extends Component {
     //表头搜索框
     const search = () => {
       return [
-        <Search
-          key="search"
-          placeholder={seiIntl.get({key: 'flow_000069', desc: '输入名称或代码进行查询'})}
-          onSearch={value => this.handleSearch(value)}
-          style={{width: 220}}
-          allowClear
-        />
+        <Tooltip title={seiIntl.get({key: 'flow_000323', desc: '当前用户名称（账户）、代理用户名称（账户）、描述'})}>
+          <Search
+            key="search"
+            placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
+            onSearch={value => this.handleSearch(value)}
+            style={{width: 220}}
+            allowClear
+          />
+        </Tooltip>
       ]
     };
     const {editData, searchValue, data, selectedRows, isAdd, modalVisible, confirmLoading} = this.state;
