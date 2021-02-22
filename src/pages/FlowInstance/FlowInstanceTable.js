@@ -46,6 +46,7 @@ class FlowInstanceTable extends Component {
   }
 
   componentWillMount() {
+    this.getDataSource();
   }
 
   toggoleGlobalLoading = (loading) => {
