@@ -4,7 +4,7 @@
  */
 import React, {Component} from "react";
 import {connect} from 'dva'
-import {Button, Col, Input, message, Modal, Row} from "antd";
+import {Button, Col, Input, message, Modal, Row, Tooltip} from "antd";
 import EditRightModal from "./EditRightModal";
 import SimpleTable from "@/components/SimpleTable";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
@@ -314,13 +314,15 @@ class ReasonOfDisagreeTable extends Component {
     //表头搜索框
     const rightSearch = () => {
       return [
-        <Search
-          key="search"
-          placeholder={seiIntl.get({key: 'common_000024', desc: '输入关键字查询'})}
-          onSearch={value => this.handleRightSearch(value)}
-          style={{width: 220}}
-          allowClear
-        />
+        <Tooltip title={seiIntl.get({key: 'flow_000320', desc: '代码、名称、描述'})}>
+          <Search
+            key="search"
+            placeholder={seiIntl.get({key: 'common_000024', desc: '输入关键字查询'})}
+            onSearch={value => this.handleRightSearch(value)}
+            style={{width: 220}}
+            allowClear
+          />
+        </Tooltip>
       ]
     };
 
