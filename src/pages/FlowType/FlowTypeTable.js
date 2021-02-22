@@ -7,8 +7,8 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva';
-import {Button, Input, Modal} from 'antd';
-import { message } from 'suid';
+import {Button, Input, Modal, Tooltip} from 'antd';
+import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {deleteCorp, getFlowType, save} from "./FlowTypeService";
 import {businessModelConfig} from "@/utils/CommonComponentsConfig";
@@ -233,13 +233,15 @@ class FlowTypeTable extends Component {
     //表头搜索框
     const search = () => {
       return [
-        <Search
-          key="search"
-          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
-          onSearch={value => this.handleSearch(value)}
-          style={{width: 220}}
-          allowClear
-        />
+        <Tooltip title={seiIntl.get({key: 'flow_000320', desc: '代码、名称、描述'})}>
+          <Search
+            key="search"
+            placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
+            onSearch={value => this.handleSearch(value)}
+            style={{width: 220}}
+            allowClear
+          />
+        </Tooltip>
       ]
     };
     const {editData, data, selectedRows, isAdd, modalVisible, confirmLoading, businessMode} = this.state;

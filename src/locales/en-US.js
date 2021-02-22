@@ -328,6 +328,7 @@ export default {
   "flow_000317": "name、className、businessDetailUrl、lookUrl",
   "flow_000318": "code、name、URL、description",
   "flow_000319": "code、name、API、param、description",
+  "flow_000320": "code、name、description",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
