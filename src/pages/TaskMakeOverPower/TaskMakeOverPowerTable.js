@@ -104,7 +104,7 @@ class TaskMakeOverPowerTable extends Component {
   };
 
   handleSearch = (value) => {
-    searchListByKeyWithTag(this.state.data, {keyword: value}, ["userName", "userAccount", "powerUserName", "powerUserAccount", "depict"]).then(data => {
+    searchListByKeyWithTag(this.state.data, {keyword: value}, ["userName", "userAccount", "powerUserName", "powerUserAccount"]).then(data => {
       this.setState({data, searchValue: value})
     })
   };
@@ -304,7 +304,7 @@ class TaskMakeOverPowerTable extends Component {
     //表头搜索框
     const search = () => {
       return [
-        <Tooltip title={seiIntl.get({key: 'flow_000323', desc: '当前用户名称（账户）、代理用户名称（账户）、描述'})}>
+        <Tooltip title={seiIntl.get({key: 'flow_000323', desc: '当前用户、代理用户'})}>
           <Search
             key="search"
             placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
