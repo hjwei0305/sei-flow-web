@@ -332,6 +332,8 @@ export default {
   "flow_000321": "flowName、businessCode（ID）、remark、creatorName（account）",
   "flow_000322": "creatorUser",
   "flow_000323": "user、powerUser",
+  "flow_000324": "flowInstanceName、flowTaskName、businessCode、executor、depict",
+  "flow_000325": "executor",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
