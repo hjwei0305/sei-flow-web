@@ -206,7 +206,7 @@ class DefinationVersionModal extends Component {
         }
       },
       {
-        title: seiIntl.get({key: 'flow_000121', desc: '定义KEY'}),
+        title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: 'defKey',
         width: 200
       },
