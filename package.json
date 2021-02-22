@@ -31,7 +31,7 @@
     "react-fast-compare": "^2.0.4",
     "react-image-gallery": "^1.0.6",
     "sei-utils": "^1.0.84",
-    "seid": "^1.2.65",
+    "seid": "^1.2.67",
     "suid": "^1.3.95"
   },
   "devDependencies": {
