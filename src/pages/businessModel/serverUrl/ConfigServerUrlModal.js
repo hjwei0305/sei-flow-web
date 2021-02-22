@@ -4,8 +4,8 @@
  */
 
 import React, {Component} from 'react'
-import {Button, Modal} from 'antd';
-import { message } from 'suid';
+import {Button, Modal, Tooltip} from 'antd';
+import {message} from 'suid';
 import {
   deleteServiceUrl,
   listServiceUrl, saveServiceUrl,
@@ -14,8 +14,9 @@ import SimpleTable from "@/components/SimpleTable";
 import {Input} from "antd/lib/index";
 import EditServerUrlModal from "./EditServerUrlModal";
 import {connect} from "dva";
-import { seiLocale } from 'sei-utils';
-const { seiIntl } = seiLocale;
+import {seiLocale} from 'sei-utils';
+
+const {seiIntl} = seiLocale;
 const Search = Input.Search;
 
 class ConfigServerUrlModal extends Component {
@@ -37,7 +38,7 @@ class ConfigServerUrlModal extends Component {
   }
 
   toggoleGlobalLoading = (loading) => {
-    const { dispatch, } = this.props;
+    const {dispatch,} = this.props;
     dispatch({
       type: 'global/updateState',
       payload: {
@@ -165,7 +166,8 @@ class ConfigServerUrlModal extends Component {
             <div className={'row-operator'} onClick={(e) => {
               e.stopPropagation()
             }}>
-              <a className={'row-operator-item'} onClick={() => this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>
+              <a className={'row-operator-item'}
+                 onClick={() => this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>
             </div>
           )
         }
@@ -173,22 +175,22 @@ class ConfigServerUrlModal extends Component {
       {
         title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
         dataIndex: 'code',
-        width: 140
+        width: 150
       },
       {
         title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
-        width: 140
+        width: 150
       },
       {
-        title: 'URL',
+        title: seiIntl.get({key: 'flow_000033', desc: 'URL地址'}),
         dataIndex: 'url',
-        width: 200
+        width: 320
       },
       {
         title: seiIntl.get({key: 'flow_000037', desc: '描述'}),
         dataIndex: 'depict',
-        width: 200
+        width: 320
       }
     ];
     const title = () => {
@@ -203,20 +205,22 @@ class ConfigServerUrlModal extends Component {
     //表头搜索框
     const search = () => {
       return [
-        <Search
-          key="search"
-          placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
-          onSearch={value => this.handleSearch(value)}
-          style={{width: 230}}
-          allowClear
-        />
+        <Tooltip title={seiIntl.get({key: 'flow_000318', desc: '代码、名称、URL地址、描述'})}>
+          <Search
+            key="search"
+            placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
+            onSearch={value => this.handleSearch(value)}
+            style={{width: 230}}
+            allowClear
+          />
+        </Tooltip>
       ]
     };
     const {modalVisible, handleCancel} = this.props;
     return (
       <Modal title={seiIntl.get({key: 'flow_000150', desc: '配置服务地址'})}
              visible={modalVisible}
-             width={700}
+             width={1000}
              maskClosable={false}
              onCancel={handleCancel}
              bodyStyle={{minHeight: 400}}

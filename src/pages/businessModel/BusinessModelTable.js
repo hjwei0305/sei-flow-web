@@ -7,8 +7,8 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Button,Input, Modal} from 'antd';
-import { message } from 'suid';
+import {Button, Input, Modal, Tooltip} from 'antd';
+import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {deleteCorp, getBusinessModel, save} from "./BusinessModelService";
 import SearchTable from "@/components/SearchTable";
@@ -18,10 +18,10 @@ import ConfigServerUrlModal from "./serverUrl/ConfigServerUrlModal";
 import ConfigExUserModal from "./exUser/ConfigExUserModal";
 import PropertiesForConditionPojoModal from "./propertiesForConditionPojo/PropertiesForConditionPojoModal";
 import StandardDropdown from "@/components/StandardDropdown";
-import { seiLocale } from 'sei-utils';
-import { appModuleAuthConfig, } from '@/utils/CommonComponentsConfig';
+import {seiLocale} from 'sei-utils';
+import {appModuleAuthConfig,} from '@/utils/CommonComponentsConfig';
 
-const { seiIntl } = seiLocale;
+const {seiIntl} = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -48,7 +48,7 @@ class BusinessModelTable extends Component {
   }
 
   toggoleGlobalLoading = (loading) => {
-    const { dispatch, } = this.props;
+    const {dispatch,} = this.props;
     dispatch({
       type: 'global/updateState',
       payload: {
@@ -88,10 +88,10 @@ class BusinessModelTable extends Component {
   };
   refClick = () => {
     const {selectedRows} = this.state;
-    if(selectedRows&&selectedRows[0]){
+    if (selectedRows && selectedRows[0]) {
       this.handleModalVisible(true);
       this.setState({operateFlag: 'refAdd'})
-    }else {
+    } else {
       message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}))
     }
 
@@ -236,15 +236,21 @@ class BusinessModelTable extends Component {
         dataIndex: "operator",
         render: (text, record, index) => {
           let ops = [
-            <a className={'row-operator-item'} key={"edit" + index} onClick={() => this.editClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>,
-            <a className={'row-operator-item'} key={"delete" + index} onClick={() => this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>,
+            <a className={'row-operator-item'} key={"edit" + index}
+               onClick={() => this.editClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>,
+            <a className={'row-operator-item'} key={"delete" + index}
+               onClick={() => this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>,
             <a className={'row-operator-item'} key={"configWorkPage" + index}
                onClick={() => this.configWorkPageClick(record)}>{seiIntl.get({key: 'flow_000157', desc: '配置工作界面'})}</a>,
             <a className={'row-operator-item'} key={"configUrl" + index}
-               onClick={() => this.configServerUrlClick(record)}>{seiIntl.get({key: 'flow_000150', desc: '配置服务地址'})}</a>,
+               onClick={() => this.configServerUrlClick(record)}>{seiIntl.get({
+              key: 'flow_000150',
+              desc: '配置服务地址'
+            })}</a>,
             <a className={'row-operator-item'} key={"configExUser" + index}
                onClick={() => this.configExUserClick(record)}>{seiIntl.get({key: 'flow_000156', desc: '自定义执行人配置'})}</a>,
-            <a className={'row-operator-item'} key={"check" + index} onClick={() => this.checkClick(record)}>{seiIntl.get({key: 'flow_000152', desc: '查看条件属性'})}</a>
+            <a className={'row-operator-item'} key={"check" + index}
+               onClick={() => this.checkClick(record)}>{seiIntl.get({key: 'flow_000152', desc: '查看条件属性'})}</a>
           ]
           return (
             <div className={'row-operator'} onClick={(e) => {
@@ -285,12 +291,12 @@ class BusinessModelTable extends Component {
     const title = () => {
       return [
         <span key={"select"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000038', desc: '应用模块：'})}
-                    <SearchTable
-                      key="searchTable"
-                      initValue={true}
-                      isNotFormItem={true} config={appModuleAuthConfig}
-                      style={{width: 220}}
-                      selectChange={this.selectChange}/></span>,
+          <SearchTable
+            key="searchTable"
+            initValue={true}
+            isNotFormItem={true} config={appModuleAuthConfig}
+            style={{width: 220}}
+            selectChange={this.selectChange}/></span>,
         <Button key="add" className={"primaryButton"} type={"primary"}
                 onClick={this.addClick}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
         <Button key="refAdd" className={"primaryButton"}
@@ -301,13 +307,15 @@ class BusinessModelTable extends Component {
     //表头搜索框
     const search = () => {
       return [
-        <Search
-          key="search"
-          placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
-          onSearch={value => this.handleSearch(value)}
-          style={{width: 220}}
-          allowClear
-        />
+        <Tooltip title={seiIntl.get({key: 'flow_000317', desc: '名称、类路径、表单明细url、表单url'})}>
+          <Search
+            key="search"
+            placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
+            onSearch={value => this.handleSearch(value)}
+            style={{width: 220}}
+            allowClear
+          />
+        </Tooltip>
       ]
     };
     const {
