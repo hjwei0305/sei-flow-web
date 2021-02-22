@@ -7,17 +7,17 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Button, Input, Modal} from 'antd';
-import { message } from 'suid';
+import {Button, Input, Modal, Tooltip} from 'antd';
+import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {deleteCorp, getWorkPage, save} from "./WorkPageService";
 import SearchTable from "@/components/SearchTable";
 import WorkPageModal from "./WorkPageModal";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
-import { seiLocale } from 'sei-utils';
-import { appModuleConfig, } from '@/utils/CommonComponentsConfig';
+import {seiLocale} from 'sei-utils';
+import {appModuleConfig,} from '@/utils/CommonComponentsConfig';
 
-const { seiIntl } = seiLocale;
+const {seiIntl} = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
@@ -40,7 +40,7 @@ class WorkPageTable extends Component {
   }
 
   toggoleGlobalLoading = (loading) => {
-    const { dispatch, } = this.props;
+    const {dispatch,} = this.props;
     dispatch({
       type: 'global/updateState',
       payload: {
@@ -211,8 +211,10 @@ class WorkPageTable extends Component {
             <div className={'row-operator'} onClick={(e) => {
               e.stopPropagation()
             }}>
-              <a className={'row-operator-item'} key={"edit" + index} onClick={() => this.editClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>
-              <a className={'row-operator-item'} key={"delete" + index} onClick={() => this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>
+              <a className={'row-operator-item'} key={"edit" + index}
+                 onClick={() => this.editClick(record)}>{seiIntl.get({key: 'flow_000031', desc: '编辑'})}</a>
+              <a className={'row-operator-item'} key={"delete" + index}
+                 onClick={() => this.deleteClick(record)}>{seiIntl.get({key: 'flow_000032', desc: '删除'})}</a>
             </div>
           )
         }
@@ -249,27 +251,30 @@ class WorkPageTable extends Component {
     const title = () => {
       return [
         <span key={"select"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000038', desc: '应用模块：'})}
-                    <SearchTable
-                      key="searchTable"
-                      initValue={true}
-                      isNotFormItem={true} config={appModuleConfig}
-                      style={{width: 220}}
-                      selectChange={this.selectChange}/>
+          <SearchTable
+            key="searchTable"
+            initValue={true}
+            isNotFormItem={true} config={appModuleConfig}
+            style={{width: 220}}
+            selectChange={this.selectChange}/>
                 </span>,
-        <Button key={"add"} className={"primaryButton"} onClick={this.addClick} type={"primary"}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
+        <Button key={"add"} className={"primaryButton"} onClick={this.addClick}
+                type={"primary"}>{seiIntl.get({key: 'flow_000039', desc: '新增'})}</Button>,
       ]
     };
 
     //表头搜索框
     const search = () => {
       return [
-        <Search
-          key="search"
-          placeholder={seiIntl.get({key: 'flow_000040', desc: '输入关键字搜索'})}
-          onSearch={value => this.handleSearch(value)}
-          style={{width: 220}}
-          allowClear
-        />
+        <Tooltip title={seiIntl.get({key: 'flow_000316', desc: '名称、URL地址、描述'})}>
+          <Search
+            key="search"
+            placeholder={seiIntl.get({key: 'flow_000040', desc: '输入关键字搜索'})}
+            onSearch={value => this.handleSearch(value)}
+            style={{width: 220}}
+            allowClear
+          />
+        </Tooltip>
       ]
     };
     const {editData, data, selectedRows, isAdd, modalVisible, confirmLoading, appModule} = this.state;
