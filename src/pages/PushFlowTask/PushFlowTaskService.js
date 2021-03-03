@@ -15,6 +15,11 @@ export async function pushAgainByControlId(controlId) {
   return httpUtils.get(baseUrl + "/flowTaskPushControl/pushAgainByControlId", {pushControlId: controlId});
 }
 
+//清理历史数据
+export async function cleaningPushHistoryData(params = {}) {
+  return httpUtils.postJson(baseUrl + "/flowTaskPushControl/cleaningPushHistoryData", params);
+}
+
 
 
 

@@ -10,9 +10,10 @@ import {connect} from 'dva'
 import {Modal, Input, Checkbox, Button, Tooltip} from 'antd';
 import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
-import {getPushTaskControl, pushAgainByControlId} from "./PushFlowTaskService";
+import {getPushTaskControl, pushAgainByControlId, cleaningPushHistoryData} from "./PushFlowTaskService";
 import SearchTable from "@/components/SearchTable";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
+import ResetPushFlowTaskModal from "./ResetPushFlowTaskModal";
 import {seiLocale} from 'sei-utils';
 import {
   appModuleAuthConfig,
@@ -40,13 +41,13 @@ class FlowInstanceTable extends Component {
       businessModel: null,
       businessModelId: "",
       flowType: null,
-      flowTypeId: ""
-      // , checkInBasic: true
+      flowTypeId: "",
+      modalVisible: false,
+      confirmLoading: false,
     };
   }
 
   componentWillMount() {
-    // this.getDataSource()
   }
 
   toggoleGlobalLoading = (loading) => {
@@ -90,12 +91,6 @@ class FlowInstanceTable extends Component {
           fieldType: "String"//筛选类型
         });
       }
-      // filter.push({
-      //   fieldName: "pushType",
-      //   operator: "EQ",//操作类型
-      //   value: this.state.checkInBasic ? "basic" : "business",//筛选值
-      //   fieldType: "String"//筛选类型
-      // });
       Object.assign(params, {filters: filter});
     }
     getPushTaskControl(params).then(data => {
@@ -166,10 +161,6 @@ class FlowInstanceTable extends Component {
       this.setState({flowType: null, flowTypeId: ""});
     }
   };
-  // checkChangeInBasic = (checkInfo) => {
-  //   this.setState({checkInBasic: checkInfo.target.checked});
-  //   this.getDataSource();
-  // };
   pageChange = (pageInfo) => {
     this.setState({
       pageInfo: pageInfo,
@@ -179,6 +170,45 @@ class FlowInstanceTable extends Component {
 
   queryClick = () => {
     this.getDataSource({quickSearchValue: this.state.changeValue, pageInfo: this.state.pageInfo});
+  };
+
+  restClick = () => {
+    this.setState({modalVisible: true})
+  };
+
+  handleSave = () => {
+    this.ref.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        let params = {}
+        Object.assign(params, values);
+        this.setState({confirmLoading: true});
+        cleaningPushHistoryData(params).then(result => {
+          if (result.status === "SUCCESS") {
+            message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
+            //刷新本地数据
+            this.getDataSource();
+            this.setState({confirmLoading: false, modalVisible: false});
+            //清空model数据
+            this.ref.setStateNull();
+          } else {
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
+            this.setState({confirmLoading: false});
+          }
+        }).catch(e => {
+          this.setState({confirmLoading: false});
+        })
+      }
+    });
+  };
+
+  handleModalCancel = () => {
+    //清空model数据
+    this.ref.setStateNull();
+    this.setState({modalVisible: false})
+  };
+
+  onRef = (ref) => {
+    this.ref = ref
   };
 
 
@@ -252,20 +282,6 @@ class FlowInstanceTable extends Component {
         dataIndex: 'pushFalse',
         width: 80
       },
-      // {
-      //   title: seiIntl.get({key: 'flow_000077', desc: '推送类型'}),
-      //   dataIndex: 'pushType',
-      //   width: 80,
-      //   render: (text, record) => {
-      //     if (record.pushType == "business") {   //推送到业务实体
-      //       return seiIntl.get({key: 'flow_000078', desc: '业务模块'})
-      //     } else if (record.pushType == "basic") {  //推送到basic
-      //       return "BASIC"
-      //     } else {
-      //       return "";
-      //     }
-      //   }
-      // },
       {
         title: seiIntl.get({key: 'flow_000047', desc: '流程名称'}),
         dataIndex: 'flowInstanceName',
@@ -309,15 +325,13 @@ class FlowInstanceTable extends Component {
             config={flowTypeByBusinessModelConfig}
             style={{width: 150}}
             selectChange={this.selectChangeFlowType}/></span>,
-        // <span key={"checkInBasic"} className={"primaryButton"}> BASIC/{seiIntl.get({key: 'flow_000091', desc: '业务模块：'})}
-        //   <Checkbox defaultChecked={true} onChange={this.checkChangeInBasic}/></span>
       ]
     };
 
     //表头搜索框
     const search = () => {
       return [
-        <Tooltip title={seiIntl.get({key: 'flow_000315', desc: '流程名称、任务名称、业务单号、执行人名称'})}>
+        <Tooltip key="tooltip" title={seiIntl.get({key: 'flow_000315', desc: '流程名称、任务名称、业务单号、执行人名称'})}>
           <Search
             key="search"
             placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
@@ -327,11 +341,12 @@ class FlowInstanceTable extends Component {
             allowClear
           />
         </Tooltip>,
-        <Button type={"primary"} style={{"margin-left": "10px"}} className={"primaryButton"} key="query"
-                onClick={this.queryClick}>{seiIntl.get({key: 'flow_000250', desc: '查询'})}</Button>
+        <Button type={"primary"} style={{"marginLeft": "10px"}} className={"primaryButton"} key="query"
+                onClick={this.queryClick}>{seiIntl.get({key: 'flow_000250', desc: '查询'})}</Button>,
+        <Button type="danger" icon="rest" key="rest" onClick={this.restClick}/>
       ]
     };
-    const {data, selectedRows} = this.state;
+    const {data, selectedRows, modalVisible, confirmLoading, appModuleId, businessModelId, flowTypeId} = this.state;
     return (
       <HeadBreadcrumb>
         <div className={"tbar-table"}>
@@ -347,6 +362,14 @@ class FlowInstanceTable extends Component {
             pageChange={this.pageChange}
           />
         </div>
+        <ResetPushFlowTaskModal
+          modalVisible={modalVisible}
+          confirmLoading={confirmLoading}
+          handleOk={this.handleSave}
+          handleCancel={this.handleModalCancel}
+          onRef={this.onRef}
+          defaultValue={{appModuleId: appModuleId, businessModelId: businessModelId, flowTypeId: flowTypeId}}
+        />
       </HeadBreadcrumb>
 
     )

@@ -334,6 +334,9 @@ export default {
   "flow_000323": "user、powerUser",
   "flow_000324": "flowInstanceName、flowTaskName、businessCode、executor、depict",
   "flow_000325": "executor",
+  "flow_000326": "Cleaning up historical data",
+  "flow_000327": "Keep the recent",
+  "flow_000328": "Please enter the latest retention time ！",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
