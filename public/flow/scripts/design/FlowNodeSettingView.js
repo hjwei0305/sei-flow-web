@@ -1167,9 +1167,10 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       xtype: "CheckBoxGroup",
       title: "通知方式",
       labelWidth: 80,
+      itemspace: 5,
       name: "type",
       defaultConfig: {
-        labelWidth: 40
+        labelWidth: 45
       },
       items: [{
         title: "邮件",
@@ -1177,15 +1178,10 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }, {
         title: "钉钉",
         name: "DINGDING"
-      }
-        // , {
-        //     title: "短信",
-        //     name: "SMS"
-        // }, {
-        //     title: "APP",
-        //     name: "APP"
-        // }
-      ]
+      }, {
+        title: "站内信",
+        name: "MESSAGE"
+      }]
     }, {
       xtype: "Button",
       id: notifyType + "ChoosePositionBtn",
@@ -1232,9 +1228,10 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       xtype: "CheckBoxGroup",
       title: "通知方式",
       labelWidth: 80,
+      itemspace: 5,
       name: "type",
       defaultConfig: {
-        labelWidth: 40
+        labelWidth: 45
       },
       items: [{
         title: "邮件",
@@ -1242,15 +1239,10 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }, {
         title: "钉钉",
         name: "DINGDING"
-      }
-        // , {
-        //     title: "短信",
-        //     name: "SMS"
-        // }, {
-        //     title: "APP",
-        //     name: "APP"
-        // }
-      ]
+      }, {
+        title: "站内信",
+        name: "MESSAGE"
+      }]
     }, {
       xtype: "TextArea",
       width: 320,
