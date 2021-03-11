@@ -942,27 +942,25 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     var items = null;
     if (noExcutor) {
       items = [{
-        items: this.getNotifyItem()
+        items: this.getNotifyItem("notifyBefore")
       }, {
         hidden: true,
-        //  items: this.getNotifyItem()
         items: this.getNotifyChoosePositionItem("notifyBefore")
       }];
     } else {
       items = [{
-        items: this.getNotifyItem()
+        items: this.getNotifyItem("notifyBefore")
       }, {
         hidden: true,
-        items: this.getNotifyItem()
+        items: this.getNotifyItem("notifyBefore")
       }, {
         hidden: true,
-        //  items: this.getNotifyItem()
         items: this.getNotifyChoosePositionItem("notifyBefore")
       }];
     }
     this.nowNotifyTab = EUI.Container({
       width: 445,
-      height: 330,
+      height: 340,
       padding: 12,
       renderTo: "notify-before",
       itemspace: 0,
@@ -978,7 +976,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     });
     var nextTab = EUI.Container({
       width: 445,
-      height: 330,
+      height: 340,
       padding: 12,
       itemspace: 0,
       renderTo: "notify-after",
@@ -991,10 +989,9 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         itemspace: 10
       },
       items: [{
-        items: this.getNotifyItem()
+        items: this.getNotifyItem("notifyAfter")
       }, {
         hidden: true,
-        // items: this.getNotifyItem()
         items: this.getNotifyChoosePositionItem("notifyAfter")
       }]
     });
@@ -1015,98 +1012,235 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         var choosePositionNum = this.notifyAfterPositionData.length
       }
     }
-    return [{
-      xtype: "CheckBoxGroup",
-      title: "通知方式",
-      labelWidth: 80,
-      itemspace: 5,
-      name: "type",
-      readonly: true,
-      defaultConfig: {
-        labelWidth: 45
-      },
-      items: [{
-        title: "邮件",
-        name: "EMAIL"
+
+    if ((this.nodeType == "Approve" || this.nodeType == "CounterSign") && notifyType == "notifyAfter") {
+      return [{
+        xtype: "CheckBoxGroup",
+        title: "通知方式",
+        labelWidth: 80,
+        itemspace: 5,
+        name: "type",
+        readonly: true,
+        defaultConfig: {
+          labelWidth: 45
+        },
+        items: [{
+          title: "邮件",
+          name: "EMAIL"
+        }, {
+          title: "钉钉",
+          name: "DINGDING"
+        }, {
+          title: "站内信",
+          name: "MESSAGE"
+        }]
       }, {
-        title: "钉钉",
-        name: "DINGDING"
+        xtype: "RadioBoxGroup",
+        title: "通知条件",
+        labelWidth: 80,
+        itemspace: 5,
+        readonly: true,
+        name: "condition",
+        defaultConfig: {
+          labelWidth: 45
+        },
+        items: [{
+          title: "全部",
+          name: "ALL"
+        }, {
+          title: "同意",
+          name: "AGREE"
+        }, {
+          title: "不同意",
+          name: "DISAGREE"
+        }]
       }, {
-        title: "站内信",
-        name: "MESSAGE"
-      }]
-    }, {
-      xtype: "Button",
-      id: notifyType + "ChoosePositionBtn",
-      width: 85,
-      height: 25,
-      title: "已选岗位(" + '<a class=' + notifyType + 'notifyChoosePositionNum>' + choosePositionNum + '</a>)',
-      style: {
-        "margin-left": "305px",
-        "position": "absolute",
-        "top": "67px"
-      },
-      handler: function () {
-        var nowChooseBtnId = $(this).attr("id");
-        var notifyChoosePositionGridData = null;
-        if (nowChooseBtnId.indexOf("notifyBefore") == 0) {
-          notifyChoosePositionGridData = g.notifyBeforePositionData
-        }
-        if (nowChooseBtnId.indexOf("notifyAfter") == 0) {
-          notifyChoosePositionGridData = g.notifyAfterPositionData
-        }
-        g.showNotifySelectPositionWindow(function (data) {
+        xtype: "Button",
+        id: notifyType + "ChoosePositionBtn",
+        width: 85,
+        height: 25,
+        title: "已选岗位(" + '<a class=' + notifyType + 'notifyChoosePositionNum>' + choosePositionNum + '</a>)',
+        style: {
+          "margin-left": "305px",
+          "position": "absolute",
+          "top": "67px"
+        },
+        handler: function () {
+          var nowChooseBtnId = $(this).attr("id");
+          var notifyChoosePositionGridData = null;
           if (nowChooseBtnId.indexOf("notifyBefore") == 0) {
-            g.notifyBeforePositionData = data;
-            $(".notifyBeforenotifyChoosePositionNum").html(data.length);
+            notifyChoosePositionGridData = g.notifyBeforePositionData
           }
           if (nowChooseBtnId.indexOf("notifyAfter") == 0) {
-            g.notifyAfterPositionData = data;
-            $(".notifyAfternotifyChoosePositionNum").html(data.length);
+            notifyChoosePositionGridData = g.notifyAfterPositionData
           }
-          g.notifySelectPositionWin.close()
-        }, notifyChoosePositionGridData);
-      }
-    }, {
-      xtype: "TextArea",
-      width: 320,
-      height: 210,
-      labelWidth: 80,
-      readonly: true,
-      title: "通知备注",
-      name: "content"
-    }];
+          g.showNotifySelectPositionWindow(function (data) {
+            if (nowChooseBtnId.indexOf("notifyBefore") == 0) {
+              g.notifyBeforePositionData = data;
+              $(".notifyBeforenotifyChoosePositionNum").html(data.length);
+            }
+            if (nowChooseBtnId.indexOf("notifyAfter") == 0) {
+              g.notifyAfterPositionData = data;
+              $(".notifyAfternotifyChoosePositionNum").html(data.length);
+            }
+            g.notifySelectPositionWin.close()
+          }, notifyChoosePositionGridData);
+        }
+      }, {
+        xtype: "TextArea",
+        width: 320,
+        height: 190,
+        labelWidth: 80,
+        readonly: true,
+        title: "通知备注",
+        name: "content"
+      }];
+    } else {
+      return [{
+        xtype: "CheckBoxGroup",
+        title: "通知方式",
+        labelWidth: 80,
+        itemspace: 5,
+        name: "type",
+        readonly: true,
+        defaultConfig: {
+          labelWidth: 45
+        },
+        items: [{
+          title: "邮件",
+          name: "EMAIL"
+        }, {
+          title: "钉钉",
+          name: "DINGDING"
+        }, {
+          title: "站内信",
+          name: "MESSAGE"
+        }]
+      }, {
+        xtype: "Button",
+        id: notifyType + "ChoosePositionBtn",
+        width: 85,
+        height: 25,
+        title: "已选岗位(" + '<a class=' + notifyType + 'notifyChoosePositionNum>' + choosePositionNum + '</a>)',
+        style: {
+          "margin-left": "305px",
+          "position": "absolute",
+          "top": "67px"
+        },
+        handler: function () {
+          var nowChooseBtnId = $(this).attr("id");
+          var notifyChoosePositionGridData = null;
+          if (nowChooseBtnId.indexOf("notifyBefore") == 0) {
+            notifyChoosePositionGridData = g.notifyBeforePositionData
+          }
+          if (nowChooseBtnId.indexOf("notifyAfter") == 0) {
+            notifyChoosePositionGridData = g.notifyAfterPositionData
+          }
+          g.showNotifySelectPositionWindow(function (data) {
+            if (nowChooseBtnId.indexOf("notifyBefore") == 0) {
+              g.notifyBeforePositionData = data;
+              $(".notifyBeforenotifyChoosePositionNum").html(data.length);
+            }
+            if (nowChooseBtnId.indexOf("notifyAfter") == 0) {
+              g.notifyAfterPositionData = data;
+              $(".notifyAfternotifyChoosePositionNum").html(data.length);
+            }
+            g.notifySelectPositionWin.close()
+          }, notifyChoosePositionGridData);
+        }
+      }, {
+        xtype: "TextArea",
+        width: 320,
+        height: 210,
+        labelWidth: 80,
+        readonly: true,
+        title: "通知备注",
+        name: "content"
+      }];
+    }
   },
-  getNotifyItem: function () {
-    return [{
-      xtype: "CheckBoxGroup",
-      title: "通知方式",
-      labelWidth: 80,
-      itemspace: 5,
-      name: "type",
-      readonly: true,
-      defaultConfig: {
-        labelWidth: 45
-      },
-      items: [{
-        title: "邮件",
-        name: "EMAIL"
+  getNotifyItem: function (notifyType) {
+    if ((this.nodeType == "Approve" || this.nodeType == "CounterSign") && notifyType == "notifyAfter") {
+      return [{
+        xtype: "CheckBoxGroup",
+        title: "通知方式",
+        labelWidth: 80,
+        itemspace: 5,
+        name: "type",
+        readonly: true,
+        defaultConfig: {
+          labelWidth: 45
+        },
+        items: [{
+          title: "邮件",
+          name: "EMAIL"
+        }, {
+          title: "钉钉",
+          name: "DINGDING"
+        }, {
+          title: "站内信",
+          name: "MESSAGE"
+        }]
       }, {
-        title: "钉钉",
-        name: "DINGDING"
+        xtype: "RadioBoxGroup",
+        title: "通知条件",
+        labelWidth: 80,
+        itemspace: 5,
+        name: "condition",
+        readonly: true,
+        defaultConfig: {
+          labelWidth: 45
+        },
+        items: [{
+          title: "全部",
+          name: "ALL"
+        }, {
+          title: "同意",
+          name: "AGREE"
+        }, {
+          title: "不同意",
+          name: "DISAGREE"
+        }]
       }, {
-        title: "站内信",
-        name: "MESSAGE"
-      }]
-    }, {
-      xtype: "TextArea",
-      width: 320,
-      height: 220,
-      readonly: true,
-      labelWidth: 80,
-      title: "通知备注",
-      name: "content"
-    }];
+        xtype: "TextArea",
+        width: 320,
+        height: 200,
+        readonly: true,
+        labelWidth: 80,
+        title: "通知备注",
+        name: "content"
+      }];
+    } else {
+      return [{
+        xtype: "CheckBoxGroup",
+        title: "通知方式",
+        labelWidth: 80,
+        itemspace: 5,
+        name: "type",
+        readonly: true,
+        defaultConfig: {
+          labelWidth: 45
+        },
+        items: [{
+          title: "邮件",
+          name: "EMAIL"
+        }, {
+          title: "钉钉",
+          name: "DINGDING"
+        }, {
+          title: "站内信",
+          name: "MESSAGE"
+        }]
+      }, {
+        xtype: "TextArea",
+        width: 320,
+        height: 220,
+        readonly: true,
+        labelWidth: 80,
+        title: "通知备注",
+        name: "content"
+      }];
+    }
   },
   getOrganizationOfSelGrid: function () {
     return {
@@ -1537,7 +1671,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     }
   },
   loadNotifyDataAfter: function (tab, data) {
-    // EUI.getCmp(tab.items[0]).loadData(data.notifyExecutor);
+    if (!data.notifyStarter.condition) {
+      data.notifyStarter.condition = "ALL";
+    }
+    if (!data.notifyPosition.condition) {
+      data.notifyPosition.condition = "ALL";
+    }
     EUI.getCmp(tab.items[0]).loadData(data.notifyStarter);
     EUI.getCmp(tab.items[1]).loadData(data.notifyPosition);
   },
