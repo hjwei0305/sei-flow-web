@@ -10,12 +10,13 @@ import {connect} from 'dva'
 import {Modal, Input, Checkbox, Tooltip} from 'antd';
 import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
-import {getFlowInstance, endForce, taskFailTheCompensation} from "./FlowInstanceService";
+import {getFlowInstance, endForce, taskFailTheCompensation, checkAndGetCanJumpNodeInfos} from "./FlowInstanceService";
 import {ApproveHistory, OptGroup} from 'seid';
 import SearchTable from "@/components/SearchTable";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import {mainTabAction} from 'sei-utils';
 import {seiLocale} from 'sei-utils';
+import NodeHoppingModal from "./NodeHoppingModal";
 import {
   appModuleAuthConfig,
   businessModelByAppModelConfig,
@@ -41,7 +42,15 @@ class FlowInstanceTable extends Component {
       businessModelId: "",
       flowType: null,
       flowTypeId: "",
-      checkInFlow: false
+      checkInFlow: false,
+      modalVisible: false,
+      confirmLoading: false,
+      selectInstanceId: "",
+      selectJumpNodeInfo: [],
+      targetNodeId: "",
+      currentNodeAfterEvent: true,
+      targetNodeBeforeEvent: true,
+      jumpDepict: ""
     };
   }
 
@@ -226,6 +235,69 @@ class FlowInstanceTable extends Component {
     this.setState({pageInfo: {...pageInfo}}, () => this.getDataSource());
   };
 
+  //节点跳转
+  handleJump = (record) => {
+    let thiz = this;
+    thiz.toggoleGlobalLoading(true);
+    checkAndGetCanJumpNodeInfos(record.id).then(result => {
+      if (result.success === true) {
+        this.setState({modalVisible: true, selectJumpNodeInfo: result.data, selectInstanceId: record.id});
+      } else {
+        message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
+      }
+    }).catch(e => {
+    }).finally(() => {
+      thiz.toggoleGlobalLoading(false);
+    });
+  };
+
+  getJumpNodeInfo = () => {
+    return new Promise((resolve) => {
+      resolve(this.state.selectJumpNodeInfo);
+    });
+  }
+
+  handleSave = () => {
+    this.ref.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.setState({
+          targetNodeId: values.targetNodeId,
+          currentNodeAfterEvent: values.currentNodeAfterEvent,
+          targetNodeBeforeEvent: values.targetNodeBeforeEvent,
+          jumpDepict: values.jumpDepict
+        });
+        console.log("提交参数= " + JSON.stringify(values));
+        alert("待开发");
+
+        // let params = {}
+        // Object.assign(params, values);
+        // if (this.state.isAdd)
+        //   delete params.id;//新增时id==="",保存可能会出错，需删除id
+        // this.setState({confirmLoading: true});
+        // save(params).then(result => {
+        //   if (result.status === "SUCCESS") {
+        //     message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
+        //     this.setState({confirmLoading: false, modalVisible: false});
+        //   } else {
+        //     message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
+        //     this.setState({confirmLoading: false});
+        //   }
+        // }).catch(e => {
+        //   this.setState({confirmLoading: false});
+        // })
+      }
+    });
+  };
+
+
+  handleModalCancel = () => {
+    this.setState({modalVisible: false, confirmLoading: false});
+  };
+
+  onRef = (ref) => {
+    this.ref = ref
+  };
+
   render() {
     const columns = [
       {
@@ -250,6 +322,10 @@ class FlowInstanceTable extends Component {
             optList.push({
               title: seiIntl.get({key: 'flow_000312', desc: '待办补偿'}),
               onClick: () => this.handleNewTask(record),
+            });
+            optList.push({
+              title: seiIntl.get({key: 'flow_000329', desc: '节点跳转'}),
+              onClick: () => this.handleJump(record),
             });
           }
           return (<OptGroup optList={optList}/>)
@@ -343,7 +419,7 @@ class FlowInstanceTable extends Component {
     //表头搜索框
     const search = () => {
       return [
-        <Tooltip title={seiIntl.get({key: 'flow_000321', desc: '流程名称、业务单号（ID）、工作说明、发起人名称（账户）'})}>
+        <Tooltip key="tooltip" title={seiIntl.get({key: 'flow_000321', desc: '流程名称、业务单号（ID）、工作说明、发起人名称（账户）'})}>
           <Search
             key="search"
             placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
@@ -354,7 +430,7 @@ class FlowInstanceTable extends Component {
         </Tooltip>
       ]
     };
-    const {data, selectedRows} = this.state;
+    const {data, selectedRows, modalVisible, confirmLoading} = this.state;
     return (
       <HeadBreadcrumb>
         <div className={"tbar-table"}>
@@ -371,6 +447,14 @@ class FlowInstanceTable extends Component {
           />
         </div>
         <ApproveHistory version="6" historyKey={this.state.historyKey} setHistoryKey={this.setHistoryKey}/>
+        <NodeHoppingModal
+          modalVisible={modalVisible}
+          confirmLoading={confirmLoading}
+          handleOk={this.handleSave}
+          handleCancel={this.handleModalCancel}
+          onRef={this.onRef}
+          getJumpNodeInfo={this.getJumpNodeInfo}
+        />
       </HeadBreadcrumb>
 
     )

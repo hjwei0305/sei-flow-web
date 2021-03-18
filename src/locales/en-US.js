@@ -337,6 +337,11 @@ export default {
   "flow_000326": "Cleaning up historical data",
   "flow_000327": "Keep the recent",
   "flow_000328": "Please enter the latest retention time ！",
+  "flow_000329": "Node hopping",
+  "flow_000330": "The target node",
+  "flow_000331": "Please select the target node！",
+  "flow_000332": "Triggers the current node after event ！ ",
+  "flow_000333": "Triggers target node before event ！",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
