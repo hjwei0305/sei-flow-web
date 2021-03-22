@@ -285,7 +285,6 @@ class FlowInstanceTable extends Component {
         }).then(result => {
           if (result.status === "SUCCESS") {
             this.checkTargetNodeInfo(result.data);
-            console.log(JSON.stringify(result.data)); //TODO：后期删除
             this.setState({confirmLoading: false, modalVisible: false});
           } else {
             message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
