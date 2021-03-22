@@ -7,16 +7,23 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Modal, Input, Checkbox, Tooltip} from 'antd';
+import {Modal, Input, Checkbox, Tooltip, List} from 'antd';
 import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
-import {getFlowInstance, endForce, taskFailTheCompensation, checkAndGetCanJumpNodeInfos} from "./FlowInstanceService";
+import {
+  getFlowInstance,
+  endForce,
+  taskFailTheCompensation,
+  checkAndGetCanJumpNodeInfos,
+  getTargetNodeInfo
+} from "./FlowInstanceService";
 import {ApproveHistory, OptGroup} from 'seid';
 import SearchTable from "@/components/SearchTable";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import {mainTabAction} from 'sei-utils';
 import {seiLocale} from 'sei-utils';
 import NodeHoppingModal from "./NodeHoppingModal";
+import UserChoose from "./UserChoose";
 import {
   appModuleAuthConfig,
   businessModelByAppModelConfig,
@@ -46,11 +53,15 @@ class FlowInstanceTable extends Component {
       modalVisible: false,
       confirmLoading: false,
       selectInstanceId: "",
+      selectSolidifyFlow: false,
       selectJumpNodeInfo: [],
       targetNodeId: "",
       currentNodeAfterEvent: true,
       targetNodeBeforeEvent: true,
-      jumpDepict: ""
+      jumpDepict: "",
+      chooseUser: false,
+      loading: false,
+      nextNode: [],
     };
   }
 
@@ -266,25 +277,22 @@ class FlowInstanceTable extends Component {
           targetNodeBeforeEvent: values.targetNodeBeforeEvent,
           jumpDepict: values.jumpDepict
         });
-        console.log("提交参数= " + JSON.stringify(values));
-        alert("待开发");
-
-        // let params = {}
-        // Object.assign(params, values);
-        // if (this.state.isAdd)
-        //   delete params.id;//新增时id==="",保存可能会出错，需删除id
-        // this.setState({confirmLoading: true});
-        // save(params).then(result => {
-        //   if (result.status === "SUCCESS") {
-        //     message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
-        //     this.setState({confirmLoading: false, modalVisible: false});
-        //   } else {
-        //     message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
-        //     this.setState({confirmLoading: false});
-        //   }
-        // }).catch(e => {
-        //   this.setState({confirmLoading: false});
-        // })
+        this.setState({confirmLoading: true});
+        getTargetNodeInfo({
+          'instanceId': this.state.selectInstanceId,
+          'targetNodeId': values.targetNodeId
+        }).then(result => {
+          if (result.status === "SUCCESS") {
+            this.checkTargetNodeInfo(result.data);
+            console.log(JSON.stringify(result.data)); //TODO：后期删除
+            this.setState({confirmLoading: false, modalVisible: false});
+          } else {
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
+            this.setState({confirmLoading: false});
+          }
+        }).catch(e => {
+          this.setState({confirmLoading: false});
+        });
       }
     });
   };
@@ -297,6 +305,109 @@ class FlowInstanceTable extends Component {
   onRef = (ref) => {
     this.ref = ref
   };
+
+  checkTargetNodeInfo = (data) => {
+    let solidifyFlow = data.solidifyFlow;
+    let targetNodeInfo = data.targetNodeInfo;
+    let nodeInfoList = [targetNodeInfo];
+    if (solidifyFlow) {
+      this.setState({nextNode: nodeInfoList, selectSolidifyFlow: solidifyFlow}, () => {
+        const chooseResult = this.state.nextNode.map(node => {
+          return {nodeId: node.id, instancy: false, flowTaskType: node.flowTaskType};
+        });
+        this.notifyTargetNodeInfo(this.state.nextNode, chooseResult);
+      });
+    } else {
+      this.setState({chooseUser: true, nextNode: nodeInfoList, loading: false, selectSolidifyFlow: solidifyFlow});
+    }
+  }
+
+  /** 固化流程提示目标节点信息 */
+  notifyTargetNodeInfo = (nextNode, chooseResult) => {
+    let component = null;
+    component = nextNode.map(node => {
+      let executorSet = [];
+      if (node.flowTaskType !== "poolTask" && node.executorSet) {
+        executorSet = node.executorSet;
+      } else {
+        executorSet.push({'code': '工作池任务', 'name': '还未生成执行人'})
+      }
+      return (
+        <List
+          key={'executorList'}
+          header={node.name}
+          dataSource={executorSet}
+          renderItem={executor => (
+            <List.Item>{`${executor.code}-【${executor.name}】`}</List.Item>
+          )}
+        />
+      );
+    });
+
+    //固化流程展示目标节点信息
+    confirm({
+      title: "目标节点信息",
+      content: <React.Fragment>{component}</React.Fragment>,
+      okText: '确定',
+      onOk: () => {
+        this.completeTask(chooseResult);
+      }
+    });
+
+  };
+
+
+  completeTask = (chooseResult) => {
+    const {
+      nextNode, selectSolidifyFlow, selectInstanceId,
+      targetNodeId, currentNodeAfterEvent, targetNodeBeforeEvent, jumpDepict
+    } = this.state;
+    let taskList;
+    this.setState({loading: true});
+    if (chooseResult) {
+      taskList = nextNode.map(node => {
+        const result = chooseResult.filter(
+          resultItems => resultItems.nodeId === node.id
+        )[0];
+        return {
+          nodeId: node.id,
+          flowTaskType: node.flowTaskType,
+          userIds: result.userIds,
+          userVarName: node.userVarName,
+          callActivityPath: node.callActivityPath,
+          instancyStatus: result.instancy,
+          solidifyFlow: selectSolidifyFlow,
+          allowJumpBack: false
+        };
+      });
+    }
+    const params = {
+      instanceId: selectInstanceId,
+      targetNodeId,
+      currentNodeAfterEvent,
+      targetNodeBeforeEvent,
+      jumpDepict,
+      taskList: JSON.stringify(taskList),
+    };
+    //TODO：后期删除
+    console.log(JSON.stringify(params));
+    // completeTask(params).then(res => {
+    //   const {success, message: msg} = res || {};
+    //   if (success) {
+    //     message.success(msg, 1);
+    //     this.setState({loading: false, chooseUser: false});
+    //   } else {
+    //     message.error(msg);
+    //     this.setState({loading: false, chooseUser: false});
+    //   }
+    // });
+  };
+
+
+  closeModal = () => {
+    this.setState({chooseUser: false});
+  };
+
 
   render() {
     const columns = [
@@ -430,7 +541,7 @@ class FlowInstanceTable extends Component {
         </Tooltip>
       ]
     };
-    const {data, selectedRows, modalVisible, confirmLoading} = this.state;
+    const {data, selectedRows, modalVisible, confirmLoading, chooseUser, loading, nextNode} = this.state;
     return (
       <HeadBreadcrumb>
         <div className={"tbar-table"}>
@@ -454,6 +565,13 @@ class FlowInstanceTable extends Component {
           handleCancel={this.handleModalCancel}
           onRef={this.onRef}
           getJumpNodeInfo={this.getJumpNodeInfo}
+        />
+        <UserChoose
+          visible={chooseUser}
+          closeModal={this.closeModal}
+          completeTask={this.completeTask}
+          confirmLoading={loading}
+          nextNode={nextNode}
         />
       </HeadBreadcrumb>
 

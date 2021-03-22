@@ -33,4 +33,24 @@ export async function checkAndGetCanJumpNodeInfos(instanceId) {
   return httpUtils.get(baseUrl + `/flowInstance/checkAndGetCanJumpNodeInfos?instanceId=` + instanceId);
 }
 
+//获取跳转目标节点信息
+export async function getTargetNodeInfo(params = {}) {
+  return httpUtils.get(baseUrl + `/flowInstance/getTargetNodeInfo`, params);
+}
+
+//获取全部组织机构
+export async function listAllOrgs() {
+  return httpUtils.postJson(baseUrl + "/flowDefination/listAllOrgs");
+}
+
+//获取组织机构下员工（包含下级组织机构）
+export async function listUserByOrg(orgId, searchValue, pageInfo) {
+  return httpUtils.postJson(baseUrl + "/flowDefination/listUserByOrg", {
+    organizationId: orgId,
+    includeSubNode: true,
+    quickSearchValue: searchValue,
+    pageInfo: pageInfo
+  })
+}
+
 
