@@ -71,6 +71,7 @@ class NodeHoppingModal extends Component {
                afterClose={this.handleClose}
                confirmLoading={confirmLoading}
                maskClosable={false}
+               destroyOnClose
         >
           <FormItem
             {...formItemLayout}
