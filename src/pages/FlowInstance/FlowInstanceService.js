@@ -53,4 +53,10 @@ export async function listUserByOrg(orgId, searchValue, pageInfo) {
   })
 }
 
+//节点跳转
+export async function jumpToTargetNode(params = {}) {
+  return httpUtils.postJson(baseUrl + "/flowInstance/jumpToTargetNode", params);
+}
+
+
 

@@ -15,7 +15,8 @@ import {
   endForce,
   taskFailTheCompensation,
   checkAndGetCanJumpNodeInfos,
-  getTargetNodeInfo
+  getTargetNodeInfo,
+  jumpToTargetNode
 } from "./FlowInstanceService";
 import {ApproveHistory, OptGroup} from 'seid';
 import SearchTable from "@/components/SearchTable";
@@ -389,18 +390,22 @@ class FlowInstanceTable extends Component {
       jumpDepict,
       taskList: JSON.stringify(taskList),
     };
-    //TODO：后期删除
-    console.log(JSON.stringify(params));
-    // completeTask(params).then(res => {
-    //   const {success, message: msg} = res || {};
-    //   if (success) {
-    //     message.success(msg, 1);
-    //     this.setState({loading: false, chooseUser: false});
-    //   } else {
-    //     message.error(msg);
-    //     this.setState({loading: false, chooseUser: false});
-    //   }
-    // });
+    this.toggoleGlobalLoading(true);
+    jumpToTargetNode(params).then(res => {
+      const {success, message: msg} = res || {};
+      if (success) {
+        message.success(msg, 1);
+        this.toggoleGlobalLoading(false);
+        this.setState({loading: false, chooseUser: false});
+      } else {
+        message.error(msg);
+        this.toggoleGlobalLoading(false);
+        this.setState({loading: false, chooseUser: false});
+      }
+    }).catch(e => {
+      this.toggoleGlobalLoading(false);
+      this.setState({loading: false, chooseUser: false});
+    });
   };
 
 
