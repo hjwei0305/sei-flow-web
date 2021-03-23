@@ -419,7 +419,6 @@ class FlowDefinationView extends Component {
         />
       ]
     };
-
     return (
       <HeadBreadcrumb
         className={"allocation-page"}
@@ -449,6 +448,7 @@ class FlowDefinationView extends Component {
                 <div className={'tbar-search-box'}>{search()}</div>
               </div>
               <SimpleTable
+                key={selectedNode && selectedNode.id}
                 data={this.state.tableData}
                 columns={columns}
                 loading={this.state.loading}
