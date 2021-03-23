@@ -228,7 +228,6 @@ export default class UserChoose extends React.Component {
     const { chooseResult } = this.state;
     const { flowTaskType, uiUserType, uiType, executorSet = [], id } =
       node || {};
-    const showFlag = flowTaskType.toLowerCase() === "servicetask";
     if (flowTaskType.toLowerCase() === "pooltask") {
       return (
         <span style={{ marginLeft: "10px" }}>
@@ -253,7 +252,6 @@ export default class UserChoose extends React.Component {
         <CheckboxGroup
           value={userIds ? userIds.split(",") : null}
           onChange={e => this.onChange(e, id)}
-          style={{ display: showFlag ? "none" : "block" }}
         >
           {executorSet.map(item => (
             <Col key={item.id} span={24}>
@@ -267,7 +265,6 @@ export default class UserChoose extends React.Component {
       <RadioGroup
         value={userIds}
         onChange={e => this.onChange(e, id)}
-        style={{ display: showFlag ? "none" : "block" }}
       >
         {executorSet.map(item => (
           <Col key={item.id} span={24}>
