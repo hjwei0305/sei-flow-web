@@ -12,8 +12,6 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   flowTypeId: null,
   notifyBeforePositionData: null,
   notifyAfterPositionData: null,
-  notifyBeforeSelfDefinitionData: null,
-  notifyAfterSelfDefinitionData: null,
   type: null,
   isSolidifyFlow: null,
   initComponent: function () {
@@ -1577,8 +1575,6 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     afterPosition.positionIds = this.getNotifyChoosePositionIds(this.notifyAfterPositionData);
     var beforeSelfDefinition = EUI.getCmp(notifyTab1.items[notifyTab1.items.length - 1]).getFormValue();
     var afterSelfDefinition = EUI.getCmp(notifyTab2.items[notifyTab2.items.length - 1]).getFormValue();
-    beforeSelfDefinition.selfDefinitionData = this.notifyBeforeSelfDefinitionData || [];
-    afterSelfDefinition.selfDefinitionData = this.notifyAfterSelfDefinitionData || [];
     var g = this;
     if (g.type == "ServiceTask" || g.type == "ReceiveTask" || g.type == "PoolTask") {
       data.before = {
@@ -3583,8 +3579,6 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     this.loadNotifyChoosePositonData(this.data);
     this.notifyBeforePositionData = this.data.notify.before.notifyPosition.positionData;
     this.notifyAfterPositionData = this.data.notify.after.notifyPosition.positionData;
-    this.notifyBeforeSelfDefinitionData = this.data.notify.before.notifySelfDefinition ? this.data.notify.before.notifySelfDefinition.selfDefinitionData : null;
-    this.notifyAfterSelfDefinitionData = this.data.notify.after.notifySelfDefinition ? this.data.notify.after.notifySelfDefinition.selfDefinitionData : null;
   },
   loadNotifyData: function (tab, data) {
     var g = this;

@@ -12,8 +12,6 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   id: null,
   notifyBeforePositionData: null,
   notifyAfterPositionData: null,
-  notifyBeforeSelfDefinitionData: null,
-  notifyAfterSelfDefinitionData: null,
   isSolidifyFlow: null,
   initComponent: function () {
     var g = this;
@@ -1837,9 +1835,6 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     this.loadNotifyChoosePositonData(this.data.nodeConfig);
     this.notifyBeforePositionData = this.data.nodeConfig.notify.before.notifyPosition.positionData;
     this.notifyAfterPositionData = this.data.nodeConfig.notify.after.notifyPosition.positionData;
-    this.notifyBeforeSelfDefinitionData = this.data.notify.before.notifySelfDefinition ? this.data.notify.before.notifySelfDefinition.selfDefinitionData : null;
-    this.notifyAfterSelfDefinitionData = this.data.notify.after.notifySelfDefinition ? this.data.notify.after.notifySelfDefinition.selfDefinitionData : null;
-
   },
   loadNotifyData: function (tab, data) {
     var g = this;
