@@ -1841,13 +1841,16 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     if (g.type == "ServiceTask" || g.type == "ReceiveTask" || g.type == "PoolTask") {
       EUI.getCmp(tab.items[0]).loadData(data.notifyStarter);
       EUI.getCmp(tab.items[1]).loadData(data.notifyPosition);
-      EUI.getCmp(tab.items[2]).loadData(data.notifySelfDefinition);
+      if(data.notifySelfDefinition){
+        EUI.getCmp(tab.items[2]).loadData(data.notifySelfDefinition);
+      }
     } else {
       EUI.getCmp(tab.items[0]).loadData(data.notifyExecutor);
       EUI.getCmp(tab.items[1]).loadData(data.notifyStarter);
       EUI.getCmp(tab.items[2]).loadData(data.notifyPosition);
-      EUI.getCmp(tab.items[3]).loadData(data.notifySelfDefinition);
-
+      if(data.notifySelfDefinition){
+        EUI.getCmp(tab.items[3]).loadData(data.notifySelfDefinition);
+      }
     }
   },
   loadNotifyDataAfter: function (tab, data) {
@@ -1862,7 +1865,9 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     }
     EUI.getCmp(tab.items[0]).loadData(data.notifyStarter);
     EUI.getCmp(tab.items[1]).loadData(data.notifyPosition);
-    EUI.getCmp(tab.items[2]).loadData(data.notifySelfDefinition);
+    if(data.notifySelfDefinition){
+      EUI.getCmp(tab.items[2]).loadData(data.notifySelfDefinition);
+    }
 
   },
   loadNotifyChoosePositonData: function (data) {
