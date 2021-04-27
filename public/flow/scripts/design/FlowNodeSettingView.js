@@ -12,6 +12,8 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   flowTypeId: null,
   notifyBeforePositionData: null,
   notifyAfterPositionData: null,
+  notifyBeforeSelfDefinitionData: null,
+  notifyAfterSelfDefinitionData: null,
   type: null,
   isSolidifyFlow: null,
   initComponent: function () {
@@ -156,6 +158,9 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       if (g.nowNotifyTab.items[2]) {
         EUI.getCmp(g.nowNotifyTab.items[2]).hide();
       }
+      if (g.nowNotifyTab.items[3]) {
+        EUI.getCmp(g.nowNotifyTab.items[3]).hide();
+      }
       var index = $(this).index();
       switch (index) {
         case 0:
@@ -167,6 +172,11 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         case 2:
           if (g.nowNotifyTab.items[2]) {
             EUI.getCmp(g.nowNotifyTab.items[2]).show();
+          }
+          break;
+        case 3:
+          if (g.nowNotifyTab.items[3]) {
+            EUI.getCmp(g.nowNotifyTab.items[3]).show();
           }
           break;
         default:
@@ -1061,6 +1071,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       html += '<div class="notify-user-item select">通知发起人</div>';
     }
     html += '<div class="notify-user-item">通知岗位</div>' +
+      '<div class="notify-user-item">通知人自定义</div>' +
       '</div>' +
       '<div id="notify-before"></div>' +
       '</div>' +
@@ -1069,6 +1080,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
 
       '<div class="notify-user-item select">通知发起人</div>' +
       '<div class="notify-user-item">通知岗位</div>' +
+      '<div class="notify-user-item">通知人自定义</div>' +
       '</div>' +
       '<div id="notify-after"></div>' +
       '</div>';
@@ -1094,6 +1106,9 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }, {
         hidden: true,
         items: this.getNotifyChoosePositionItem("notifyBefore")
+      }, {
+        hidden: true,
+        items: this.getNotifyChooseSelfDefinitionItem("notifyBefore")
       }];
     } else {
       items = [{
@@ -1104,6 +1119,9 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }, {
         hidden: true,
         items: this.getNotifyChoosePositionItem("notifyBefore")
+      }, {
+        hidden: true,
+        items: this.getNotifyChooseSelfDefinitionItem("notifyBefore")
       }];
     }
     this.nowNotifyTab = EUI.Container({
@@ -1141,8 +1159,175 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }, {
         hidden: true,
         items: this.getNotifyChoosePositionItem("notifyAfter")
+      }, {
+        hidden: true,
+        items: this.getNotifyChooseSelfDefinitionItem("notifyAfter")
       }]
     });
+  },
+  getNotifyChooseSelfDefinitionItem: function (notifyType) {
+    var g = this;
+    if (notifyType == "notifyBefore") {
+      return [{
+        xtype: "ComboBox",
+        id: "notifyBeforeSelfDef",
+        name: "name",
+        title: "通知人员",
+        labelWidth: 80,
+        height: 18,
+        width: 280,
+        field: ["notifySelfDefId"],
+        reader: {
+          field: ["id"]
+        },
+        store: {
+          url: _ctxPath + "/flowExecutorConfig/listCombo",
+          params: {
+            "businessModelId": this.businessModelId
+          }
+        }
+      }, {
+        xtype: "CheckBoxGroup",
+        title: "通知方式",
+        labelWidth: 80,
+        itemspace: 5,
+        name: "type",
+        defaultConfig: {
+          labelWidth: 45
+        },
+        items: [{
+          title: "邮件",
+          name: "EMAIL"
+        }, {
+          title: "钉钉",
+          name: "DINGDING"
+        }, {
+          title: "站内信",
+          name: "MESSAGE"
+        }]
+      }, {
+        xtype: "TextArea",
+        width: 320,
+        height: 180,
+        labelWidth: 80,
+        title: "通知备注",
+        name: "content"
+      }];
+    }
+    if (notifyType == "notifyAfter") {
+      if ((this.nodeType == "Approve" || this.nodeType == "CounterSign")) {
+        return [{
+          xtype: "ComboBox",
+          id: "notifyAfterSelfDef",
+          name: "name",
+          title: "通知人员",
+          labelWidth: 80,
+          height: 18,
+          width: 280,
+          field: ["notifySelfDefId"],
+          reader: {
+            field: ["id"]
+          },
+          store: {
+            url: _ctxPath + "/flowExecutorConfig/listCombo",
+            params: {
+              "businessModelId": this.businessModelId
+            }
+          }
+        }, {
+          xtype: "CheckBoxGroup",
+          title: "通知方式",
+          labelWidth: 80,
+          itemspace: 5,
+          name: "type",
+          defaultConfig: {
+            labelWidth: 45
+          },
+          items: [{
+            title: "邮件",
+            name: "EMAIL"
+          }, {
+            title: "钉钉",
+            name: "DINGDING"
+          }, {
+            title: "站内信",
+            name: "MESSAGE"
+          }]
+        }, {
+          xtype: "RadioBoxGroup",
+          title: "通知条件",
+          labelWidth: 80,
+          itemspace: 5,
+          name: "condition",
+          defaultConfig: {
+            labelWidth: 45
+          },
+          items: [{
+            title: "全部",
+            name: "ALL"
+          }, {
+            title: "同意",
+            name: "AGREE"
+          }, {
+            title: "不同意",
+            name: "DISAGREE"
+          }]
+        }, {
+          xtype: "TextArea",
+          width: 320,
+          height: 150,
+          labelWidth: 80,
+          title: "通知备注",
+          name: "content"
+        }];
+      } else {
+        return [{
+          xtype: "ComboBox",
+          id: "notifyAfterSelfDef",
+          name: "name",
+          title: "通知人员",
+          labelWidth: 80,
+          height: 18,
+          width: 280,
+          field: ["notifySelfDefId"],
+          reader: {
+            field: ["id"]
+          },
+          store: {
+            url: _ctxPath + "/flowExecutorConfig/listCombo",
+            params: {
+              "businessModelId": this.businessModelId
+            }
+          }
+        }, {
+          xtype: "CheckBoxGroup",
+          title: "通知方式",
+          labelWidth: 80,
+          itemspace: 5,
+          name: "type",
+          defaultConfig: {
+            labelWidth: 45
+          },
+          items: [{
+            title: "邮件",
+            name: "EMAIL"
+          }, {
+            title: "钉钉",
+            name: "DINGDING"
+          }, {
+            title: "站内信",
+            name: "MESSAGE"
+          }]
+        }, {
+          xtype: "TextArea",
+          width: 320,
+          height: 180,
+          labelWidth: 80,
+          title: "通知备注",
+          name: "content"
+        }];
+      }
+    }
   },
   getNotifyChoosePositionItem: function (notifyType) {
     var g = this;
@@ -1384,30 +1569,37 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     var data = {};
     var notifyTab1 = EUI.getCmp("notify-before");
     var notifyTab2 = EUI.getCmp("notify-after");
-    var beforePosition = EUI.getCmp(notifyTab1.items[notifyTab1.items.length - 1]).getFormValue();
-    var afterPosition = EUI.getCmp(notifyTab2.items[notifyTab2.items.length - 1]).getFormValue();
+    var beforePosition = EUI.getCmp(notifyTab1.items[notifyTab1.items.length - 2]).getFormValue();
+    var afterPosition = EUI.getCmp(notifyTab2.items[notifyTab2.items.length - 2]).getFormValue();
     beforePosition.positionData = this.notifyBeforePositionData || [];
     beforePosition.positionIds = this.getNotifyChoosePositionIds(this.notifyBeforePositionData);
     afterPosition.positionData = this.notifyAfterPositionData || [];
     afterPosition.positionIds = this.getNotifyChoosePositionIds(this.notifyAfterPositionData);
+    var beforeSelfDefinition = EUI.getCmp(notifyTab1.items[notifyTab1.items.length - 1]).getFormValue();
+    var afterSelfDefinition = EUI.getCmp(notifyTab2.items[notifyTab2.items.length - 1]).getFormValue();
+    beforeSelfDefinition.selfDefinitionData = this.notifyBeforeSelfDefinitionData || [];
+    afterSelfDefinition.selfDefinitionData = this.notifyAfterSelfDefinitionData || [];
     var g = this;
     if (g.type == "ServiceTask" || g.type == "ReceiveTask" || g.type == "PoolTask") {
       data.before = {
         notifyStarter: EUI.getCmp(notifyTab1.items[0]).getFormValue(),
-        notifyPosition: beforePosition
+        notifyPosition: beforePosition,
+        notifySelfDefinition: beforeSelfDefinition
       };
     } else {
       data.before = {
         notifyExecutor: EUI.getCmp(notifyTab1.items[0]).getFormValue(),
         notifyStarter: EUI.getCmp(notifyTab1.items[1]).getFormValue(),
-        notifyPosition: beforePosition
+        notifyPosition: beforePosition,
+        notifySelfDefinition: beforeSelfDefinition
       };
     }
 
     data.after = {
       notifyExecutor: "",
       notifyStarter: EUI.getCmp(notifyTab2.items[0]).getFormValue(),
-      notifyPosition: afterPosition
+      notifyPosition: afterPosition,
+      notifySelfDefinition: afterSelfDefinition
     };
     return data;
   },
@@ -3372,22 +3564,6 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         userTypeCmp.setValue(userType);
         this.showChooseUserGrid(userType, this.data.executor);
       }
-      // else if (executorLength == 2) {
-      //     var userTypeCmp = EUI.getCmp("userType");
-      //     var userType = "";
-      //     if (this.data.executor[0].userType == "PositionType") {
-      //         userType = "PositionTypeAndOrg";
-      //     } else {
-      //         userType = "PositionAndOrg";
-      //     }
-      //     userTypeCmp.setValue(userType);
-      //     this.showChooseUserGrid(userType, this.data.executor);
-      // } else if (executorLength == 3) {
-      //     var userType = "PositionAndOrgAndSelfDefinition";
-      //     var userTypeCmp = EUI.getCmp("userType");
-      //     userTypeCmp.setValue(userType);
-      //     this.showChooseUserGrid(userType, this.data.executor);
-      // }
     }
     if (g.type == 'CallActivity') {
       return;
@@ -3407,16 +3583,20 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     this.loadNotifyChoosePositonData(this.data);
     this.notifyBeforePositionData = this.data.notify.before.notifyPosition.positionData;
     this.notifyAfterPositionData = this.data.notify.after.notifyPosition.positionData;
+    this.notifyBeforeSelfDefinitionData = this.data.notify.before.notifySelfDefinition ? this.data.notify.before.notifySelfDefinition.selfDefinitionData : null;
+    this.notifyAfterSelfDefinitionData = this.data.notify.after.notifySelfDefinition ? this.data.notify.after.notifySelfDefinition.selfDefinitionData : null;
   },
   loadNotifyData: function (tab, data) {
     var g = this;
     if (g.type == "ServiceTask" || g.type == "ReceiveTask" || g.type == "PoolTask") {
       EUI.getCmp(tab.items[0]).loadData(data.notifyStarter);
-      EUI.getCmp(tab.items[tab.items.length - 1]).loadData(data.notifyPosition);
+      EUI.getCmp(tab.items[1]).loadData(data.notifyPosition);
+      EUI.getCmp(tab.items[2]).loadData(data.notifySelfDefinition);
     } else {
       EUI.getCmp(tab.items[0]).loadData(data.notifyExecutor);
       EUI.getCmp(tab.items[1]).loadData(data.notifyStarter);
-      EUI.getCmp(tab.items[tab.items.length - 1]).loadData(data.notifyPosition);
+      EUI.getCmp(tab.items[2]).loadData(data.notifyPosition);
+      EUI.getCmp(tab.items[3]).loadData(data.notifySelfDefinition);
     }
   },
   loadNotifyDataAfter: function (tab, data) {
@@ -3426,8 +3606,12 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     if (!data.notifyPosition.condition) {
       data.notifyPosition.condition = "ALL";
     }
+    if (data.notifySelfDefinition && !data.notifySelfDefinition.condition) {
+      data.notifySelfDefinition.condition = "ALL";
+    }
     EUI.getCmp(tab.items[0]).loadData(data.notifyStarter);
     EUI.getCmp(tab.items[1]).loadData(data.notifyPosition);
+    EUI.getCmp(tab.items[2]).loadData(data.notifySelfDefinition);
   },
   loadNotifyChoosePositonData: function (data) {
     if (!data.notify.before.notifyPosition.positionData) {

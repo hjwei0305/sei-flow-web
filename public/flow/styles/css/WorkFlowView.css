@@ -734,7 +734,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   float: left;
   padding: 8px 0;
   text-align: center;
-  width: 136px;
+  width: 100px;
 }
 
 .notify-user-item:nth-child(2) {
