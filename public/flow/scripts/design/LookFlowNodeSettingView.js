@@ -18,7 +18,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     if (g.nodeType == "CallActivity") {
       this.window = EUI.Window({
         title: "节点配置",
-        width: 550,
+        width: 580,
         height: 435,
         padding: 15,
         afterRender: function () {
@@ -41,7 +41,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     } else if (g.nodeType == "ServiceTask" || g.nodeType == "ReceiveTask" || this.nodeType == "PoolTask") {
       this.window = EUI.Window({
         title: "节点配置",
-        width: 550,
+        width: 580,
         height: 435,
         padding: 15,
         afterRender: function () {
@@ -909,7 +909,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   },
   getNotifyTab: function (noExcutor) {
     var html = '<div class="notify-west">' +
-      '<div class="west-navbar select-navbar">任务达到时</div>' +
+      '<div class="west-navbar select-navbar">任务到达时</div>' +
       '<div class="west-navbar">任务执行后</div>' +
       '</div>' +
       '<div class="notify-center">' +
@@ -1045,7 +1045,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 45
+          labelWidth: 28
         },
         items: [{
           title: "邮件",
@@ -1055,7 +1055,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "DINGDING"
         }, {
           title: "站内信",
-          name: "MESSAGE"
+          name: "MESSAGE",
+          labelWidth: 42
+        }, {
+          title: "虚拟待办",
+          name: "VIRTUALTODO",
+          labelWidth: 56
         }]
       }, {
         xtype: "TextArea",
@@ -1096,7 +1101,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           readonly: true,
           name: "type",
           defaultConfig: {
-            labelWidth: 45
+            labelWidth: 28
           },
           items: [{
             title: "邮件",
@@ -1106,7 +1111,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             name: "DINGDING"
           }, {
             title: "站内信",
-            name: "MESSAGE"
+            name: "MESSAGE",
+            labelWidth: 42
+          }, {
+            title: "虚拟待办",
+            name: "VIRTUALTODO",
+            labelWidth: 56
           }]
         }, {
           xtype: "RadioBoxGroup",
@@ -1165,7 +1175,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           itemspace: 5,
           name: "type",
           defaultConfig: {
-            labelWidth: 45
+            labelWidth: 28
           },
           items: [{
             title: "邮件",
@@ -1175,7 +1185,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             name: "DINGDING"
           }, {
             title: "站内信",
-            name: "MESSAGE"
+            name: "MESSAGE",
+            labelWidth: 42
+          }, {
+            title: "虚拟待办",
+            name: "VIRTUALTODO",
+            labelWidth: 56
           }]
         }, {
           xtype: "TextArea",
@@ -1215,7 +1230,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 45
+          labelWidth: 28
         },
         items: [{
           title: "邮件",
@@ -1225,7 +1240,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "DINGDING"
         }, {
           title: "站内信",
-          name: "MESSAGE"
+          name: "MESSAGE",
+          labelWidth: 42
+        }, {
+          title: "虚拟待办",
+          name: "VIRTUALTODO",
+          labelWidth: 56
         }]
       }, {
         xtype: "RadioBoxGroup",
@@ -1254,9 +1274,9 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         height: 25,
         title: "已选岗位(" + '<a class=' + notifyType + 'notifyChoosePositionNum>' + choosePositionNum + '</a>)',
         style: {
-          "margin-left": "305px",
+          "margin-left": "350px",
           "position": "absolute",
-          "top": "67px"
+          "top": "65px"
         },
         handler: function () {
           var nowChooseBtnId = $(this).attr("id");
@@ -1297,7 +1317,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 45
+          labelWidth: 28
         },
         items: [{
           title: "邮件",
@@ -1307,7 +1327,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "DINGDING"
         }, {
           title: "站内信",
-          name: "MESSAGE"
+          name: "MESSAGE",
+          labelWidth: 42
+        }, {
+          title: "虚拟待办",
+          name: "VIRTUALTODO",
+          labelWidth: 56
         }]
       }, {
         xtype: "Button",
@@ -1316,9 +1341,9 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         height: 25,
         title: "已选岗位(" + '<a class=' + notifyType + 'notifyChoosePositionNum>' + choosePositionNum + '</a>)',
         style: {
-          "margin-left": "305px",
+          "margin-left": "350px",
           "position": "absolute",
-          "top": "67px"
+          "top": "65px"
         },
         handler: function () {
           var nowChooseBtnId = $(this).attr("id");
@@ -1362,7 +1387,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 45
+          labelWidth: 28
         },
         items: [{
           title: "邮件",
@@ -1372,7 +1397,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "DINGDING"
         }, {
           title: "站内信",
-          name: "MESSAGE"
+          name: "MESSAGE",
+          labelWidth: 42
+        }, {
+          title: "虚拟待办",
+          name: "VIRTUALTODO",
+          labelWidth: 56
         }]
       }, {
         xtype: "RadioBoxGroup",
@@ -1412,7 +1442,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 45
+          labelWidth: 28
         },
         items: [{
           title: "邮件",
@@ -1422,7 +1452,12 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "DINGDING"
         }, {
           title: "站内信",
-          name: "MESSAGE"
+          name: "MESSAGE",
+          labelWidth: 42
+        }, {
+          title: "虚拟待办",
+          name: "VIRTUALTODO",
+          labelWidth: 56
         }]
       }, {
         xtype: "TextArea",
@@ -1841,14 +1876,14 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     if (g.type == "ServiceTask" || g.type == "ReceiveTask" || g.type == "PoolTask") {
       EUI.getCmp(tab.items[0]).loadData(data.notifyStarter);
       EUI.getCmp(tab.items[1]).loadData(data.notifyPosition);
-      if(data.notifySelfDefinition){
+      if (data.notifySelfDefinition) {
         EUI.getCmp(tab.items[2]).loadData(data.notifySelfDefinition);
       }
     } else {
       EUI.getCmp(tab.items[0]).loadData(data.notifyExecutor);
       EUI.getCmp(tab.items[1]).loadData(data.notifyStarter);
       EUI.getCmp(tab.items[2]).loadData(data.notifyPosition);
-      if(data.notifySelfDefinition){
+      if (data.notifySelfDefinition) {
         EUI.getCmp(tab.items[3]).loadData(data.notifySelfDefinition);
       }
     }
@@ -1865,7 +1900,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     }
     EUI.getCmp(tab.items[0]).loadData(data.notifyStarter);
     EUI.getCmp(tab.items[1]).loadData(data.notifyPosition);
-    if(data.notifySelfDefinition){
+    if (data.notifySelfDefinition) {
       EUI.getCmp(tab.items[2]).loadData(data.notifySelfDefinition);
     }
 
