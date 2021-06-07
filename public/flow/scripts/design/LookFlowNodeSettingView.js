@@ -856,7 +856,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         },
         items: [{
           name: "beforeExcuteService",
-          title: "任务执行前",
+          title: "任务到达时",
           colon: false,
           labelWidth: 100,
           width: 220
