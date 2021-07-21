@@ -373,6 +373,19 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "singleTaskNoChoose"
       }]);
     }
+
+    //审批节点添加[处理后返回我审批],会签只有当决策是100%并且立即生效的时候才显示[处理后返回我审批]
+    //如果勾选，在选择不同意的时候，可以选择不同意后的节点执行是按流程图路线走还是直接回到当前节点
+    if (this.nodeType == 'Approve' || this.nodeType == 'CounterSign') {
+      items = items.concat([{
+        xtype: "CheckBox",
+        title: "处理后返回我审批",
+        name: "allowJumpBack",
+        readonly: true
+      }]);
+    }
+
+
     return {
       title: "常规",
       xtype: "FormPanel",

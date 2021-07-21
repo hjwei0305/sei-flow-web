@@ -82,6 +82,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     }
     if (this.data && !Object.isEmpty(this.data)) {
       this.loadData();
+      this.showAllowJumpBack();
     } else {
       if (this.type != "CallActivity" && this.type != "ServiceTask" &&
         this.type != "ReceiveTask" && this.type != "PoolTask") {
@@ -216,7 +217,12 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         var executor = '';
         if (g.type != 'ServiceTask' && g.type != 'ReceiveTask' && g.type != 'PoolTask' && g.type != 'CallActivity') {
           executor = g.getExcutorData();
-
+        }
+        //如果是会签，考虑会签决策和立即执行的值，判断返回我审批的值是否生效
+        if (g.nodeType == 'CounterSign') {
+          if (normalData.counterDecision != 100 || normalData.immediatelyEnd != true) {
+            normalData.allowJumpBack = false;
+          }
         }
         g.afterConfirm && g.afterConfirm.call(this, {
           normal: normalData,
@@ -246,11 +252,6 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       maxlength: 80,
       value: ''
     },
-      //     {
-      //     xtype: "CheckBox",
-      //     title: "环节催办",
-      //     name: "allowUrge"
-      // } ,
       {
         xtype: "FieldGroup",
         labelWidth: 100,
@@ -288,15 +289,6 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           unit: "分"
         }]
       },
-      //     {
-      //     xtype: "NumberField",
-      //     title: "额定工时",
-      //     allowNegative: false,
-      //     name: "executeTime",
-      //     labelWidth: 100,
-      //     value:0,
-      //     unit: "分钟"
-      // },
       {
         xtype: "ComboBox",
         title: "工作界面",
@@ -394,7 +386,13 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         displayText: "请输入会签通过的百分比1%—100%",
         allowNegative: false,
         allowBlank: false,
-        name: "counterDecision"
+        name: "counterDecision",
+        id: "counterDecision",
+        listener: {
+          "blur": function () {
+            g.showAllowJumpBack();
+          }
+        }
       }, {
         xtype: "RadioBoxGroup",
         name: "isSequential",
@@ -411,7 +409,11 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }, {
         xtype: "CheckBox",
         title: "允许即时生效",
-        name: "immediatelyEnd"
+        name: "immediatelyEnd",
+        id: "immediatelyEnd",
+        onChecked: function (value) {
+          g.showAllowJumpBack();
+        }
       }, {
         xtype: "CheckBox",
         title: "允许流程发起人终止",
@@ -488,6 +490,18 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         xtype: "CheckBox",
         title: "单任务不选择执行人",
         name: "singleTaskNoChoose"
+      }]);
+    }
+
+    //审批节点添加[处理后返回我审批],会签只有当决策是100%并且立即生效的时候才显示[处理后返回我审批]
+    //如果勾选，在选择不同意的时候，可以选择不同意后的节点执行是按流程图路线走还是直接回到当前节点
+    if (this.nodeType == 'Approve' || this.nodeType == 'CounterSign') {
+      items = items.concat([{
+        xtype: "CheckBox",
+        title: "处理后返回我审批",
+        id: "allowJumpBack",
+        name: "allowJumpBack",
+        hidden: (this.nodeType == 'CounterSign') ? true : false
       }]);
     }
 
@@ -3845,4 +3859,16 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       "z-index": "9999999"
     }).show();
   },
+  showAllowJumpBack: function () {
+    //会签的时候当决策为100%并且立即生效为true是才显示【处理后返回我审批】
+    if (this.nodeType == 'CounterSign') {
+      var immediatelyEnd = EUI.getCmp("immediatelyEnd").getValue();
+      var counterDecision = EUI.getCmp("counterDecision").getValue();
+      if (counterDecision == 100 && immediatelyEnd == true) {
+        EUI.getCmp("allowJumpBack").show();
+      } else {
+        EUI.getCmp("allowJumpBack").hide();
+      }
+    }
+  }
 });
