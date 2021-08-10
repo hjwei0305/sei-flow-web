@@ -58,5 +58,12 @@ export async function jumpToTargetNode(params = {}) {
   return httpUtils.postJson(baseUrl + "/flowInstance/jumpToTargetNode", params);
 }
 
+//修改说明
+export async function updateRemark(params = {}) {
+  return httpUtils.postJson(baseUrl + "/flowInstance/updateRemarkByInstaceId", params);
+}
+
+
+
 
 

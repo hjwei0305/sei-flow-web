@@ -16,7 +16,8 @@ import {
   taskFailTheCompensation,
   checkAndGetCanJumpNodeInfos,
   getTargetNodeInfo,
-  jumpToTargetNode
+  jumpToTargetNode,
+  updateRemark
 } from "./FlowInstanceService";
 import {ApproveHistory, OptGroup} from 'seid';
 import SearchTable from "@/components/SearchTable";
@@ -30,6 +31,7 @@ import {
   businessModelByAppModelConfig,
   flowTypeByBusinessModelConfig,
 } from '@/utils/CommonComponentsConfig';
+import UpdateRemarkModel from "./UpdateRemarkModel";
 
 const {seiIntl} = seiLocale;
 const confirm = Modal.confirm
@@ -52,7 +54,9 @@ class FlowInstanceTable extends Component {
       flowTypeId: "",
       checkInFlow: false,
       modalVisible: false,
+      updateModalVisible: false,
       confirmLoading: false,
+      updateConfirmLoading: false,
       selectInstanceId: "",
       selectSolidifyFlow: false,
       selectJumpNodeInfo: [],
@@ -263,6 +267,12 @@ class FlowInstanceTable extends Component {
     });
   };
 
+  //修改说明
+  handleUpdate = (record) => {
+
+    this.setState({updateModalVisible: true, selectInstanceId: record.id, editData : record});
+  }
+
   getJumpNodeInfo = () => {
     return new Promise((resolve) => {
       resolve(this.state.selectJumpNodeInfo);
@@ -300,6 +310,35 @@ class FlowInstanceTable extends Component {
 
   handleModalCancel = () => {
     this.setState({modalVisible: false, confirmLoading: false});
+  };
+
+
+  handleUpdateSave = () => {
+    this.ref.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.setState({updateConfirmLoading: true});
+        updateRemark({
+          'instanceId': this.state.selectInstanceId,
+          'updateRemark': values.updateRemark
+        }).then(result => {
+          if (result.status === "SUCCESS") {
+            message.success(seiIntl.get({key: 'common_000833', desc: '修改成功！'}));
+            this.getDataSource();
+            this.setState({updateConfirmLoading: false, updateModalVisible: false});
+          } else {
+            message.error(result.message ? result.message : seiIntl.get({key: 'flow_000026', desc: '请求失败'}));
+            this.setState({updateConfirmLoading: false});
+          }
+        }).catch(e => {
+          this.setState({updateConfirmLoading: false});
+        });
+      }
+    });
+  };
+
+
+  handleUpdateModalCancel = () => {
+    this.setState({updateModalVisible: false, updateConfirmLoading: false});
   };
 
   onRef = (ref) => {
@@ -442,6 +481,10 @@ class FlowInstanceTable extends Component {
               title: seiIntl.get({key: 'flow_000329', desc: '节点跳转'}),
               onClick: () => this.handleJump(record),
             });
+            optList.push({
+              title: seiIntl.get({key: 'flow_000334', desc: '修改说明'}),
+              onClick: () => this.handleUpdate(record),
+            });
           }
           return (<OptGroup optList={optList}/>)
         }
@@ -545,7 +588,7 @@ class FlowInstanceTable extends Component {
         </Tooltip>
       ]
     };
-    const {data, selectedRows, modalVisible, confirmLoading, chooseUser, loading, nextNode} = this.state;
+    const {data, selectedRows, modalVisible, updateModalVisible, confirmLoading, updateConfirmLoading, chooseUser, loading, nextNode, editData} = this.state;
     return (
       <HeadBreadcrumb>
         <div className={"tbar-table"}>
@@ -569,6 +612,14 @@ class FlowInstanceTable extends Component {
           handleCancel={this.handleModalCancel}
           onRef={this.onRef}
           getJumpNodeInfo={this.getJumpNodeInfo}
+        />
+        <UpdateRemarkModel
+          modalVisible={updateModalVisible}
+          confirmLoading={updateConfirmLoading}
+          handleOk={this.handleUpdateSave}
+          handleCancel={this.handleUpdateModalCancel}
+          onRef={this.onRef}
+          defaultValue={editData?editData:{}}
         />
         <UserChoose
           visible={chooseUser}

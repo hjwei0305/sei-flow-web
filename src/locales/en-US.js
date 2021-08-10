@@ -342,6 +342,8 @@ export default {
   "flow_000331": "Please select the target node！",
   "flow_000332": "Triggers the current node after event ！ ",
   "flow_000333": "Triggers target node before event ！",
+  "flow_000334": "Update remark",
+  "flow_000335": "Please enter the task description",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
