@@ -314,7 +314,7 @@ class FlowInstanceTable extends Component {
 
 
   handleUpdateSave = () => {
-    this.ref.props.form.validateFieldsAndScroll((err, values) => {
+    this.updateRemarkRef.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         this.setState({updateConfirmLoading: true});
         updateRemark({
@@ -618,7 +618,7 @@ class FlowInstanceTable extends Component {
           confirmLoading={updateConfirmLoading}
           handleOk={this.handleUpdateSave}
           handleCancel={this.handleUpdateModalCancel}
-          onRef={this.onRef}
+          onRef={ref=>this.updateRemarkRef = ref}
           defaultValue={editData?editData:{}}
         />
         <UserChoose
