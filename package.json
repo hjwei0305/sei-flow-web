@@ -32,7 +32,7 @@
     "react-image-gallery": "^1.0.6",
     "sei-utils": "^1.0.84",
     "seid": "^1.2.67",
-    "suid": "^1.3.170"
+    "suid": "^1.3.171"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
