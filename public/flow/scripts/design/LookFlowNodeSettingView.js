@@ -336,12 +336,15 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         title: "允许转办",
         name: "allowTransfer"
       }]);
-      if (this.nodeType == "Approve") {
+      if (this.nodeType == "Approve" || this.nodeType == "CounterSign") {
         items = items.concat([{
           xtype: "CheckBox",
           title: "允许委托",
           name: "allowEntrust"
-        }, {
+        }]);
+      }
+      if (this.nodeType == "Approve") {
+        items = items.concat([{
           xtype: "CheckBox",
           title: "需要选择不同意原因",
           name: "chooseDisagreeReason"

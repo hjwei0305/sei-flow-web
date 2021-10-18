@@ -454,13 +454,16 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "allowTransfer",
         checked: true
       }]);
-      if (this.nodeType == "Approve") {
+      if (this.nodeType == "Approve" || this.nodeType == "CounterSign") {
         items = items.concat([{
           xtype: "CheckBox",
           title: "允许委托",
           name: "allowEntrust",
           checked: true
-        }, {
+        }]);
+      }
+      if (this.nodeType == "Approve") {
+        items = items.concat([{
           xtype: "CheckBox",
           title: "需要选择不同意原因",
           name: "chooseDisagreeReason",
