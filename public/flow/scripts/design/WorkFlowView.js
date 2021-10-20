@@ -114,7 +114,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
         if (g.businessModelId && g.businessModelId != busModelId) {
           var msgBox = EUI.MessageBox({
             title: g.lang.tiShiText,
-            msg: "切换流程类型将清空所有流程设计，请确定是否继续?",
+            msg: "跨业务实体切换流程类型将清空所有流程设计，请确定是否继续?",
             buttons: [{
               title: "取消",
               handler: function () {
