@@ -333,6 +333,10 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     if (this.nodeType == "Normal" || this.nodeType == "Approve" || this.nodeType == "CounterSign") {
       items = items.concat([{
         xtype: "CheckBox",
+        title: "允许任意退回",
+        name: "allowReturn"
+      },{
+        xtype: "CheckBox",
         title: "允许转办",
         name: "allowTransfer"
       }]);
