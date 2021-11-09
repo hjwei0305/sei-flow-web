@@ -34,6 +34,7 @@ export default [
       /*流程监管*/
       { title: '流程实例', path: '/FlowInstanceTable', component: './FlowInstance/FlowInstanceTable' },
       { title: '推送任务管理', path: '/PushFlowTaskTable', component: './PushFlowTask/PushFlowTaskTable' },
+      { title: '替换固化执行人', path: '/ReplaceSolidifyExecutorTable', component: './ReplaceSolidifyExecutor/ReplaceSolidifyExecutorTable' },
       { title: '任意转办', path: '/TurnToDoTable', component: './TurnToDo/TurnToDoTable' },
       { title: '加签管理', path: '/AddSignTable', component: './AddSign/AddSignTable' },
       { title: '减签管理', path: '/SubtractTable', component: './SubtractSign/SubtractSignTable' },

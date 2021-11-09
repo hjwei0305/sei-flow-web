@@ -344,6 +344,12 @@ export default {
   "flow_000333": "Triggers target node before event ！",
   "flow_000334": "Update remark",
   "flow_000335": "Please enter the task description",
+  "flow_000336": "The new executor.",
+  "flow_000337": "The executor",
+  "flow_000338": "Substitute",
+  "flow_000339": "It cannot be restored after the replacement. Are you sure to replace it?",
+  "flow_000340": "Please select a replacement!",
+  "flow_000341": "Please select the person to be replaced!",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
