@@ -223,6 +223,9 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           if (normalData.counterDecision != 100 || normalData.immediatelyEnd != true) {
             normalData.allowJumpBack = false;
           }
+          if (normalData.immediatelyEnd != true) {
+            normalData.foldingLog = false;
+          }
         }
         g.afterConfirm && g.afterConfirm.call(this, {
           normal: normalData,
@@ -414,6 +417,13 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         onChecked: function (value) {
           g.showAllowJumpBack();
         }
+      }, {
+        xtype: "CheckBox",
+        title: "折叠弃权日志",
+        id: "foldingLog",
+        name: "foldingLog",
+        checked: false,
+        hidden:true
       }, {
         xtype: "CheckBox",
         title: "允许流程发起人终止",
@@ -3869,13 +3879,19 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   },
   showAllowJumpBack: function () {
     //会签的时候当决策为100%并且立即生效为true是才显示【处理后返回我审批】
-    if (this.nodeType == 'CounterSign') {
+    if (this.nodeType === 'CounterSign') {
       var immediatelyEnd = EUI.getCmp("immediatelyEnd").getValue();
       var counterDecision = EUI.getCmp("counterDecision").getValue();
-      if (counterDecision == 100 && immediatelyEnd == true) {
+      if (counterDecision === 100 && immediatelyEnd ) {
         EUI.getCmp("allowJumpBack").show();
       } else {
         EUI.getCmp("allowJumpBack").hide();
+      }
+      //立即生效时显示折叠日志
+      if(immediatelyEnd){
+        EUI.getCmp("foldingLog").show();
+      }else{
+        EUI.getCmp("foldingLog").hide();
       }
     }
   }

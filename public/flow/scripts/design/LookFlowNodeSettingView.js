@@ -304,6 +304,10 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "immediatelyEnd"
       }, {
         xtype: "CheckBox",
+        title: "折叠弃权日志",
+        name: "foldingLog",
+      }, {
+        xtype: "CheckBox",
         title: "允许流程发起人终止",
         name: "allowTerminate"
       }, {
