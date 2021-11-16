@@ -108,6 +108,15 @@ class WorkPageModal extends Component {
                             <Input/>
                         )}
                     </FormItem>
+                  <FormItem
+                    {...formItemLayout}
+                    label={seiIntl.get({key: 'flow_000223', desc: '移动端地址'})}>
+                    {getFieldDecorator('phoneUrl', {
+                      initialValue: FormValue.phoneUrl ? FormValue.phoneUrl : ""
+                    })(
+                      <Input/>
+                    )}
+                  </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label={seiIntl.get({key: 'flow_000037', desc: '描述'})}>

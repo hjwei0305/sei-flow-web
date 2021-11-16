@@ -234,7 +234,7 @@ export default {
   "flow_000220": "The maximum length of the code is 255",
   "flow_000221": "The editor disagreed",
   "flow_000222": "Add reason for disagreement",
-
+  "flow_000223": "Mobile address",
 
   "flow_000225": "Just Recently",
   "flow_000226": "Days Ago",

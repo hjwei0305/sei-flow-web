@@ -222,12 +222,17 @@ class WorkPageTable extends Component {
       {
         title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
         dataIndex: 'name',
-        width: 300
+        width: 260
       },
       {
         title: seiIntl.get({key: 'flow_000033', desc: 'URL地址'}),
         dataIndex: 'url',
-        width: 400
+        width: 360
+      },
+      {
+        title: seiIntl.get({key: 'flow_000223', desc: '移动端地址'}),
+        dataIndex: 'phoneUrl',
+        width: 320
       },
       {
         title: seiIntl.get({key: 'flow_000034', desc: '必须提交'}),
