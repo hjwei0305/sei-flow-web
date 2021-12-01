@@ -134,9 +134,18 @@ class FlowTypeModal extends Component {
           </FormItem></Row>
           <Row><FormItem
             {...formItemLayout}
-            label={seiIntl.get({key: 'flow_000097', desc: '表单URL'})}>
+            label={seiIntl.get({key: 'flow_000097', desc: '查看表单URL'})}>
             {getFieldDecorator('lookUrl', {
               initialValue: FormValue.lookUrl ? FormValue.lookUrl : "",
+            })(
+              <Input/>
+            )}
+          </FormItem></Row>
+          <Row><FormItem
+            {...formItemLayout}
+            label={seiIntl.get({key: 'flow_000308', desc: '移动端查看URL'})}>
+            {getFieldDecorator('phoneLookUrl', {
+              initialValue: FormValue.phoneLookUrl ? FormValue.phoneLookUrl : ""
             })(
               <Input/>
             )}
