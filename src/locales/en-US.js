@@ -108,7 +108,7 @@ export default {
   "flow_000094": "Please enter the code!",
   "flow_000095": "Submit Task Address",
   "flow_000096": "Form Detail URL",
-  "flow_000097": "Form URL",
+  "flow_000097": "Viewing the form URL",
   "flow_000098": "View The Form",
   "flow_000099": "Are you sure you want to force termination of {0}?？",
   "flow_000100": "Task make over power",
@@ -235,7 +235,7 @@ export default {
   "flow_000221": "The editor disagreed",
   "flow_000222": "Add reason for disagreement",
   "flow_000223": "Mobile address",
-
+  "flow_000224": "Please fill in the viewing form URL!",
   "flow_000225": "Just Recently",
   "flow_000226": "Days Ago",
   "flow_000227": "Hour Ago",
@@ -319,6 +319,7 @@ export default {
   "flow_000305": "Select common contact people",
   "flow_000306": "Please select the common contact people！",
   "flow_000307": "Organizational code",
+  "flow_000308": "Viewing URLS on mobile devices",
 
   "flow_000312": "Task the compensation",
   "flow_000313": "Task compensation is a way of compensating for failure to generate task. Are you sure you want to implement it?",

@@ -286,6 +286,11 @@ class BusinessModelTable extends Component {
         dataIndex: 'businessDetailServiceUrl',
         width: 400,
       },
+      {
+        title: seiIntl.get({key: 'flow_000308', desc: '移动端查看URL'}),
+        dataIndex: 'phoneLookUrl',
+        width: 400,
+      }
     ];
 
     const title = () => {
