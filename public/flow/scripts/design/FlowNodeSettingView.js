@@ -431,6 +431,11 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         checked: true
       }, {
         xtype: "CheckBox",
+        title: "允许流程发起人催办",
+        name: "allowUrged",
+        checked: true
+      }, {
+        xtype: "CheckBox",
         title: "允许加签",
         name: "allowAddSign"
       }, {
@@ -443,6 +448,11 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         xtype: "CheckBox",
         title: "允许流程发起人终止",
         name: "allowTerminate",
+        checked: true
+      }, {
+        xtype: "CheckBox",
+        title: "允许流程发起人催办",
+        name: "allowUrged",
         checked: true
       }, {
         xtype: "CheckBox",
@@ -619,6 +629,10 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           xtype: "CheckBox",
           title: "允许流程发起人终止",
           name: "allowTerminate"
+        }, {
+          xtype: "CheckBox",
+          title: "允许流程发起人催办",
+          name: "allowUrged"
         }, {
           xtype: "CheckBox",
           title: "允许撤回",
