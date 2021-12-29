@@ -25,7 +25,7 @@ class ResetPushFlowTaskModal extends Component {
       appModuleId: "",
       businessModelId: "",
       flowTypeId: "",
-      recentDate: 12
+      recentDate: 6
     }
   }
 
@@ -35,7 +35,7 @@ class ResetPushFlowTaskModal extends Component {
       appModuleId: "",
       businessModelId: "",
       flowTypeId: "",
-      recentDate: 12
+      recentDate: 6
     });
   }
 
@@ -172,7 +172,7 @@ class ResetPushFlowTaskModal extends Component {
               rules: [{required: true, message: seiIntl.get({key: 'flow_000328', desc: '请输入最近保留时间!'})}
               ]
             })(
-              <InputNumber addonAfter="个月" min={1} max={36}
+              <InputNumber addonAfter="个月" min={1} max={6}
                            formatter={value => `${value}个月`}
                            onChange={this.recentChange} style={{width: "323px"}}/>
             )}

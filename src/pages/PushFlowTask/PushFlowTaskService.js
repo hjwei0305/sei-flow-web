@@ -5,7 +5,6 @@ const {baseUrl} = constants;
 export async function getPushTaskControl(params = {}) {
   Object.assign(params, {
     sortOrders: [{property: 'pushStartDate', direction: 'DESC'}],
-    quickSearchProperties: ["flowInstanceName", "flowTaskName", "businessCode", "executorNameList"],
   });
   return httpUtils.postJson(baseUrl + "/flowTaskPushControl/findByPage", params);
 }

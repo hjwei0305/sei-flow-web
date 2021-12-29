@@ -320,6 +320,8 @@ export default {
   "flow_000306": "Please select the common contact people！",
   "flow_000307": "Organizational code",
   "flow_000308": "Viewing URLS on mobile devices",
+  "flow_000309": "Complete business order number",
+  "flow_000310": "Please enter the complete business order number",
 
   "flow_000312": "Task the compensation",
   "flow_000313": "Task compensation is a way of compensating for failure to generate task. Are you sure you want to implement it?",

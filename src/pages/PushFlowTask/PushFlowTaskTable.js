@@ -64,33 +64,56 @@ class FlowInstanceTable extends Component {
     this.toggoleGlobalLoading(true);
     if (!params.filters) {
       let filter = [];
-      //筛选字段(应用模块)
-      if (this.state.appModuleId) {
+      //筛选字段（业务单号）
+      if (this.state.changeValue) {
         filter.push({
-          fieldName: "appModuleId",//筛选字段(应用模块)
+          fieldName: "businessCode",//筛选字段（流程类型）
           operator: "EQ",//操作类型
-          value: this.state.appModuleId,//筛选值
+          value: this.state.changeValue,//筛选值
           fieldType: "String"//筛选类型
         });
+      }else{
+        //筛选字段(应用模块)
+        if (this.state.appModuleId) {
+          filter.push({
+            fieldName: "appModuleId",//筛选字段(应用模块)
+            operator: "EQ",//操作类型
+            value: this.state.appModuleId,//筛选值
+            fieldType: "String"//筛选类型
+          });
+        }else{
+          message.error(seiIntl.get({key: 'common_000017', desc: '请选择应用模块!'}));
+          this.toggoleGlobalLoading(false);
+          return;
+        }
+        //筛选字段（业务实体）
+        if (this.state.businessModelId) {
+          filter.push({
+            fieldName: "businessModelId",//筛选字段（业务实体）
+            operator: "EQ",//操作类型
+            value: this.state.businessModelId,//筛选值
+            fieldType: "String"//筛选类型
+          });
+        }else{
+          message.error(seiIntl.get({key: 'flow_000093', desc: '请选择业务实体!'}));
+          this.toggoleGlobalLoading(false);
+          return;
+        }
+        //筛选字段（流程类型）
+        if (this.state.flowTypeId) {
+          filter.push({
+            fieldName: "flowTypeId",//筛选字段（流程类型）
+            operator: "EQ",//操作类型
+            value: this.state.flowTypeId,//筛选值
+            fieldType: "String"//筛选类型
+          });
+        }else{
+          message.error(seiIntl.get({key: 'flow_000217', desc: '请选择流程类型!'}));
+          this.toggoleGlobalLoading(false);
+          return;
+        }
       }
-      //筛选字段（业务实体）
-      if (this.state.businessModelId) {
-        filter.push({
-          fieldName: "businessModelId",//筛选字段（业务实体）
-          operator: "EQ",//操作类型
-          value: this.state.businessModelId,//筛选值
-          fieldType: "String"//筛选类型
-        });
-      }
-      //筛选字段（流程类型）
-      if (this.state.flowTypeId) {
-        filter.push({
-          fieldName: "flowTypeId",//筛选字段（流程类型）
-          operator: "EQ",//操作类型
-          value: this.state.flowTypeId,//筛选值
-          fieldType: "String"//筛选类型
-        });
-      }
+
       Object.assign(params, {filters: filter});
     }
     getPushTaskControl(params).then(data => {
@@ -106,7 +129,7 @@ class FlowInstanceTable extends Component {
   };
   handleSearch = (value) => {
     this.setState({searchValue: value});
-    this.getDataSource({quickSearchValue: value});
+    this.getDataSource();
   };
   changeSearch = (e) => {
     this.setState({changeValue: e.target.value});
@@ -165,11 +188,11 @@ class FlowInstanceTable extends Component {
     this.setState({
       pageInfo: pageInfo,
     });
-    this.getDataSource({quickSearchValue: this.state.changeValue, pageInfo})
+    this.getDataSource({ pageInfo})
   };
 
   queryClick = () => {
-    this.getDataSource({quickSearchValue: this.state.changeValue, pageInfo: this.state.pageInfo});
+    this.getDataSource({ pageInfo: this.state.pageInfo});
   };
 
   restClick = () => {
@@ -303,7 +326,7 @@ class FlowInstanceTable extends Component {
           <SearchTable
             title={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}
             key="searchAppModelTable"
-            initValue={true}
+            initValue={false}
             isNotFormItem={true} config={appModuleAuthConfig}
             style={{width: 150}}
             selectChange={this.selectChangeAppModel}/></span>,
@@ -331,10 +354,10 @@ class FlowInstanceTable extends Component {
     //表头搜索框
     const search = () => {
       return [
-        <Tooltip key="tooltip" title={seiIntl.get({key: 'flow_000315', desc: '流程名称、任务名称、业务单号、执行人名称'})}>
+        <Tooltip key="tooltip" title={seiIntl.get({key: 'flow_000309', desc: '完整的业务单号'})}>
           <Search
             key="search"
-            placeholder={seiIntl.get({key: 'flow_000160', desc: '输入关键字查询'})}
+            placeholder={seiIntl.get({key: 'flow_000310', desc: '请输入完整的业务单号'})}
             onChange={this.changeSearch}
             onSearch={value => this.handleSearch(value)}
             style={{width: 220}}
@@ -342,8 +365,8 @@ class FlowInstanceTable extends Component {
           />
         </Tooltip>,
         <Button type={"primary"} style={{"marginLeft": "10px"}} className={"primaryButton"} key="query"
-                onClick={this.queryClick}>{seiIntl.get({key: 'flow_000250', desc: '查询'})}</Button>,
-        <Button type="danger" icon="rest" key="rest" onClick={this.restClick}/>
+                onClick={this.queryClick}>{seiIntl.get({key: 'flow_000250', desc: '查询'})}</Button>
+        // , <Button type="danger" icon="rest" key="rest" onClick={this.restClick}/>
       ]
     };
     const {data, selectedRows, modalVisible, confirmLoading, appModuleId, businessModelId, flowTypeId} = this.state;
