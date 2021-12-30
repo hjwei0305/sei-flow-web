@@ -276,7 +276,7 @@ class FlowInstanceTable extends Component {
           <SearchTable
             title={seiIntl.get({key: 'flow_000056', desc: '流程类型'})}
             key="searchFlowType"
-            initValue={false}
+            initValue={true}
             isNotFormItem={true}
             config={allflowTypeConfig}
             style={{width: 300}}
