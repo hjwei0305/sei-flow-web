@@ -1,7 +1,7 @@
 import {searchListByKey} from "./common";
 import {getAllList,findAllAppModuleByAuth} from "@/pages/AppModule/AppModuleService";
 import {findAllByAuth} from "@/pages/FlowType/FlowTypeService";
-import {findBusinessModelByAppModuleId,findFlowTypeByBusinessModelId} from "@/pages/FlowInstance/FlowInstanceService";
+import {findBusinessModelByAppModuleId,findFlowTypeByBusinessModelId,allFlowType} from "@/pages/FlowInstance/FlowInstanceService";
 import {
   listFlowTaskApp,
   listFlowHistoryApp,
@@ -94,6 +94,29 @@ export const flowTypeByBusinessModelConfig = {
     }],
   dataService: findFlowTypeByBusinessModelId,
   searchService: searchListByKey,
+  key: 'id',
+  text: 'name'
+}
+
+
+export const allflowTypeConfig = {
+  columns: [
+    {
+      title: seiIntl.get({key: 'flow_000021', desc: '代码'}),
+      dataIndex: 'code',
+    }, {
+      title: seiIntl.get({key: 'flow_000022', desc: '名称'}),
+      dataIndex: 'name',
+    },{
+      title: seiIntl.get({key: 'flow_000092', desc: '所属业务实体模型'}),
+      dataIndex: 'businessModelName',
+    },{
+      title: seiIntl.get({key: 'flow_000023', desc: '所属应用模块'}),
+      dataIndex: 'businessModelAppModuleName',
+    }],
+  dataService: allFlowType,
+  searchService: searchListByKey,
+  searchKeys:["code","name","businessModelName","businessModelAppModuleName"],
   key: 'id',
   text: 'name'
 }

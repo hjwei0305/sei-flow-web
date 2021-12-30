@@ -7,7 +7,7 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Modal, Input, Checkbox, Button, Tooltip} from 'antd';
+import {Modal, Input, Button, Tooltip} from 'antd';
 import {message} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {getPushTaskControl, pushAgainByControlId, cleaningPushHistoryData} from "./PushFlowTaskService";
@@ -15,11 +15,7 @@ import SearchTable from "@/components/SearchTable";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import ResetPushFlowTaskModal from "./ResetPushFlowTaskModal";
 import {seiLocale} from 'sei-utils';
-import {
-  appModuleAuthConfig,
-  businessModelByAppModelConfig,
-  flowTypeByBusinessModelConfig
-} from '@/utils/CommonComponentsConfig';
+import {allflowTypeConfig} from '@/utils/CommonComponentsConfig';
 
 
 const {seiIntl} = seiLocale;
@@ -36,10 +32,6 @@ class FlowInstanceTable extends Component {
       pageInfo: null,
       searchValue: "",
       changeValue: "",
-      appModule: null,
-      appModuleId: "",
-      businessModel: null,
-      businessModelId: "",
       flowType: null,
       flowTypeId: "",
       modalVisible: false,
@@ -73,32 +65,6 @@ class FlowInstanceTable extends Component {
           fieldType: "String"//筛选类型
         });
       }else{
-        //筛选字段(应用模块)
-        if (this.state.appModuleId) {
-          filter.push({
-            fieldName: "appModuleId",//筛选字段(应用模块)
-            operator: "EQ",//操作类型
-            value: this.state.appModuleId,//筛选值
-            fieldType: "String"//筛选类型
-          });
-        }else{
-          message.error(seiIntl.get({key: 'common_000017', desc: '请选择应用模块!'}));
-          this.toggoleGlobalLoading(false);
-          return;
-        }
-        //筛选字段（业务实体）
-        if (this.state.businessModelId) {
-          filter.push({
-            fieldName: "businessModelId",//筛选字段（业务实体）
-            operator: "EQ",//操作类型
-            value: this.state.businessModelId,//筛选值
-            fieldType: "String"//筛选类型
-          });
-        }else{
-          message.error(seiIntl.get({key: 'flow_000093', desc: '请选择业务实体!'}));
-          this.toggoleGlobalLoading(false);
-          return;
-        }
         //筛选字段（流程类型）
         if (this.state.flowTypeId) {
           filter.push({
@@ -156,27 +122,6 @@ class FlowInstanceTable extends Component {
     });
   };
 
-  selectChangeAppModel = (record) => {
-    if (record && record.id) {
-      this.setState({appModule: record, appModuleId: record.id, businessModel: null, businessModelId: ""});
-    } else {
-      this.setState({
-        appModule: null,
-        appModuleId: "",
-        businessModel: null,
-        businessModelId: "",
-        flowType: null,
-        flowTypeId: ""
-      });
-    }
-  };
-  selectChangeBusinessModel = (record) => {
-    if (record && record.id) {
-      this.setState({businessModel: record, businessModelId: record.id});
-    } else {
-      this.setState({businessModel: null, businessModelId: "", flowType: null, flowTypeId: ""});
-    }
-  };
   selectChangeFlowType = (record) => {
     if (record && record.id) {
       this.setState({flowType: record, flowTypeId: record.id});
@@ -201,9 +146,14 @@ class FlowInstanceTable extends Component {
 
   handleSave = () => {
     this.ref.props.form.validateFieldsAndScroll((err, values) => {
+      message.destroy();
       if (!err) {
         let params = {}
         Object.assign(params, values);
+        if(params.flowTypeId === ""){
+          message.error(seiIntl.get({key: 'flow_000217', desc: '请选择流程类型!'}));
+          return;
+        }
         this.setState({confirmLoading: true});
         cleaningPushHistoryData(params).then(result => {
           if (result.status === "SUCCESS") {
@@ -322,31 +272,14 @@ class FlowInstanceTable extends Component {
 
     const title = () => {
       return [
-        <span key={"selectAppModel"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000038', desc: '应用模块：'})}
-          <SearchTable
-            title={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}
-            key="searchAppModelTable"
-            initValue={false}
-            isNotFormItem={true} config={appModuleAuthConfig}
-            style={{width: 150}}
-            selectChange={this.selectChangeAppModel}/></span>,
-        <span key={"selectBusinessModel"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000053', desc: '业务实体：'})}
-          <SearchTable
-            title={seiIntl.get({key: 'flow_000054', desc: '业务实体'})}
-            key="searchBusinessModelTable"
-            initValue={false}
-            isNotFormItem={true} params={{"appModuleId": this.state.appModuleId}}
-            config={businessModelByAppModelConfig}
-            style={{width: 150}}
-            selectChange={this.selectChangeBusinessModel}/></span>,
         <span key={"selectFlowType"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000055', desc: '流程类型：'})}
           <SearchTable
             title={seiIntl.get({key: 'flow_000056', desc: '流程类型'})}
             key="searchFlowType"
             initValue={false}
-            isNotFormItem={true} params={{"businessModelId": this.state.businessModelId}}
-            config={flowTypeByBusinessModelConfig}
-            style={{width: 150}}
+            isNotFormItem={true}
+            config={allflowTypeConfig}
+            style={{width: 300}}
             selectChange={this.selectChangeFlowType}/></span>,
       ]
     };
@@ -366,10 +299,10 @@ class FlowInstanceTable extends Component {
         </Tooltip>,
         <Button type={"primary"} style={{"marginLeft": "10px"}} className={"primaryButton"} key="query"
                 onClick={this.queryClick}>{seiIntl.get({key: 'flow_000250', desc: '查询'})}</Button>
-        // , <Button type="danger" icon="rest" key="rest" onClick={this.restClick}/>
+        , <Button type="danger" icon="rest" key="rest" onClick={this.restClick}/>
       ]
     };
-    const {data, selectedRows, modalVisible, confirmLoading, appModuleId, businessModelId, flowTypeId} = this.state;
+    const {data, selectedRows, modalVisible, confirmLoading, flowTypeId} = this.state;
     return (
       <HeadBreadcrumb>
         <div className={"tbar-table"}>
@@ -391,7 +324,7 @@ class FlowInstanceTable extends Component {
           handleOk={this.handleSave}
           handleCancel={this.handleModalCancel}
           onRef={this.onRef}
-          defaultValue={{appModuleId: appModuleId, businessModelId: businessModelId, flowTypeId: flowTypeId}}
+          defaultValue={{flowTypeId: flowTypeId}}
         />
       </HeadBreadcrumb>
 

@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
-import {Form, Modal, Select, InputNumber} from 'antd';
+import {Form, Modal, InputNumber} from 'antd';
 import {seiLocale} from 'sei-utils';
 import SearchTable from "@/components/SearchTable";
-import {
-  appModuleAuthConfig,
-  businessModelByAppModelConfig,
-  flowTypeByBusinessModelConfig
-} from '@/utils/CommonComponentsConfig';
+import {allflowTypeConfig} from '@/utils/CommonComponentsConfig';
 
 const {seiIntl} = seiLocale;
 
@@ -22,8 +18,6 @@ class ResetPushFlowTaskModal extends Component {
       startValue: null,
       modalVisible: false,
       confirmLoading: false,
-      appModuleId: "",
-      businessModelId: "",
       flowTypeId: "",
       recentDate: 6
     }
@@ -32,7 +26,6 @@ class ResetPushFlowTaskModal extends Component {
 
   setStateNull = () => {
     this.setState({
-      appModuleId: "",
       businessModelId: "",
       flowTypeId: "",
       recentDate: 6
@@ -54,15 +47,11 @@ class ResetPushFlowTaskModal extends Component {
   selectChangeAppModel = (record) => {
     if (record && record.id) {
       this.setState({
-        appModuleId: record.id,
-        businessModelId: "",
-        flowTypeId: "",
+        flowTypeId: ""
       });
     } else {
       this.setState({
-        appModuleId: "",
-        businessModelId: "",
-        flowTypeId: "",
+        flowTypeId: ""
       });
     }
   };
@@ -110,40 +99,6 @@ class ResetPushFlowTaskModal extends Component {
                confirmLoading={confirmLoading}
                maskClosable={false}
         >
-          <FormItem
-            {...formItemLayout}
-            label={seiIntl.get({key: 'flow_000041', desc: '应用模块'})}>
-            {getFieldDecorator('appModuleId', {
-              initialValue: FormValue.appModuleId ? FormValue.appModuleId : "",
-              rules: [{required: false}
-              ]
-            })(
-              <SearchTable
-                key="searchAppModelTable"
-                initValue={false}
-                isNotFormItem={true}
-                config={appModuleAuthConfig}
-                selectChange={this.selectChangeAppModel}/>
-            )}
-          </FormItem>
-
-          <FormItem
-            {...formItemLayout}
-            label={seiIntl.get({key: 'flow_000053', desc: '业务实体'})}>
-            {getFieldDecorator('businessModelId', {
-              initialValue: FormValue.businessModelId ? FormValue.businessModelId : "",
-              rules: [{required: false}
-              ]
-            })(
-              <SearchTable
-                key="searchBusinessModelTable"
-                initValue={false}
-                isNotFormItem={true}
-                params={{"appModuleId": this.state.appModuleId}}
-                config={businessModelByAppModelConfig}
-                selectChange={this.selectChangeBusinessModel}/>
-            )}
-          </FormItem>
 
           <FormItem
             {...formItemLayout}
@@ -157,8 +112,7 @@ class ResetPushFlowTaskModal extends Component {
                 key="searchFlowType"
                 initValue={false}
                 isNotFormItem={true}
-                params={{"businessModelId": this.state.businessModelId}}
-                config={flowTypeByBusinessModelConfig}
+                config={allflowTypeConfig}
                 selectChange={this.selectChangeFlowType}/>
             )}
           </FormItem>
@@ -172,7 +126,7 @@ class ResetPushFlowTaskModal extends Component {
               rules: [{required: true, message: seiIntl.get({key: 'flow_000328', desc: '请输入最近保留时间!'})}
               ]
             })(
-              <InputNumber addonAfter="个月" min={1} max={6}
+              <InputNumber addonAfter="个月" min={1} max={5}
                            formatter={value => `${value}个月`}
                            onChange={this.recentChange} style={{width: "323px"}}/>
             )}

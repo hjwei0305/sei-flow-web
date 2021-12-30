@@ -18,6 +18,18 @@ export async function findFlowTypeByBusinessModelId(params = {}) {
   return httpUtils.post(baseUrl + "/flowType/findByBusinessModelId", params);
 }
 
+export async function allFlowType() {
+  return httpUtils.get(baseUrl + "/flowType/getAll").then(data => {
+    if (data && data.length > 0) {
+      for (var i in data) {
+        data[i].businessModelName = data[i].businessModel.name;
+        data[i].businessModelAppModuleName = data[i].businessModel.appModule.name;
+      }
+      return data;
+    }
+  });
+}
+
 //强制终止流程
 export async function endForce(instanceId) {
   return httpUtils.postJson(baseUrl + `/flowInstance/endForce/${instanceId}`);

@@ -10,11 +10,11 @@ import {Input, Icon, Button, Col, Row} from 'antd';
 import './SearchTable.css'
 import SimpleTable from "./SimpleTable";
 import PropTypes from 'prop-types';
-import { seiLocale } from 'sei-utils';
-import { commonUtils, } from '@/utils';
+import {seiLocale} from 'sei-utils';
+import {commonUtils,} from '@/utils';
 
 const {convertSearchFilter, isEmpty} = commonUtils;
-const { seiIntl } = seiLocale;
+const {seiIntl} = seiLocale;
 
 class SearchTable extends Component {
   params = null
@@ -44,7 +44,7 @@ class SearchTable extends Component {
       if (this.state.value !== nextProps.value) {
         this.initValue(nextProps.value)
       }
-    } else if (this.state.textValue && !nextProps.value&&!this.props.isNotFormItem) {
+    } else if (this.state.textValue && !nextProps.value && !this.props.isNotFormItem) {
       if (this.state.searchValue || this.state.searchValue.length > 0) {
         this.getDataSource();
         this.setState({textValue: '', value: '', searchValue: ''})
@@ -62,10 +62,10 @@ class SearchTable extends Component {
       } else {
         this.getDataSource()
       }
-      if(Object.values(this.props.params)[0]){
-        this.setState({searchValue: '', pageInfo: {}},()=>{
+      if (Object.values(this.props.params)[0]) {
+        this.setState({searchValue: '', pageInfo: {}}, () => {
           if (this.props.value === nextProps.value && !isEmpty(nextProps.value)) {
-            if(this.props.onChange){
+            if (this.props.onChange) {
               this.props.onChange('');
             }
           }
@@ -75,8 +75,8 @@ class SearchTable extends Component {
     }
   }
 
-  componentDidUpdate(){
-    if (this.state.show&&this.innerInput) {
+  componentDidUpdate() {
+    if (this.state.show && this.innerInput) {
       this.innerInput.input.focus()
     }
   }
@@ -109,9 +109,9 @@ class SearchTable extends Component {
     }
   }
 
-  initValue=(value)=>{
-    if(value){
-      const {text,key,keyFieldType}=this.props.config;
+  initValue = (value) => {
+    if (value) {
+      const {text, key, keyFieldType} = this.props.config;
       if (this.props.config.searchService) {
         let searchParam = {keyword: value}
         this.props.config.searchService(this.state.dataSource, searchParam, [key]).then(data => {
@@ -123,8 +123,8 @@ class SearchTable extends Component {
       } else {
 
         let searchParam = {};
-        let fieldType=keyFieldType?keyFieldType:"String";
-        searchParam['Q_EQ_' + key+'_'+fieldType] = value;
+        let fieldType = keyFieldType ? keyFieldType : "String";
+        searchParam['Q_EQ_' + key + '_' + fieldType] = value;
         this.props.config.dataService(convertSearchFilter({...searchParam})).then(res => {
           let list
           if (res.rows) {
@@ -133,9 +133,9 @@ class SearchTable extends Component {
             list = res;
           }
           let result = this.bulidByCloumns(list)
-          if(result && result.length>0){
+          if (result && result.length > 0) {
             let index = result.findIndex(item => item[key] === value);
-            this.setState({value:value, textValue: index!==-1?result[index][text]:""})
+            this.setState({value: value, textValue: index !== -1 ? result[index][text] : ""})
           }
         })
       }
@@ -145,9 +145,9 @@ class SearchTable extends Component {
   getInitData(value) {
     const {key, text} = this.props.config;
     //如果是分页查询，拼装下参数
-    let requestParams={...value, ...this.params};
-    if (!this.props.config.searchService){
-      requestParams =convertSearchFilter(requestParams);
+    let requestParams = {...value, ...this.params};
+    if (!this.props.config.searchService) {
+      requestParams = convertSearchFilter(requestParams);
     }
     this.props.config.dataService(requestParams).then((res) => {
       let list;
@@ -159,15 +159,15 @@ class SearchTable extends Component {
       let result = this.bulidByCloumns(list)
       if (result && result.length > 0) {
         let textVal = ''
-        if(text.includes('.')){
+        if (text.includes('.')) {
           textVal = result[0][text.split('.')[0]][text.split('.')[1]]
-        }else {
+        } else {
           textVal = result[0][text];
         }
         this.setState({dataSource: res, filterData: res, textValue: textVal, value: list[0][key]},
           //状态更新完毕之后执行
-          ()=>{
-            if(this.props.onChange){
+          () => {
+            if (this.props.onChange) {
               this.props.onChange(list[0][key], list[0]);
             }
             if (this.props.selectChange) {
@@ -182,13 +182,13 @@ class SearchTable extends Component {
     const {key, text} = this.props.config;
     this.setState({loading: true});
     //如果是分页查询，拼装下参数
-    let requestParams={...value,pageInfo, ...this.params};
-    if (!this.props.config.searchService){
-      requestParams =convertSearchFilter(requestParams);
+    let requestParams = {...value, pageInfo, ...this.params};
+    if (!this.props.config.searchService) {
+      requestParams = convertSearchFilter(requestParams);
     }
     this.props.config.dataService(requestParams).then((res) => {
       if (res && !res.rows) {
-        res = res.filter(item => Object.keys(item).includes('frozen')?item.frozen!==true:true)
+        res = res.filter(item => Object.keys(item).includes('frozen') ? item.frozen !== true : true)
       }
       this.setState({dataSource: res, filterData: res})
       this.setState({loading: false});
@@ -200,7 +200,7 @@ class SearchTable extends Component {
           list = res;
         }
         let index = list.findIndex(item => item[key] === this.props.value);
-        if (index!==-1){
+        if (index !== -1) {
           this.props.selectChange(list[index]);
         }
       }
@@ -220,7 +220,11 @@ class SearchTable extends Component {
   handleSearch = (values) => {
     if (this.props.config.searchService) {
       let searchParam = {keyword: values}
-      this.props.config.searchService(this.state.dataSource, searchParam).then(data => {
+      let searchKey = [];
+      if (this.props.config.searchKeys) {
+        searchKey = this.props.config.searchKeys;
+      }
+      this.props.config.searchService(this.state.dataSource, searchParam, searchKey).then(data => {
         this.setState({filterData: data.rows ? data.rows : data})
       })
     } else {
@@ -239,9 +243,9 @@ class SearchTable extends Component {
     if (!this.props.multiple) {
       if (selectedRows.length > 0) {
         let textVal = ''
-        if(text.includes('.')){
+        if (text.includes('.')) {
           textVal = selectedRows[0][text.split('.')[0]][text.split('.')[1]]
-        }else {
+        } else {
           textVal = selectedRows[0][text];
         }
         this.setState({
@@ -249,8 +253,8 @@ class SearchTable extends Component {
           textValue: textVal,
           value: selectedRows[0][key],
           selectedRows: []
-        },()=>{
-          if(this.props.onChange){
+        }, () => {
+          if (this.props.onChange) {
             this.props.onChange(selectedRows[0][key], selectedRows[0]);
           }
         })
@@ -262,16 +266,16 @@ class SearchTable extends Component {
         textValue.push(selectedRows[i][text]);
         keyValue.push(selectedRows[i][key])
       }
-      this.setState({textValue: textValue.toString(), value: keyValue, selectedRows},()=>{
-        if(this.props.onChange){
+      this.setState({textValue: textValue.toString(), value: keyValue, selectedRows}, () => {
+        if (this.props.onChange) {
           this.props.onChange(keyValue, selectedRows);
         }
       })
     }
     if (this.props.selectChange) {
-      if (!this.props.multiple){
+      if (!this.props.multiple) {
         this.props.selectChange(selectedRows[0]);
-      }else {
+      } else {
         this.props.selectChange(selectedRows);
       }
 
@@ -279,11 +283,11 @@ class SearchTable extends Component {
   }
 
   emptyValue = () => {
-    this.setState({textValue: '', value: '', selectedRows: []},()=>{
-      if(this.props.onChange){
+    this.setState({textValue: '', value: '', selectedRows: []}, () => {
+      if (this.props.onChange) {
         this.props.onChange('')
       }
-      if (this.props.selectChange){
+      if (this.props.selectChange) {
         this.props.selectChange([])
       }
     })
@@ -310,14 +314,17 @@ class SearchTable extends Component {
     this.setState({searchValue: e.target.value})
   }
 
-  dropDown = () =>{
+  dropDown = () => {
     const {columns} = this.props.config
     const {filterData} = this.state;
     return <div id={'SearchTableChild'} ref={(ref) => this.mainContent = ref} style={this.state.style}>
       <Row style={{background: '#F3F8FC', padding: 1}}>
         <Col span={24} style={{textAlign: 'right'}}>{this.search()}</Col>
         {this.props.multiple ? <Col span={6} style={{textAlign: 'right'}}>
-          <Button key="sure" icon="plus" onClick={this.handleSure}>{seiIntl.get({key: 'flow_000261', desc: '确认'})}</Button>
+          <Button key="sure" icon="plus" onClick={this.handleSure}>{seiIntl.get({
+            key: 'flow_000261',
+            desc: '确认'
+          })}</Button>
         </Col> : null}
       </Row>
       <SimpleTable
@@ -328,13 +335,13 @@ class SearchTable extends Component {
         data={filterData}
         columns={columns}
         heightY={180}
-        pageChange={this.props.config.searchService?null:this.pageChange}
+        pageChange={this.props.config.searchService ? null : this.pageChange}
       />
     </div>
   }
 
   showDrop = (e) => {
-    this.setState({show:true})
+    this.setState({show: true})
   }
 
   search = () => {
@@ -350,13 +357,13 @@ class SearchTable extends Component {
   }
 
   getSuffixCompoennt = () => {
-    const { canNotClear, value: propValue, isNotFormItem, disabled } = this.props;
-    const { value, mouseHover } = this.state;
+    const {canNotClear, value: propValue, isNotFormItem, disabled} = this.props;
+    const {value, mouseHover} = this.state;
     let suffix = [];
     if (disabled) {
       return false;
     }
-    if (!canNotClear && (propValue || (isNotFormItem && value)) && mouseHover){
+    if (!canNotClear && (propValue || (isNotFormItem && value)) && mouseHover) {
       suffix.push((
         <Icon
           key="emptyClick"
@@ -379,8 +386,9 @@ class SearchTable extends Component {
   }
 
   render() {
-    const suffix = !this.props.disabled&& ([
-      !this.props.canNotClear&&(this.props.value ||(this.props.isNotFormItem&&this.state.value))? <Icon key="emptyClick" type="close" onClick={this.emptyValue}/>:"",
+    const suffix = !this.props.disabled && ([
+      !this.props.canNotClear && (this.props.value || (this.props.isNotFormItem && this.state.value)) ?
+        <Icon key="emptyClick" type="close" onClick={this.emptyValue}/> : "",
       <Icon key="selectClict" type="down" onClick={this.showDrop}/>,
     ])
     return (
@@ -400,7 +408,7 @@ class SearchTable extends Component {
                  });
                }}
                onMouseLeave={(e) => {
-                 const { nodeName } = e.relatedTarget;
+                 const {nodeName} = e.relatedTarget;
                  if (!['path', 'svg'].includes(nodeName)) {
                    this.setState({
                      mouseHover: false
@@ -413,19 +421,19 @@ class SearchTable extends Component {
   }
 }
 
-SearchTable.propTypes={
+SearchTable.propTypes = {
   //默认
-  placeholder:PropTypes.string,
+  placeholder: PropTypes.string,
   //选择回调方法,formItem使用，一般不用自己实现
-  onChange:PropTypes.func,
+  onChange: PropTypes.func,
   //选择回调方法，自主回调选择变化
-  selectChange:PropTypes.func,
+  selectChange: PropTypes.func,
   //过滤条件动态请求参数
-  params:PropTypes.object,
+  params: PropTypes.object,
   //
-  value:PropTypes.string,
+  value: PropTypes.string,
   //
-  config:PropTypes.object,
+  config: PropTypes.object,
 
 }
 
