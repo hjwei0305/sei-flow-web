@@ -290,6 +290,11 @@ class BusinessModelTable extends Component {
         title: seiIntl.get({key: 'flow_000308', desc: '移动端查看URL'}),
         dataIndex: 'phoneLookUrl',
         width: 400,
+      },
+      {
+        title: seiIntl.get({key: 'flow_000177', desc: '排序'}),
+        dataIndex: 'rank',
+        width: 80
       }
     ];
 

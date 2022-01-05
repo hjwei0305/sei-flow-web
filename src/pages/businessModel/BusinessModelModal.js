@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Form, Input, Modal, Row, Col} from 'antd';
+import {Form, Input, Modal, Row, Col, InputNumber} from 'antd';
 import SearchTable from "@/components/SearchTable";
 import {seiLocale} from 'sei-utils';
 import {appModuleConfig,} from '@/utils/CommonComponentsConfig';
@@ -234,6 +234,20 @@ class BusinessModelModal extends Component {
                   initialValue: FormValue.phoneLookUrl ? FormValue.phoneLookUrl : ""
                 })(
                   <Input/>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <FormItem
+                {...formItemLayout}
+                label={seiIntl.get({key: 'flow_000177', desc: '排序'})}>
+                {getFieldDecorator('rank', {
+                  initialValue: FormValue.rank >= 0 ? FormValue.rank : "",
+                  rules: [{required: true, message: seiIntl.get({key: 'flow_000178', desc: '请填写排序!'})}]
+                })(
+                  <InputNumber precision={0} min={0} style={{width: "100%"}}/>
                 )}
               </FormItem>
             </Col>

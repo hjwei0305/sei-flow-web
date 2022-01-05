@@ -4,7 +4,7 @@ const {baseUrl} = constants;
 
 export async function getBusinessModel(params = {}) {
   Object.assign(params, {
-    sortOrders: [{property: 'createdDate', direction: 'ASC'}],
+    sortOrders: [{property: 'rank', direction: 'ASC'},{property: 'createdDate', direction: 'ASC'}],
     quickSearchProperties: ["name", "className", "businessDetailServiceUrl", "lookUrl"]
   });
 
