@@ -518,13 +518,21 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
             g.instance.detachAllConnections(dom);
             var sourceId = dom.attr("id");
             for (var key in g.connectInfo) {
-              if (key.indexOf(sourceId) != -1) {
-                delete g.connectInfo[key];
+              var keys = key.split(",");
+              for (var i = 0; i < keys.length; i++) {
+                if (keys[i] == sourceId) {
+                  delete g.connectInfo[key];
+                  break;
+                }
               }
             }
             for (var key in g.uelInfo) {
-              if (key.indexOf(sourceId) != -1) {
-                delete g.uelInfo[key];
+              var keys = key.split(",");
+              for (var i = 0; i < keys.length; i++) {
+                if (keys[i] == sourceId) {
+                  delete g.uelInfo[key];
+                  break;
+                }
               }
             }
             dom.remove();
