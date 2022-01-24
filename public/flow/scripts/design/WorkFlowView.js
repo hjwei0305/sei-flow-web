@@ -1326,7 +1326,8 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
         }
       }
       //如果是系统排他网关或者包容网关，出口只有一条的时候
-      if ((node.busType == "ExclusiveGateway" || node.busType == "InclusiveGateway") && outCout == 1) {
+      // if ((node.busType == "ExclusiveGateway" || node.busType == "InclusiveGateway") && outCout == 1) {
+        if ((node.busType == "ExclusiveGateway") && outCout == 1) {
         EUI.ProcessStatus({
           success: false,
           msg: node.name + "：只有一条出口路径，请修改配置"
