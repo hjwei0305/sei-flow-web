@@ -954,8 +954,8 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
         if (busType && busType.indexOf("Gateway") != -1) { //起点是网关
           var busTypeAfter = $("#" + connection.targetId).attr("bustype");
           if (busTypeAfter && busTypeAfter.indexOf("Gateway") != -1) { //终点也是网关
-            //优化点1：禁止两个相同的网关相连
-            if (busType == busTypeAfter) {
+            //优化点1：禁止两个相同的网关相连(系统排他网关除外，存在很多条件并存，一个网关难以配置完全)
+            if (busType == busTypeAfter && busType != "ExclusiveGateway") {
               EUI.ProcessStatus({
                 success: false,
                 msg: "禁止两个相同类型的网关相连"
