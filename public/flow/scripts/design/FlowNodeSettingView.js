@@ -423,7 +423,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         id: "foldingLog",
         name: "foldingLog",
         checked: false,
-        hidden:true
+        hidden: true
       }, {
         xtype: "CheckBox",
         title: "允许流程发起人终止",
@@ -478,15 +478,12 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         title: "允许转办",
         name: "allowTransfer",
         checked: true
+      }, {
+        xtype: "CheckBox",
+        title: "允许委托",
+        name: "allowEntrust",
+        checked: true
       }]);
-      if (this.nodeType == "Approve" || this.nodeType == "CounterSign") {
-        items = items.concat([{
-          xtype: "CheckBox",
-          title: "允许委托",
-          name: "allowEntrust",
-          checked: true
-        }]);
-      }
       if (this.nodeType == "Approve") {
         items = items.concat([{
           xtype: "CheckBox",
@@ -3896,15 +3893,15 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     if (this.nodeType === 'CounterSign') {
       var immediatelyEnd = EUI.getCmp("immediatelyEnd").getValue();
       var counterDecision = EUI.getCmp("counterDecision").getValue();
-      if (counterDecision === 100 && immediatelyEnd ) {
+      if (counterDecision === 100 && immediatelyEnd) {
         EUI.getCmp("allowJumpBack").show();
       } else {
         EUI.getCmp("allowJumpBack").hide();
       }
       //立即生效时显示折叠日志
-      if(immediatelyEnd){
+      if (immediatelyEnd) {
         EUI.getCmp("foldingLog").show();
-      }else{
+      } else {
         EUI.getCmp("foldingLog").hide();
       }
     }
