@@ -19,14 +19,26 @@ export default class index extends React.Component {
   // }
 
   lookEui = () => {
-    if (window.EUI) {
-      const id = window.EUI.util.getUrlParam("id");
-      const instanceId = window.EUI.util.getUrlParam("instanceId");
-      const flowView = new window.EUI.LookWorkFlowView({
-        id: id,
-        instanceId: instanceId,
-        renderTo: "content"
-      });
+    const EUI = window.EUI;
+    if (EUI) {
+      const sid = EUI.util.getUrlParam("sid");
+      const id = EUI.util.getUrlParam("id");
+      const instanceId = EUI.util.getUrlParam("instanceId");
+      if (sid) {
+        new EUI.LookWorkFlowView({
+          id: id,
+          instanceId: instanceId,
+          renderTo: "content"
+        });
+      } else {
+        EUI.onReady(function () {
+          new EUI.LookWorkFlowView({
+            id: id,
+            instanceId: instanceId,
+            renderTo: "content"
+          });
+        });
+      }
     }
   };
 
