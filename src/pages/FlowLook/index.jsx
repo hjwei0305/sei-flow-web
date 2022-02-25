@@ -1,34 +1,48 @@
 import React from 'react';
+import {AuthUrl} from 'suid';
 
 export default class index extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
 
-  componentDidMount() {
-    var flowView;
+  // componentDidMount() {
+  //   var flowView;
+  //   const EUI = window.EUI;
+  //   var id = EUI.util.getUrlParam("id");
+  //   var instanceId = EUI.util.getUrlParam("instanceId");
+  //   EUI.onReady(function () {
+  //     flowView = new EUI.LookWorkFlowView({
+  //       id: id,
+  //       instanceId: instanceId,
+  //       renderTo: "content"
+  //     });
+  //   });
+  // }
+
+  lookEui=(p)=>{
+    console.log('lookEui',p);
     const EUI = window.EUI;
-    var id = EUI.util.getUrlParam("id");
-    var instanceId = EUI.util.getUrlParam("instanceId");
-    // EUI.onReady(function () {
-        flowView = new EUI.LookWorkFlowView({
-            id: id,
-            instanceId: instanceId,
-            renderTo: "content"
-        });
-    // });
-  }
+    const id = EUI.util.getUrlParam("id");
+    const instanceId = EUI.util.getUrlParam("instanceId");
+    EUI.onReady(function () {
+      const flowView = new EUI.LookWorkFlowView({
+        id: id,
+        instanceId: instanceId,
+        renderTo: "content"
+      });
+    });
+  };
 
   render() {
     const style = {
-        fontSize: '14px',
+      fontSize: '14px',
     }
     return (
-      <React.Fragment>
-        <div id="content" style={style}></div>
-        <div id="moreinfo" style={style}></div>
-      </React.Fragment>
+      <AuthUrl loaded={this.lookEui}>
+        <React.Fragment>
+          <div id="content" style={style}></div>
+          <div id="moreinfo" style={style}></div>
+        </React.Fragment>
+       </AuthUrl>
     );
   }
 }
