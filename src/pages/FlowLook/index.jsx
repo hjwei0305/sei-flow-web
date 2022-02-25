@@ -1,5 +1,5 @@
 import React from 'react';
-import {AuthUrl} from 'suid';
+import { AuthUrl } from 'suid';
 
 export default class index extends React.Component {
 
@@ -18,20 +18,16 @@ export default class index extends React.Component {
   //   });
   // }
 
-  lookEui=(p)=>{
-    console.log('lookEui',p);
-    const EUI = window.EUI;
-    const id = EUI.util.getUrlParam("id");
-    const instanceId = EUI.util.getUrlParam("instanceId");
-    console.log(id,instanceId);
-    EUI.onReady(function () {
-      console.log(99999)
+  lookEui = () => {
+    if (EUI) {
+      const id = EUI.util.getUrlParam("id");
+      const instanceId = EUI.util.getUrlParam("instanceId");
       const flowView = new EUI.LookWorkFlowView({
         id: id,
         instanceId: instanceId,
         renderTo: "content"
       });
-    });
+    }
   };
 
   render() {
@@ -44,7 +40,7 @@ export default class index extends React.Component {
           <div id="content" style={style}></div>
           <div id="moreinfo" style={style}></div>
         </React.Fragment>
-       </AuthUrl>
+      </AuthUrl>
     );
   }
 }
