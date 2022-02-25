@@ -20,9 +20,9 @@ export default class index extends React.Component {
 
   lookEui = () => {
     if (window.EUI) {
-      const id = EUI.util.getUrlParam("id");
-      const instanceId = EUI.util.getUrlParam("instanceId");
-      const flowView = new EUI.LookWorkFlowView({
+      const id = window.EUI.util.getUrlParam("id");
+      const instanceId = window.EUI.util.getUrlParam("instanceId");
+      const flowView = new window.EUI.LookWorkFlowView({
         id: id,
         instanceId: instanceId,
         renderTo: "content"
