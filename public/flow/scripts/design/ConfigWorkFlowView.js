@@ -96,7 +96,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       handler: function () {
         g.returnPage();
         //兼容suid关闭窗口
-        window.parent.postMessage({'solidifyFlow': false },'*');
+        window.parent.postMessage({'solidifyFlow': false}, '*');
       }
     }];
   },
@@ -210,6 +210,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       case "approve":
       case "serialtask":
       case "normal":
+      case "endevent":
         this.executorInfo[node.id] = null;
         this.anyOneSelectHtml[node.id] = "";
         break;
@@ -231,7 +232,12 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       if (type === "StartEvent") {
         html += this.showStartNode(id, node);
       } else if (type.indexOf("EndEvent") !== -1) {
-        html += this.showEndNode(id, node);
+        if (node.nodeConfig.normal && node.nodeConfig.normal.pushToMq) {
+          this.initExecutorInfo(node);
+          html += this.showEndNode(id, node, true);
+        } else {
+          html += this.showEndNode(id, node, false);
+        }
       } else if (type.indexOf("Task") !== -1 || type === "CallActivity") {
         this.initExecutorInfo(node);
         html += this.showTaskNode(id, node);
@@ -294,14 +300,18 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       + "</div>";
   }
   ,
-  showEndNode: function (id, node) {
+  showEndNode: function (id, node, boo) {
     var css = "flow-event-end";
+    var nodeCss = 'flow-event-box flow-node node-choosed end-event';
+    if (boo) {
+      nodeCss = nodeCss + ' visibleCss'
+    }
     if (node.type === "TerminateEndEvent") {
       css = "flow-event-terminateend";
     }
     return "<div tabindex=0 type='" + node.type + "' id='"
       + id
-      + "' class='flow-event-box flow-node node-choosed' style='cursor: auto; left: "
+      + "' class='" + nodeCss + "' style='cursor: auto; left: "
       + node.x
       + "px; top: "
       + node.y
@@ -423,7 +433,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
     return true;
   },
   //返回单据启动页面
-  returnPage: function (){
+  returnPage: function () {
     var g = this;
     g.refreshPage();
   },
@@ -441,7 +451,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       msg: "正在处理中,请稍候..."
     });
     EUI.Store({
-      url: _ctxPath +  "/flowSolidifyExecutor/saveSolidifyInfoByExecutorVos",
+      url: _ctxPath + "/flowSolidifyExecutor/saveSolidifyInfoByExecutorVos",
       postType: 'json',
       isUrlParam: false,
       params: {
@@ -465,7 +475,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       msg: "正在启动，请稍候..."
     });
     EUI.Store({
-      url: _ctxPath +  "/defaultFlowBase/startFlowNew",
+      url: _ctxPath + "/defaultFlowBase/startFlowNew",
       postType: 'json',
       isUrlParam: false,
       params: {
@@ -489,7 +499,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
         }
         taskList = JSON.stringify(task);
         EUI.Store({
-          url: _ctxPath +  "/defaultFlowBase/startFlowNew",
+          url: _ctxPath + "/defaultFlowBase/startFlowNew",
           postType: 'json',
           isUrlParam: false,
           params: {
@@ -511,7 +521,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
             // parentThis.afterSubmit && parentThis.afterSubmit(res);
             g.refreshPage();
             //兼容suid关闭窗口
-            window.parent.postMessage({'solidifyFlow': true },'*');
+            window.parent.postMessage({'solidifyFlow': true}, '*');
           },
           failure: function (response) {
             mask.hide();

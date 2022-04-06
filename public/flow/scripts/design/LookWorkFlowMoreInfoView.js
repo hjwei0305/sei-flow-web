@@ -63,8 +63,8 @@ EUI.LookWorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
           name: "subProcess"
         }, {
           xtype: "CheckBox",
-          title: "允许固化流程",
-          labelWidth: 100,
+          title: "发起人指定执行人",
+          labelWidth: 130,
           name: "solidifyFlow",
           readonly: true
         }]

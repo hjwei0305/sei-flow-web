@@ -649,9 +649,6 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
       "dblclick": function () {
         var dom = $(this);
         var type = dom.attr("type");
-        // if (type == "StartEvent" || type.indexOf("EndEvent") != -1) {
-        //     return;
-        // }
         if (!g.businessModelId) {
           EUI.ProcessStatus({
             success: false,
@@ -661,11 +658,34 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
         }
         var input = dom.find(".node-title");
         if (type == "StartEvent" || type.indexOf("EndEvent") != -1 || type.endsWith("Gateway") || type == 'ManualTask') {
-          g.showSimpleNodeConfig(input.text(), null, null, type, dom.data().allowChooseInstancyNew, function (value, code, allowChooseInstancyNew) {
-            input.text(value);
-            input.attr("title", value);
-            // dom.data({"allowChooseInstancyNew":allowChooseInstancyNew});
-          });
+          if (type.indexOf("EndEvent") != -1) {
+            var nodeType = dom.attr("nodeType");
+            new EUI.FlowNodeSettingView({
+              title: input.text(),
+              businessModelId: g.businessModelId,
+              businessModelCode: g.businessModelCode,
+              flowDefinitionId: g.id,
+              data: dom.data(),
+              nodeType: nodeType,
+              type: type,
+              isSolidifyFlow: g.isSolidifyFlow,
+              afterConfirm: function (data) {
+                input.text(data.normal.name);
+                input.attr("title", data.normal.name);
+                dom.data(data);
+                if (data.normal.isSequential) {
+                  dom.find(".countertask").addClass("serial-countertask").removeClass("parallel-countertask");
+                } else {
+                  dom.find(".countertask").addClass("parallel-countertask").removeClass("serial-countertask");
+                }
+              }
+            });
+          } else {
+            g.showSimpleNodeConfig(input.text(), null, null, type, dom.data().allowChooseInstancyNew, function (value, code, allowChooseInstancyNew) {
+              input.text(value);
+              input.attr("title", value);
+            });
+          }
         } else {
           var nodeType = dom.attr("nodeType");
           new EUI.FlowNodeSettingView({
@@ -1327,7 +1347,7 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
       }
       //如果是系统排他网关或者包容网关，出口只有一条的时候
       // if ((node.busType == "ExclusiveGateway" || node.busType == "InclusiveGateway") && outCout == 1) {
-        if ((node.busType == "ExclusiveGateway") && outCout == 1) {
+      if ((node.busType == "ExclusiveGateway") && outCout == 1) {
         EUI.ProcessStatus({
           success: false,
           msg: node.name + "：只有一条出口路径，请修改配置"

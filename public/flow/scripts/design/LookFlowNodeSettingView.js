@@ -22,7 +22,6 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         height: 435,
         padding: 15,
         afterRender: function () {
-          // this.dom.find(".ux-window-content").css("border-radius", "6px");
         },
         afterClose: function () {
           g.remove();
@@ -45,7 +44,6 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         height: 435,
         padding: 15,
         afterRender: function () {
-          // this.dom.find(".ux-window-content").css("border-radius", "6px");
         },
         afterClose: function () {
           g.remove();
@@ -63,6 +61,28 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         }]
       });
       this.initNotify(true);
+    } else if (this.type.indexOf("EndEvent") != -1) {
+      this.window = EUI.Window({
+        title: "抄送配置",
+        width: 580,
+        height: 435,
+        padding: 15,
+        afterRender: function () {
+        },
+        afterClose: function () {
+          g.remove();
+        },
+        items: [{
+          xtype: "TabPanel",
+          isOverFlow: false,
+          showTabMenu: false,
+          defaultConfig: {
+            iframe: false,
+            closable: false
+          },
+          items: [this.getEndTab(), this.getExcutorTab()]
+        }]
+      });
     } else {
       this.window = EUI.Window({
         title: "节点配置",
@@ -70,7 +90,6 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         height: 435,
         padding: 15,
         afterRender: function () {
-          // this.dom.find(".ux-window-content").css("border-radius", "6px");
         },
         afterClose: function () {
           g.remove();
@@ -148,6 +167,66 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           break;
       }
     });
+  },
+  getEndTab: function () {
+    var items = [{
+      title: "节点名称",
+      readonly: true,
+      labelWidth: 100,
+      allowBlank: false,
+      name: "name",
+      maxlength: 80,
+      value: this.title
+    }, {
+      xtype: "CheckBox",
+      title: "允许抄送",
+      readonly: true,
+      labelWidth: 100,
+      name: "pushToMq",
+      id: "pushToMq",
+      hidden: false
+    }, {
+      title: "工作界面",
+      labelWidth: 100,
+      name: "workPageName",
+      hidden: false,
+      readonly: true
+    }, {
+      xtype: "FieldGroup",
+      width: "auto",
+      id: "pushUelGroup",
+      hidden: false,
+      readonly: true,
+      items: [
+        {
+          xtype: "TextField",
+          readonly: true,
+          title: "抄送条件",
+          labelWidth: 100,
+          width: 300,
+          checkHtmlStr: false,
+          submitName: false,
+          id: "pushUEL",
+          name: "logicUel"
+        }]
+    }];
+
+    return {
+      title: "常规",
+      xtype: "FormPanel",
+      id: "normal",
+      padding: 10,
+      defaultConfig: {
+        width: 300,
+        xtype: "TextField",
+        labelWidth: 150,
+        colon: false
+      },
+      style: {
+        padding: "10px 30px"
+      },
+      items: items
+    };
   },
   getNormalTab: function () {
     var g = this;

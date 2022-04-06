@@ -57,6 +57,26 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         }]
       });
       this.initNotify(true);
+    } else if (this.type.indexOf("EndEvent") != -1) {
+      this.window = EUI.Window({
+        width: 580,
+        height: 435,
+        padding: 15,
+        buttons: this.getButtons(),
+        afterRender: function () {
+          this.dom.find(".ux-window-content").css("border-radius", "6px");
+        },
+        items: [{
+          xtype: "TabPanel",
+          isOverFlow: false,
+          showTabMenu: false,
+          defaultConfig: {
+            iframe: false,
+            closable: false
+          },
+          items: [this.getEndTab(), this.getExcutorTab()]
+        }]
+      });
     } else {
       this.window = EUI.Window({
         width: 580,
@@ -82,6 +102,12 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     }
     if (this.data && !Object.isEmpty(this.data)) {
       this.loadData();
+      if (this.type.indexOf("EndEvent") != -1 && this.data.normal.pushToMq) {
+        var pushUelGroup = EUI.getCmp("pushUelGroup");
+        var workPageName = EUI.getCmp("workPageName");
+        pushUelGroup.show();
+        workPageName.show();
+      }
       this.showAllowJumpBack();
     } else {
       if (this.type != "CallActivity" && this.type != "ServiceTask" &&
@@ -203,16 +229,45 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           });
           return;
         }
+        var normalData = normalForm.getFormValue();
         if ((g.type != 'ServiceTask' && g.type != 'ReceiveTask' && g.type != 'PoolTask' && g.type != 'CallActivity') && !g.checkExcutor()) {
-          EUI.ProcessStatus({
-            success: false,
-            msg: "请将执行人项配置完整"
-          });
-          return;
+          if (g.type.indexOf("EndEvent") != -1) {
+            if (normalData.pushToMq) {
+              EUI.ProcessStatus({
+                success: false,
+                msg: "请将抄送人项配置完整"
+              });
+              return;
+            }
+          } else {
+            EUI.ProcessStatus({
+              success: false,
+              msg: "请将执行人项配置完整"
+            });
+            return;
+          }
         }
         var executorForm = EUI.getCmp("excutor");
         var eventForm = EUI.getCmp("event");
-        var normalData = normalForm.getFormValue();
+
+        if (g.type.indexOf("EndEvent") != -1) {
+          if (normalData.pushToMq) {
+            normalData.pushUEL = g.pushUEL;
+            if (normalData.name == "结束") {
+              normalData.name = "结束并抄送";
+            } else if (normalData.name == "终止结束") {
+              normalData.name = "终止结束并抄送";
+            }
+          } else {
+            normalData.pushUEL = {};
+            if (normalData.name == "结束并抄送") {
+              normalData.name = "结束";
+            } else if (normalData.name == "终止结束并抄送") {
+              normalData.name = "终止结束";
+            }
+          }
+        }
+
         var eventData = eventForm ? eventForm.getFormValue() : '';
         var executor = '';
         if (g.type != 'ServiceTask' && g.type != 'ReceiveTask' && g.type != 'PoolTask' && g.type != 'CallActivity') {
@@ -231,12 +286,117 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           normal: normalData,
           executor: executor,
           event: eventData,
-          notify: g.type == "CallActivity" ? '' : g.getNotifyData()
+          notify: (g.type == "CallActivity" || g.type.indexOf("EndEvent") != -1) ? '' : g.getNotifyData()
         });
         g.remove();
         g.window.close();
       }
     }];
+  },
+  getEndTab: function () {
+    var g = this;
+    var items = [{
+      title: "节点名称",
+      labelWidth: 100,
+      allowBlank: false,
+      name: "name",
+      maxlength: 80,
+      value: this.title
+    }, {
+      xtype: "CheckBox",
+      title: "允许抄送",
+      labelWidth: 100,
+      name: "pushToMq",
+      id: "pushToMq",
+      hidden: false,
+      onChecked: function (value) {
+        var pushUelGroup = EUI.getCmp("pushUelGroup");
+        var workPageName = EUI.getCmp("workPageName");
+        if (value) {
+          pushUelGroup.show();
+          workPageName.show();
+        } else {
+          pushUelGroup.hide();
+          workPageName.hide();
+        }
+      }
+    }, {
+      xtype: "ComboBox",
+      title: "抄送界面",
+      labelWidth: 100,
+      allowBlank: false,
+      id: "workPageName",
+      name: "workPageName",
+      field: ["id", "mustCommit"],
+      async: false,
+      hidden: true,
+      store: {
+        url: _ctxPath + "/design/listAllWorkPage",
+        params: {
+          businessModelId: this.businessModelId
+        }
+      },
+      reader: {
+        name: "name",
+        field: ["id", "mustCommit"]
+      }
+    }, {
+      xtype: "FieldGroup",
+      width: "auto",
+      id: "pushUelGroup",
+      hidden: true,
+      items: [
+        {
+          xtype: "TextField",
+          readonly: true,
+          title: "抄送条件",
+          labelWidth: 100,
+          width: 300,
+          checkHtmlStr: false,
+          submitName: false,
+          id: "pushUEL",
+          name: "logicUel"
+        }, {
+          xtype: "Label",
+          content: "<span class='ecmp-eui-setting'></span>",
+          style: {
+            cursor: "pointer"
+          },
+          onClick: function () {
+            new EUI.UELSettingView({
+              title: "流程抄送条件",
+              data: g.pushUEL,
+              showName: false,
+              businessModelId: g.businessModelId,
+              businessModelCode: g.businessModelCode,
+              flowTypeId: EUI.getCmp("formPanel").getFormValue().flowTypeId,
+              afterConfirm: function (data) {
+                EUI.getCmp("pushUEL").setValue(data.logicUel);
+                g.pushUEL = data;
+              }
+            });
+          }
+        }
+      ]
+    }
+    ];
+
+    return {
+      title: "常规",
+      xtype: "FormPanel",
+      id: "normal",
+      padding: 10,
+      defaultConfig: {
+        width: 300,
+        xtype: "TextField",
+        labelWidth: 150,
+        colon: false
+      },
+      style: {
+        padding: "10px 30px"
+      },
+      items: items
+    };
   },
   getNormalTab: function () {
     var g = this;
@@ -3615,6 +3775,12 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
     if (!this.data) {
       return;
     }
+
+    if (g.type.indexOf("EndEvent") != -1 && this.data.normal.pushUEL) {
+      this.pushUEL = this.data.normal.pushUEL;
+      this.data.normal.logicUel = this.data.normal.pushUEL.logicUel;
+    }
+
     //加载常规配置
     normalForm.loadData(this.data.normal);
 
@@ -3640,7 +3806,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         this.showChooseUserGrid(userType, this.data.executor);
       }
     }
-    if (g.type == 'CallActivity') {
+    if (g.type == 'CallActivity' || g.type.indexOf("EndEvent") != -1) {
       return;
     }
     //加载事件配置

@@ -116,7 +116,7 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
       "dblclick": function () {
         var dom = $(this);
         var type = dom.attr("type");
-        if (type == "StartEvent" || type.indexOf("EndEvent") != -1) {
+        if (type == "StartEvent") {
           return;
         }
         var input = dom.find(".node-title");
