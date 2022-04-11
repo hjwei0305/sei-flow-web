@@ -211,6 +211,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       case "serialtask":
       case "normal":
       case "endevent":
+      case "terminateendevent":
         this.executorInfo[node.id] = null;
         this.anyOneSelectHtml[node.id] = "";
         break;
@@ -233,6 +234,7 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
         html += this.showStartNode(id, node);
       } else if (type.indexOf("EndEvent") !== -1) {
         if (node.nodeConfig.normal && node.nodeConfig.normal.pushToMq) {
+          node.nodeType = type;
           this.initExecutorInfo(node);
           html += this.showEndNode(id, node, true);
         } else {
@@ -408,7 +410,11 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
       var user = this.executorInfo[key];
       if (!user || !user.executorIds) {
         userIsNull = true;
-        $("#" + key).addClass("not-choose-error");//标红色
+        if (key.indexOf("EndEvent") == -1) {
+          $("#" + key).addClass("not-choose-error");//标红色
+        } else { //抄送节点非必选
+          $("#" + key).addClass("can-choose");//标黄色
+        }
       }
     }
   },
@@ -445,7 +451,9 @@ EUI.ConfigWorkFlowView = EUI.extend(EUI.CustomUI, {
     }
     var executorsVos = [];
     for (var key in this.executorInfo) {
-      executorsVos.push(this.executorInfo[key]);
+      if (this.executorInfo[key] != null) {
+        executorsVos.push(this.executorInfo[key]);
+      }
     }
     var mask = EUI.LoadMask({
       msg: "正在处理中,请稍候..."

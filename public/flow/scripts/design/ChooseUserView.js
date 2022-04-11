@@ -20,7 +20,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
   showChooseWin: function (data) {
     var g = this;
     this.winBox = EUI.Window({
-      title: "配置执行人",
+      title: g.nodeData.nodeType.toLowerCase().indexOf("endevent") != -1 ? "配置抄送人" : "配置执行人",
       width: 600,
       height: 450,
       padding: 0,
@@ -45,7 +45,11 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
           if (!user) {
             return false;
           }
-          $("#" + user.actTaskDefKey).removeClass("not-choose-error");
+          if (user.actTaskDefKey.indexOf("EndEvent") == -1) {
+            $("#" + user.actTaskDefKey).removeClass("not-choose-error");
+          } else {
+            $("#" + user.actTaskDefKey).removeClass("can-choose");
+          }
           g.setSelectedUser(user);
           g.winBox.remove();
         }
@@ -142,6 +146,14 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
         break;
       case "receivetask":
         taskText = this.lang.receiveTaskText;
+        break;
+      case "endevent":
+        iconCss = "choose-checkbox";
+        taskText = "结束并抄送";
+        break;
+      case "terminateendevent":
+        iconCss = "choose-checkbox";
+        taskText = "终止结束并抄送";
         break;
       default:
         break;
@@ -280,7 +292,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
     if (nodeDoms.length > 0) {
       var nodeDom = $(nodeDoms[0]);
       var itemDoms = $(".select", nodeDom);
-      if (itemDoms.length === 0) {
+      if (itemDoms.length === 0 && this.nodeData.id.indexOf("EndEvent") == -1) {
         EUI.ProcessStatus({
           success: false,
           msg: String.format(this.lang.chooseExecutorMsgText, this.nodeData.name)

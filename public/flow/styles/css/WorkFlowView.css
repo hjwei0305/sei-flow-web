@@ -74,7 +74,7 @@
 }
 
 .flow-event-box {
-  height: 72px;
+  min-height: 72px;
   padding-top: 10px;
 }
 
@@ -846,6 +846,14 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .not-choose-error {
   background: red;
+}
+
+.can-choose {
+  background: yellow;
+}
+
+.end-event {
+  border: 2px solid #cdcdcd;
 }
 
 .disabledCss {
