@@ -1407,7 +1407,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "MESSAGE",
           labelWidth: 42
         }, {
-          title: "虚拟待办",
+          title: "待办通知",
           name: "VIRTUALTODO",
           labelWidth: 56
         }]
@@ -1461,7 +1461,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             name: "MESSAGE",
             labelWidth: 42
           }, {
-            title: "虚拟待办",
+            title: "待办通知",
             name: "VIRTUALTODO",
             labelWidth: 56
           }]
@@ -1531,7 +1531,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             name: "MESSAGE",
             labelWidth: 42
           }, {
-            title: "虚拟待办",
+            title: "待办通知",
             name: "VIRTUALTODO",
             labelWidth: 56
           }]
@@ -1584,7 +1584,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "MESSAGE",
           labelWidth: 42
         }, {
-          title: "虚拟待办",
+          title: "待办通知",
           name: "VIRTUALTODO",
           labelWidth: 56
         }]
@@ -1668,7 +1668,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "MESSAGE",
           labelWidth: 42
         }, {
-          title: "虚拟待办",
+          title: "待办通知",
           name: "VIRTUALTODO",
           labelWidth: 56
         }]
@@ -1736,7 +1736,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "MESSAGE",
           labelWidth: 42
         }, {
-          title: "虚拟待办",
+          title: "待办通知",
           name: "VIRTUALTODO",
           labelWidth: 56
         }]
@@ -1788,7 +1788,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           name: "MESSAGE",
           labelWidth: 42
         }, {
-          title: "虚拟待办",
+          title: "待办通知",
           name: "VIRTUALTODO",
           labelWidth: 56
         }]
