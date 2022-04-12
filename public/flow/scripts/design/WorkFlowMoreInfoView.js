@@ -79,7 +79,7 @@ EUI.WorkFlowMoreInfoView = EUI.extend(EUI.CustomUI, {
           }
         }, {
           xtype: "CheckBox",
-          title: "发起人指定执行人",
+          title: "启动时指定执行人",
           labelWidth: 130,
           name: "solidifyFlow",
           id: "solidifyFlow",

@@ -156,7 +156,7 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
   openShowWin: function (nodeName, executorList) {
     var g = this;
     g.win = EUI.Window({
-      title: "固化执行人列表",
+      title: "已设置执行人列表",
       padding: 15,
       width: 400,
       height: 400,
