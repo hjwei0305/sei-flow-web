@@ -256,13 +256,13 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             if (normalData.name == "结束") {
               normalData.name = "结束并抄送";
             } else if (normalData.name == "终止结束") {
-              normalData.name = "终止结束并抄送";
+              normalData.name = "终止并抄送";
             }
           } else {
             normalData.pushUEL = {};
             if (normalData.name == "结束并抄送") {
               normalData.name = "结束";
-            } else if (normalData.name == "终止结束并抄送") {
+            } else if (normalData.name == "终止并抄送") {
               normalData.name = "终止结束";
             }
           }

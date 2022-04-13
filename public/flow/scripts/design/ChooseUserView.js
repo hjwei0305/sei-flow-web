@@ -149,11 +149,11 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
         break;
       case "endevent":
         iconCss = "choose-checkbox";
-        taskText = "结束并抄送";
+        taskText = this.lang.endEventText;
         break;
       case "terminateendevent":
         iconCss = "choose-checkbox";
-        taskText = "终止结束并抄送";
+        taskText = this.lang.terminateEndEventText;
         break;
       default:
         break;
@@ -224,6 +224,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       }
     }
     var html = "", anyOnehtml = this.parentThis.anyOneSelectHtml[this.nodeData.id] || "";
+    var textStr = nodeType.indexOf("EndEvent") != -1 ? g.lang.chooseText2 : g.lang.chooseText;
     var nodeHtml = '<div class="flow-node-box" index="' + i + '">' +
       '<div class="flow-excutor-title" flowTaskType="' + nodeType + '">' + nodeName + '-[' + taskText + ']' + urgentHtml +
       '</div>' +
@@ -231,7 +232,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
       '<div class="flow-excutor-content2">' + anyOnehtml + '</div>' +
       '<div class="choose-btn">' +
       '<span class="btn-icon ecmp-common-add"></span>' +
-      '<span class="btn-icon choose-btn-text">' + g.lang.chooseText + '</span>' +
+      '<span class="btn-icon choose-btn-text">' + textStr + '</span>' +
       '</div>' +
       '</div>' +
       '</div>';
