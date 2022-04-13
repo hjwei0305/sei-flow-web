@@ -821,9 +821,10 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   },
   getExcutorTab: function () {
     var g = this;
+    var cs = g.type.indexOf("EndEvent") != -1;
     return {
       xtype: "FormPanel",
-      title: "执行人",
+      title: cs ? "抄送人" : "执行人",
       height: 400,
       width: 565,
       id: "excutor",
