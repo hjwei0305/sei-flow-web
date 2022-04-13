@@ -954,9 +954,10 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   },
   initUserTypeGroup: function () {
     var g = this;
+    var cs = g.type.indexOf("EndEvent") != -1;
     return {
       xtype: "RadioBoxGroup",
-      title: "执行人类型",
+      title: cs ? "抄送人类型" : "执行人类型",
       labelWidth: 100,
       name: "userType",
       id: "userType",
@@ -983,13 +984,13 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           g.showChooseUserGrid(this.name);
         }
       }, {
-        title: "自定义执行人",
+        title: cs ? "自定义抄送人" : "自定义执行人",
         name: "SelfDefinition",
         onChecked: function (value) {
           g.showChooseUserGrid(this.name);
         }
       }, {
-        title: "任意执行人",
+        title: cs ? "任意抄送人" : "任意执行人",
         name: "AnyOne",
         onChecked: function (value) {
           g.showChooseUserGrid(this.name);
@@ -1001,7 +1002,7 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           g.showChooseUserGrid(this.name);
         }
       }, {
-        title: "自定义执行人（参数自选）",
+        title: cs ? "自定义抄送人（参数自选）" : "自定义执行人（参数自选）",
         name: "PositionAndOrgAndSelfDefinition",
         labelWidth: 210,
         onChecked: function (value) {
