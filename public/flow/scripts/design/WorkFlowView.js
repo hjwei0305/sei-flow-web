@@ -1309,8 +1309,11 @@ EUI.WorkFlowView = EUI.extend(EUI.CustomUI, {
       var type = item.attr("type");
       var name = item.find(".node-title").text();
       var nodeConfig = item.data();
-      if (this.isSolidifyFlow == true && nodeConfig.normal && nodeConfig.normal.singleTaskNoChoose) {
+      if (this.isSolidifyFlow && nodeConfig.normal && nodeConfig.normal.singleTaskNoChoose) {
         nodeConfig.normal.singleTaskNoChoose = false;
+      }
+      if ( type.indexOf("EndEvent") != -1  && nodeConfig.normal && !nodeConfig.normal.pushToMq) {
+        nodeConfig = {};
       }
       var node = {
           type: type,
