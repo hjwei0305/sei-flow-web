@@ -61,7 +61,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         }]
       });
       this.initNotify(true);
-    } else if (this.type.indexOf("EndEvent") != -1) {
+    } else if (g.nodeType.indexOf("EndEvent") != -1) {
       this.window = EUI.Window({
         title: "抄送配置",
         width: 580,
@@ -617,7 +617,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   },
   getExcutorTab: function () {
     var g = this;
-    var cs = g.type.indexOf("EndEvent") != -1;
+    var cs = g.nodeType.indexOf("EndEvent") != -1;
     return {
       xtype: "FormPanel",
       title:  cs ? "抄送人" : "执行人",
@@ -787,7 +787,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   },
   initUserTypeGroup: function () {
     var g = this;
-    var cs = g.type.indexOf("EndEvent") != -1;
+    var cs = g.nodeType.indexOf("EndEvent") != -1;
     return {
       xtype: "RadioBoxGroup",
       title: cs ? "抄送人类型" : "执行人类型",
@@ -1970,6 +1970,11 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         this.showChooseUserGrid(userType, nodeConfig.executor);
       }
     }
+
+    if (this.nodeType.indexOf('EndEvent') != -1) {
+      return;
+    }
+
     //加载事件配置
     eventForm.loadData(nodeConfig.event);
 

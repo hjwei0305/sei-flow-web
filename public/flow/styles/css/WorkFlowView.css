@@ -283,6 +283,15 @@
   width: 12px;
 }
 
+.solidifyExecutorLookByEnd::before {
+  background: url("../images/user.png") no-repeat scroll 0 0 / cover !important;
+  content: "";
+  float: right;
+  height: 12px;
+  margin-right: -5px;
+  width: 12px;
+}
+
 
 .flow-task .servicetask {
   background: url("../images/flow_task_service.png") no-repeat !important;

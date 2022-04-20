@@ -123,12 +123,16 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
         if (type.endsWith("Gateway")) {
           g.showSimpleNodeConfig(input.text(), '');
         } else {
+          var nodeType = dom.attr("nodeType");
+          if(type.indexOf("EndEvent") != -1){
+            nodeType = type;
+          }
           new EUI.LookFlowNodeSettingView({
             businessModelId: g.businessModelId,
             data: dom.data(),
             id: g.id,
             instanceId: g.instanceId,
-            nodeType: dom.attr("nodeType"),
+            nodeType: nodeType,
             isSolidifyFlow: g.isSolidifyFlow
           });
         }
@@ -136,6 +140,13 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
     });
 
     $(".solidifyExecutorLook").live({
+      "click": function () {
+        var currentNodeId = $(this).parent().parent().attr("id");
+        g.showExecutorWindow(currentNodeId);
+      }
+    });
+
+    $(".solidifyExecutorLookByEnd").live({
       "click": function () {
         var currentNodeId = $(this).parent().parent().attr("id");
         g.showExecutorWindow(currentNodeId);
@@ -149,14 +160,15 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
       if (currentNodeId == info.flowNode.id) {
         var nodeName = info.flowNode.name;
         var executorList = info.executorList;
-        this.openShowWin(nodeName, executorList);
+        var type = info.flowNode.type;
+        this.openShowWin(type, nodeName, executorList);
       }
     }
   },
-  openShowWin: function (nodeName, executorList) {
+  openShowWin: function (type, nodeName, executorList) {
     var g = this;
     g.win = EUI.Window({
-      title: "已设置执行人列表",
+      title: type.indexOf("EndEvent")!=-1 ? "已设置抄送人列表" : "已设置执行人列表"  ,
       padding: 15,
       width: 400,
       height: 400,
@@ -445,14 +457,28 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
     if (node.type == "TerminateEndEvent") {
       css = "flow-event-terminateend";
     }
+
+    var solidifyCss = "";
+    var endCss = "flow-event-box flow-node node-choosed";
+    if (node.type.indexOf("EndEvent") != -1 && this.solidifyExecutorsInfo.length > 0) {
+      this.solidifyExecutorsInfo.forEach(a => {
+        if (a.flowNode.id.indexOf("EndEvent") != -1) {
+          solidifyCss += " solidifyExecutorLookByEnd";
+          endCss += " end-event";
+        }
+      });
+    }
+
     return "<div tabindex=0 type='" + node.type + "' id='"
       + id
-      + "' class='flow-event-box flow-node node-choosed' style='cursor: pointer; left: "
+      + "' class='" + endCss + "' style='cursor: pointer; left: "
       + node.x
       + "px; top: "
       + node.y
       + "px; opacity: 1;'>"
-      + "<div class='flow-event-iconbox'><div class='" + css + "'></div></div>"
+      + "<div class='flow-event-iconbox'>"
+      + (solidifyCss == "" ? "" : "<div class='" + solidifyCss + "'></div>")
+      + "<div class='" + css + "'></div></div>"
       + "<div class='node-title' title='" + node.name + "'>" + node.name + "</div>	</div>";
   }
   ,
