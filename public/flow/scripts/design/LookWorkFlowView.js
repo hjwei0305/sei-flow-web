@@ -125,6 +125,11 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
         } else {
           var nodeType = dom.attr("nodeType");
           if(type.indexOf("EndEvent") != -1){
+            var data = dom.data();
+            //表示没有配置抄送信息
+            if(data.nodeConfig.normal == undefined){
+                 return;
+            }
             nodeType = type;
           }
           new EUI.LookFlowNodeSettingView({
