@@ -2,15 +2,16 @@
  * @description 树控件
  * @author 李艳
  */
-import React, { Component } from "react";
-import { Input, Tree, Card } from "antd";
-import { message } from 'suid';
-import { connect } from "dva";
+import React, {Component} from "react";
+import {Input, Tree, Card, Button, Tooltip} from "antd";
+import {message} from 'suid';
+import {connect} from "dva";
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import ReactDOM from "react-dom";
-import { seiLocale } from 'sei-utils';
-const { seiIntl } = seiLocale;
+import {seiLocale} from 'sei-utils';
+
+const {seiIntl} = seiLocale;
 const DirectoryTree = Tree.DirectoryTree;
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -35,7 +36,7 @@ class StandardTree extends Component {
     if (this.simpleDiv) {
       let yHeight = document.body.clientHeight - this.getElementTop(this.simpleDiv) - 5;
       let scrollY = (this.props.heightY ? (this.props.heightY + 12) : (yHeight - 83));
-      this.setState({ scrollY }, () => {
+      this.setState({scrollY}, () => {
         this.ps && this.ps.update();
       })
     }
@@ -63,6 +64,7 @@ class StandardTree extends Component {
     this.updateSize();
     window.addEventListener('resize', this.updateSize);
   }
+
   wrappedScroller = () => {
     if (this.ps) {
       this.ps.destroy();
@@ -72,19 +74,20 @@ class StandardTree extends Component {
     this.ps = new PerfectScrollbar(simpleDivDom);
     this.ps && this.ps.update();
   }
+
   componentWillReceiveProps(nextProp) {
-    let { dadaSource } = nextProp;
+    let {dadaSource} = nextProp;
     if (!(dadaSource instanceof Array)) {
       dadaSource = [dadaSource];
     }
     if (this.state.dada !== dadaSource) {
-      this.setState({ dadaSource }, () => this.wrappedScroller())
+      this.setState({dadaSource}, () => this.wrappedScroller())
     }
   }
 
   //树节点选择触发
   onSelect = (selectedKeys) => {
-    this.setState({ selectedKeys });
+    this.setState({selectedKeys});
     let selectedNodes = getNodesByKeys(this.state.dadaSource, selectedKeys);
     if (this.props.onSelect) {
       this.props.onSelect(selectedKeys, selectedNodes)
@@ -125,6 +128,7 @@ class StandardTree extends Component {
       })
     }
   };
+
 
   getExpandedKeys = (data) => {
     for (let item of data) {
@@ -174,7 +178,7 @@ class StandardTree extends Component {
       const name = i > -1 ? (
         <span>
           {beforeStr}
-          <span style={{ color: '#f50' }}>{this.state.searchValue}</span>
+          <span style={{color: '#f50'}}>{this.state.searchValue}</span>
           {afterStr}
         </span>
       ) : <span>{item.name}</span>;
@@ -185,7 +189,7 @@ class StandardTree extends Component {
           </TreeNode>
         );
       }
-      return <TreeNode title={name} key={item.id} isLeaf />;
+      return <TreeNode title={name} key={item.id} isLeaf/>;
     });
   };
   //移动节点
@@ -210,38 +214,45 @@ class StandardTree extends Component {
     const data = [...this.state.dadaSource];
     let dragNode = getNodeByKey(data, dragKey);
     if (!dragNode.parentId) {
-      message.error(seiIntl.get({ key: 'flow_000230', desc: '无法移动根节点！' }));
+      message.error(seiIntl.get({key: 'flow_000230', desc: '无法移动根节点！'}));
       return;
     }
     let node = getNodeByKey(data, dropKey);
     if (info.dropToGap) {
       if (!node.parentId) {
-        message.error(seiIntl.get({ key: 'flow_000231', desc: '无法将节点设置为根节点！' }));
+        message.error(seiIntl.get({key: 'flow_000231', desc: '无法将节点设置为根节点！'}));
         return;
       } else {
-        params = { nodeId: dragKey, targetParentId: node.parentId };
+        params = {nodeId: dragKey, targetParentId: node.parentId};
       }
 
     } else {
-      params = { nodeId: dragKey, targetParentId: dropKey };
+      params = {nodeId: dragKey, targetParentId: dropKey};
     }
     if (this.props.moveService) {
       this.props.moveService(params).then((result) => {
         if (result.status === "SUCCESS") {
-          message.success(result.message ? result.message : seiIntl.get({ key: 'flow_000232', desc: '移动成功' }));
+          message.success(result.message ? result.message : seiIntl.get({key: 'flow_000232', desc: '移动成功'}));
           // 更新本地树,有时后台获取的数据格式不一样，交给外层处理
           if (this.props.initService) {
             this.props.initService()
           }
         } else {
-          message.error(result.message ? result.message : seiIntl.get({ key: 'flow_000233', desc: '移动失败' }))
+          message.error(result.message ? result.message : seiIntl.get({key: 'flow_000233', desc: '移动失败'}))
         }
       }).catch(err => {
       }).finally(() => {
       });
     }
-
   };
+
+
+  syncClick = () => {
+    if (this.props.syncClick) {
+      this.props.syncClick();
+    }
+  };
+
 
   render() {
     return (
@@ -251,15 +262,20 @@ class StandardTree extends Component {
           <div className={'tbar-search-box'}>
             <Search
               key="search"
-              placeholder={seiIntl.get({ key: 'flow_000234', desc: '输入名称查询' })}
+              placeholder={seiIntl.get({key: 'flow_000234', desc: '输入名称查询'})}
               onSearch={e => this.handleSearch(e)}
-              style={{ width: 220 }}
+              style={{width: 220}}
               allowClear
             />
+            {this.props.onSync ? (
+              <Tooltip key="tooltip" title={seiIntl.get({key: 'flow_000343', desc: '刷新组织机构数据'})}>
+                <Button type="danger" icon="sync" key="sync"  onClick={this.syncClick}/>
+              </Tooltip>) : null}
           </div>
         </div>
-        <div ref={(div) => this.simpleDiv = div} style={{ position: "relative" }}>
-          <Card style={{ height: (this.state.scrollY || 0) + 70 }} bordered={false} bodyStyle={{ padding: "0 0px 0px 30px" }}>
+        <div ref={(div) => this.simpleDiv = div} style={{position: "relative"}}>
+          <Card style={{height: (this.state.scrollY || 0) + 70}} bordered={false}
+                bodyStyle={{padding: "0 0px 0px 30px"}}>
             {this.state.dadaSource.length > 0 ? (
               <DirectoryTree
                 checkedKeys={this.props.selectedKeys ? this.props.selectedKeys : this.state.selectedKeys}
@@ -284,7 +300,7 @@ class StandardTree extends Component {
   }
 }
 
-const mapStateToProps = ({ }) => {
+const mapStateToProps = ({}) => {
   return {};
 };
 

@@ -11,7 +11,7 @@ import SimpleTable from "@/components/SimpleTable";
 import {connect} from "dva";
 import {
   activateOrFreezeFlowDef, deleteFlowDefination, getFlowDefVersion, listAllOrgs,
-  listFlowDefination
+  listFlowDefination, refreshOrg
 } from "./FlowDefinationService";
 import DefinationVersionModal from "./DefinationVersionModal";
 import StandardTree from "@/components/StandardTree";
@@ -60,16 +60,32 @@ class FlowDefinationView extends Component {
     });
   }
 
+
+  //实时刷新组织机构数据
+  syncClick = () => {
+    this.toggoleGlobalLoading(true);
+    refreshOrg().then((result) =>{
+      if (result.success) {
+        this.setState({
+          treeData: result.data,
+        });
+      }
+    }).catch(err => {
+    }).finally(() => {
+      this.toggoleGlobalLoading(false);
+    });
+  };
+
+
   //网络请求树控件数据
   getTreeData = (param) => {
     this.toggoleGlobalLoading(true);
     listAllOrgs(param).then((result) => {
       if (result.success) {
-
+        this.setState({
+          treeData: result.data,
+        });
       }
-      this.setState({
-        treeData: result.data,
-      });
     }).catch(err => {
     }).finally(() => {
       this.toggoleGlobalLoading(false);
@@ -303,6 +319,7 @@ class FlowDefinationView extends Component {
     this.listFlowDefination(params);
   }
 
+
   render() {
     const columns = [
       {
@@ -409,16 +426,12 @@ class FlowDefinationView extends Component {
           key="search"
           placeholder={seiIntl.get({key: 'flow_000057', desc: '输入代码或名称查询'})}
           onSearch={value => this.handleTableSearch(value)}
-          // onChange={(e) => {
-          //   if (e.target.value) {
-          //     this.handleTableSearch(e.target.value)
-          //   }
-          // }}
           style={{width: '220px'}}
           allowClear
         />
       ]
     };
+
     return (
       <HeadBreadcrumb
         className={"allocation-page"}
@@ -433,7 +446,9 @@ class FlowDefinationView extends Component {
             >
               <StandardTree
                 onSelect={this.onTreeSelect}
-                dadaSource={this.state.treeData ? this.state.treeData : []}/>
+                dadaSource={this.state.treeData ? this.state.treeData : []}
+                syncClick={this.syncClick}
+                onSync/>
             </DetailCard>
           </Col>
           {/*右边的表格控件*/}

@@ -3,6 +3,10 @@ import {request as httpUtils, constants, commonUtils} from "@/utils";
 const {convertSearchFilter} = commonUtils;
 const {baseUrl} = constants;
 
+export async function refreshOrg(params = {}) {
+  return httpUtils.post(baseUrl + "/flowDefination/refreshOrg", params);
+}
+
 export async function listAllOrgs(params = {}) {
   return httpUtils.post(baseUrl + "/flowDefination/listAllOrgByPower", params);
 }

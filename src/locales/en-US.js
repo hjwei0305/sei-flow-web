@@ -354,6 +354,7 @@ export default {
   "flow_000340": "Please select a replacement!",
   "flow_000341": "Please select the person to be replaced!",
   "flow_000342": "First push time：",
+  "flow_000343": "Refresh organization data",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
