@@ -7,8 +7,8 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'dva'
-import {Modal, Input, Button, Tooltip} from 'antd';
-import {message} from 'suid';
+import {Modal, Input, Button, Tooltip, Checkbox, DatePicker} from 'antd';
+import {message,ScopeDatePicker} from 'suid';
 import SimpleTable from "@/components/SimpleTable";
 import {getPushTaskControl, pushAgainByControlId, cleaningPushHistoryData} from "./PushFlowTaskService";
 import SearchTable from "@/components/SearchTable";
@@ -16,7 +16,6 @@ import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import ResetPushFlowTaskModal from "./ResetPushFlowTaskModal";
 import {seiLocale} from 'sei-utils';
 import {allflowTypeConfig} from '@/utils/CommonComponentsConfig';
-
 
 const {seiIntl} = seiLocale;
 const confirm = Modal.confirm
@@ -36,6 +35,9 @@ class FlowInstanceTable extends Component {
       flowTypeId: "",
       modalVisible: false,
       confirmLoading: false,
+      onlyError: false,
+      startValue: null,
+      endValue: null,
     };
   }
 
@@ -64,7 +66,7 @@ class FlowInstanceTable extends Component {
           value: this.state.changeValue,//筛选值
           fieldType: "String"//筛选类型
         });
-      }else{
+      } else {
         //筛选字段（流程类型）
         if (this.state.flowTypeId) {
           filter.push({
@@ -73,11 +75,41 @@ class FlowInstanceTable extends Component {
             value: this.state.flowTypeId,//筛选值
             fieldType: "String"//筛选类型
           });
-        }else{
+        } else {
           message.error(seiIntl.get({key: 'flow_000217', desc: '请选择流程类型!'}));
           this.toggoleGlobalLoading(false);
           return;
         }
+      }
+
+      //仅查看失败过的
+      if(this.state.onlyError){
+        filter.push({
+          fieldName: "pushFalse",
+          operator: "GT",
+          value: 0,
+          fieldType: "int"
+        });
+      }
+
+      //首次推送时间开始
+      if(this.state.startValue){
+        filter.push({
+          fieldName: "pushStartDate",
+          operator: "GE",
+          value: this.state.startValue,
+          fieldType: "Date"
+        });
+      }
+
+      //首次推送时间结束
+      if(this.state.endValue){
+        filter.push({
+          fieldName: "pushStartDate",
+          operator: "LE",
+          value: this.state.endValue,
+          fieldType: "Date"
+        });
       }
 
       Object.assign(params, {filters: filter});
@@ -129,15 +161,24 @@ class FlowInstanceTable extends Component {
       this.setState({flowType: null, flowTypeId: ""});
     }
   };
+
+  checkChangeOnlyError = (checkInfo) => {
+    this.setState({onlyError: checkInfo.target.checked});
+  };
+
+  onTimeChange = value => {
+    this.setState({startValue: value[0], endValue: value[1]});
+  }
+
   pageChange = (pageInfo) => {
     this.setState({
       pageInfo: pageInfo,
     });
-    this.getDataSource({ pageInfo})
+    this.getDataSource({pageInfo})
   };
 
   queryClick = () => {
-    this.getDataSource({ pageInfo: this.state.pageInfo});
+    this.getDataSource({pageInfo: this.state.pageInfo});
   };
 
   restClick = () => {
@@ -150,7 +191,7 @@ class FlowInstanceTable extends Component {
       if (!err) {
         let params = {}
         Object.assign(params, values);
-        if(params.flowTypeId === ""){
+        if (params.flowTypeId === "") {
           message.error(seiIntl.get({key: 'flow_000217', desc: '请选择流程类型!'}));
           return;
         }
@@ -260,7 +301,7 @@ class FlowInstanceTable extends Component {
         dataIndex: 'flowInstanceName',
         width: 180
       }, {
-        title: seiIntl.get({key: 'flow_000089', desc: '第一次推送时间'}),
+        title: seiIntl.get({key: 'flow_000089', desc: '首次推送时间'}),
         dataIndex: 'pushStartDate',
         width: 180
       }, {
@@ -281,6 +322,11 @@ class FlowInstanceTable extends Component {
             config={allflowTypeConfig}
             style={{width: 300}}
             selectChange={this.selectChangeFlowType}/></span>,
+        <span key={"aaa"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000342', desc: '首次推送时间：'})}
+            <ScopeDatePicker format={'YYYY-MM-DD hh:mm'}  onChange={this.onTimeChange}  />
+        </span>,
+        <span key={"onlyError"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000311', desc: '仅失败：'})}
+          <Checkbox defaultChecked={false} onChange={this.checkChangeOnlyError}/></span>
       ]
     };
 

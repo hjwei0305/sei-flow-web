@@ -322,7 +322,7 @@ export default {
   "flow_000308": "Viewing URLS on mobile devices",
   "flow_000309": "Complete business order number",
   "flow_000310": "Please enter the complete business order number",
-
+  "flow_000311": "Only failure：",
   "flow_000312": "Task the compensation",
   "flow_000313": "Task compensation is a way of compensating for failure to generate task. Are you sure you want to implement it?",
   "flow_000314": "Compensation for success ！",
@@ -353,6 +353,7 @@ export default {
   "flow_000339": "It cannot be restored after the replacement. Are you sure to replace it?",
   "flow_000340": "Please select a replacement!",
   "flow_000341": "Please select the person to be replaced!",
+  "flow_000342": "First push time：",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',
