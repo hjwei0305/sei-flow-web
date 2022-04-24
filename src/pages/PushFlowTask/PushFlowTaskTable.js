@@ -320,7 +320,7 @@ class FlowInstanceTable extends Component {
             initValue={true}
             isNotFormItem={true}
             config={allflowTypeConfig}
-            style={{width: 300}}
+            style={{width: 180}}
             selectChange={this.selectChangeFlowType}/></span>,
         <span key={"aaa"} className={"primaryButton"}>{seiIntl.get({key: 'flow_000342', desc: '首次推送时间：'})}
             <ScopeDatePicker format={'YYYY-MM-DD hh:mm'}  onChange={this.onTimeChange}  />
@@ -339,7 +339,7 @@ class FlowInstanceTable extends Component {
             placeholder={seiIntl.get({key: 'flow_000310', desc: '请输入完整的业务单号'})}
             onChange={this.changeSearch}
             onSearch={value => this.handleSearch(value)}
-            style={{width: 220}}
+            style={{width: 180}}
             allowClear
           />
         </Tooltip>,
