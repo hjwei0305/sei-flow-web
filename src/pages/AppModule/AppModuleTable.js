@@ -84,7 +84,7 @@ class AppModuleTable extends Component {
           delete params.id;//新增时id==="",保存可能会出错，需删除id
         this.setState({confirmLoading: true});
         save(params).then(result => {
-          if (result.status === "SUCCESS") {
+          if (result.success) {
             message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             this.getDataSource();
@@ -146,7 +146,7 @@ class AppModuleTable extends Component {
             }
             /*删除*/
             deleteCorp(params).then(result => {
-              if (result.status === "SUCCESS") {
+              if (result.success) {
                 message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
                 //刷新本地数据
                 thiz.getDataSource();
