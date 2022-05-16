@@ -36,6 +36,7 @@ export default [
       { title: '推送任务管理', path: '/PushFlowTaskTable', component: './PushFlowTask/PushFlowTaskTable' },
       { title: '替换固化执行人', path: '/ReplaceSolidifyExecutorTable', component: './ReplaceSolidifyExecutor/ReplaceSolidifyExecutorTable' },
       { title: '任意转办', path: '/TurnToDoTable', component: './TurnToDo/TurnToDoTable' },
+      { title: '待办转授权', path: '/taskMakeOverPower', component: './taskMakeOverPower/TaskMakeOverPowerTable' },
       { title: '加签管理', path: '/AddSignTable', component: './AddSign/AddSignTable' },
       { title: '减签管理', path: '/SubtractTable', component: './SubtractSign/SubtractSignTable' },
       /*通用单据（自测使用）*/
