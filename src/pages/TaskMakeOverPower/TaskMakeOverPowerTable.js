@@ -8,12 +8,13 @@ import AddTaskMakeOverPowerModal from "./AddTaskMakeOverPowerModal";
 import HeadBreadcrumb from "@/components/breadcrumb/HeadBreadcrumb";
 import {seiLocale} from 'sei-utils';
 import moment from 'moment';
-import {commonUtils,} from '@/utils';
+import {commonUtils} from '@/utils';
 
 const {searchListByKeyWithTag,} = commonUtils;
 const {seiIntl} = seiLocale;
 const Search = Input.Search;
 const confirm = Modal.confirm;
+
 
 class TaskMakeOverPowerTable extends Component {
   constructor(props) {
@@ -189,7 +190,7 @@ class TaskMakeOverPowerTable extends Component {
         }
       },
       {
-        title: seiIntl.get({key: 'flow_000291', desc: '当前用户'}),
+        title: seiIntl.get({key: 'flow_000291', desc: '授权用户'}),
         dataIndex: 'userName',
         width: 200,
         render: (text, record, index) => {

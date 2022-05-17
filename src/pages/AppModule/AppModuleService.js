@@ -1,5 +1,4 @@
 import { request as httpUtils, constants, } from "@/utils";
-import {findAllByAuth} from "../FlowType/FlowTypeService";
 
 const { baseUrl } = constants;
 export async function getAllList(params = {}) {

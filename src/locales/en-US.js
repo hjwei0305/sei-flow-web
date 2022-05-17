@@ -302,7 +302,7 @@ export default {
   "flow_000288": "Processor:",
   "flow_000289": "Time-Consuming:",
   "flow_000290": "Processing Summary:",
-  "flow_000291": "Current User",
+  "flow_000291": "Authorized users",
   "flow_000292": "Agency User",
   "flow_000293": "The authorization documents",
   "flow_000294": "Upload authorization file",
@@ -355,6 +355,7 @@ export default {
   "flow_000341": "Please select the person to be replaced!",
   "flow_000342": "First push time：",
   "flow_000343": "Refresh organization data",
+  "flow_000344": "Selecting an Authorized User",
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',

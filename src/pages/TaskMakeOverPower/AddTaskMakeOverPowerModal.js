@@ -1,8 +1,6 @@
-import {constants} from "@/utils";
 import React, {Component} from 'react';
-import {Form, Input, Modal, DatePicker, Button, Col, Row, Divider, Select} from 'antd';
+import {Form, Input, Modal, DatePicker, Button, Col, Row, Select} from 'antd';
 import {seiLocale} from 'sei-utils';
-import {FileUpload} from 'seid';
 import AnyOneSelected from './TaskMakeOverPowerSelected';
 import SearchTable from "@/components/SearchTable";
 import {
@@ -11,14 +9,21 @@ import {
   flowTypeByBusinessModelConfig
 } from '@/utils/CommonComponentsConfig';
 import moment from 'moment';
+import {userUtils} from '@/utils';
+import {message} from "suid";
 
 const {seiIntl} = seiLocale;
-const {baseUrl} = constants;
 
 const FormItem = Form.Item;
 
+const {getCurrentUser} = userUtils;
+const currUser = getCurrentUser();
+const {authorityPolicy} = currUser || {};
+//TenantAdmin:租户管理员 GlobalAdmin:全局管理员
+const isAdmin = authorityPolicy === 'TenantAdmin';
 
 class AddTaskMakeOverPowerModal extends Component {
+
   selectedOne = null;
 
   constructor(props) {
@@ -29,20 +34,22 @@ class AddTaskMakeOverPowerModal extends Component {
       modalVisible: false,
       confirmLoading: false,
       selectUserModal: false,
-      selectedOneId: "",
-      selectedOneCode: "",
-      selectedOneName: "",
       appModuleId: "",
       appModuleName: "",
       businessModelId: "",
       businessModelName: "",
       flowTypeId: "",
-      flowTypeName: ""
+      flowTypeName: "",
+      selectUserOrPower: false
     }
   }
 
+  selectAnyUser = () => {
+    this.setState({selectUserOrPower: true, selectUserModal: true});
+  }
+
   selectAnyOne = () => {
-    this.setState({selectUserModal: true});
+    this.setState({selectUserOrPower: false, selectUserModal: true});
   }
 
   handleClose = () => {
@@ -85,7 +92,7 @@ class AddTaskMakeOverPowerModal extends Component {
     this.onChange('endValue', value)
   }
 
-  setStateNull = () =>{
+  setStateNull = () => {
     this.setState({
       appModuleId: "",
       appModuleName: "",
@@ -136,18 +143,30 @@ class AddTaskMakeOverPowerModal extends Component {
 
 
   okHandle = () => {
-    this.props.form.setFieldsValue({
-      'powerUserId': this.selectedOne.id,
-      'powerUserAccount': this.selectedOne.code,
-      'powerUserName': this.selectedOne.userName,
-      'powerUserOrgId': this.selectedOne.organizationId,
-      'powerUserOrgCode': this.selectedOne.organizationCode,
-      'powerUserOrgName': this.selectedOne.organizationName
+    if (this.selectedOne) {
+      if (this.state.selectUserOrPower) {
+        this.props.form.setFieldsValue({
+          'userId': this.selectedOne.id,
+          'userAccount': this.selectedOne.code,
+          'userName': this.selectedOne.userName
+        });
+      } else {
+        this.props.form.setFieldsValue({
+          'powerUserId': this.selectedOne.id,
+          'powerUserAccount': this.selectedOne.code,
+          'powerUserName': this.selectedOne.userName,
+          'powerUserOrgId': this.selectedOne.organizationId,
+          'powerUserOrgCode': this.selectedOne.organizationCode,
+          'powerUserOrgName': this.selectedOne.organizationName
 
-    });
-    this.setState({
-      selectUserModal: false
-    });
+        });
+      }
+      this.setState({
+        selectUserModal: false
+      });
+    } else {
+      message.error(seiIntl.get({key: 'flow_000027', desc: '请选择一行数据！'}));
+    }
   }
 
 
@@ -170,20 +189,8 @@ class AddTaskMakeOverPowerModal extends Component {
       FormValue = {}
     }
     const dateFormat = 'YYYY-MM-DD';
-    const uploadProps = {
-      domain: baseUrl,
-      // action: 'http://dsei.changhong.com:80/edm-service/upload',
-      // previewUrl:'http://dsei.changhong.com:80/edm-service/preview',
-      // downloadUrl:'http://dsei.changhong.com:80/edm-service/download?docId=',
-      defaultFileList: [],
-      disabled: !isAdd,
-      onChange: (status) => {
-        console.log(status);
-      },
-      onRemove: (file) => {
-        console.log(file);
-      }
-    };
+
+
     return (
       <div>
         <Modal title={title}
@@ -286,6 +293,49 @@ class AddTaskMakeOverPowerModal extends Component {
               <Input/>
             )}
           </FormItem>
+
+
+          <FormItem
+            style={{display: "none"}}
+            label="flowTypeName">
+            {getFieldDecorator('userId', {
+              initialValue: FormValue.userId ? FormValue.userId : "",
+            })(
+              <Input/>
+            )}
+          </FormItem>
+          <FormItem
+            style={{display: "none"}}
+            label="flowTypeName">
+            {getFieldDecorator('userAccount', {
+              initialValue: FormValue.userAccount ? FormValue.userAccount : "",
+            })(
+              <Input/>
+            )}
+          </FormItem>
+
+
+          <FormItem
+            {...formItemLayout}
+            style={{display: ( isAdmin ? "block" : "none" )}}
+            label={seiIntl.get({key: 'flow_000291', desc: '授权用户'})}>
+            <Row gutter={10}>
+              <Col span={15}>
+                {getFieldDecorator('userName', {
+                  initialValue: FormValue.userName ? FormValue.userName : ""
+                })(
+                  <Input disabled style={{width: "100%"}}/>
+                )}
+              </Col>
+              <Col span={9}>
+                <Button disabled={!isAdd} type="primary" onClick={this.selectAnyUser}>{seiIntl.get({
+                  key: 'flow_000344',
+                  desc: '选择授权用户'
+                })}</Button>
+              </Col>
+            </Row>
+          </FormItem>
+
           <FormItem
             {...formItemLayout}
             label={seiIntl.get({key: 'flow_000292', desc: '代理用户'})}>
@@ -413,11 +463,9 @@ class AddTaskMakeOverPowerModal extends Component {
                 style={{width: "100%"}}/>
             )}
           </FormItem>
-          {/*<Divider> {seiIntl.get({key: 'flow_000293', desc: '授权文件'})}</Divider>*/}
-          {/*<FileUpload   {...uploadProps} />*/}
         </Modal>
         <Modal
-          title={`指定代理人`}
+          title={this.state.selectUserOrPower ? `指定授权人` : `指定代理人`}
           bodyStyle={{maxHeight: "720px", overflow: "auto"}}
           width={window.innerWidth * 0.8}
           visible={this.state.selectUserModal}
