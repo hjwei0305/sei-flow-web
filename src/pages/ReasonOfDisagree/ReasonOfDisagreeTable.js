@@ -137,7 +137,7 @@ class ReasonOfDisagreeTable extends Component {
             delete values.id
           }
           saveDisagreeReason(values).then((result) => {
-            if (result.status === "SUCCESS") {
+            if (result.success) {
               message.success(result.message ? result.message : seiIntl.get({key: 'common_000002', desc: '保存成功'}));
               this.setState({rightModalVisible: false});
               this.getDisagreeReasonByTypeId({typeId: this.state.leftSelectedRow[0] ? this.state.leftSelectedRow[0].id : null})
@@ -172,7 +172,7 @@ class ReasonOfDisagreeTable extends Component {
         let params = {'id': record.id};
         thiz.toggoleGlobalLoading(true);
         updateStatusById(params).then((result) => {
-          if (result.status === "SUCCESS") {
+          if (result.success) {
             message.success(result.message ? result.message : seiIntl.get({key: 'common_000000', desc: '请求成功'}));
             thiz.getDisagreeReasonByTypeId({typeId: thiz.state.leftSelectedRow[0] ? thiz.state.leftSelectedRow[0].id : null})
           } else {

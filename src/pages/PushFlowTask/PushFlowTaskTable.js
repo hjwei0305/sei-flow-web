@@ -197,7 +197,7 @@ class FlowInstanceTable extends Component {
         }
         this.setState({confirmLoading: true});
         cleaningPushHistoryData(params).then(result => {
-          if (result.status === "SUCCESS") {
+          if (result.success) {
             message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             this.getDataSource();

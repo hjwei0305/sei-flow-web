@@ -293,7 +293,7 @@ class FlowInstanceTable extends Component {
           'instanceId': this.state.selectInstanceId,
           'targetNodeId': values.targetNodeId
         }).then(result => {
-          if (result.status === "SUCCESS") {
+          if (result.success) {
             this.checkTargetNodeInfo(result.data);
             this.setState({confirmLoading: false, modalVisible: false});
           } else {
@@ -321,7 +321,7 @@ class FlowInstanceTable extends Component {
           'instanceId': this.state.selectInstanceId,
           'updateRemark': values.updateRemark
         }).then(result => {
-          if (result.status === "SUCCESS") {
+          if (result.success) {
             message.success(seiIntl.get({key: 'common_000833', desc: '修改成功！'}));
             this.getDataSource();
             this.setState({updateConfirmLoading: false, updateModalVisible: false});
