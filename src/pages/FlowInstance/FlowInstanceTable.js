@@ -173,7 +173,7 @@ class FlowInstanceTable extends Component {
       onOk: () => {
         thiz.toggoleGlobalLoading(true);
         endForce(record.id).then(res => {
-          if (res.status === 'SUCCESS') {
+          if (res.success) {
             message.success(seiIntl.get({key: 'flow_000101', desc: '流程终止成功'}));
             thiz.getDataSource();
           } else {

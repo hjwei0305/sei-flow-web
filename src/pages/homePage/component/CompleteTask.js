@@ -62,7 +62,7 @@ class CompleteTask extends Component {
           return;
         }
         rollBackTo(record.id,thiz.opinion).then(res=>{
-          if(res.status==='SUCCESS'){
+          if(res.success){
             message.success(seiIntl.get({key: 'common_000226', desc: '流程撤回成功'}));
             thiz.opinion=''
             this.props.refresh()

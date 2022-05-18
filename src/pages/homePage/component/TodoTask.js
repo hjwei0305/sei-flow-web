@@ -57,7 +57,7 @@ class TodoTask extends Component {
 
   handleEnd=(record)=>{
     endTask(record.flowInstance.id).then(res=>{
-      if(res.status==='SUCCESS'){
+      if(res.success){
         message.success(seiIntl.get({key: 'common_000235', desc: '流程终止成功'}))
         this.props.refresh();
       }else{
@@ -80,7 +80,7 @@ class TodoTask extends Component {
       return;
     }
     reject(this.currentRecord.id,this.state.opinion).then(res=>{
-      if(res.status==='SUCCESS'){
+      if(res.success){
         message.success(seiIntl.get({key: 'common_000243', desc: '流程驳回成功'}));
         this.currentRecord=null;
         this.setState({opinion:'',rejectModal:false});
@@ -95,7 +95,7 @@ class TodoTask extends Component {
     switch (this.currentClick) {
       case seiIntl.get({key: 'common_000244', desc: '转办'}):
         taskTurnToDo(this.currentRecord.id,this.selectedOne.toString()).then(res=>{
-          if(res.status==='SUCCESS'){
+          if(res.success){
             this.currentRecord=null;
             message.success(seiIntl.get({key: 'common_000245', desc: '流程转办成功'}));
             this.props.refresh()
@@ -106,7 +106,7 @@ class TodoTask extends Component {
         break;
       case seiIntl.get({key: 'common_000246', desc: '委托'}):
         taskTrustToDo(this.currentRecord.id,this.selectedOne.toString()).then(res=>{
-          if(res.status==='SUCCESS'){
+          if(res.success){
             this.currentRecord=null;
             message.success(seiIntl.get({key: 'common_000247', desc: '流程委托成功'}));
             this.props.refresh()

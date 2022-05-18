@@ -140,7 +140,7 @@ class FlowInstanceTable extends Component {
       onOk: () => {
         thiz.toggoleGlobalLoading(true);
         pushAgainByControlId(record.id).then(res => {
-          if (res.status === 'SUCCESS') {
+          if (res.success) {
             message.success(seiIntl.get({key: 'flow_000074', desc: '推送成功'}));
             thiz.getDataSource();
           } else {

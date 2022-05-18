@@ -79,7 +79,7 @@ class SubtractSignTable extends Component {
     });
     thiz.toggoleGlobalLoading(true);
     setSubtractSignExecutorList(params).then(res => {
-      if (res.status === 'SUCCESS') {
+      if (res.success) {
         this.currentRecord = null;
         this.selectedOne = null;
         message.success(res.message);

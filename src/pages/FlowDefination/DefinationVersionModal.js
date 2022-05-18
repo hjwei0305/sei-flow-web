@@ -147,7 +147,7 @@ class DefinationVersionModal extends Component {
       onOk() {
         thiz.setState({loading: true});
         activateOrFreezeFlowVer(id, status).then(result => {
-          if (result.status === 'SUCCESS') {
+          if (result.success) {
             message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             thiz.getDataSource()

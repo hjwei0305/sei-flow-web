@@ -47,7 +47,7 @@ class MyOrder extends Component {
 	    content: `您确定要终止【${record.businessCode}】吗？`,
 	    onOk: () => {
           endTask(record.flowInstanceId).then(res=>{
-            if(res.status==='SUCCESS'){
+            if(res.success){
               message.success(seiIntl.get({key: 'common_000235', desc: '流程终止成功'}))
               thiz.props.refresh();
             }else{

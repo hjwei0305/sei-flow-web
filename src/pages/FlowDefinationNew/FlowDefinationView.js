@@ -224,7 +224,7 @@ class FlowDefinationView extends Component {
       onOk() {
         thiz.setState({loading: true});
         activateOrFreezeFlowDef(id, status).then(result => {
-          if (result.status === 'SUCCESS') {
+          if (result.success) {
             message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             let params = {
@@ -260,7 +260,7 @@ class FlowDefinationView extends Component {
         let id = record.id;
         thiz.setState({loading: true});
         deleteFlowDefination(id).then(result => {
-          if (result.status === 'SUCCESS') {
+          if (result.success) {
             message.success(result.message ? result.message : seiIntl.get({key: 'flow_000025', desc: '请求成功'}));
             //刷新本地数据
             let params = {

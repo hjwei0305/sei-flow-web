@@ -88,7 +88,7 @@ class TurnToDoTable extends Component {
     let thiz = this;
     thiz.toggoleGlobalLoading(true);
     taskTurnToDo(this.currentRecord.id, this.selectedOne.toString()).then(res => {
-      if (res.status === 'SUCCESS') {
+      if (res.success) {
         this.currentRecord = null;
         message.success(seiIntl.get({key: 'flow_000045', desc: '流程转办成功'}));
         thiz.getDataSource();
