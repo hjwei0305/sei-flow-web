@@ -29,14 +29,13 @@ export default [
       { title: '展示页面', path: '/design/show', component: './FlowDesign' },
       { title: '流程查看', path: '/design/showLook', component: './FlowLook' },
       { title: '用户配置', path: '/design/configUser', component: './ConfigUser' },
-      { title: '任务创建', path: '/taskMakeOverPower', component: './TaskMakeOverPower/TaskMakeOverPowerTable' },
+      { title: '待办转授权', path: '/taskMakeOverPower', component: './TaskMakeOverPower/TaskMakeOverPowerTable' },
 
       /*流程监管*/
       { title: '流程实例', path: '/FlowInstanceTable', component: './FlowInstance/FlowInstanceTable' },
       { title: '推送任务管理', path: '/PushFlowTaskTable', component: './PushFlowTask/PushFlowTaskTable' },
       { title: '替换固化执行人', path: '/ReplaceSolidifyExecutorTable', component: './ReplaceSolidifyExecutor/ReplaceSolidifyExecutorTable' },
       { title: '任意转办', path: '/TurnToDoTable', component: './TurnToDo/TurnToDoTable' },
-      { title: '待办转授权', path: '/taskMakeOverPower', component: './taskMakeOverPower/TaskMakeOverPowerTable' },
       { title: '加签管理', path: '/AddSignTable', component: './AddSign/AddSignTable' },
       { title: '减签管理', path: '/SubtractTable', component: './SubtractSign/SubtractSignTable' },
       /*通用单据（自测使用）*/
