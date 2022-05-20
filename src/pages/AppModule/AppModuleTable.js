@@ -195,14 +195,14 @@ class AppModuleTable extends Component {
         width: 200
       },
       {
-        title: seiIntl.get({key: 'flow_000183', desc: 'web服务代码'}),
-        dataIndex: 'webBaseAddress',
-        width: 220
-      },
-      {
         title: seiIntl.get({key: 'flow_000184', desc: 'api服务代码'}),
         dataIndex: 'apiBaseAddress',
-        width: 220,
+        width: 200,
+      },
+      {
+        title: seiIntl.get({key: 'flow_000183', desc: 'web服务代码'}),
+        dataIndex: 'webBaseAddress',
+        width: 280
       },
       {
         title: seiIntl.get({key: 'flow_000177', desc: '排序'}),
