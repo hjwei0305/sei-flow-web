@@ -370,7 +370,7 @@ EUI.ChooseUserView = EUI.extend(EUI.CustomUI, {
             var html = '<div class="flow-anyOneUser-item select" type="' + currentChooseTaskType + '" id="' + rowData.id + '">' +
               '<div class="choose-icon ecmp-flow-delete" title="删除"></div>' +
               '<div class="excutor-item-title">姓名：' + rowData["userName"] +
-              '，组织机构：' + rowData["organization.name"] + '，编号：' + rowData.code + '</div>' +
+              '，组织机构：' + rowData["organizationName"] + '，编号：' + rowData.code + '</div>' +
               '</div>';
             $("div[index=" + currentChooseDivIndex + "]").find(".flow-excutor-content2").html(html);
           } else {
