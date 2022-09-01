@@ -17,7 +17,8 @@ import {
   checkAndGetCanJumpNodeInfos,
   getTargetNodeInfo,
   jumpToTargetNode,
-  updateRemark
+  updateRemark,
+  selfMotionExecuteTask
 } from "./FlowInstanceService";
 import {ApproveHistory, OptGroup} from 'seid';
 import SearchTable from "@/components/SearchTable";
@@ -194,6 +195,26 @@ class FlowInstanceTable extends Component {
       onOk: () => {
         thiz.toggoleGlobalLoading(true);
         taskFailTheCompensation(record.id).then(res => {
+          if (res.success === true) {
+            message.success(seiIntl.get({key: 'flow_000314', desc: '补偿成功！'}));
+          } else {
+            message.error(res.message);
+          }
+        }).catch(e => {
+        }).finally(() => {
+          thiz.toggoleGlobalLoading(false);
+        });
+      }
+    });
+  };
+  handleNewAuto = (record) => {
+    let thiz = this;
+    confirm({
+      title: seiIntl.get({key: 'flow_000028', desc: '温馨提示'}),
+      content: seiIntl.get({key: 'flow_000346', desc: '自动执行补偿是在自动执行待办失败后重试的一种补偿机制，你确定要执行吗？'}),
+      onOk: () => {
+        thiz.toggoleGlobalLoading(true);
+        selfMotionExecuteTask({'businessId': record.businessId}).then(res => {
           if (res.success === true) {
             message.success(seiIntl.get({key: 'flow_000314', desc: '补偿成功！'}));
           } else {
@@ -484,6 +505,10 @@ class FlowInstanceTable extends Component {
             optList.push({
               title: seiIntl.get({key: 'flow_000334', desc: '修改说明'}),
               onClick: () => this.handleUpdate(record),
+            });
+            optList.push({
+              title: seiIntl.get({key: 'flow_000345', desc: '自动执行补偿'}),
+              onClick: () => this.handleNewAuto(record),
             });
           }
           return (<OptGroup optList={optList}/>)

@@ -356,6 +356,9 @@ export default {
   "flow_000342": "First push time：",
   "flow_000343": "Refresh organization data",
   "flow_000344": "Selecting an Authorized User",
+  "flow_000345": "automatically executed compensation",
+  "flow_000346": "Auto-execution compensation is a compensation mechanism that retries after an auto-execution to-do fails. Are you sure you want to do this?",
+
 
   common_000000: 'Request succeed',
   common_000001: 'Request failed',

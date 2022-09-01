@@ -40,6 +40,11 @@ export async function taskFailTheCompensation(instanceId) {
   return httpUtils.get(baseUrl + `/flowInstance/taskFailTheCompensation?instanceId=` + instanceId);
 }
 
+//自动执行补偿
+export async function selfMotionExecuteTask(params = {}) {
+  return httpUtils.post(baseUrl + `/flowSolidifyExecutor/selfMotionExecuteTask`, params);
+}
+
 //检查并获取流程中可以跳转节点信息
 export async function checkAndGetCanJumpNodeInfos(instanceId) {
   return httpUtils.get(baseUrl + `/flowInstance/checkAndGetCanJumpNodeInfos?instanceId=` + instanceId);
