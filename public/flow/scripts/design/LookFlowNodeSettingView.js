@@ -1153,30 +1153,37 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
           }
         }
       }, {
-        xtype: "CheckBoxGroup",
+        xtype: "CheckBoxGroup",   //任务到达时：自定义执行人
         title: "通知方式",
         labelWidth: 80,
         itemspace: 5,
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 28
+          labelWidth: 60
         },
-        items: [{
-          title: "邮件",
-          name: "EMAIL"
-        }, {
-          title: "钉钉",
-          name: "DINGDING"
-        }, {
-          title: "站内信",
-          name: "MESSAGE",
-          labelWidth: 42
-        }, {
-          title: "待办通知",
-          name: "VIRTUALTODO",
-          labelWidth: 56
-        }]
+        items: [
+          {
+            title: "邮件",
+            name: "EMAIL"
+          }, {
+            title: "站内信",
+            name: "MESSAGE"
+          }, {
+            title: "待办通知",
+            name: "VIRTUALTODO"
+            // , labelWidth: 56
+          }, {
+            title: "钉钉",
+            name: "DINGDING"
+          }, {
+            title: "小程序",
+            name: "MINIAPP"
+          }, {
+            title: "企业微信",
+            name: "WORKWECHAT"
+          }
+        ]
       }, {
         xtype: "TextArea",
         width: 320,
@@ -1209,30 +1216,36 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             }
           }
         }, {
-          xtype: "CheckBoxGroup",
+          xtype: "CheckBoxGroup",  //任务执行后：自定义执行人（审批和会签）
           title: "通知方式",
           labelWidth: 80,
           itemspace: 5,
           readonly: true,
           name: "type",
           defaultConfig: {
-            labelWidth: 28
+            labelWidth: 60
           },
-          items: [{
-            title: "邮件",
-            name: "EMAIL"
-          }, {
-            title: "钉钉",
-            name: "DINGDING"
-          }, {
-            title: "站内信",
-            name: "MESSAGE",
-            labelWidth: 42
-          }, {
-            title: "待办通知",
-            name: "VIRTUALTODO",
-            labelWidth: 56
-          }]
+          items: [
+            {
+              title: "邮件",
+              name: "EMAIL"
+            }, {
+              title: "站内信",
+              name: "MESSAGE"
+            }, {
+              title: "待办通知",
+              name: "VIRTUALTODO"
+            }, {
+              title: "钉钉",
+              name: "DINGDING"
+            }, {
+              title: "小程序",
+              name: "MINIAPP"
+            }, {
+              title: "企业微信",
+              name: "WORKWECHAT"
+            }
+          ]
         }, {
           xtype: "RadioBoxGroup",
           title: "通知条件",
@@ -1256,7 +1269,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         }, {
           xtype: "TextArea",
           width: 320,
-          height: 150,
+          height: 135,
           labelWidth: 80,
           readonly: true,
           title: "通知备注",
@@ -1283,30 +1296,36 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
             }
           }
         }, {
-          xtype: "CheckBoxGroup",
+          xtype: "CheckBoxGroup", //任务执行后：自定义执行人（审批和会签以外的其他任务）
           title: "通知方式",
           readonly: true,
           labelWidth: 80,
           itemspace: 5,
           name: "type",
           defaultConfig: {
-            labelWidth: 28
+            labelWidth: 60
           },
-          items: [{
-            title: "邮件",
-            name: "EMAIL"
-          }, {
-            title: "钉钉",
-            name: "DINGDING"
-          }, {
-            title: "站内信",
-            name: "MESSAGE",
-            labelWidth: 42
-          }, {
-            title: "待办通知",
-            name: "VIRTUALTODO",
-            labelWidth: 56
-          }]
+          items: [
+            {
+              title: "邮件",
+              name: "EMAIL"
+            }, {
+              title: "站内信",
+              name: "MESSAGE"
+            }, {
+              title: "待办通知",
+              name: "VIRTUALTODO"
+            }, {
+              title: "钉钉",
+              name: "DINGDING"
+            }, {
+              title: "小程序",
+              name: "MINIAPP"
+            }, {
+              title: "企业微信",
+              name: "WORKWECHAT"
+            }
+          ]
         }, {
           xtype: "TextArea",
           width: 320,
@@ -1338,30 +1357,36 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
 
     if ((this.nodeType == "Approve" || this.nodeType == "CounterSign") && notifyType == "notifyAfter") {
       return [{
-        xtype: "CheckBoxGroup",
+        xtype: "CheckBoxGroup",   //执行后：通知岗位（审批和会签）
         title: "通知方式",
         labelWidth: 80,
         itemspace: 5,
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 28
+          labelWidth: 60
         },
-        items: [{
-          title: "邮件",
-          name: "EMAIL"
-        }, {
-          title: "钉钉",
-          name: "DINGDING"
-        }, {
-          title: "站内信",
-          name: "MESSAGE",
-          labelWidth: 42
-        }, {
-          title: "待办通知",
-          name: "VIRTUALTODO",
-          labelWidth: 56
-        }]
+        items: [
+          {
+            title: "邮件",
+            name: "EMAIL"
+          }, {
+            title: "站内信",
+            name: "MESSAGE"
+          }, {
+            title: "待办通知",
+            name: "VIRTUALTODO"
+          }, {
+            title: "钉钉",
+            name: "DINGDING"
+          }, {
+            title: "小程序",
+            name: "MINIAPP"
+          }, {
+            title: "企业微信",
+            name: "WORKWECHAT"
+          }
+        ]
       }, {
         xtype: "RadioBoxGroup",
         title: "通知条件",
@@ -1417,7 +1442,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }, {
         xtype: "TextArea",
         width: 320,
-        height: 190,
+        height: 170,
         labelWidth: 80,
         readonly: true,
         title: "通知备注",
@@ -1425,30 +1450,36 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }];
     } else {
       return [{
-        xtype: "CheckBoxGroup",
+        xtype: "CheckBoxGroup", //执行后通知岗位（其他节点）
         title: "通知方式",
         labelWidth: 80,
         itemspace: 5,
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 28
+          labelWidth: 60
         },
-        items: [{
-          title: "邮件",
-          name: "EMAIL"
-        }, {
-          title: "钉钉",
-          name: "DINGDING"
-        }, {
-          title: "站内信",
-          name: "MESSAGE",
-          labelWidth: 42
-        }, {
-          title: "待办通知",
-          name: "VIRTUALTODO",
-          labelWidth: 56
-        }]
+        items: [
+          {
+            title: "邮件",
+            name: "EMAIL"
+          }, {
+            title: "站内信",
+            name: "MESSAGE"
+          }, {
+            title: "待办通知",
+            name: "VIRTUALTODO"
+          }, {
+            title: "钉钉",
+            name: "DINGDING"
+          }, {
+            title: "小程序",
+            name: "MINIAPP"
+          }, {
+            title: "企业微信",
+            name: "WORKWECHAT"
+          }
+        ]
       }, {
         xtype: "Button",
         id: notifyType + "ChoosePositionBtn",
@@ -1495,30 +1526,36 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
   getNotifyItem: function (notifyType) {
     if ((this.nodeType == "Approve" || this.nodeType == "CounterSign") && notifyType == "notifyAfter") {
       return [{
-        xtype: "CheckBoxGroup",
+        xtype: "CheckBoxGroup",  //执行后：通知发起人（审批或者会签）
         title: "通知方式",
         labelWidth: 80,
         itemspace: 5,
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 28
+          labelWidth: 60
         },
-        items: [{
-          title: "邮件",
-          name: "EMAIL"
-        }, {
-          title: "钉钉",
-          name: "DINGDING"
-        }, {
-          title: "站内信",
-          name: "MESSAGE",
-          labelWidth: 42
-        }, {
-          title: "待办通知",
-          name: "VIRTUALTODO",
-          labelWidth: 56
-        }]
+        items: [
+          {
+            title: "邮件",
+            name: "EMAIL"
+          }, {
+            title: "站内信",
+            name: "MESSAGE"
+          }, {
+            title: "待办通知",
+            name: "VIRTUALTODO"
+          }, {
+            title: "钉钉",
+            name: "DINGDING"
+          }, {
+            title: "小程序",
+            name: "MINIAPP"
+          }, {
+            title: "企业微信",
+            name: "WORKWECHAT"
+          }
+        ]
       }, {
         xtype: "RadioBoxGroup",
         title: "通知条件",
@@ -1542,7 +1579,7 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }, {
         xtype: "TextArea",
         width: 320,
-        height: 200,
+        height: 180,
         readonly: true,
         labelWidth: 80,
         title: "通知备注",
@@ -1557,23 +1594,29 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "type",
         readonly: true,
         defaultConfig: {
-          labelWidth: 28
+          labelWidth: 60
         },
-        items: [{
-          title: "邮件",
-          name: "EMAIL"
-        }, {
-          title: "钉钉",
-          name: "DINGDING"
-        }, {
-          title: "站内信",
-          name: "MESSAGE",
-          labelWidth: 42
-        }, {
-          title: "待办通知",
-          name: "VIRTUALTODO",
-          labelWidth: 56
-        }]
+        items: [
+          {
+            title: "邮件",
+            name: "EMAIL"
+          }, {
+            title: "站内信",
+            name: "MESSAGE"
+          }, {
+            title: "待办通知",
+            name: "VIRTUALTODO"
+          }, {
+            title: "钉钉",
+            name: "DINGDING"
+          }, {
+            title: "小程序",
+            name: "MINIAPP"
+          }, {
+            title: "企业微信",
+            name: "WORKWECHAT"
+          }
+        ]
       }, {
         xtype: "TextArea",
         width: 320,
