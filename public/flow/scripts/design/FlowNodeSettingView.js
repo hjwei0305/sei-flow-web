@@ -627,13 +627,16 @@ EUI.FlowNodeSettingView = EUI.extend(EUI.CustomUI, {
       }]);
     }
     //会签添加转办功能
-    if (this.nodeType == "Normal" || this.nodeType == "Approve" || this.nodeType == "CounterSign") {
+    if (this.nodeType == "Normal" || this.nodeType == "Approve" || this.nodeType == "CounterSign" || this.nodeType == "SingleSign") {
+      if (this.nodeType != "SingleSign") {
+        items = items.concat([{
+          xtype: "CheckBox",
+          title: "允许任意退回",
+          name: "allowReturn",
+          checked: false
+        }]);
+      }
       items = items.concat([{
-        xtype: "CheckBox",
-        title: "允许任意退回",
-        name: "allowReturn",
-        checked: false
-      }, {
         xtype: "CheckBox",
         title: "允许转办",
         name: "allowTransfer",

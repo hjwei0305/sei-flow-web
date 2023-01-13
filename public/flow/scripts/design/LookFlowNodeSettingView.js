@@ -421,12 +421,15 @@ EUI.LookFlowNodeSettingView = EUI.extend(EUI.CustomUI, {
         name: "allowReject"
       }]);
     }
-    if (this.nodeType == "Normal" || this.nodeType == "Approve" || this.nodeType == "CounterSign") {
+    if (this.nodeType == "Normal" || this.nodeType == "Approve" || this.nodeType == "CounterSign" || this.nodeType == "SingleSign") {
+      if (this.nodeType != "SingleSign") {
+        items = items.concat([{
+          xtype: "CheckBox",
+          title: "允许任意退回",
+          name: "allowReturn"
+        }]);
+      }
       items = items.concat([{
-        xtype: "CheckBox",
-        title: "允许任意退回",
-        name: "allowReturn"
-      }, {
         xtype: "CheckBox",
         title: "允许转办",
         name: "allowTransfer"
