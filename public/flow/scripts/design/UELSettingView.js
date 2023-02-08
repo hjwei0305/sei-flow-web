@@ -201,10 +201,25 @@ EUI.UELSettingView = EUI.extend(EUI.CustomUI, {
           if (g.isDefault || !g.properties) {
             return;
           }
+
+          //将后台返回的map键值对按照值的长短进行倒序排列，这样就不会出现有包含关系的属性替换错误
+          const map = new Map();
           for (var key in g.properties) {
-            var reg = new RegExp(g.properties[key], "g");
-            value = value.replace(reg, key);
+            map.set(key,g.properties[key]);
           }
+          var arrProperties = Array.from(map);
+          var propertiesArray =  arrProperties.sort((a,b) => { return b[1].length - a[1].length });
+          for (var i in propertiesArray) {
+            const property = propertiesArray[i];
+            var reg = new RegExp(property[1], "g");
+            value = value.replace(reg, property[0]);
+          }
+
+          // for (var key in g.properties) {
+          //   var reg = new RegExp(g.properties[key], "g");
+          //   value = value.replace(reg, key);
+          // }
+
           if (!value) {
             g.groovyUelCmp.setValue("");
             return;
