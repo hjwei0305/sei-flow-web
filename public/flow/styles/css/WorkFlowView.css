@@ -763,6 +763,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: white;
 }
 
+.flow-content .historyNode {
+  opacity: 0.5 !important;
+  box-shadow: 0 0 6px #44e57b;
+  border: 2px solid #4be544;
+}
+
 .flow-content .currentNode[type='CallActivity'] {
   border-width: 4px;
 }

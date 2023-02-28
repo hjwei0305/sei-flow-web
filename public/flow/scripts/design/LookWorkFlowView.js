@@ -368,6 +368,8 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
       var data = JSON.parse(defData.defJson);
     } else {
       var data = JSON.parse(defData.def.defJson);
+
+      //当前节点
       var currentNodes = "";
       var currentNodesInfo = defData.currentNodes;
       if (currentNodesInfo) {
@@ -377,7 +379,18 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
       } else {
         currentNodes += ",";
       }
-      // var currentNodes = defData.currentNodes ? defData.currentNodes.join(",") : "";
+      //历史节点
+      var historyNodes = "";
+      var historyNodesInfo = defData.historyNodes;
+      if (historyNodesInfo) {
+        for (var tempP in historyNodesInfo) {
+          historyNodes += tempP + ",";
+        }
+      } else {
+        historyNodes += ",";
+      }
+
+
       if (defData.solidifyExecutorsInfo) {
         this.solidifyExecutorsInfo = defData.solidifyExecutorsInfo;
       }
@@ -397,7 +410,7 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
       } else if (type.indexOf("EndEvent") != -1) {
         html += this.showEndNode(id, node);
       } else if (type.indexOf("Task") != -1 || type == "CallActivity") {
-        html += this.showTaskNode(id, node, currentNodes);
+        html += this.showTaskNode(id, node, currentNodes, historyNodes);
       } else if (type.indexOf("Gateway") != -1) {
         html += this.showGatewayNode(id, node, currentNodes);
       }
@@ -487,13 +500,20 @@ EUI.LookWorkFlowView = EUI.extend(EUI.CustomUI, {
       + "<div class='node-title' title='" + node.name + "'>" + node.name + "</div>	</div>";
   }
   ,
-  showTaskNode: function (id, node, currentNodes) {
+  showTaskNode: function (id, node, currentNodes, historyNodes) {
     var nodeCss = "flow-task flow-node node-choosed";
+    var addCss = "";
     if (!this.viewFlowDefByVersionId) {
+      if (historyNodes.indexOf(id + ",") != -1) {
+        addCss = " historyNode";
+      }
       if (currentNodes.indexOf(id + ",") != -1) {
-        nodeCss += " currentNode";
+        addCss = " currentNode";
       }
     }
+
+    nodeCss += addCss;
+
     var css = node.css;
     if (!css) {
       switch (node.nodeType) {
